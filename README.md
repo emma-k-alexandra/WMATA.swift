@@ -2,6 +2,22 @@
 
 WMATA.swift is a lightweight Swift interface to the [Washington Metropolitan Area Transit Authority API](https://developer.wmata.com).
 
+## Contents
+- [Requirements](#requirements)
+- [Installation](#installation)
+- [Usage](#usage)
+    - [Getting Started](#getting-started)
+    - [Design](#design)
+    - [Using `Rail`](#using-rail)
+    - [Using `Line`](#using-line)
+    - [Using `Station`](#using-station)
+    - [Using `Bus`](#using-bus)
+    - [Using `Route`](#using-route)
+    - [Using `Stop`](#using-stop)
+- [Dependencies](#dependencies)
+- [Contact](#contact)
+- [License](#license)
+
 
 ## Requirements
 - Swift 5.1+
@@ -11,7 +27,7 @@ WMATA.swift is a lightweight Swift interface to the [Washington Metropolitan Are
 ### Swift Package Manager
 ```swift
 dependencies: [
-.package(url: "https://github.com/emma-foster/WMATA.swift.git", from: "1.0.0")
+    .package(url: "https://github.com/emma-foster/WMATA.swift.git", from: "1.0.0")
 ]
 ```
 
@@ -22,7 +38,7 @@ dependencies: [
 import WMATA
 
 WMATA(apiKey: apiKey)[.A01].nextTrains { (nextTrains, error) in
-    print(nextTrains?.trains, error)
+    print(nextTrains, error)
 
 }
 ```
@@ -333,4 +349,4 @@ Feel free to email questions and comments to [emma@emma.sh](mailto:emma@emma.sh)
 
 ## License
 
-Alamofire is released under the MIT license. [See LICENSE](https://github.com/emma-foster/WMATA.swift/blob/master/LICENSE) for details.
+WMATA.swift is released under the MIT license. [See LICENSE](https://github.com/emma-foster/WMATA.swift/blob/master/LICENSE) for details.
