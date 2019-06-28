@@ -18,10 +18,10 @@ public class Bus {
     }
     
     /// WMATA API key from dev portal
-    var apiKey: String
+    public var apiKey: String
     
     /// URLSession to use for all requests
-    var session: URLSession
+    public var session: URLSession
     
     private var decoder = JSONDecoder()
     
@@ -29,7 +29,7 @@ public class Bus {
     ///
     /// - parameter apiKey: WMATA API key from dev portal
     /// - parameter session: Session to call on requests on
-    init(apiKey: String, session: URLSession = URLSession.shared) {
+    public init(apiKey: String, session: URLSession = URLSession.shared) {
         self.apiKey = apiKey
         self.session = session
         
@@ -42,7 +42,7 @@ public class Bus {
     /// - parameter longitude: Longitude to search around
     /// - parameter radius: Radius in meters to search along given latlong
     /// - parameter completion: Completion handler which returns `BusPositions`
-    func positions(routeId: Route.Id?, latitude: Double?, longitude: Double?, radius: Double?, completion: @escaping (_ result: BusPositions?, _ error: WMATAError?) -> ()){
+    public func positions(routeId: Route.Id?, latitude: Double?, longitude: Double?, radius: Double?, completion: @escaping (_ result: BusPositions?, _ error: WMATAError?) -> ()){
         var urlComponents = URLComponents(string: Route.Urls.positions.rawValue)!
         
         if let populatedRouteId = routeId {
@@ -84,7 +84,7 @@ public class Bus {
     /// All bus routes and variants
     ///
     /// - parameter completion: Completion handler which returns `RoutesResponse`
-    func routes(completion: @escaping (_ result: RoutesResponse?, _ error: WMATAError?) -> ()) {
+    public func routes(completion: @escaping (_ result: RoutesResponse?, _ error: WMATAError?) -> ()) {
         var request = URLRequest(url: URL(string: Bus.Urls.routes.rawValue)!)
         request.setValue(self.apiKey, forHTTPHeaderField: "api_key")
         
@@ -107,7 +107,7 @@ public class Bus {
     /// - parameter longitude: Longitude to search around
     /// - parameter radius: Radius in meters to search within
     /// - parameter completion: Completion handler which returns `StopsSearchResponse`
-    func searchStops(latitude: Double?, longitude: Double?, radius: Double?, completion: @escaping (_ result: StopsSearchResponse?, _ error: WMATAError?) -> ()) {
+    public func searchStops(latitude: Double?, longitude: Double?, radius: Double?, completion: @escaping (_ result: StopsSearchResponse?, _ error: WMATAError?) -> ()) {
         var urlComponents = URLComponents(string: Bus.Urls.stops.rawValue)!
         
         if let populatedLatitude = latitude {
@@ -145,7 +145,7 @@ public class Bus {
     ///
     /// - parameter route: Route to search for incidents along. Omit route to receive all incidents.
     /// - parameter completion: Completion handler which returns `BusIncidents`
-    func incidents(route: Route.Id?, completion: @escaping (_ result: BusIncidents?, _ error: WMATAError?) -> ()) {
+    public func incidents(route: Route.Id?, completion: @escaping (_ result: BusIncidents?, _ error: WMATAError?) -> ()) {
         var urlComponents = URLComponents(string: Bus.Urls.incidents.rawValue)!
         
         if let populatedRoute = route {

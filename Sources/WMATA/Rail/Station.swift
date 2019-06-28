@@ -9,7 +9,7 @@ import Foundation
 /// Fetches information relating to MetroRail Stations
 public class Station {
     /// Station codes as defined by WMATA
-    enum Code: String, CaseIterable {
+    public enum Code: String, CaseIterable {
         case A01
         case A02
         case A03
@@ -118,13 +118,13 @@ public class Station {
     }
     
     /// WMATA API key from dev portal
-    var apiKey: String
+    public var apiKey: String
     
     /// The station this object refers to
-    var code: Station.Code
+    public var code: Station.Code
     
     /// URLSession to use for all requests
-    var session: URLSession
+    public var session: URLSession
     
     private let decoder = JSONDecoder()
     
@@ -133,7 +133,7 @@ public class Station {
     /// - parameter apiKey: WMATA API key from dev portal
     /// - parameter code: Station to point this object at
     /// - parameter session: Session to call on requests on
-    init(apiKey: String, code: Station.Code, session: URLSession = URLSession.shared) {
+    public init(apiKey: String, code: Station.Code, session: URLSession = URLSession.shared) {
         self.apiKey = apiKey
         self.code = code
         self.session = session
@@ -143,7 +143,7 @@ public class Station {
     /// Next train arrival information for this station
     ///
     /// - parameter completion: Completion handler which returns `RailPredictions`
-    func nextTrains(completion: @escaping (_ result: RailPredictions?, _ error: WMATAError?) -> ()) {
+    public func nextTrains(completion: @escaping (_ result: RailPredictions?, _ error: WMATAError?) -> ()) {
         var request = URLRequest(url: URL(string: "\(Station.Urls.nextTrains)/\(self.code)")!)
         request.setValue(self.apiKey, forHTTPHeaderField: "api_key")
         
@@ -163,7 +163,7 @@ public class Station {
     /// Location and address information for this station
     ///
     /// - parameter completion: Completion handler which returns `StationInformation`
-    func information(completion: @escaping (_ result: StationInformation?, _ error: WMATAError?) -> ()) {
+    public func information(completion: @escaping (_ result: StationInformation?, _ error: WMATAError?) -> ()) {
         var urlComponents = URLComponents(string: Station.Urls.information.rawValue)!
         urlComponents.queryItems = [
             URLQueryItem(name: "StationCode", value: self.code.rawValue)
@@ -188,7 +188,7 @@ public class Station {
     /// Parking information for this station
     ///
     /// - parameter completion: Completion handler which returns `StationsParking`
-    func parkingInformation(completion: @escaping (_ result: StationsParking?, _ error: WMATAError?) -> ()) {
+    public func parkingInformation(completion: @escaping (_ result: StationsParking?, _ error: WMATAError?) -> ()) {
         var urlComponents = URLComponents(string: Station.Urls.parkingInformation.rawValue)!
         urlComponents.queryItems = [
             URLQueryItem(name: "StationCode", value: self.code.rawValue)
@@ -214,7 +214,7 @@ public class Station {
     ///
     /// - parameter to: Destination station to pathfind to
     /// - parameter completion: Completion handler which returns `PathBetweenStations`
-    func path(to station: Station.Code, completion: @escaping (_ result: PathBetweenStations?, _ error: WMATAError?) -> ()) {
+    public func path(to station: Station.Code, completion: @escaping (_ result: PathBetweenStations?, _ error: WMATAError?) -> ()) {
         var urlComponents = URLComponents(string: Station.Urls.path.rawValue)!
         urlComponents.queryItems? = [
             URLQueryItem(name: "FromStationCode", value: self.code.rawValue),
@@ -240,7 +240,7 @@ public class Station {
     /// Opening and scheduled first and last trains for this station
     ///
     /// - parameter completion: Completion handler which returns `StationTimings`
-    func timings(completion: @escaping (_ result: StationTimings?, _ error: WMATAError?) -> ()) {
+    public func timings(completion: @escaping (_ result: StationTimings?, _ error: WMATAError?) -> ()) {
         var urlComponents = URLComponents(string: Station.Urls.timings.rawValue)!
         urlComponents.queryItems = [
             URLQueryItem(name: "StationCode", value: self.code.rawValue)
@@ -266,7 +266,7 @@ public class Station {
     ///
     /// - parameter station: Station to travel to
     /// - parameter completion: Completion handler which returns `StationToStationInfos`
-    func to(_ station: Station.Code, completion: @escaping (_ result: StationToStationInfos?, _ error: WMATAError?) -> ()) {
+    public func to(_ station: Station.Code, completion: @escaping (_ result: StationToStationInfos?, _ error: WMATAError?) -> ()) {
         Rail(apiKey: self.apiKey, session: self.session).station(self.code, to: station, completion: completion)
         
     }

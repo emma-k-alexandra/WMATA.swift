@@ -6,8 +6,8 @@
 //
 
 public struct WMATAError: Codable {
-    let statusCode: Int
-    let message: String
+    public let statusCode: Int
+    public let message: String
     
 }
 

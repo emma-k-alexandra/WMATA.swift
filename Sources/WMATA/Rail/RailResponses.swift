@@ -6,7 +6,7 @@
 //
 
 public struct RailPredictions: Codable {
-    let trains: [RailPrediction]
+    public let trains: [RailPrediction]
     
     enum CodingKeys: String, CodingKey {
         case trains = "Trains"
@@ -14,15 +14,15 @@ public struct RailPredictions: Codable {
 }
 
 public struct RailPrediction: Codable {
-    let car: String?
-    let destination: String
-    let destinationCode: String?
-    let destinationName: String
-    let group: String
-    let line: String
-    let locationCode: String
-    let locationName: String
-    let minutes: String
+    public let car: String?
+    public let destination: String
+    public let destinationCode: String?
+    public let destinationName: String
+    public let group: String
+    public let line: String
+    public let locationCode: String
+    public let locationName: String
+    public let minutes: String
     
     enum CodingKeys: String, CodingKey {
         case car = "Car"
@@ -38,7 +38,7 @@ public struct RailPrediction: Codable {
 }
 
 public struct TrainPositions: Codable {
-    let trainPositions: [TrainPosition]
+    public let trainPositions: [TrainPosition]
     
     enum CodingKeys: String, CodingKey {
         case trainPositions = "TrainPositions"
@@ -46,15 +46,15 @@ public struct TrainPositions: Codable {
 }
 
 public struct TrainPosition: Codable {
-    let trainId: String
-    let trainNumber: String
-    let carCount: Int
-    let directionNumber: Int
-    let circuitId: Int
-    let destinationStationCode: String?
-    let lineCode: String?
-    let secondsAtLocation: Int
-    let serviceType: String
+    public let trainId: String
+    public let trainNumber: String
+    public let carCount: Int
+    public let directionNumber: Int
+    public let circuitId: Int
+    public let destinationStationCode: String?
+    public let lineCode: String?
+    public let secondsAtLocation: Int
+    public let serviceType: String
     
     enum CodingKeys: String, CodingKey {
         case trainId = "TrainId"
@@ -70,7 +70,7 @@ public struct TrainPosition: Codable {
 }
 
 public struct StandardRoutes: Codable {
-    let standardRoutes: [StandardRoute]
+    public let standardRoutes: [StandardRoute]
     
     enum CodingKeys: String, CodingKey {
         case standardRoutes = "StandardRoutes"
@@ -78,9 +78,9 @@ public struct StandardRoutes: Codable {
 }
 
 public struct StandardRoute: Codable {
-    let lineCode: String
-    let trackNumber: Int
-    let trackCircuits: [TrackCircuitWithStation]
+    public let lineCode: String
+    public let trackNumber: Int
+    public let trackCircuits: [TrackCircuitWithStation]
     
     enum CodingKeys: String, CodingKey {
         case lineCode = "LineCode"
@@ -90,9 +90,9 @@ public struct StandardRoute: Codable {
 }
 
 public struct TrackCircuitWithStation: Codable {
-    let sequenceNumber: Int
-    let circuitId: Int
-    let stationCode: String?
+    public let sequenceNumber: Int
+    public let circuitId: Int
+    public let stationCode: String?
     
     enum CodingKeys: String, CodingKey {
         case sequenceNumber = "SeqNum"
@@ -102,7 +102,7 @@ public struct TrackCircuitWithStation: Codable {
 }
 
 public struct TrackCircuits: Codable {
-    let trackCircuits: [TrackCircuit]
+    public let trackCircuits: [TrackCircuit]
     
     enum CodingKeys: String, CodingKey {
         case trackCircuits = "TrackCircuits"
@@ -110,9 +110,9 @@ public struct TrackCircuits: Codable {
 }
 
 public struct TrackCircuit: Codable {
-    let track: Int
-    let circuitId: Int
-    let neighbors: [TrackNeighbor]
+    public let track: Int
+    public let circuitId: Int
+    public let neighbors: [TrackNeighbor]
     
     enum CodingKeys: String, CodingKey {
         case track = "Track"
@@ -122,8 +122,8 @@ public struct TrackCircuit: Codable {
 }
 
 public struct TrackNeighbor: Codable {
-    let neighborType: String
-    let circuitIds: [Int]
+    public let neighborType: String
+    public let circuitIds: [Int]
     
     enum CodingKeys: String, CodingKey {
         case neighborType = "NeighborType"
@@ -132,13 +132,7 @@ public struct TrackNeighbor: Codable {
 }
 
 public struct LinesResponse: Codable {
-    let lines: [LineResponse]
-    
-    init(from decoder: Decoder) throws {
-        let values = try decoder.container(keyedBy: CodingKeys.self)
-        self.lines = try values.decode([LineResponse].self, forKey: .lines)
-        
-    }
+    public let lines: [LineResponse]
     
     enum CodingKeys: String, CodingKey {
         case lines = "Lines"
@@ -146,12 +140,12 @@ public struct LinesResponse: Codable {
 }
 
 public struct LineResponse: Codable {
-    let lineCode: String
-    let displayName: String
-    let startStationCode: String
-    let endStationCode: String
-    let firstInternalDestination: String
-    let secondInternalDestination: String
+    public let lineCode: String
+    public let displayName: String
+    public let startStationCode: String
+    public let endStationCode: String
+    public let firstInternalDestination: String
+    public let secondInternalDestination: String
     
     enum CodingKeys: String, CodingKey {
         case lineCode = "LineCode"
@@ -164,7 +158,7 @@ public struct LineResponse: Codable {
 }
 
 public struct StationsParking: Codable {
-    let stationsParking: [StationParking]
+    public let stationsParking: [StationParking]
     
     enum CodingKeys: String, CodingKey {
         case stationsParking = "StationsParking"
@@ -172,10 +166,10 @@ public struct StationsParking: Codable {
 }
 
 public struct StationParking: Codable {
-    let code: String
-    let notes: String
-    let allDayParking: AllDayParking
-    let shortTermParking: ShortTermParking
+    public let code: String
+    public let notes: String
+    public let allDayParking: AllDayParking
+    public let shortTermParking: ShortTermParking
     
     enum CodingKeys: String, CodingKey {
         case code = "Code"
@@ -186,11 +180,11 @@ public struct StationParking: Codable {
 }
 
 public struct AllDayParking: Codable {
-    let totalCount: Int
-    let riderCost: Double
-    let nonRiderCost: Double
-    let saturdayRiderCost: Double
-    let saturdayNonRiderCost: Double
+    public let totalCount: Int
+    public let riderCost: Double
+    public let nonRiderCost: Double
+    public let saturdayRiderCost: Double
+    public let saturdayNonRiderCost: Double
     
     enum CodingKeys: String, CodingKey {
         case totalCount = "TotalCount"
@@ -202,8 +196,8 @@ public struct AllDayParking: Codable {
 }
 
 public struct ShortTermParking: Codable {
-    let totalCount: Int
-    let notes: String
+    public let totalCount: Int
+    public let notes: String
     
     enum CodingKeys: String, CodingKey {
         case totalCount = "TotalCount"
@@ -212,7 +206,7 @@ public struct ShortTermParking: Codable {
 }
 
 public struct PathBetweenStations: Codable {
-    let path: [Path]
+    public let path: [Path]
     
     enum CodingKeys: String, CodingKey {
         case path = "Path"
@@ -220,11 +214,11 @@ public struct PathBetweenStations: Codable {
 }
 
 public struct Path: Codable {
-    let distanceToPreviousStation: Int
-    let lineCode: String
-    let sequenceNumber: Int
-    let stationCode: String
-    let stationName: String
+    public let distanceToPreviousStation: Int
+    public let lineCode: String
+    public let sequenceNumber: Int
+    public let stationCode: String
+    public let stationName: String
     
     enum CodingKeys: String, CodingKey {
         case distanceToPreviousStation = "DistanceToPrev"
@@ -236,7 +230,7 @@ public struct Path: Codable {
 }
 
 public struct StationEntrances: Codable {
-    let entrances: [StationEntrance]
+    public let entrances: [StationEntrance]
     
     enum CodingKeys: String, CodingKey {
         case entrances = "Entrances"
@@ -244,13 +238,13 @@ public struct StationEntrances: Codable {
 }
 
 public struct StationEntrance: Codable {
-    let description: String
-    let id: String
-    let latitude: Double
-    let longitude: Double
-    let name: String
-    let firstStationCode: String
-    let secondStationCode: String
+    public let description: String
+    public let id: String
+    public let latitude: Double
+    public let longitude: Double
+    public let name: String
+    public let firstStationCode: String
+    public let secondStationCode: String
     
     enum CodingKeys: String, CodingKey {
         case description = "Description"
@@ -264,17 +258,17 @@ public struct StationEntrance: Codable {
 }
 
 public struct StationInformation: Codable {
-    let address: StationAddress
-    let code: String
-    let latitude: Double
-    let longitude: Double
-    let firstLineCode: String
-    let secondLineCode: String?
-    let thirdLineCode: String?
-    let fourthLineCode: String?
-    let name: String
-    let firstStationTogether: String
-    let secondStationTogether: String
+    public let address: StationAddress
+    public let code: String
+    public let latitude: Double
+    public let longitude: Double
+    public let firstLineCode: String
+    public let secondLineCode: String?
+    public let thirdLineCode: String?
+    public let fourthLineCode: String?
+    public let name: String
+    public let firstStationTogether: String
+    public let secondStationTogether: String
     
     enum CodingKeys: String, CodingKey {
         case address = "Address"
@@ -292,10 +286,10 @@ public struct StationInformation: Codable {
 }
 
 public struct StationAddress: Codable {
-    let city: String
-    let state: String
-    let street: String
-    let zip: String
+    public let city: String
+    public let state: String
+    public let street: String
+    public let zip: String
     
     enum CodingKeys: String, CodingKey {
         case city = "City"
@@ -306,7 +300,7 @@ public struct StationAddress: Codable {
 }
 
 public struct Stations: Codable {
-    let stations: [StationInformation]
+    public let stations: [StationInformation]
     
     enum CodingKeys: String, CodingKey {
         case stations = "Stations"
@@ -314,7 +308,7 @@ public struct Stations: Codable {
 }
 
 public struct StationTimings: Codable {
-    let stationTimes: [StationTime]
+    public let stationTimes: [StationTime]
     
     enum CodingKeys: String, CodingKey {
         case stationTimes = "StationTimes"
@@ -322,15 +316,15 @@ public struct StationTimings: Codable {
 }
 
 public struct StationTime: Codable {
-    let code: String
-    let stationName: String
-    let monday: StationFirstLastTrains
-    let tuesday: StationFirstLastTrains
-    let wednesday: StationFirstLastTrains
-    let thursday: StationFirstLastTrains
-    let friday: StationFirstLastTrains
-    let saturday: StationFirstLastTrains
-    let sunday: StationFirstLastTrains
+    public let code: String
+    public let stationName: String
+    public let monday: StationFirstLastTrains
+    public let tuesday: StationFirstLastTrains
+    public let wednesday: StationFirstLastTrains
+    public let thursday: StationFirstLastTrains
+    public let friday: StationFirstLastTrains
+    public let saturday: StationFirstLastTrains
+    public let sunday: StationFirstLastTrains
     
     enum CodingKeys: String, CodingKey {
         case code = "Code"
@@ -346,9 +340,9 @@ public struct StationTime: Codable {
 }
 
 public struct StationFirstLastTrains: Codable {
-    let openingTime: String
-    let firstTrains: [TrainTime]
-    let lastTrains: [TrainTime]
+    public let openingTime: String
+    public let firstTrains: [TrainTime]
+    public let lastTrains: [TrainTime]
     
     enum CodingKeys: String, CodingKey {
         case openingTime = "OpeningTime"
@@ -358,8 +352,8 @@ public struct StationFirstLastTrains: Codable {
 }
 
 public struct TrainTime: Codable {
-    let time: String
-    let destinationStation: String
+    public let time: String
+    public let destinationStation: String
     
     enum CodingKeys: String, CodingKey {
         case time = "Time"
@@ -368,7 +362,7 @@ public struct TrainTime: Codable {
 }
 
 public struct StationToStationInfos: Codable {
-    let stationToStationInfos: [StationToStationInfo]
+    public let stationToStationInfos: [StationToStationInfo]
     
     enum CodingKeys: String, CodingKey {
         case stationToStationInfos = "StationToStationInfos"
@@ -376,11 +370,11 @@ public struct StationToStationInfos: Codable {
 }
 
 public struct StationToStationInfo: Codable {
-    let compositeMiles: Double
-    let destinationStation: String
-    let railFare: RailFare
-    let railTime: Int
-    let sourceStation: String
+    public let compositeMiles: Double
+    public let destinationStation: String
+    public let railFare: RailFare
+    public let railTime: Int
+    public let sourceStation: String
     
     enum CodingKeys: String, CodingKey {
         case compositeMiles = "CompositeMiles"
@@ -392,9 +386,9 @@ public struct StationToStationInfo: Codable {
 }
 
 public struct RailFare: Codable {
-    let offPeakTime: Double
-    let peakTime: Double
-    let seniorDisabled: Double
+    public let offPeakTime: Double
+    public let peakTime: Double
+    public let seniorDisabled: Double
     
     enum CodingKeys: String, CodingKey {
         case offPeakTime = "OffPeakTime"
@@ -404,7 +398,7 @@ public struct RailFare: Codable {
 }
 
 public struct ElevatorAndEscalatorIncidents: Codable {
-    let incidents: [ElevatorAndEscalatorIncident]
+    public let incidents: [ElevatorAndEscalatorIncident]
     
     enum CodingKeys: String, CodingKey {
         case incidents = "ElevatorIncidents"
@@ -412,19 +406,19 @@ public struct ElevatorAndEscalatorIncidents: Codable {
 }
 
 public struct ElevatorAndEscalatorIncident: Codable {
-    let unitName: String
-    let unitType: String
-    let unitStatus: String?
-    let stationCode: String
-    let stationName: String
-    let locationDescription: String
-    let symptomCode: String?
-    let timeOutOfService: String
-    let symptomDescription: String
-    let displayOrder: Double
-    let dateOutOfService: String
-    let dateUpdated: String
-    let estimatedReturnToService: String
+    public let unitName: String
+    public let unitType: String
+    public let unitStatus: String?
+    public let stationCode: String
+    public let stationName: String
+    public let locationDescription: String
+    public let symptomCode: String?
+    public let timeOutOfService: String
+    public let symptomDescription: String
+    public let displayOrder: Double
+    public let dateOutOfService: String
+    public let dateUpdated: String
+    public let estimatedReturnToService: String
     
     enum CodingKeys: String, CodingKey {
         case unitName = "UnitName"
@@ -444,7 +438,7 @@ public struct ElevatorAndEscalatorIncident: Codable {
 }
 
 public struct RailIncidents: Codable {
-    let incidents: [RailIncident]
+    public let incidents: [RailIncident]
     
     enum CodingKeys: String, CodingKey {
         case incidents = "Incidents"
@@ -452,16 +446,16 @@ public struct RailIncidents: Codable {
 }
 
 public struct RailIncident: Codable {
-    let incidentID: String
-    let description: String
-    let startLocationFullName: String?
-    let endLocationFullName: String?
-    let passengerDelay: Double
-    let delaySeverity: String?
-    let incidentType: String
-    let emergencyText: String?
-    let linesAffected: String
-    let dateUpdated: String
+    public let incidentID: String
+    public let description: String
+    public let startLocationFullName: String?
+    public let endLocationFullName: String?
+    public let passengerDelay: Double
+    public let delaySeverity: String?
+    public let incidentType: String
+    public let emergencyText: String?
+    public let linesAffected: String
+    public let dateUpdated: String
     
     enum CodingKeys: String, CodingKey {
         case incidentID = "IncidentID"

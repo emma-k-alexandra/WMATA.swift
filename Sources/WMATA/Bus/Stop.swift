@@ -16,13 +16,13 @@ public class Stop {
     }
     
     /// WMATA API key from dev portal
-    var apiKey: String
+    public var apiKey: String
     
     /// The stop this object refers to
-    var stopId: String
+    public var stopId: String
     
     /// URLSession to use for all requests
-    var session: URLSession
+    public var session: URLSession
     
     private var decoder = JSONDecoder()
     
@@ -31,7 +31,7 @@ public class Stop {
     /// - parameter apiKey: WMATA API key from dev portal
     /// - parameter stopId: Stop to point this object at
     /// - parameter session: Session to call on requests on
-    init(apiKey: String, stopId: String, session: URLSession = URLSession.shared) {
+    public init(apiKey: String, stopId: String, session: URLSession = URLSession.shared) {
         self.apiKey = apiKey
         self.stopId = stopId
         self.session = session
@@ -41,7 +41,7 @@ public class Stop {
     /// Next bus arrival times at this Stop
     ///
     /// - parameter completion: Completion handler which returns `BusPredictions`
-    func nextBuses(completion: @escaping (_ result: BusPredictions?, _ error: WMATAError?) -> ()) {
+    public func nextBuses(completion: @escaping (_ result: BusPredictions?, _ error: WMATAError?) -> ()) {
         var urlComponents = URLComponents(string: Stop.Urls.nextBuses.rawValue)!
         urlComponents.queryItems = [
             URLQueryItem(name: "StopID", value: self.stopId)
@@ -67,7 +67,7 @@ public class Stop {
     ///
     /// - parameter date: Date in `YYYY-MM-DD` format for which to receive schedule for. Omit for today.
     /// - parameter completion: Completion handler which returns `StopSchedule`
-    func schedule(at date: String? = nil, completion: @escaping (_ result: StopSchedule?, _ error: WMATAError?) -> ()) {
+    public func schedule(at date: String? = nil, completion: @escaping (_ result: StopSchedule?, _ error: WMATAError?) -> ()) {
         var urlComponents = URLComponents(string: Stop.Urls.schedule.rawValue)!
         urlComponents.queryItems = [
             URLQueryItem(name: "StopID", value: self.stopId)

@@ -8,7 +8,7 @@ import Foundation
 
 public class Line {
     /// Line codes as defined by WMATA
-    enum Code: String {
+    public enum Code: String {
         case RD
         case BL
         case YL
@@ -23,13 +23,13 @@ public class Line {
     }
     
     /// WMATA API key from dev portal
-    var apiKey: String
+    public var apiKey: String
     
     /// The Line this object refers to
-    var line: Line.Code
+    public var line: Line.Code
     
     /// URLSession to use for all requests
-    var session: URLSession
+    public var session: URLSession
     
     private let decoder = JSONDecoder()
     
@@ -38,7 +38,7 @@ public class Line {
     /// - parameter apiKey: WMATA API key from dev portal
     /// - parameter code: Line to point this object at
     /// - parameter session: Session to call on requests on
-    init(apiKey: String, line: Line.Code, session: URLSession = URLSession.shared) {
+    public init(apiKey: String, line: Line.Code, session: URLSession = URLSession.shared) {
         self.apiKey = apiKey
         self.line = line
         self.session = session
@@ -49,7 +49,7 @@ public class Line {
     ///
     /// - parameter line: Line to receive stations along.
     /// - parameter completion: Completion handler which returns `Stations`
-    func stations(completion: @escaping (_ result: Stations?, _ error: WMATAError?) -> ()) {
+    public func stations(completion: @escaping (_ result: Stations?, _ error: WMATAError?) -> ()) {
         Rail(apiKey: self.apiKey, session: self.session).stations(for: self.line, completion: completion)
         
     }

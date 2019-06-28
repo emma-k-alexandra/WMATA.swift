@@ -10,7 +10,7 @@ import Foundation
 /// Information relating to a specific MetroBus route
 public class Route {
     /// Route ids as defined by WMATA
-    enum Id: String {
+    public enum Id: String {
         case _10A = "10A"
         case _10B = "10B"
         case _10E = "10E"
@@ -494,13 +494,13 @@ public class Route {
     }
     
     /// WMATA API key from dev portal
-    var apiKey: String
+    public var apiKey: String
     
     /// The route this object refers to
-    var routeId: Route.Id
+    public var routeId: Route.Id
     
     /// URLSession to use for all requests
-    var session: URLSession
+    public var session: URLSession
     
     private var decoder = JSONDecoder()
     
@@ -509,7 +509,7 @@ public class Route {
     /// - parameter apiKey: WMATA API key from dev portal
     /// - parameter routeId: Route to point this object at
     /// - parameter session: Session to call on requests on
-    init(apiKey: String, routeId: Route.Id, session: URLSession = URLSession.shared) {
+    public init(apiKey: String, routeId: Route.Id, session: URLSession = URLSession.shared) {
         self.apiKey = apiKey
         self.routeId = routeId
         self.session = session
@@ -522,7 +522,7 @@ public class Route {
     /// - parameter longitude: Longitude to search around
     /// - parameter radius: Radius in meters to search within
     /// - parameter completion: Completion handler which returns `BusPositions`
-    func positions(latitude: Double?, longitude: Double?, radius: Double?, completion: @escaping (_ result: BusPositions?, _ error: WMATAError?) -> ()){
+    public func positions(latitude: Double?, longitude: Double?, radius: Double?, completion: @escaping (_ result: BusPositions?, _ error: WMATAError?) -> ()){
         Bus(apiKey: self.apiKey, session: self.session).positions(routeId: self.routeId, latitude: latitude, longitude: longitude, radius: radius, completion: completion)
         
     }
@@ -531,7 +531,7 @@ public class Route {
     ///
     /// - parameter date: Date in `YYYY-MM-DD` format for which to receive path information. Omit for today.
     /// - parameter completion: Completion handler which returns `PathDetails`
-    func pathDetails(date: String? = nil, completion: @escaping (_ result: PathDetails?, _ error: WMATAError?) -> ()) {
+    public func pathDetails(date: String? = nil, completion: @escaping (_ result: PathDetails?, _ error: WMATAError?) -> ()) {
         var urlComponents = URLComponents(string: Route.Urls.pathDetails.rawValue)!
         urlComponents.queryItems?.append(URLQueryItem(name: "RouteID", value: self.routeId.rawValue))
         
@@ -561,7 +561,7 @@ public class Route {
     /// - parameter date: Date in `YYYY-MM-DD` format for which to receive scheduled stops
     /// - parameter includingVariations: Whether to include route variations. Example: B30v1 and B30v2 for Route B30
     /// - parameter completion: Completion handler which returns `RoutesResponse`
-    func schedule(date: String? = nil, includingVariations: Bool? = false, completion: @escaping (_ result: RoutesResponse?, _ error: WMATAError?) -> ()) {
+    public func schedule(date: String? = nil, includingVariations: Bool? = false, completion: @escaping (_ result: RoutesResponse?, _ error: WMATAError?) -> ()) {
         var urlComponents = URLComponents(string: Route.Urls.schedule.rawValue)!
         urlComponents.queryItems?.append(URLQueryItem(name: "RouteID", value: self.routeId.rawValue))
         

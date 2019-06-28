@@ -22,10 +22,10 @@ public class Rail {
     }
     
     /// WMATA API key from dev portal
-    var apiKey: String
+    public var apiKey: String
     
     /// URLSession to use for all requests
-    var session: URLSession
+    public var session: URLSession
     
     private var decoder = JSONDecoder()
     
@@ -33,7 +33,7 @@ public class Rail {
     ///
     /// - parameter apiKey: WMATA API key from dev portal
     /// - parameter session: Session to call on requests on
-    init(apiKey: String, session: URLSession = URLSession.shared) {
+    public init(apiKey: String, session: URLSession = URLSession.shared) {
         self.apiKey = apiKey
         self.session = session
         
@@ -42,7 +42,7 @@ public class Rail {
     /// General information on all MetroRail lines
     ///
     /// - parameter completion: Completion handler which returns `LinesResponse`
-    func lines(completion: @escaping (_ result: LinesResponse?, _ error: WMATAError?) -> ()) {
+    public func lines(completion: @escaping (_ result: LinesResponse?, _ error: WMATAError?) -> ()) {
         var request = URLRequest(url: URL(string: Rail.Urls.lines.rawValue)!)
         request.setValue(self.apiKey, forHTTPHeaderField: "api_key")
         
@@ -65,7 +65,7 @@ public class Rail {
     /// - parameter longitude: Longitude to search at
     /// - parameter radius: Radius in meters to search within
     /// - parameter completion: Completion handler which returns `StationEntrances`
-    func entrances(latitude: Double?, longitude: Double?, radius: Double?, completion: @escaping (_ result: StationEntrances?, _ error: WMATAError?) -> ()) {
+    public func entrances(latitude: Double?, longitude: Double?, radius: Double?, completion: @escaping (_ result: StationEntrances?, _ error: WMATAError?) -> ()) {
         var urlComponents = URLComponents(string: Rail.Urls.entrances.rawValue)!
         
         if let populatedLatitude = latitude {
@@ -103,7 +103,7 @@ public class Rail {
     ///
     /// - parameter line: Line to receive stations along. Omit to receive all stations.
     /// - parameter completion: Completion handler which returns `Stations`
-    func stations(for line: Line.Code?, completion: @escaping (_ result: Stations?, _ error: WMATAError?) -> ()) {
+    public func stations(for line: Line.Code?, completion: @escaping (_ result: Stations?, _ error: WMATAError?) -> ()) {
         var urlComponents = URLComponents(string: Line.Urls.stations.rawValue)!
         
         if let populatedLine = line {
@@ -133,7 +133,7 @@ public class Rail {
     /// - parameter station: Station to start trip at
     /// - parameter destinationStation: Station to travel to
     /// - parameter completion: Completion handler which returns `StationToStationInfos`
-    func station(_ station: Station.Code?, to destinationStation: Station.Code?, completion: @escaping (_ result: StationToStationInfos?, _ error: WMATAError?) -> ()) {
+    public func station(_ station: Station.Code?, to destinationStation: Station.Code?, completion: @escaping (_ result: StationToStationInfos?, _ error: WMATAError?) -> ()) {
         var urlComponents = URLComponents(string: Station.Urls.stationToStation.rawValue)!
         
         if let populatedStation = station {
@@ -165,7 +165,7 @@ public class Rail {
     /// Uniquely identifiable trains in service and what track circuits they currently occupy
     ///
     /// - parameter completion: Completion handler which returns `TrainPositions`
-    func positions(completion: @escaping (_ result: TrainPositions?, _ error: WMATAError?) -> ()) {
+    public func positions(completion: @escaping (_ result: TrainPositions?, _ error: WMATAError?) -> ()) {
         var urlComponents = URLComponents(string: Rail.Urls.positions.rawValue)!
         
         urlComponents.queryItems = [
@@ -191,7 +191,7 @@ public class Rail {
     /// Ordered list of track circuits, arranged by line and track number
     ///
     /// - parameter completion: Completion handler which returns `StandardRoutes`
-    func routes(completion: @escaping (_ result: StandardRoutes?, _ error: WMATAError?) -> ()) {
+    public func routes(completion: @escaping (_ result: StandardRoutes?, _ error: WMATAError?) -> ()) {
         var urlComponents = URLComponents(string: Rail.Urls.routes.rawValue)!
         
         urlComponents.queryItems = [
@@ -217,7 +217,7 @@ public class Rail {
     /// List of all track circuits - See https://developer.wmata.com/TrainPositionsFAQ
     ///
     /// - parameter completion: Completion handler which returns `TrackCircuits`
-    func circuits(completion: @escaping (_ result: TrackCircuits?, _ error: WMATAError?) -> ()) {
+    public func circuits(completion: @escaping (_ result: TrackCircuits?, _ error: WMATAError?) -> ()) {
         var urlComponents = URLComponents(string: Rail.Urls.circuits.rawValue)!
         
         urlComponents.queryItems = [
@@ -244,7 +244,7 @@ public class Rail {
     ///
     /// - parameter at: Which station to search for incidents at. Optional.
     /// - parameter completion: Completion handler which returns `ElevatorAndEscalatorIncidents`
-    func elevatorAndEscalatorIncidents(at station: Station.Code?, completion: @escaping (_ result: ElevatorAndEscalatorIncidents?, _ error: WMATAError?) -> ()) {
+    public func elevatorAndEscalatorIncidents(at station: Station.Code?, completion: @escaping (_ result: ElevatorAndEscalatorIncidents?, _ error: WMATAError?) -> ()) {
         var urlComponents = URLComponents(string: Rail.Urls.elevatorAndEscalatorIncidents.rawValue)!
         
         if let populatedStation = station {
@@ -272,7 +272,7 @@ public class Rail {
     ///
     /// - parameter at: Station to search for incidents at. Optional.
     /// - parameter completion: Completion handler which returns `RailIncidents`
-    func incidents(at station: Station.Code?, completion: @escaping (_ result: RailIncidents?, _ error: WMATAError?) -> ()) {
+    public func incidents(at station: Station.Code?, completion: @escaping (_ result: RailIncidents?, _ error: WMATAError?) -> ()) {
         var urlComponents = URLComponents(string: Rail.Urls.incidents.rawValue)!
         
         if let populatedStation = station {
