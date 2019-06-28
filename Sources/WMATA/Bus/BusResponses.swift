@@ -5,7 +5,7 @@
 //  Created by Emma Foster on 6/16/19.
 //
 
-struct BusPredictions: Codable {
+public struct BusPredictions: Codable {
     let predictions: BusPrediction
     
     enum CodingKeys: String, CodingKey {
@@ -13,7 +13,7 @@ struct BusPredictions: Codable {
     }
 }
 
-struct BusPrediction: Codable {
+public struct BusPrediction: Codable {
     let directionNumber: String
     let directionText: String
     let minutes: Int
@@ -31,7 +31,7 @@ struct BusPrediction: Codable {
     }
 }
 
-struct BusPositions: Codable {
+public struct BusPositions: Codable {
     let busPositions: BusPosition
     
     enum CodingKeys: String, CodingKey {
@@ -39,7 +39,7 @@ struct BusPositions: Codable {
     }
 }
 
-struct BusPosition: Codable {
+public struct BusPosition: Codable {
     let dateTime: String
     let deviation: Int
     let directionNumber: String
@@ -69,7 +69,7 @@ struct BusPosition: Codable {
     }
 }
 
-struct PathDetails: Codable {
+public struct PathDetails: Codable {
     let routeId: String
     let name: String
     let directionZero: PathDirection
@@ -83,7 +83,7 @@ struct PathDetails: Codable {
     }
 }
 
-struct PathDirection: Codable {
+public struct PathDirection: Codable {
     let tripHeadsign: String
     let directionText: String
     let directionNumber: String
@@ -99,7 +99,7 @@ struct PathDirection: Codable {
     }
 }
 
-struct PathStop: Codable {
+public struct PathStop: Codable {
     let latitude: Double
     let longitude: Double
     let sequenceNumber: Int
@@ -111,7 +111,7 @@ struct PathStop: Codable {
     }
 }
 
-struct StopResponse: Codable {
+public struct StopResponse: Codable {
     let stopId: String
     let name: String
     let latitude: Double
@@ -127,7 +127,7 @@ struct StopResponse: Codable {
     }
 }
 
-struct RoutesResponse: Codable {
+public struct RoutesResponse: Codable {
     let routes: [RouteResponse]
     
     enum CodingKeys: String, CodingKey {
@@ -135,7 +135,7 @@ struct RoutesResponse: Codable {
     }
 }
 
-struct RouteResponse: Codable {
+public struct RouteResponse: Codable {
     let routeId: String
     let name: String
     let lineDescription: String
@@ -147,7 +147,7 @@ struct RouteResponse: Codable {
     }
 }
 
-struct StopSchedule: Codable {
+public struct StopSchedule: Codable {
     let arrivals: [BusArrival]
     let stop: StopScheduleResponse
     
@@ -157,7 +157,7 @@ struct StopSchedule: Codable {
     }
 }
 
-struct BusArrival: Codable {
+public struct BusArrival: Codable {
     let scheduleTime: String
     let directionNumber: Int
     let startTime: String
@@ -179,7 +179,7 @@ struct BusArrival: Codable {
     }
 }
 
-struct StopScheduleResponse: Codable {
+public struct StopScheduleResponse: Codable {
     let stopId: String?
     let name: String
     let latitude: Double
@@ -195,7 +195,7 @@ struct StopScheduleResponse: Codable {
     }
 }
 
-struct StopsSearchResponse: Codable {
+public struct StopsSearchResponse: Codable {
     let stops: [StopScheduleResponse]
     
     enum CodingKeys: String, CodingKey {
@@ -203,7 +203,7 @@ struct StopsSearchResponse: Codable {
     }
 }
 
-struct BusIncidents: Codable {
+public struct BusIncidents: Codable {
     let incidents: [BusIncident]
     
     enum CodingKeys: String, CodingKey {
@@ -211,7 +211,7 @@ struct BusIncidents: Codable {
     }
 }
 
-struct BusIncident: Codable {
+public struct BusIncident: Codable {
     let dateUpdated: String
     let description: String
     let incidentId: String

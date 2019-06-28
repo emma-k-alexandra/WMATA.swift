@@ -5,7 +5,7 @@
 //  Created by Emma Foster on 6/16/19.
 //
 
-struct RailPredictions: Codable {
+public struct RailPredictions: Codable {
     let trains: [RailPrediction]
     
     enum CodingKeys: String, CodingKey {
@@ -13,7 +13,7 @@ struct RailPredictions: Codable {
     }
 }
 
-struct RailPrediction: Codable {
+public struct RailPrediction: Codable {
     let car: String?
     let destination: String
     let destinationCode: String?
@@ -37,7 +37,7 @@ struct RailPrediction: Codable {
     }
 }
 
-struct TrainPositions: Codable {
+public struct TrainPositions: Codable {
     let trainPositions: [TrainPosition]
     
     enum CodingKeys: String, CodingKey {
@@ -45,7 +45,7 @@ struct TrainPositions: Codable {
     }
 }
 
-struct TrainPosition: Codable {
+public struct TrainPosition: Codable {
     let trainId: String
     let trainNumber: String
     let carCount: Int
@@ -69,7 +69,7 @@ struct TrainPosition: Codable {
     }
 }
 
-struct StandardRoutes: Codable {
+public struct StandardRoutes: Codable {
     let standardRoutes: [StandardRoute]
     
     enum CodingKeys: String, CodingKey {
@@ -77,7 +77,7 @@ struct StandardRoutes: Codable {
     }
 }
 
-struct StandardRoute: Codable {
+public struct StandardRoute: Codable {
     let lineCode: String
     let trackNumber: Int
     let trackCircuits: [TrackCircuitWithStation]
@@ -89,7 +89,7 @@ struct StandardRoute: Codable {
     }
 }
 
-struct TrackCircuitWithStation: Codable {
+public struct TrackCircuitWithStation: Codable {
     let sequenceNumber: Int
     let circuitId: Int
     let stationCode: String?
@@ -101,7 +101,7 @@ struct TrackCircuitWithStation: Codable {
     }
 }
 
-struct TrackCircuits: Codable {
+public struct TrackCircuits: Codable {
     let trackCircuits: [TrackCircuit]
     
     enum CodingKeys: String, CodingKey {
@@ -109,7 +109,7 @@ struct TrackCircuits: Codable {
     }
 }
 
-struct TrackCircuit: Codable {
+public struct TrackCircuit: Codable {
     let track: Int
     let circuitId: Int
     let neighbors: [TrackNeighbor]
@@ -121,7 +121,7 @@ struct TrackCircuit: Codable {
     }
 }
 
-struct TrackNeighbor: Codable {
+public struct TrackNeighbor: Codable {
     let neighborType: String
     let circuitIds: [Int]
     
@@ -131,7 +131,7 @@ struct TrackNeighbor: Codable {
     }
 }
 
-struct LinesResponse: Codable {
+public struct LinesResponse: Codable {
     let lines: [LineResponse]
     
     init(from decoder: Decoder) throws {
@@ -145,7 +145,7 @@ struct LinesResponse: Codable {
     }
 }
 
-struct LineResponse: Codable {
+public struct LineResponse: Codable {
     let lineCode: String
     let displayName: String
     let startStationCode: String
@@ -163,7 +163,7 @@ struct LineResponse: Codable {
     }
 }
 
-struct StationsParking: Codable {
+public struct StationsParking: Codable {
     let stationsParking: [StationParking]
     
     enum CodingKeys: String, CodingKey {
@@ -171,7 +171,7 @@ struct StationsParking: Codable {
     }
 }
 
-struct StationParking: Codable {
+public struct StationParking: Codable {
     let code: String
     let notes: String
     let allDayParking: AllDayParking
@@ -185,7 +185,7 @@ struct StationParking: Codable {
     }
 }
 
-struct AllDayParking: Codable {
+public struct AllDayParking: Codable {
     let totalCount: Int
     let riderCost: Double
     let nonRiderCost: Double
@@ -201,7 +201,7 @@ struct AllDayParking: Codable {
     }
 }
 
-struct ShortTermParking: Codable {
+public struct ShortTermParking: Codable {
     let totalCount: Int
     let notes: String
     
@@ -211,7 +211,7 @@ struct ShortTermParking: Codable {
     }
 }
 
-struct PathBetweenStations: Codable {
+public struct PathBetweenStations: Codable {
     let path: [Path]
     
     enum CodingKeys: String, CodingKey {
@@ -219,7 +219,7 @@ struct PathBetweenStations: Codable {
     }
 }
 
-struct Path: Codable {
+public struct Path: Codable {
     let distanceToPreviousStation: Int
     let lineCode: String
     let sequenceNumber: Int
@@ -235,7 +235,7 @@ struct Path: Codable {
     }
 }
 
-struct StationEntrances: Codable {
+public struct StationEntrances: Codable {
     let entrances: [StationEntrance]
     
     enum CodingKeys: String, CodingKey {
@@ -243,7 +243,7 @@ struct StationEntrances: Codable {
     }
 }
 
-struct StationEntrance: Codable {
+public struct StationEntrance: Codable {
     let description: String
     let id: String
     let latitude: Double
@@ -263,7 +263,7 @@ struct StationEntrance: Codable {
     }
 }
 
-struct StationInformation: Codable {
+public struct StationInformation: Codable {
     let address: StationAddress
     let code: String
     let latitude: Double
@@ -291,7 +291,7 @@ struct StationInformation: Codable {
     }
 }
 
-struct StationAddress: Codable {
+public struct StationAddress: Codable {
     let city: String
     let state: String
     let street: String
@@ -305,7 +305,7 @@ struct StationAddress: Codable {
     }
 }
 
-struct Stations: Codable {
+public struct Stations: Codable {
     let stations: [StationInformation]
     
     enum CodingKeys: String, CodingKey {
@@ -313,7 +313,7 @@ struct Stations: Codable {
     }
 }
 
-struct StationTimings: Codable {
+public struct StationTimings: Codable {
     let stationTimes: [StationTime]
     
     enum CodingKeys: String, CodingKey {
@@ -321,7 +321,7 @@ struct StationTimings: Codable {
     }
 }
 
-struct StationTime: Codable {
+public struct StationTime: Codable {
     let code: String
     let stationName: String
     let monday: StationFirstLastTrains
@@ -345,7 +345,7 @@ struct StationTime: Codable {
     }
 }
 
-struct StationFirstLastTrains: Codable {
+public struct StationFirstLastTrains: Codable {
     let openingTime: String
     let firstTrains: [TrainTime]
     let lastTrains: [TrainTime]
@@ -357,7 +357,7 @@ struct StationFirstLastTrains: Codable {
     }
 }
 
-struct TrainTime: Codable {
+public struct TrainTime: Codable {
     let time: String
     let destinationStation: String
     
@@ -367,7 +367,7 @@ struct TrainTime: Codable {
     }
 }
 
-struct StationToStationInfos: Codable {
+public struct StationToStationInfos: Codable {
     let stationToStationInfos: [StationToStationInfo]
     
     enum CodingKeys: String, CodingKey {
@@ -375,7 +375,7 @@ struct StationToStationInfos: Codable {
     }
 }
 
-struct StationToStationInfo: Codable {
+public struct StationToStationInfo: Codable {
     let compositeMiles: Double
     let destinationStation: String
     let railFare: RailFare
@@ -391,7 +391,7 @@ struct StationToStationInfo: Codable {
     }
 }
 
-struct RailFare: Codable {
+public struct RailFare: Codable {
     let offPeakTime: Double
     let peakTime: Double
     let seniorDisabled: Double
@@ -403,7 +403,7 @@ struct RailFare: Codable {
     }
 }
 
-struct ElevatorAndEscalatorIncidents: Codable {
+public struct ElevatorAndEscalatorIncidents: Codable {
     let incidents: [ElevatorAndEscalatorIncident]
     
     enum CodingKeys: String, CodingKey {
@@ -411,7 +411,7 @@ struct ElevatorAndEscalatorIncidents: Codable {
     }
 }
 
-struct ElevatorAndEscalatorIncident: Codable {
+public struct ElevatorAndEscalatorIncident: Codable {
     let unitName: String
     let unitType: String
     let unitStatus: String?
@@ -443,7 +443,7 @@ struct ElevatorAndEscalatorIncident: Codable {
     }
 }
 
-struct RailIncidents: Codable {
+public struct RailIncidents: Codable {
     let incidents: [RailIncident]
     
     enum CodingKeys: String, CodingKey {
@@ -451,7 +451,7 @@ struct RailIncidents: Codable {
     }
 }
 
-struct RailIncident: Codable {
+public struct RailIncident: Codable {
     let incidentID: String
     let description: String
     let startLocationFullName: String?

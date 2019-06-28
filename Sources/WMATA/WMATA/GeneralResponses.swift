@@ -5,7 +5,7 @@
 //  Created by Emma Foster on 6/23/19.
 //
 
-struct WMATAError: Codable {
+public struct WMATAError: Codable {
     let statusCode: Int
     let message: String
     

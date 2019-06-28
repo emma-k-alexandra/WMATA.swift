@@ -8,7 +8,7 @@
 import Foundation
 
 /// Information relating to a specific MetroBus stop
-class Stop {
+public class Stop {
     /// URLs of WMATA endpoints relating to Stops
     enum Urls: String {
         case nextBuses = "https://api.wmata.com/NextBusService.svc/json/jPredictions"

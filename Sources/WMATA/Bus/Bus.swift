@@ -8,7 +8,7 @@
 import Foundation
 
 /// General information for MetroBus
-class Bus {
+public class Bus {
     
     /// URLs of WMATA endpoints relating to MetroBus
     enum Urls: String {

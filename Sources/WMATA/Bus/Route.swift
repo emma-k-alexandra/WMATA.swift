@@ -8,7 +8,7 @@
 import Foundation
 
 /// Information relating to a specific MetroBus route
-class Route {
+public class Route {
     /// Route ids as defined by WMATA
     enum Id: String {
         case _10A = "10A"

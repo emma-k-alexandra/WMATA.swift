@@ -8,7 +8,7 @@
 import Foundation
 
 /// General information for MetroRail
-class Rail {
+public class Rail {
     
     /// URLs of WMATA endpoints relating to MetroRail
     enum Urls: String {

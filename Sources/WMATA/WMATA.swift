@@ -7,7 +7,7 @@
 import Foundation
 
 /// Main way of interacting with the WMATA API
-class WMATA {
+public class WMATA {
     /// WMATA API key from dev portal
     var apiKey: String
     

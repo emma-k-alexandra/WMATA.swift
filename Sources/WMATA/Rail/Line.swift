@@ -6,7 +6,7 @@
 //
 import Foundation
 
-class Line {
+public class Line {
     /// Line codes as defined by WMATA
     enum Code: String {
         case RD

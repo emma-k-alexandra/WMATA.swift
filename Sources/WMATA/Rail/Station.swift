@@ -7,7 +7,7 @@
 import Foundation
 
 /// Fetches information relating to MetroRail Stations
-class Station {
+public class Station {
     /// Station codes as defined by WMATA
     enum Code: String, CaseIterable {
         case A01
