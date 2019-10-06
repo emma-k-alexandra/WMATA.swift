@@ -8,7 +8,7 @@
 import Foundation
 
 /// General information for MetroRail
-public class Rail {
+public class Rail: Fetcher, RequestBuilder {
     
     /// URLs of WMATA endpoints relating to MetroRail
     enum Urls: String {
@@ -22,10 +22,10 @@ public class Rail {
     }
     
     /// WMATA API key from dev portal
-    public var apiKey: String
+    public var key: String
     
     /// URLSession to use for all requests
-    public var session: URLSession
+    public var urlSession: URLSession
     
     private var decoder = JSONDecoder()
     
@@ -34,28 +34,16 @@ public class Rail {
     /// - parameter apiKey: WMATA API key from dev portal
     /// - parameter session: Session to call on requests on
     public init(apiKey: String, session: URLSession = URLSession.shared) {
-        self.apiKey = apiKey
-        self.session = session
+        self.key = apiKey
+        self.urlSession = session
         
     }
     
     /// General information on all MetroRail lines
     ///
     /// - parameter completion: Completion handler which returns `LinesResponse`
-    public func lines(completion: @escaping (_ result: LinesResponse?, _ error: WMATAError?) -> ()) {
-        var request = URLRequest(url: URL(string: Rail.Urls.lines.rawValue)!)
-        request.setValue(self.apiKey, forHTTPHeaderField: "api_key")
-        
-        self.session.dataTask(with: request) { (data, response, error) in
-            guard let populatedData = data else {
-                completion(nil, error?.toWMATAError())
-                return
-                
-            }
-            
-            decode(data: populatedData, ofType: LinesResponse.self, completion: completion)
-            
-        }.resume()
+    public func lines(completion: @escaping (Result<LinesResponse, WMATAError>) -> ()) {
+        self.fetch(with: self.buildRequest(fromUrl: Rail.Urls.lines.rawValue, andQueryItems: []), completion: completion)
         
     }
     
@@ -65,37 +53,26 @@ public class Rail {
     /// - parameter longitude: Longitude to search at
     /// - parameter radius: Radius in meters to search within
     /// - parameter completion: Completion handler which returns `StationEntrances`
-    public func entrances(latitude: Double?, longitude: Double?, radius: Double?, completion: @escaping (_ result: StationEntrances?, _ error: WMATAError?) -> ()) {
-        var urlComponents = URLComponents(string: Rail.Urls.entrances.rawValue)!
+    public func entrances(latitude: Double?, longitude: Double?, radius: Double?, completion: @escaping (Result<StationEntrances, WMATAError>) -> ()) {
         
-        if let populatedLatitude = latitude {
-            urlComponents.queryItems?.append(URLQueryItem(name: "Lat", value: String(populatedLatitude)))
+        var queryItems = [(String, String)]()
+        
+        if let latitude = latitude {
+            queryItems.append(("Lat", String(latitude)))
             
         }
         
-        if let populatedLongitude = longitude {
-            urlComponents.queryItems?.append(URLQueryItem(name: "Lon", value: String(populatedLongitude)))
+        if let longitude = longitude {
+            queryItems.append(("Lon", String(longitude)))
             
         }
         
-        if let populatedRadius = radius {
-            urlComponents.queryItems?.append(URLQueryItem(name: "Radius", value: String(populatedRadius)))
+        if let radius = radius {
+            queryItems.append(("Radius", String(radius)))
             
         }
         
-        var request = URLRequest(url: urlComponents.url!)
-        request.setValue(self.apiKey, forHTTPHeaderField: "api_key")
-        
-        self.session.dataTask(with: request) { (data, response, error) in
-            guard let populatedData = data else {
-                completion(nil, error?.toWMATAError())
-                return
-                
-            }
-            
-            decode(data: populatedData, ofType: StationEntrances.self, completion: completion)
-            
-        }.resume()
+        self.fetch(with: self.buildRequest(fromUrl: Rail.Urls.entrances.rawValue,andQueryItems: queryItems), completion: completion)
         
     }
     
@@ -103,28 +80,15 @@ public class Rail {
     ///
     /// - parameter line: Line to receive stations along. Omit to receive all stations.
     /// - parameter completion: Completion handler which returns `Stations`
-    public func stations(for line: Line.Code?, completion: @escaping (_ result: Stations?, _ error: WMATAError?) -> ()) {
-        var urlComponents = URLComponents(string: Line.Urls.stations.rawValue)!
+    public func stations(for line: Line.Code?, completion: @escaping (Result<Stations, WMATAError>) -> ()) {
+        var queryItems = [(String, String)]()
         
-        if let populatedLine = line {
-            urlComponents.queryItems = [
-                URLQueryItem(name: "LineCode", value: populatedLine.rawValue)
-            ]
+        if let line = line {
+            queryItems.append(("LineCode", line.rawValue))
+
         }
         
-        var request = URLRequest(url: urlComponents.url!)
-        request.setValue(self.apiKey, forHTTPHeaderField: "api_key")
-        
-        self.session.dataTask(with: request) { (data, response, error) in
-            guard let populatedData = data else {
-                completion(nil, error?.toWMATAError())
-                return
-                
-            }
-            
-            decode(data: populatedData, ofType: Stations.self, completion: completion)
-            
-        }.resume()
+        self.fetch(with: self.buildRequest(fromUrl: Line.Urls.stations.rawValue, andQueryItems: queryItems), completion: completion)
         
     }
     
@@ -133,110 +97,44 @@ public class Rail {
     /// - parameter station: Station to start trip at
     /// - parameter destinationStation: Station to travel to
     /// - parameter completion: Completion handler which returns `StationToStationInfos`
-    public func station(_ station: Station.Code?, to destinationStation: Station.Code?, completion: @escaping (_ result: StationToStationInfos?, _ error: WMATAError?) -> ()) {
-        var urlComponents = URLComponents(string: Station.Urls.stationToStation.rawValue)!
+    public func station(_ station: Station.Code?, to destinationStation: Station.Code?, completion: @escaping (Result<StationToStationInfos, WMATAError>) -> ()) {
+        var queryItems = [(String, String)]()
         
-        if let populatedStation = station {
-            urlComponents.queryItems?.append(URLQueryItem(name: "FromStationCode", value: populatedStation.rawValue))
+        if let station = station {
+            queryItems.append(("FromStationCode", station.rawValue))
             
         }
         
-        if let populatedDestinationStation = destinationStation {
-            urlComponents.queryItems?.append(URLQueryItem(name: "ToStationCode", value: populatedDestinationStation.rawValue))
+        if let destinationStation = destinationStation {
+            queryItems.append(("ToStationCode", destinationStation.rawValue))
             
         }
         
-        var request = URLRequest(url: urlComponents.url!)
-        request.setValue(self.apiKey, forHTTPHeaderField: "api_key")
-        
-        self.session.dataTask(with: request) { (data, response, error) in
-            guard let populatedData = data else {
-                completion(nil, error?.toWMATAError())
-                return
-                
-            }
-            
-            decode(data: populatedData, ofType: StationToStationInfos.self, completion: completion)
-            
-        }.resume()
+        self.fetch(with: self.buildRequest(fromUrl: Station.Urls.stationToStation.rawValue, andQueryItems: queryItems), completion: completion)
         
     }
     
     /// Uniquely identifiable trains in service and what track circuits they currently occupy
     ///
     /// - parameter completion: Completion handler which returns `TrainPositions`
-    public func positions(completion: @escaping (_ result: TrainPositions?, _ error: WMATAError?) -> ()) {
-        var urlComponents = URLComponents(string: Rail.Urls.positions.rawValue)!
-        
-        urlComponents.queryItems = [
-            URLQueryItem(name: "contentType", value: "json")
-        ]
-        
-        var request = URLRequest(url: urlComponents.url!)
-        request.setValue(self.apiKey, forHTTPHeaderField: "api_key")
-        
-        self.session.dataTask(with: request) { (data, response, error) in
-            guard let populatedData = data else {
-                completion(nil, error?.toWMATAError())
-                return
-                
-            }
-            
-            decode(data: populatedData, ofType: TrainPositions.self, completion: completion)
-            
-        }.resume()
+    public func positions(completion: @escaping (Result<TrainPositions, WMATAError>) -> ()) {
+        self.fetch(with: self.buildRequest(fromUrl: Rail.Urls.positions.rawValue, andQueryItems: [("contentType", "json")]), completion: completion)
         
     }
     
     /// Ordered list of track circuits, arranged by line and track number
     ///
     /// - parameter completion: Completion handler which returns `StandardRoutes`
-    public func routes(completion: @escaping (_ result: StandardRoutes?, _ error: WMATAError?) -> ()) {
-        var urlComponents = URLComponents(string: Rail.Urls.routes.rawValue)!
-        
-        urlComponents.queryItems = [
-            URLQueryItem(name: "contentType", value: "json")
-        ]
-        
-        var request = URLRequest(url: urlComponents.url!)
-        request.setValue(self.apiKey, forHTTPHeaderField: "api_key")
-        
-        self.session.dataTask(with: request) { (data, response, error) in
-            guard let populatedData = data else {
-                completion(nil, error?.toWMATAError())
-                return
-                
-            }
-            
-            decode(data: populatedData, ofType: StandardRoutes.self, completion: completion)
-            
-        }.resume()
+    public func routes(completion: @escaping (Result<StandardRoutes, WMATAError>) -> ()) {
+        self.fetch(with: self.buildRequest(fromUrl: Rail.Urls.routes.rawValue, andQueryItems: [("contentType", "json")]), completion: completion)
         
     }
     
     /// List of all track circuits - See https://developer.wmata.com/TrainPositionsFAQ
     ///
     /// - parameter completion: Completion handler which returns `TrackCircuits`
-    public func circuits(completion: @escaping (_ result: TrackCircuits?, _ error: WMATAError?) -> ()) {
-        var urlComponents = URLComponents(string: Rail.Urls.circuits.rawValue)!
-        
-        urlComponents.queryItems = [
-            URLQueryItem(name: "contentType", value: "json")
-        ]
-        
-        var request = URLRequest(url: urlComponents.url!)
-        request.setValue(self.apiKey, forHTTPHeaderField: "api_key")
-        
-        self.session.dataTask(with: request) { (data, response, error) in
-            guard let populatedData = data else {
-                completion(nil, error?.toWMATAError())
-                return
-                
-            }
-            
-            decode(data: populatedData, ofType: TrackCircuits.self, completion: completion)
-            
-        }.resume()
+    public func circuits(completion: @escaping (Result<TrackCircuits, WMATAError>) -> ()) {
+        self.fetch(with: self.buildRequest(fromUrl: Rail.Urls.circuits.rawValue, andQueryItems: [("contentType", "json")]), completion: completion)
         
     }
     
@@ -244,27 +142,15 @@ public class Rail {
     ///
     /// - parameter at: Which station to search for incidents at. Optional.
     /// - parameter completion: Completion handler which returns `ElevatorAndEscalatorIncidents`
-    public func elevatorAndEscalatorIncidents(at station: Station.Code?, completion: @escaping (_ result: ElevatorAndEscalatorIncidents?, _ error: WMATAError?) -> ()) {
-        var urlComponents = URLComponents(string: Rail.Urls.elevatorAndEscalatorIncidents.rawValue)!
+    public func elevatorAndEscalatorIncidents(at station: Station.Code?, completion: @escaping (Result<ElevatorAndEscalatorIncidents, WMATAError>) -> ()) {
+        var queryItems = [(String, String)]()
         
-        if let populatedStation = station {
-            urlComponents.queryItems?.append(URLQueryItem(name: "StationCode", value: populatedStation.rawValue))
+        if let station = station {
+            queryItems.append(("StationCode", station.rawValue))
             
         }
         
-        var request = URLRequest(url: urlComponents.url!)
-        request.setValue(self.apiKey, forHTTPHeaderField: "api_key")
-        
-        self.session.dataTask(with: request) { (data, response, error) in
-            guard let populatedData = data else {
-                completion(nil, error?.toWMATAError())
-                return
-                
-            }
-            
-            decode(data: populatedData, ofType: ElevatorAndEscalatorIncidents.self, completion: completion)
-            
-        }.resume()
+        self.fetch(with: self.buildRequest(fromUrl: Rail.Urls.elevatorAndEscalatorIncidents.rawValue, andQueryItems: queryItems), completion: completion)
         
     }
     
@@ -272,28 +158,32 @@ public class Rail {
     ///
     /// - parameter at: Station to search for incidents at. Optional.
     /// - parameter completion: Completion handler which returns `RailIncidents`
-    public func incidents(at station: Station.Code?, completion: @escaping (_ result: RailIncidents?, _ error: WMATAError?) -> ()) {
-        var urlComponents = URLComponents(string: Rail.Urls.incidents.rawValue)!
+    public func incidents(at station: Station.Code?, completion: @escaping (Result<RailIncidents, WMATAError>) -> ()) {
+        var queryItems = [(String, String)]()
         
-        if let populatedStation = station {
-            urlComponents.queryItems?.append(URLQueryItem(name: "StationCode", value: populatedStation.rawValue))
+        if let station = station {
+            queryItems.append(("StationCode", station.rawValue))
             
         }
         
-        var request = URLRequest(url: urlComponents.url!)
-        request.setValue(self.apiKey, forHTTPHeaderField: "api_key")
-        
-        self.session.dataTask(with: request) { (data, response, error) in
-            guard let populatedData = data else {
-                completion(nil, error?.toWMATAError())
-                return
-                
-            }
-            
-            decode(data: populatedData, ofType: RailIncidents.self, completion: completion)
-            
-        }.resume()
+        self.fetch(with: self.buildRequest(fromUrl: Rail.Urls.incidents.rawValue, andQueryItems: queryItems), completion: completion)
         
     }
+    
+}
+
+extension Rail: Session {
+    func session() -> URLSession {
+        self.urlSession
         
+    }
+    
+}
+
+extension Rail: ApiKey {
+    func apiKey() -> String {
+        self.key
+        
+    }
+    
 }

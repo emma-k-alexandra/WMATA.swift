@@ -8,7 +8,7 @@
 import Foundation
 
 /// General information for MetroBus
-public class Bus {
+public class Bus: Fetcher, RequestBuilder {
     
     /// URLs of WMATA endpoints relating to MetroBus
     enum Urls: String {
@@ -18,10 +18,10 @@ public class Bus {
     }
     
     /// WMATA API key from dev portal
-    public var apiKey: String
+    public var key: String
     
     /// URLSession to use for all requests
-    public var session: URLSession
+    public var urlSession: URLSession
     
     private var decoder = JSONDecoder()
     
@@ -30,8 +30,8 @@ public class Bus {
     /// - parameter apiKey: WMATA API key from dev portal
     /// - parameter session: Session to call on requests on
     public init(apiKey: String, session: URLSession = URLSession.shared) {
-        self.apiKey = apiKey
-        self.session = session
+        self.key = apiKey
+        self.urlSession = session
         
     }
     
@@ -42,62 +42,38 @@ public class Bus {
     /// - parameter longitude: Longitude to search around
     /// - parameter radius: Radius in meters to search along given latlong
     /// - parameter completion: Completion handler which returns `BusPositions`
-    public func positions(routeId: Route.Id?, latitude: Double?, longitude: Double?, radius: Double?, completion: @escaping (_ result: BusPositions?, _ error: WMATAError?) -> ()){
-        var urlComponents = URLComponents(string: Route.Urls.positions.rawValue)!
+    public func positions(routeId: Route.Id?, latitude: Double?, longitude: Double?, radius: Double?, completion: @escaping (Result<BusPositions, WMATAError>) -> ()){
+        var queryItems = [(String, String)]()
         
-        if let populatedRouteId = routeId {
-            urlComponents.queryItems?.append(URLQueryItem(name: "RouteID", value: populatedRouteId.rawValue))
+        if let routeId = routeId {
+            queryItems.append(("RouteID", routeId.rawValue))
             
         }
         
-        if let populatedLatitude = latitude {
-            urlComponents.queryItems?.append(URLQueryItem(name: "Lat", value: String(populatedLatitude)))
+        if let latitude = latitude {
+            queryItems.append(("Lat", String(latitude)))
             
         }
         
-        if let populatedLongitude = longitude {
-            urlComponents.queryItems?.append(URLQueryItem(name: "Lon", value: String(populatedLongitude)))
+        if let longitude = longitude {
+            queryItems.append(("Lon", String(longitude)))
             
         }
         
-        if let populatedRadius = radius {
-            urlComponents.queryItems?.append(URLQueryItem(name: "Radius", value: String(populatedRadius)))
+        if let radius = radius {
+            queryItems.append(("Radius", String(radius)))
             
         }
         
-        var request = URLRequest(url: urlComponents.url!)
-        request.setValue(self.apiKey, forHTTPHeaderField: "api_key")
-        
-        self.session.dataTask(with: request) { (data, response, error) in
-            guard let populatedData = data else {
-                completion(nil, error?.toWMATAError())
-                return
-                
-            }
-            
-            decode(data: populatedData, ofType: BusPositions.self, completion: completion)
-            
-        }.resume()
+        self.fetch(with: self.buildRequest(fromUrl: Route.Urls.positions.rawValue, andQueryItems: queryItems), completion: completion)
         
     }
     
     /// All bus routes and variants
     ///
     /// - parameter completion: Completion handler which returns `RoutesResponse`
-    public func routes(completion: @escaping (_ result: RoutesResponse?, _ error: WMATAError?) -> ()) {
-        var request = URLRequest(url: URL(string: Bus.Urls.routes.rawValue)!)
-        request.setValue(self.apiKey, forHTTPHeaderField: "api_key")
-        
-        self.session.dataTask(with: request) { (data, response, error) in
-            guard let populatedData = data else {
-                completion(nil, error?.toWMATAError())
-                return
-                
-            }
-            
-            decode(data: populatedData, ofType: RoutesResponse.self, completion: completion)
-            
-        }.resume()
+    public func routes(completion: @escaping (Result<RoutesResponse, WMATAError>) -> ()) {
+        self.fetch(with: self.buildRequest(fromUrl: Bus.Urls.routes.rawValue, andQueryItems: []), completion: completion)
         
     }
     
@@ -107,37 +83,25 @@ public class Bus {
     /// - parameter longitude: Longitude to search around
     /// - parameter radius: Radius in meters to search within
     /// - parameter completion: Completion handler which returns `StopsSearchResponse`
-    public func searchStops(latitude: Double?, longitude: Double?, radius: Double?, completion: @escaping (_ result: StopsSearchResponse?, _ error: WMATAError?) -> ()) {
-        var urlComponents = URLComponents(string: Bus.Urls.stops.rawValue)!
+    public func searchStops(latitude: Double?, longitude: Double?, radius: Double?, completion: @escaping (Result<StopsSearchResponse, WMATAError>) -> ()) {
+        var queryItems = [(String, String)]()
         
-        if let populatedLatitude = latitude {
-            urlComponents.queryItems?.append(URLQueryItem(name: "Lat", value: String(populatedLatitude)))
+        if let latitude = latitude {
+            queryItems.append(("Lat", String(latitude)))
             
         }
         
-        if let populatedLongitude = longitude {
-            urlComponents.queryItems?.append(URLQueryItem(name: "Lon", value: String(populatedLongitude)))
+        if let longitude = longitude {
+            queryItems.append(("Lon", String(longitude)))
             
         }
         
-        if let populatedRadius = radius {
-            urlComponents.queryItems?.append(URLQueryItem(name: "Radius", value: String(populatedRadius)))
+        if let radius = radius {
+            queryItems.append(("Radius", String(radius)))
             
         }
         
-        var request = URLRequest(url: urlComponents.url!)
-        request.setValue(self.apiKey, forHTTPHeaderField: "api_key")
-        
-        self.session.dataTask(with: request) { (data, response, error) in
-            guard let populatedData = data else {
-                completion(nil, error?.toWMATAError())
-                return
-                
-            }
-            
-            decode(data: populatedData, ofType: StopsSearchResponse.self, completion: completion)
-            
-        }.resume()
+        self.fetch(with: self.buildRequest(fromUrl: Bus.Urls.stops.rawValue, andQueryItems: queryItems), completion: completion)
         
     }
     
@@ -145,28 +109,32 @@ public class Bus {
     ///
     /// - parameter route: Route to search for incidents along. Omit route to receive all incidents.
     /// - parameter completion: Completion handler which returns `BusIncidents`
-    public func incidents(route: Route.Id?, completion: @escaping (_ result: BusIncidents?, _ error: WMATAError?) -> ()) {
-        var urlComponents = URLComponents(string: Bus.Urls.incidents.rawValue)!
+    public func incidents(route: Route.Id?, completion: @escaping (Result<BusIncidents, WMATAError>) -> ()) {
+        var queryItems = [(String, String)]()
         
-        if let populatedRoute = route {
-            urlComponents.queryItems?.append(URLQueryItem(name: "Route", value: populatedRoute.rawValue))
+        if let route = route {
+            queryItems.append(("Route", route.rawValue))
             
         }
         
-        var request = URLRequest(url: urlComponents.url!)
-        request.setValue(self.apiKey, forHTTPHeaderField: "api_key")
-        
-        self.session.dataTask(with: request) { (data, response, error) in
-            guard let populatedData = data else {
-                completion(nil, error?.toWMATAError())
-                return
-                
-            }
-            
-            decode(data: populatedData, ofType: BusIncidents.self, completion: completion)
-            
-        }.resume()
+        self.fetch(with: self.buildRequest(fromUrl: Bus.Urls.incidents.rawValue, andQueryItems: queryItems), completion: completion)
         
     }
+    
+}
+
+extension Bus: ApiKey {
+    func apiKey() -> String {
+        self.key
+    }
+    
+    
+}
+
+extension Bus: Session {
+    func session() -> URLSession {
+        self.urlSession
+    }
+    
     
 }

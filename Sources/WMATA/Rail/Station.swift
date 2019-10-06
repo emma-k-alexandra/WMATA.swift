@@ -7,7 +7,7 @@
 import Foundation
 
 /// Fetches information relating to MetroRail Stations
-public class Station {
+public class Station: Fetcher, RequestBuilder {
     /// Station codes as defined by WMATA
     public enum Code: String, CaseIterable {
         case A01
@@ -118,13 +118,13 @@ public class Station {
     }
     
     /// WMATA API key from dev portal
-    public var apiKey: String
+    public var key: String
     
     /// The station this object refers to
     public var code: Station.Code
     
     /// URLSession to use for all requests
-    public var session: URLSession
+    public var urlSession: URLSession
     
     private let decoder = JSONDecoder()
     
@@ -134,79 +134,33 @@ public class Station {
     /// - parameter code: Station to point this object at
     /// - parameter session: Session to call on requests on
     public init(apiKey: String, code: Station.Code, session: URLSession = URLSession.shared) {
-        self.apiKey = apiKey
+        self.key = apiKey
         self.code = code
-        self.session = session
+        self.urlSession = session
         
     }
     
     /// Next train arrival information for this station
     ///
     /// - parameter completion: Completion handler which returns `RailPredictions`
-    public func nextTrains(completion: @escaping (_ result: RailPredictions?, _ error: WMATAError?) -> ()) {
-        var request = URLRequest(url: URL(string: "\(Station.Urls.nextTrains)/\(self.code)")!)
-        request.setValue(self.apiKey, forHTTPHeaderField: "api_key")
-        
-        self.session.dataTask(with: request) { (data, response, error) in
-            guard let populatedData = data else {
-                completion(nil, error?.toWMATAError())
-                return
-                
-            }
-            
-            decode(data: populatedData, ofType: RailPredictions.self, completion: completion)
-            
-        }.resume()
+    public func nextTrains(completion: @escaping (Result<RailPredictions, WMATAError>) -> ()) {
+        self.fetch(with: self.buildRequest(fromUrl: "\(Station.Urls.nextTrains)/\(self.code)", andQueryItems: []), completion: completion)
         
     }
     
     /// Location and address information for this station
     ///
     /// - parameter completion: Completion handler which returns `StationInformation`
-    public func information(completion: @escaping (_ result: StationInformation?, _ error: WMATAError?) -> ()) {
-        var urlComponents = URLComponents(string: Station.Urls.information.rawValue)!
-        urlComponents.queryItems = [
-            URLQueryItem(name: "StationCode", value: self.code.rawValue)
-        ]
-        
-        var request = URLRequest(url: urlComponents.url!)
-        request.setValue(self.apiKey, forHTTPHeaderField: "api_key")
-        
-        self.session.dataTask(with: request) { (data, response, error) in
-            guard let populatedData = data else {
-                completion(nil, error?.toWMATAError())
-                return
-                
-            }
-            
-            decode(data: populatedData, ofType: StationInformation.self, completion: completion)
-            
-        }.resume()
+    public func information(completion: @escaping (Result<StationInformation, WMATAError>) -> ()) {
+        self.fetch(with: self.buildRequest(fromUrl: Station.Urls.information.rawValue, andQueryItems: [("StationCode", self.code.rawValue)]), completion: completion)
         
     }
     
     /// Parking information for this station
     ///
     /// - parameter completion: Completion handler which returns `StationsParking`
-    public func parkingInformation(completion: @escaping (_ result: StationsParking?, _ error: WMATAError?) -> ()) {
-        var urlComponents = URLComponents(string: Station.Urls.parkingInformation.rawValue)!
-        urlComponents.queryItems = [
-            URLQueryItem(name: "StationCode", value: self.code.rawValue)
-        ]
-        
-        var request = URLRequest(url: urlComponents.url!)
-        request.setValue(self.apiKey, forHTTPHeaderField: "api_key")
-        
-        self.session.dataTask(with: request) { (data, response, error) in
-            guard let populatedData = data else {
-                completion(nil, error?.toWMATAError())
-                return
-                
-            }
-            
-            decode(data: populatedData, ofType: StationsParking.self, completion: completion)
-            
-        }.resume()
+    public func parkingInformation(completion: @escaping (Result<StationsParking, WMATAError>) -> ()) {
+        self.fetch(with: self.buildRequest(fromUrl: Station.Urls.parkingInformation.rawValue, andQueryItems: [("StationCode", self.code.rawValue)]), completion: completion)
         
     }
     
@@ -214,51 +168,16 @@ public class Station {
     ///
     /// - parameter to: Destination station to pathfind to
     /// - parameter completion: Completion handler which returns `PathBetweenStations`
-    public func path(to station: Station.Code, completion: @escaping (_ result: PathBetweenStations?, _ error: WMATAError?) -> ()) {
-        var urlComponents = URLComponents(string: Station.Urls.path.rawValue)!
-        urlComponents.queryItems? = [
-            URLQueryItem(name: "FromStationCode", value: self.code.rawValue),
-            URLQueryItem(name: "ToStationCode", value: station.rawValue)
-        ]
-        
-        var request = URLRequest(url: urlComponents.url!)
-        request.setValue(self.apiKey, forHTTPHeaderField: "api_key")
-        
-        self.session.dataTask(with: request) { (data, response, error) in
-            guard let populatedData = data else {
-                completion(nil, error?.toWMATAError())
-                return
-                
-            }
-            
-            decode(data: populatedData, ofType: PathBetweenStations.self, completion: completion)
-            
-        }.resume()
+    public func path(to station: Station.Code, completion: @escaping (Result<PathBetweenStations, WMATAError>) -> ()) {
+        self.fetch(with: self.buildRequest(fromUrl: Station.Urls.path.rawValue, andQueryItems: [("FromStationCode", self.code.rawValue), ("ToStationCode", station.rawValue)]), completion: completion)
         
     }
     
     /// Opening and scheduled first and last trains for this station
     ///
     /// - parameter completion: Completion handler which returns `StationTimings`
-    public func timings(completion: @escaping (_ result: StationTimings?, _ error: WMATAError?) -> ()) {
-        var urlComponents = URLComponents(string: Station.Urls.timings.rawValue)!
-        urlComponents.queryItems = [
-            URLQueryItem(name: "StationCode", value: self.code.rawValue)
-        ]
-        
-        var request = URLRequest(url: urlComponents.url!)
-        request.setValue(self.apiKey, forHTTPHeaderField: "api_key")
-        
-        self.session.dataTask(with: request) { (data, response, error) in
-            guard let populatedData = data else {
-                completion(nil, error?.toWMATAError())
-                return
-                
-            }
-            
-            decode(data: populatedData, ofType: StationTimings.self, completion: completion)
-            
-        }.resume()
+    public func timings(completion: @escaping (Result<StationTimings, WMATAError>) -> ()) {
+        self.fetch(with: self.buildRequest(fromUrl: Station.Urls.timings.rawValue, andQueryItems: [("StationCode", self.code.rawValue)]), completion: completion)
         
     }
     
@@ -266,8 +185,24 @@ public class Station {
     ///
     /// - parameter station: Station to travel to
     /// - parameter completion: Completion handler which returns `StationToStationInfos`
-    public func to(_ station: Station.Code, completion: @escaping (_ result: StationToStationInfos?, _ error: WMATAError?) -> ()) {
-        Rail(apiKey: self.apiKey, session: self.session).station(self.code, to: station, completion: completion)
+    public func to(_ station: Station.Code, completion: @escaping (Result<StationToStationInfos, WMATAError>) -> ()) {
+        Rail(apiKey: self.key, session: self.urlSession).station(self.code, to: station, completion: completion)
+        
+    }
+    
+}
+
+extension Station: Session {
+    func session() -> URLSession {
+        self.urlSession
+        
+    }
+    
+}
+
+extension Station: ApiKey {
+    func apiKey() -> String {
+        self.key
         
     }
     

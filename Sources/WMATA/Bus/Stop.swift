@@ -8,7 +8,7 @@
 import Foundation
 
 /// Information relating to a specific MetroBus stop
-public class Stop {
+public class Stop: Fetcher, RequestBuilder {
     /// URLs of WMATA endpoints relating to Stops
     enum Urls: String {
         case nextBuses = "https://api.wmata.com/NextBusService.svc/json/jPredictions"
@@ -16,13 +16,13 @@ public class Stop {
     }
     
     /// WMATA API key from dev portal
-    public var apiKey: String
+    public var key: String
     
     /// The stop this object refers to
     public var stopId: String
     
     /// URLSession to use for all requests
-    public var session: URLSession
+    public var urlSession: URLSession
     
     private var decoder = JSONDecoder()
     
@@ -32,34 +32,17 @@ public class Stop {
     /// - parameter stopId: Stop to point this object at
     /// - parameter session: Session to call on requests on
     public init(apiKey: String, stopId: String, session: URLSession = URLSession.shared) {
-        self.apiKey = apiKey
+        self.key = apiKey
         self.stopId = stopId
-        self.session = session
+        self.urlSession = session
         
     }
     
     /// Next bus arrival times at this Stop
     ///
     /// - parameter completion: Completion handler which returns `BusPredictions`
-    public func nextBuses(completion: @escaping (_ result: BusPredictions?, _ error: WMATAError?) -> ()) {
-        var urlComponents = URLComponents(string: Stop.Urls.nextBuses.rawValue)!
-        urlComponents.queryItems = [
-            URLQueryItem(name: "StopID", value: self.stopId)
-        ]
-        
-        var request = URLRequest(url: urlComponents.url!)
-        request.setValue(self.apiKey, forHTTPHeaderField: "api_key")
-        
-        self.session.dataTask(with: request) { (data, response, error) in
-            guard let populatedData = data else {
-                completion(nil, error?.toWMATAError())
-                return
-                
-            }
-            
-            decode(data: populatedData, ofType: BusPredictions.self, completion: completion)
-            
-        }.resume()
+    public func nextBuses(completion: @escaping (Result<BusPredictions, WMATAError>) -> ()) {
+        self.fetch(with: self.buildRequest(fromUrl: Stop.Urls.nextBuses.rawValue, andQueryItems: [("StopID", self.stopId)]), completion: completion)
         
     }
     
@@ -67,32 +50,32 @@ public class Stop {
     ///
     /// - parameter date: Date in `YYYY-MM-DD` format for which to receive schedule for. Omit for today.
     /// - parameter completion: Completion handler which returns `StopSchedule`
-    public func schedule(at date: String? = nil, completion: @escaping (_ result: StopSchedule?, _ error: WMATAError?) -> ()) {
-        var urlComponents = URLComponents(string: Stop.Urls.schedule.rawValue)!
-        urlComponents.queryItems = [
-            URLQueryItem(name: "StopID", value: self.stopId)
-        ]
+    public func schedule(at date: String? = nil, completion: @escaping (Result<StopSchedule, WMATAError>) -> ()) {
+        var queryItems = [("StopID", self.stopId)]
         
-        if let populatedDate = date {
-            urlComponents.queryItems?.append(URLQueryItem(name: "Date", value: populatedDate))
+        if let date = date {
+            queryItems.append(("Date", date))
             
         }
         
-        
-        var request = URLRequest(url: urlComponents.url!)
-        request.setValue(self.apiKey, forHTTPHeaderField: "api_key")
-        
-        self.session.dataTask(with: request) { (data, response, error) in
-            guard let populatedData = data else {
-                completion(nil, error?.toWMATAError())
-                return
-                
-            }
-            
-            decode(data: populatedData, ofType: StopSchedule.self, completion: completion)
-            
-        }.resume()
+        self.fetch(with: self.buildRequest(fromUrl: Stop.Urls.schedule.rawValue, andQueryItems: queryItems), completion: completion)
         
     }
+    
+}
+
+extension Stop: ApiKey {
+    func apiKey() -> String {
+        self.key
+    }
+    
+    
+}
+
+extension Stop: Session {
+    func session() -> URLSession {
+        self.urlSession
+    }
+    
     
 }

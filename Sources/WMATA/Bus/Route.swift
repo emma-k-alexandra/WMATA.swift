@@ -8,7 +8,7 @@
 import Foundation
 
 /// Information relating to a specific MetroBus route
-public class Route {
+public class Route: Fetcher, RequestBuilder {
     /// Route ids as defined by WMATA
     public enum Id: String {
         case _10A = "10A"
@@ -494,13 +494,13 @@ public class Route {
     }
     
     /// WMATA API key from dev portal
-    public var apiKey: String
+    public var key: String
     
     /// The route this object refers to
     public var routeId: Route.Id
     
     /// URLSession to use for all requests
-    public var session: URLSession
+    public var urlSession: URLSession
     
     private var decoder = JSONDecoder()
     
@@ -510,9 +510,9 @@ public class Route {
     /// - parameter routeId: Route to point this object at
     /// - parameter session: Session to call on requests on
     public init(apiKey: String, routeId: Route.Id, session: URLSession = URLSession.shared) {
-        self.apiKey = apiKey
+        self.key = apiKey
         self.routeId = routeId
-        self.session = session
+        self.urlSession = session
         
     }
     
@@ -522,8 +522,8 @@ public class Route {
     /// - parameter longitude: Longitude to search around
     /// - parameter radius: Radius in meters to search within
     /// - parameter completion: Completion handler which returns `BusPositions`
-    public func positions(latitude: Double?, longitude: Double?, radius: Double?, completion: @escaping (_ result: BusPositions?, _ error: WMATAError?) -> ()){
-        Bus(apiKey: self.apiKey, session: self.session).positions(routeId: self.routeId, latitude: latitude, longitude: longitude, radius: radius, completion: completion)
+    public func positions(latitude: Double?, longitude: Double?, radius: Double?, completion: @escaping (Result<BusPositions, WMATAError>) -> ()){
+        Bus(apiKey: self.key, session: self.urlSession).positions(routeId: self.routeId, latitude: latitude, longitude: longitude, radius: radius, completion: completion)
         
     }
     
@@ -531,28 +531,15 @@ public class Route {
     ///
     /// - parameter date: Date in `YYYY-MM-DD` format for which to receive path information. Omit for today.
     /// - parameter completion: Completion handler which returns `PathDetails`
-    public func pathDetails(date: String? = nil, completion: @escaping (_ result: PathDetails?, _ error: WMATAError?) -> ()) {
-        var urlComponents = URLComponents(string: Route.Urls.pathDetails.rawValue)!
-        urlComponents.queryItems?.append(URLQueryItem(name: "RouteID", value: self.routeId.rawValue))
+    public func pathDetails(date: String? = nil, completion: @escaping (Result<PathDetails, WMATAError>) -> ()) {
+        var queryItems = [("RouteID", self.routeId.rawValue)]
         
-        if let populatedDate = date {
-            urlComponents.queryItems?.append(URLQueryItem(name: "Date", value: String(populatedDate)))
+        if let date = date {
+            queryItems.append(("Date", date))
             
         }
         
-        var request = URLRequest(url: urlComponents.url!)
-        request.setValue(self.apiKey, forHTTPHeaderField: "api_key")
-        
-        self.session.dataTask(with: request) { (data, response, error) in
-            guard let populatedData = data else {
-                completion(nil, error?.toWMATAError())
-                return
-                
-            }
-            
-            decode(data: populatedData, ofType: PathDetails.self, completion: completion)
-            
-        }.resume()
+        self.fetch(with: self.buildRequest(fromUrl: Route.Urls.pathDetails.rawValue, andQueryItems: queryItems), completion: completion)
         
     }
     
@@ -561,34 +548,35 @@ public class Route {
     /// - parameter date: Date in `YYYY-MM-DD` format for which to receive scheduled stops
     /// - parameter includingVariations: Whether to include route variations. Example: B30v1 and B30v2 for Route B30
     /// - parameter completion: Completion handler which returns `RoutesResponse`
-    public func schedule(date: String? = nil, includingVariations: Bool? = false, completion: @escaping (_ result: RoutesResponse?, _ error: WMATAError?) -> ()) {
-        var urlComponents = URLComponents(string: Route.Urls.schedule.rawValue)!
-        urlComponents.queryItems?.append(URLQueryItem(name: "RouteID", value: self.routeId.rawValue))
+    public func schedule(date: String? = nil, includingVariations: Bool? = false, completion: @escaping (Result<RoutesResponse, WMATAError>) -> ()) {
+        var queryItems = [("RouteID", self.routeId.rawValue)]
         
-        if let populatedDate = date {
-            urlComponents.queryItems?.append(URLQueryItem(name: "Date", value: String(populatedDate)))
+        if let date = date {
+            queryItems.append(("Date", date))
             
         }
         
-        if let populatedIncludingVariations = includingVariations {
-            urlComponents.queryItems?.append(URLQueryItem(name: "IncludingVariations", value: String(populatedIncludingVariations)))
+        if let includingVariations = includingVariations {
+            queryItems.append(("IncludingVariations", String(includingVariations)))
             
         }
         
-        var request = URLRequest(url: urlComponents.url!)
-        request.setValue(self.apiKey, forHTTPHeaderField: "api_key")
-        
-        self.session.dataTask(with: request) { (data, response, error) in
-            guard let populatedData = data else {
-                completion(nil, error?.toWMATAError())
-                return
-                
-            }
-            
-            decode(data: populatedData, ofType: RoutesResponse.self, completion: completion)
-            
-        }.resume()
+        self.fetch(with: self.buildRequest(fromUrl: Route.Urls.schedule.rawValue, andQueryItems: queryItems), completion: completion)
         
     }
     
+}
+
+extension Route: ApiKey {
+    func apiKey() -> String {
+        self.key
+    }
+    
+}
+
+extension Route: Session {
+    func session() -> URLSession {
+        self.urlSession
+    }
+
 }
