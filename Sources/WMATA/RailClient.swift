@@ -7,6 +7,7 @@
 
 import Foundation
 
+/// MetroRail related methods
 public struct RailClient: Fetcher, RequestBuilder {
     public let key: String
     public var urlSession: URLSession

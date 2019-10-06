@@ -7,6 +7,7 @@
 
 import Foundation
 
+/// MetroBus related methods
 public struct BusClient: Fetcher, RequestBuilder {
     public let key: String
     public var urlSession: URLSession
