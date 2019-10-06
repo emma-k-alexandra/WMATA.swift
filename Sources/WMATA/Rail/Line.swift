@@ -49,7 +49,7 @@ public class Line {
     ///
     /// - parameter line: Line to receive stations along.
     /// - parameter completion: Completion handler which returns `Stations`
-    public func stations(completion: @escaping (_ result: Stations?, _ error: WMATAError?) -> ()) {
+    public func stations(completion: @escaping (Result<Stations, WMATAError>) -> ()) {
         Rail(apiKey: self.apiKey, session: self.session).stations(for: self.line, completion: completion)
         
     }
