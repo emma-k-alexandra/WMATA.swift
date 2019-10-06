@@ -27,7 +27,7 @@ WMATA.swift is a lightweight Swift interface to the [Washington Metropolitan Are
 ### Swift Package Manager
 ```swift
 dependencies: [
-    .package(url: "https://github.com/emma-foster/WMATA.swift.git", from: "2.0.0")
+    .package(url: "https://github.com/emma-foster/WMATA.swift.git", from: "1.1.0")
 ]
 ```
 
