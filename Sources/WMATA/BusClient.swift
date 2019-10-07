@@ -38,26 +38,13 @@ extension BusClient {
     
     /// Stops nearby the given latitude, longitude and radius. Omit latitude, longitude and radius to receive all stops.
     ///
-    /// - parameter latitude: Latitude to search around
-    /// - parameter longitude: Longitude to search around
-    /// - parameter radius: Radius in meters to search within
+    /// - parameter radiusAtLatLong: Radius at latitude and longitude to search at
     /// - parameter completion: Completion handler which returns `StopsSearchResponse`
-    public func searchStops(latitude: Double?, longitude: Double?, radius: Double?, completion: @escaping (Result<StopsSearchResponse, WMATAError>) -> ()) {
+    public func searchStops(at radiusAtLatLong: RadiusAtLatLong?, completion: @escaping (Result<StopsSearchResponse, WMATAError>) -> ()) {
         var queryItems = [(String, String)]()
         
-        if let latitude = latitude {
-            queryItems.append(("Lat", String(latitude)))
-            
-        }
-        
-        if let longitude = longitude {
-            queryItems.append(("Lon", String(longitude)))
-            
-        }
-        
-        if let radius = radius {
-            queryItems.append(("Radius", String(radius)))
-            
+        if let radiusAtLatLong = radiusAtLatLong {
+            queryItems.append(contentsOf: radiusAtLatLong.toQueryItems())
         }
         
         self.fetch(with: self.buildRequest(fromUrl: BusURL.stops.rawValue, andQueryItems: queryItems), completion: completion)
@@ -71,11 +58,9 @@ extension BusClient {
     /// Bus positions including latlong and direction. Omit routeId, latitude, longitude and radius to receive all bus positions.
     ///
     /// - parameter routeId: Get bus positions along this route
-    /// - parameter latitude: Latitude to search around
-    /// - parameter longitude: Longitude to search around
-    /// - parameter radius: Radius in meters to search along given latlong
+    /// - parameter radiusAtLatLong: Radius at latitude and longitude to search at
     /// - parameter completion: Completion handler which returns `BusPositions`
-    public func positions(on routeId: RouteID?, latitude: Double?, longitude: Double?, radius: Double?, completion: @escaping (Result<BusPositions, WMATAError>) -> ()){
+    public func positions(on routeId: RouteID?, at radiusAtLatLong: RadiusAtLatLong?, completion: @escaping (Result<BusPositions, WMATAError>) -> ()){
         var queryItems = [(String, String)]()
         
         if let routeId = routeId {
@@ -83,19 +68,8 @@ extension BusClient {
             
         }
         
-        if let latitude = latitude {
-            queryItems.append(("Lat", String(latitude)))
-            
-        }
-        
-        if let longitude = longitude {
-            queryItems.append(("Lon", String(longitude)))
-            
-        }
-        
-        if let radius = radius {
-            queryItems.append(("Radius", String(radius)))
-            
+        if let radiusAtLatLong = radiusAtLatLong {
+            queryItems.append(contentsOf: radiusAtLatLong.toQueryItems())
         }
         
         self.fetch(with: self.buildRequest(fromUrl: BusURL.positions.rawValue, andQueryItems: queryItems), completion: completion)

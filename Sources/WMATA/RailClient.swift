@@ -42,23 +42,11 @@ extension RailClient {
     /// - parameter longitude: Longitude to search at
     /// - parameter radius: Radius in meters to search within
     /// - parameter completion: Completion handler which returns `StationEntrances`
-    public func entrances(latitude: Double?, longitude: Double?, radius: Double?, completion: @escaping (Result<StationEntrances, WMATAError>) -> ()) {
-        
+    public func entrances(at radiusAtLatLong: RadiusAtLatLong?, completion: @escaping (Result<StationEntrances, WMATAError>) -> ()) {
         var queryItems = [(String, String)]()
         
-        if let latitude = latitude {
-            queryItems.append(("Lat", String(latitude)))
-            
-        }
-        
-        if let longitude = longitude {
-            queryItems.append(("Lon", String(longitude)))
-            
-        }
-        
-        if let radius = radius {
-            queryItems.append(("Radius", String(radius)))
-            
+        if let radiusAtLatLong = radiusAtLatLong {
+            queryItems.append(contentsOf: radiusAtLatLong.toQueryItems())
         }
         
         self.fetch(with: self.buildRequest(fromUrl: RailURL.entrances.rawValue,andQueryItems: queryItems), completion: completion)
@@ -150,7 +138,7 @@ extension RailClient {
     ///
     /// - parameter station: `StationCode` to search for trains at
     /// - parameter completion: Completion handler which returns `RailPredictions`
-    public func nextTrains(at station: StationCode ,completion: @escaping (Result<RailPredictions, WMATAError>) -> ()) {
+    public func nextTrains(at station: StationCode, completion: @escaping (Result<RailPredictions, WMATAError>) -> ()) {
         self.fetch(with: self.buildRequest(fromUrl: "\(RailURL.nextTrains)/\(station)", andQueryItems: []), completion: completion)
         
     }
