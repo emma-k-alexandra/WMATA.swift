@@ -4,116 +4,11 @@ import Foundation
 
 let TEST_API_KEY = "9e38c3eab34c4e6c990828002828f5ed" // Get your own @ https://developer.wmata.com using this one will probably result in some weird behavior
 
-final class WMATATests: XCTestCase {
-    func testWmataBasicInit() {
-        let wmata = WMATA(apiKey: "test")
-        
-        XCTAssertEqual("test", wmata.apiKey)
-        
-    }
-    
-    func testWmataSessionInit() {
-        let session = URLSession(configuration: URLSessionConfiguration.background(withIdentifier: "A"))
-        let wmata = WMATA(apiKey: "test", session: session)
-        
-        XCTAssertEqual(wmata.session.configuration.identifier, session.configuration.identifier)
-        
-    }
-    
-    func testWmataStationCodeSubscript() {
-        let metroCenter = WMATA(apiKey: TEST_API_KEY)[.A01]
-        
-        XCTAssertEqual(metroCenter.code, .A01)
-        
-    }
-    
-    func testWmataLineSubscript() {
-        let redLine = WMATA(apiKey: TEST_API_KEY)[.RD]
-        
-        XCTAssertEqual(redLine.line, .RD)
-        
-    }
-    
-    func testWmataStopSubscript() {
-        let seventhAndMass = WMATA(apiKey: TEST_API_KEY)["1001195"]
-        
-        XCTAssertEqual(seventhAndMass.stopId, "1001195")
-        
-    }
-    
-    func testWmataRouteSubscript() {
-        let a12 = WMATA(apiKey: TEST_API_KEY)[Route.Id.A12] // Note that A12 is both a Station and a Route
-        
-        XCTAssertEqual(a12.routeId, .A12)
-        
-    }
-    
-    func testWmataRail() {
-        let rail = WMATA(apiKey: TEST_API_KEY).rail
-        
-        XCTAssertEqual(rail.key, TEST_API_KEY)
-        
-    }
-    
-    func testWmataBus() {
-        let bus = WMATA(apiKey: TEST_API_KEY).bus
-        
-        XCTAssertEqual(bus.key, TEST_API_KEY)
-        
-    }
-    
-}
-
-final class LineTests: XCTestCase {
-    func testBasicLinesInit() {
-        let line = Line(apiKey: "test", line: .BL)
-        
-        XCTAssertEqual("test", line.apiKey)
-        
-    }
-    
-    func testLineSessionInit() {
-        let session = URLSession(configuration: URLSessionConfiguration.background(withIdentifier: "C"))
-        let line = Line(apiKey: "test", line: .BL, session: session)
-        
-        XCTAssertEqual(line.session.configuration.identifier, session.configuration.identifier)
-        
-    }
-    
-    func testLineStations() {
-        let exp = self.expectation(description: "testLineStations")
-        let line = Line(apiKey: TEST_API_KEY, line: .BL)
-        
-        line.stations { result in
-            exp.fulfill()
-            
-        }
-        
-        waitForExpectations(timeout: 10, handler: nil)
-        
-    }
-    
-}
-
 final class RailTests: XCTestCase {
-    func testBasicRailInit() {
-        let rail = Rail(apiKey: "test")
-        
-        XCTAssertEqual("test", rail.key)
-        
-    }
-    
-    func testRailSessionInit() {
-        let session = URLSession(configuration: URLSessionConfiguration.background(withIdentifier: "D"))
-        let rail = Rail(apiKey: "test", session: session)
-        
-        XCTAssertEqual(rail.urlSession.configuration.identifier, session.configuration.identifier)
-        
-    }
     
     func testRailLines() {
         let exp = self.expectation(description: "testRailLines")
-        let rail = Rail(apiKey: TEST_API_KEY)
+        let rail = RailClient(key: TEST_API_KEY)
         
         rail.lines { result in
             exp.fulfill()
@@ -126,9 +21,9 @@ final class RailTests: XCTestCase {
     
     func testRailEntrances() {
         let exp = self.expectation(description: "testRailEntrances")
-        let rail = Rail(apiKey: TEST_API_KEY)
+        let rail = RailClient(key: TEST_API_KEY)
         
-        rail.entrances(latitude: 1, longitude: 1, radius: 1) { result in
+        rail.entrances(at: RadiusAtLatLong(radius: 1, latitude: 1.0, longitude: 1.0)) { result in
             exp.fulfill()
             
         }
@@ -139,7 +34,7 @@ final class RailTests: XCTestCase {
     
     func testRailStations() {
         let exp = self.expectation(description: "testRailStations")
-        let rail = Rail(apiKey: TEST_API_KEY)
+        let rail = RailClient(key: TEST_API_KEY)
         
         rail.stations(for: .BL) { error in
             exp.fulfill()
@@ -152,11 +47,11 @@ final class RailTests: XCTestCase {
     
     func testRailStation() {
         let exp = self.expectation(description: "testRailStation")
-        let rail = Rail(apiKey: TEST_API_KEY)
+        let rail = RailClient(key: TEST_API_KEY)
         
         rail.station(.A01, to: .A02) { result in
             exp.fulfill()
-    
+            
         }
         
         waitForExpectations(timeout: 10, handler: nil)
@@ -165,7 +60,7 @@ final class RailTests: XCTestCase {
     
     func testRailPositions() {
         let exp = self.expectation(description: "testRailPositions")
-        let rail = Rail(apiKey: TEST_API_KEY)
+        let rail = RailClient(key: TEST_API_KEY)
         
         rail.positions { result in
             exp.fulfill()
@@ -178,7 +73,7 @@ final class RailTests: XCTestCase {
     
     func testRailRoutes() {
         let exp = self.expectation(description: "testRailRoutes")
-        let rail = Rail(apiKey: TEST_API_KEY)
+        let rail = RailClient(key: TEST_API_KEY)
         
         rail.routes { result in
             exp.fulfill()
@@ -191,7 +86,7 @@ final class RailTests: XCTestCase {
     
     func testRailCircuits() {
         let exp = self.expectation(description: "testRailCircuits")
-        let rail = Rail(apiKey: TEST_API_KEY)
+        let rail = RailClient(key: TEST_API_KEY)
         
         rail.circuits { result in
             exp.fulfill()
@@ -204,7 +99,7 @@ final class RailTests: XCTestCase {
     
     func testRailElevatorAndEscalatorIncidents() {
         let exp = self.expectation(description: "testRailElevatorAndEscalatorIncidents")
-        let rail = Rail(apiKey: TEST_API_KEY)
+        let rail = RailClient(key: TEST_API_KEY)
         
         rail.elevatorAndEscalatorIncidents(at: .A01) { result in
             exp.fulfill()
@@ -217,7 +112,7 @@ final class RailTests: XCTestCase {
     
     func testRailIncidents() {
         let exp = self.expectation(description: "testRailIncidents")
-        let rail = Rail(apiKey: TEST_API_KEY)
+        let rail = RailClient(key: TEST_API_KEY)
         
         rail.incidents(at: .A01) { result in
             exp.fulfill()
@@ -227,30 +122,12 @@ final class RailTests: XCTestCase {
         waitForExpectations(timeout: 10, handler: nil)
         
     }
-    
-}
 
-final class StationTests: XCTestCase {
-    func testBasicStationInit() {
-        let station = Station(apiKey: "test", code: .A01)
-        
-        XCTAssertEqual(station.key, "test")
-        
-    }
-    
-    func testStationSessionInit() {
-        let session = URLSession(configuration: URLSessionConfiguration.background(withIdentifier: "E"))
-        let station = Station(apiKey: "test", code: .A01, session: session)
-        
-        XCTAssertEqual(station.urlSession.configuration.identifier, session.configuration.identifier)
-        
-    }
-    
     func testStationNextTrains() {
         let exp = self.expectation(description: "testStationNextTrains")
-        let station = Station(apiKey: TEST_API_KEY, code: .A01)
+        let station = RailClient(key: TEST_API_KEY)
         
-        station.nextTrains { result in
+        station.nextTrains(at: .A01) { result in
             exp.fulfill()
             
         }
@@ -261,9 +138,9 @@ final class StationTests: XCTestCase {
     
     func testStationInformation() {
         let exp = self.expectation(description: "testStationInformation")
-        let station = Station(apiKey: TEST_API_KEY, code: .A01)
+        let station = RailClient(key: TEST_API_KEY)
         
-        station.information { result in
+        station.information(for: .A01) { result in
             exp.fulfill()
             
         }
@@ -274,9 +151,9 @@ final class StationTests: XCTestCase {
     
     func testStationParkingInformation() {
         let exp = self.expectation(description: "testStationParkingInformation")
-        let station = Station(apiKey: TEST_API_KEY, code: .A01)
+        let station = RailClient(key: TEST_API_KEY)
         
-        station.parkingInformation { result in
+        station.parkingInformation(for: .A01) { result in
             exp.fulfill()
             
         }
@@ -287,9 +164,9 @@ final class StationTests: XCTestCase {
     
     func testStationPath() {
         let exp = self.expectation(description: "testStationPath")
-        let station = Station(apiKey: TEST_API_KEY, code: .A01)
+        let station = RailClient(key: TEST_API_KEY)
         
-        station.path(to: .A02) { result in
+        station.path(from: .A01, to: .A02) { result in
             exp.fulfill()
             
         }
@@ -300,22 +177,9 @@ final class StationTests: XCTestCase {
     
     func testStationTimings() {
         let exp = self.expectation(description: "testStationTimings")
-        let station = Station(apiKey: TEST_API_KEY, code: .A01)
+        let station = RailClient(key: TEST_API_KEY)
         
-        station.timings { result in
-            exp.fulfill()
-            
-        }
-        
-        waitForExpectations(timeout: 10, handler: nil)
-        
-    }
-    
-    func testStationTo() {
-        let exp = self.expectation(description: "testStationTo")
-        let station = Station(apiKey: TEST_API_KEY, code: .A01)
-        
-        station.to(.A02) { result in
+        station.timings(for: .A01) { result in
             exp.fulfill()
             
         }
@@ -327,26 +191,11 @@ final class StationTests: XCTestCase {
 }
 
 final class BusTests: XCTestCase {
-    func testBusBasicInit() {
-        let bus = Bus(apiKey: "test")
-        
-        XCTAssertEqual(bus.key, "test")
-        
-    }
-    
-    func testBusSessionInit() {
-        let session = URLSession(configuration: URLSessionConfiguration.background(withIdentifier: "F"))
-        let bus = Bus(apiKey: "test", session: session)
-        
-        XCTAssertEqual(bus.urlSession.configuration.identifier, session.configuration.identifier)
-        
-    }
-    
     func testBusPositions() {
         let exp = self.expectation(description: "testBusPositions")
-        let bus = Bus(apiKey: TEST_API_KEY)
+        let bus = BusClient(key: TEST_API_KEY)
         
-        bus.positions(routeId: ._10A, latitude: 1, longitude: 1, radius: 1) { result in
+        bus.positions(on: ._10A, at: RadiusAtLatLong(radius: 1, latitude: 1.0, longitude: 1.0)) { result in
             exp.fulfill()
             
         }
@@ -357,7 +206,7 @@ final class BusTests: XCTestCase {
     
     func testBusRoutes() {
         let exp = self.expectation(description: "testBusRoutes")
-        let bus = Bus(apiKey: TEST_API_KEY)
+        let bus = BusClient(key: TEST_API_KEY)
         
         bus.routes { result in
             exp.fulfill()
@@ -370,9 +219,9 @@ final class BusTests: XCTestCase {
     
     func testBusSearchStops() {
         let exp = self.expectation(description: "testBusRoutes")
-        let bus = Bus(apiKey: TEST_API_KEY)
+        let bus = BusClient(key: TEST_API_KEY)
         
-        bus.searchStops(latitude: 1, longitude: 1, radius: 1) { result in
+        bus.searchStops(at: RadiusAtLatLong(radius: 1, latitude: 1.0, longitude: 1.0)) { result in
             exp.fulfill()
             
         }
@@ -383,9 +232,9 @@ final class BusTests: XCTestCase {
     
     func testBusIncidents() {
         let exp = self.expectation(description: "testBusRoutes")
-        let bus = Bus(apiKey: TEST_API_KEY)
+        let bus = BusClient(key: TEST_API_KEY)
         
-        bus.incidents(route: ._10A) { result in
+        bus.incidents(on: ._10A) { result in
             exp.fulfill()
             
         }
@@ -394,30 +243,11 @@ final class BusTests: XCTestCase {
         
     }
     
-}
-
-final class RouteTests: XCTestCase {
-    func testRouteBasicInit() {
-        let route = Route(apiKey: "test", routeId: ._10A)
-        
-        XCTAssertEqual(route.key, "test")
-        XCTAssertEqual(route.routeId, ._10A)
-        
-    }
-    
-    func testRouteSessionInit() {
-        let session = URLSession(configuration: URLSessionConfiguration.background(withIdentifier: "G"))
-        let route = Route(apiKey: "test", routeId: ._10A, session: session)
-        
-        XCTAssertEqual(route.urlSession.configuration.identifier, session.configuration.identifier)
-        
-    }
-    
     func testRoutePositions() {
         let exp = self.expectation(description: "testRoutePositions")
-        let route = Route(apiKey: TEST_API_KEY, routeId: ._10A)
+        let route = BusClient(key: TEST_API_KEY)
         
-        route.positions(latitude: 1, longitude: 1, radius: 1) { result in
+        route.positions(on: ._10A, at: RadiusAtLatLong(radius: 1, latitude: 1.0, longitude: 1.0)) { result in
             exp.fulfill()
             
         }
@@ -428,9 +258,9 @@ final class RouteTests: XCTestCase {
     
     func testRoutePathDetails() {
         let exp = self.expectation(description: "testRoutePathDetails")
-        let route = Route(apiKey: TEST_API_KEY, routeId: ._10A)
+        let route = BusClient(key: TEST_API_KEY)
         
-        route.pathDetails(date: nil) { result in
+        route.pathDetails(for: ._10A, on: nil) { result in
             exp.fulfill()
             
         }
@@ -441,9 +271,9 @@ final class RouteTests: XCTestCase {
     
     func testRouteSchedule() {
         let exp = self.expectation(description: "testRouteSchedule")
-        let route = Route(apiKey: TEST_API_KEY, routeId: ._10A)
+        let route = BusClient(key: TEST_API_KEY)
         
-        route.schedule(date: nil, includingVariations: true) { result in
+        route.schedule(for: ._10A, on: nil, includingVariations: true) { result in
             exp.fulfill()
             
         }
@@ -451,31 +281,12 @@ final class RouteTests: XCTestCase {
         waitForExpectations(timeout: 10, handler: nil)
         
     }
-    
-}
 
-final class StopTests: XCTestCase {
-    func testStopBasicInit() {
-        let stop = Stop(apiKey: "test", stopId: "1001195")
-        
-        XCTAssertEqual(stop.key, "test")
-        XCTAssertEqual(stop.stopId, "1001195")
-        
-    }
-    
-    func testStopSessionInit() {
-        let session = URLSession(configuration: URLSessionConfiguration.background(withIdentifier: "H"))
-        let stop = Stop(apiKey: "test", stopId: "1001195", session: session)
-        
-        XCTAssertEqual(stop.urlSession.configuration.identifier, session.configuration.identifier)
-        
-    }
-    
     func testStopNextBuses() {
         let exp = self.expectation(description: "testStopNextBuses")
-        let stop = Stop(apiKey: TEST_API_KEY, stopId: "1001195")
+        let stop = BusClient(key: TEST_API_KEY)
         
-        stop.nextBuses { result in
+        stop.nextBuses(for: "1001195") { result in
             exp.fulfill()
             
         }
@@ -486,9 +297,9 @@ final class StopTests: XCTestCase {
     
     func testStopSchedule() {
         let exp = self.expectation(description: "testStopSchedule")
-        let stop = Stop(apiKey: TEST_API_KEY, stopId: "1001195")
+        let stop = BusClient(key: TEST_API_KEY)
         
-        stop.schedule(at: nil) { result in
+        stop.schedule(for: "1001195") { result in
             exp.fulfill()
             
         }
@@ -498,5 +309,3 @@ final class StopTests: XCTestCase {
     }
     
 }
-
-

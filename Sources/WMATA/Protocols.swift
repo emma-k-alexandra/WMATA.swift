@@ -6,75 +6,26 @@
 //
 import Foundation
 
-/// Main way of interacting with the WMATA API
-public class WMATA {
-    /// WMATA API key from dev portal
-    public var apiKey: String
-    
-    /// URLSession to use for all requests
-    public var session: URLSession
-    
-    /// General MetroRail information
-    public lazy var rail: Rail = {
-        return Rail(apiKey: self.apiKey)
-        
-    }()
-    
-    /// General MetroBus information
-    public lazy var bus: Bus = {
-        return Bus(apiKey: self.apiKey)
-        
-    }()
-    
-    /// Set up WMATA
-    ///
-    /// - parameter apiKey: WMATA API key from dev portal
-    /// - parameter session: Session to call on requests on
-    public init(apiKey: String, session: URLSession = URLSession.shared) {
-        self.apiKey = apiKey
-        self.session = session
-        
-    }
-    
-    /// Subscript support for Stations
-    public subscript(index: Station.Code) -> Station {
-        return Station(apiKey: self.apiKey, code: index)
-        
-    }
-    
-    /// Subscript support for Line
-    public subscript(index: Line.Code) -> Line {
-        return Line(apiKey: self.apiKey, line: index)
-        
-    }
-    
-    /// Subscript support for Stops
-    public subscript(index: String) -> Stop {
-        return Stop(apiKey: self.apiKey, stopId: index)
-        
-    }
-    
-    /// Subscript support for Routes
-    public subscript(index: Route.Id) -> Route {
-        return Route(apiKey: self.apiKey, routeId: index)
-        
-    }
-    
-}
-
+/// Indicates the implementor has a WMATA API key
 protocol ApiKey {
     func apiKey() -> String
 }
 
+/// Indicates the implementor has a URLSession
 protocol Session {
     func session() -> URLSession
 }
 
+/// Incidates the implementors can deserialize data
 protocol Deserializer {
     func deserialize<T: Codable>(_ data: Data) -> Result<T, WMATAError>
 }
 
 extension Deserializer {
+    /// Default implemention for deserialize.
+    ///
+    /// - parameter data: Data to deserialize
+    /// - returns: Result container the deserialized data, or an error
     func deserialize<T: Codable>(_ data: Data) -> Result<T, WMATAError> {
         do {
             return .success(try JSONDecoder().decode(T.self, from: data))
@@ -94,12 +45,17 @@ extension Deserializer {
     
 }
 
+/// Indicates the implementors can send an HTTP request
 protocol Requester: Session {
     func request(with request: URLRequest, completion: @escaping (Result<Data, WMATAError>) -> ())
     
 }
 
 extension Requester {
+    /// Default implementation for sending an HTTP request.
+    ///
+    /// - parameter request: The URLRequest to send
+    /// - parameter completion: Completion handler to receive output of request.
     func request(with request: URLRequest, completion: @escaping (Result<Data, WMATAError>) -> ()) {
         
         self.session().dataTask(with: request) { (data, response, error) in
@@ -123,11 +79,13 @@ extension Requester {
     
 }
 
+/// Indicates the implementor can request and deserialize data
 protocol Fetcher: Requester, Deserializer {
     func fetch<T: Codable>(with urlRequest: URLRequest, completion: @escaping (Result<T, WMATAError>) -> ())
 }
 
 extension Fetcher {
+    /// Default implementation for requesting and deserializing data
     func fetch<T: Codable>(with urlRequest: URLRequest, completion: @escaping (Result<T, WMATAError>) -> ()) {
         request(with: urlRequest) { (result) in
             switch result {
@@ -145,12 +103,18 @@ extension Fetcher {
     
 }
 
+/// Incidates the implmentor can build a URLRequest
 protocol RequestBuilder: ApiKey {
     func buildRequest(fromUrl url: String, andQueryItems queryItems: [(String, String)]) -> URLRequest
     
 }
 
 extension RequestBuilder {
+    /// Default implemention of buildRequest.
+    ///
+    /// - parameter url: URL to request
+    /// - parameter queryItems: Query parameters for request
+    /// - returns: A URLRequest
     func buildRequest(fromUrl url: String, andQueryItems queryItems: [(String, String)]) -> URLRequest {
         var urlComponents = URLComponents(string: url)!
         
