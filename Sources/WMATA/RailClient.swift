@@ -32,7 +32,7 @@ extension RailClient {
     ///
     /// - parameter completion: Completion handler which returns `LinesResponse`
     public func lines(completion: @escaping (Result<LinesResponse, WMATAError>) -> ()) {
-        self.fetch(with: self.buildRequest(fromUrl: RailURL.lines.rawValue, andQueryItems: []), completion: completion)
+        self.fetch(with: self.buildRequest(fromUrl: RailURL.lines.rawValue, andQueryItems: [], withApiKey: self.key), andSession: self.urlSession, completion: completion)
         
     }
     
@@ -49,7 +49,7 @@ extension RailClient {
             queryItems.append(contentsOf: radiusAtLatLong.toQueryItems())
         }
         
-        self.fetch(with: self.buildRequest(fromUrl: RailURL.entrances.rawValue,andQueryItems: queryItems), completion: completion)
+        self.fetch(with: self.buildRequest(fromUrl: RailURL.entrances.rawValue,andQueryItems: queryItems, withApiKey: self.key), andSession: self.urlSession, completion: completion)
         
     }
     
@@ -57,7 +57,7 @@ extension RailClient {
     ///
     /// - parameter completion: Completion handler which returns `TrainPositions`
     public func positions(completion: @escaping (Result<TrainPositions, WMATAError>) -> ()) {
-        self.fetch(with: self.buildRequest(fromUrl: RailURL.positions.rawValue, andQueryItems: [("contentType", "json")]), completion: completion)
+        self.fetch(with: self.buildRequest(fromUrl: RailURL.positions.rawValue, andQueryItems: [("contentType", "json")], withApiKey: self.key), andSession: self.urlSession, completion: completion)
         
     }
     
@@ -65,7 +65,7 @@ extension RailClient {
     ///
     /// - parameter completion: Completion handler which returns `StandardRoutes`
     public func routes(completion: @escaping (Result<StandardRoutes, WMATAError>) -> ()) {
-        self.fetch(with: self.buildRequest(fromUrl: RailURL.routes.rawValue, andQueryItems: [("contentType", "json")]), completion: completion)
+        self.fetch(with: self.buildRequest(fromUrl: RailURL.routes.rawValue, andQueryItems: [("contentType", "json")], withApiKey: self.key), andSession: self.urlSession, completion: completion)
         
     }
     
@@ -73,92 +73,59 @@ extension RailClient {
     ///
     /// - parameter completion: Completion handler which returns `TrackCircuits`
     public func circuits(completion: @escaping (Result<TrackCircuits, WMATAError>) -> ()) {
-        self.fetch(with: self.buildRequest(fromUrl: RailURL.circuits.rawValue, andQueryItems: [("contentType", "json")]), completion: completion)
+        self.fetch(with: self.buildRequest(fromUrl: RailURL.circuits.rawValue, andQueryItems: [("contentType", "json")], withApiKey: self.key), andSession: self.urlSession, completion: completion)
         
     }
 }
 
-// These require a Station code
-extension RailClient {
+extension RailClient: NeedsStation {
     /// Distance, fare information, and estimated travel time between any two stations. Omit both station codes to receive information for all possible trips.
     ///
     /// - parameter station: Station to start trip at
     /// - parameter destinationStation: Station to travel to
-    /// - parameter completion: Completion handler which returns `StationToStationInfos`
-    public func station(_ station: StationCode?, to destinationStation: StationCode?, completion: @escaping (Result<StationToStationInfos, WMATAError>) -> ()) {
-        var queryItems = [(String, String)]()
-        
-        if let station = station {
-            queryItems.append(("FromStationCode", station.rawValue))
-            
-        }
-        
-        if let destinationStation = destinationStation {
-            queryItems.append(("ToStationCode", destinationStation.rawValue))
-            
-        }
-        
-        self.fetch(with: self.buildRequest(fromUrl: RailURL.stationToStation.rawValue, andQueryItems: queryItems), completion: completion)
-        
+    /// - parameter completion: Completion handler which returns
+    public func station(_ station: Station?, to destinationStation: Station?, completion: @escaping (Result<StationToStationInfos, WMATAError>) -> ()) {
+        (self as NeedsStation).station(station, to: destinationStation, withApiKey: self.key, andSession: self.urlSession, completion: completion)
     }
     
     /// Reported elevator and escalator incidents
     ///
     /// - parameter at: Which station to search for incidents at. Optional.
-    /// - parameter completion: Completion handler which returns `ElevatorAndEscalatorIncidents`
-    public func elevatorAndEscalatorIncidents(at station: StationCode?, completion: @escaping (Result<ElevatorAndEscalatorIncidents, WMATAError>) -> ()) {
-        var queryItems = [(String, String)]()
-        
-        if let station = station {
-            queryItems.append(("StationCode", station.rawValue))
-            
-        }
-        
-        self.fetch(with: self.buildRequest(fromUrl: RailURL.elevatorAndEscalatorIncidents.rawValue, andQueryItems: queryItems), completion: completion)
-        
+    /// - parameter completion: Completion handler which returns
+    public func elevatorAndEscalatorIncidents(at station: Station?, completion: @escaping (Result<ElevatorAndEscalatorIncidents, WMATAError>) -> ()) {
+        (self as NeedsStation).elevatorAndEscalatorIncidents(at: station, withApiKey: self.key, andSession: self.urlSession, completion: completion)
     }
     
     /// Reported MetroRail incidents
     ///
     /// - parameter at: Station to search for incidents at. Optional.
     /// - parameter completion: Completion handler which returns `RailIncidents`
-    public func incidents(at station: StationCode?, completion: @escaping (Result<RailIncidents, WMATAError>) -> ()) {
-        var queryItems = [(String, String)]()
-        
-        if let station = station {
-            queryItems.append(("StationCode", station.rawValue))
-            
-        }
-        
-        self.fetch(with: self.buildRequest(fromUrl: RailURL.incidents.rawValue, andQueryItems: queryItems), completion: completion)
-        
+    public func incidents(at station: Station?, completion: @escaping (Result<RailIncidents, WMATAError>) -> ()) {
+        (self as NeedsStation).incidents(at: station, withApiKey: self.key, andSession: self.urlSession, completion: completion)
     }
     
     /// Next train arrival information for this station
     ///
     /// - parameter station: `StationCode` to search for trains at
     /// - parameter completion: Completion handler which returns `RailPredictions`
-    public func nextTrains(at station: StationCode, completion: @escaping (Result<RailPredictions, WMATAError>) -> ()) {
-        self.fetch(with: self.buildRequest(fromUrl: "\(RailURL.nextTrains)/\(station)", andQueryItems: []), completion: completion)
-        
+    public func nextTrains(at station: Station, completion: @escaping (Result<RailPredictions, WMATAError>) -> ()) {
+        (self as NeedsStation).nextTrains(at: station, withApiKey: self.key, andSession: self.urlSession, completion: completion)
     }
     
     /// Location and address information for this station
     ///
     /// - parameter station: `StationCode` search for information for
     /// - parameter completion: Completion handler which returns `StationInformation`
-    public func information(for station: StationCode, completion: @escaping (Result<StationInformation, WMATAError>) -> ()) {
-        self.fetch(with: self.buildRequest(fromUrl: RailURL.information.rawValue, andQueryItems: [("StationCode", station.rawValue)]), completion: completion)
-        
+    public func information(for station: Station, completion: @escaping (Result<StationInformation, WMATAError>) -> ()) {
+        (self as NeedsStation).information(for: station, withApiKey: self.key, andSession: self.urlSession, completion: completion)
     }
     
     /// Parking information for this station
     ///
     /// - parameter station: `StationCode` to search for parking information for
     /// - parameter completion: Completion handler which returns `StationsParking`
-    public func parkingInformation(for station: StationCode, completion: @escaping (Result<StationsParking, WMATAError>) -> ()) {
-        self.fetch(with: self.buildRequest(fromUrl: RailURL.parkingInformation.rawValue, andQueryItems: [("StationCode", station.rawValue)]), completion: completion)
-        
+    public func parkingInformation(for station: Station, completion: @escaping (Result<StationsParking, WMATAError>) -> ()) {
+        (self as NeedsStation).parkingInformation(for: station, withApiKey: self.key, andSession: self.urlSession, completion: completion)
     }
     
     /// Returns a set of ordered stations and distances between two stations _on the same line_
@@ -166,53 +133,26 @@ extension RailClient {
     /// - parameter from: Starting station to pathfind from
     /// - parameter to: Destination station to pathfind to
     /// - parameter completion: Completion handler which returns `PathBetweenStations`
-    public func path(from startingStation: StationCode, to destinationStation: StationCode, completion: @escaping (Result<PathBetweenStations, WMATAError>) -> ()) {
-        self.fetch(with: self.buildRequest(fromUrl: RailURL.path.rawValue, andQueryItems: [("FromStationCode", startingStation.rawValue), ("ToStationCode", destinationStation.rawValue)]), completion: completion)
-        
+    public func path(from startingStation: Station, to destinationStation: Station, completion: @escaping (Result<PathBetweenStations, WMATAError>) -> ()) {
+        (self as NeedsStation).path(from: startingStation, to: destinationStation, withApiKey: self.key, andSession: self.urlSession, completion: completion)
     }
     
     /// Opening and scheduled first and last trains for this station
     ///
     /// - parameter station: `StationCode` to search for timings for
     /// - parameter completion: Completion handler which returns `StationTimings`
-    public func timings(for station: StationCode, completion: @escaping (Result<StationTimings, WMATAError>) -> ()) {
-        self.fetch(with: self.buildRequest(fromUrl: RailURL.timings.rawValue, andQueryItems: [("StationCode", station.rawValue)]), completion: completion)
-        
+    public func timings(for station: Station, completion: @escaping (Result<StationTimings, WMATAError>) -> ()) {
+        (self as NeedsStation).timings(for: station, withApiKey: self.key, andSession: self.urlSession, completion: completion)
     }
     
 }
 
-// These require a Line code
-extension RailClient {
+extension RailClient: NeedsLine {
     /// Stations along a Line
     ///
     /// - parameter line: Line to receive stations along. Omit to receive all stations.
     /// - parameter completion: Completion handler which returns `Stations`
-    public func stations(for line: LineCode?, completion: @escaping (Result<Stations, WMATAError>) -> ()) {
-        var queryItems = [(String, String)]()
-        
-        if let line = line {
-            queryItems.append(("LineCode", line.rawValue))
-
-        }
-        
-        self.fetch(with: self.buildRequest(fromUrl: RailURL.stations.rawValue, andQueryItems: queryItems), completion: completion)
-        
+    public func stations(for line: Line?, completion: @escaping (Result<Stations, WMATAError>) -> ()) {
+        (self as NeedsLine).stations(for: line, withApiKey: self.key, andSession: self.urlSession, completion: completion)
     }
-}
-
-extension RailClient: ApiKey {
-    func apiKey() -> String {
-        self.key
-        
-    }
-    
-}
-
-extension RailClient: Session {
-    func session() -> URLSession {
-        self.urlSession
-        
-    }
-    
 }

@@ -32,7 +32,7 @@ extension BusClient {
     ///
     /// - parameter completion: Completion handler which returns `RoutesResponse`
     public func routes(completion: @escaping (Result<RoutesResponse, WMATAError>) -> ()) {
-        self.fetch(with: self.buildRequest(fromUrl: BusURL.routes.rawValue, andQueryItems: []), completion: completion)
+        self.fetch(with: self.buildRequest(fromUrl: BusURL.routes.rawValue, andQueryItems: [], withApiKey: self.key), andSession: self.urlSession, completion: completion)
         
     }
     
@@ -47,7 +47,7 @@ extension BusClient {
             queryItems.append(contentsOf: radiusAtLatLong.toQueryItems())
         }
         
-        self.fetch(with: self.buildRequest(fromUrl: BusURL.stops.rawValue, andQueryItems: queryItems), completion: completion)
+        self.fetch(with: self.buildRequest(fromUrl: BusURL.stops.rawValue, andQueryItems: queryItems, withApiKey: self.key), andSession: self.urlSession, completion: completion)
         
     }
     
@@ -72,7 +72,7 @@ extension BusClient {
             queryItems.append(contentsOf: radiusAtLatLong.toQueryItems())
         }
         
-        self.fetch(with: self.buildRequest(fromUrl: BusURL.positions.rawValue, andQueryItems: queryItems), completion: completion)
+        self.fetch(with: self.buildRequest(fromUrl: BusURL.positions.rawValue, andQueryItems: queryItems, withApiKey: self.key), andSession: self.urlSession, completion: completion)
         
     }
     
@@ -88,7 +88,7 @@ extension BusClient {
             
         }
         
-        self.fetch(with: self.buildRequest(fromUrl: BusURL.incidents.rawValue, andQueryItems: queryItems), completion: completion)
+        self.fetch(with: self.buildRequest(fromUrl: BusURL.incidents.rawValue, andQueryItems: queryItems, withApiKey: self.key), andSession: self.urlSession, completion: completion)
         
     }
     
@@ -105,7 +105,7 @@ extension BusClient {
                
            }
            
-           self.fetch(with: self.buildRequest(fromUrl: BusURL.pathDetails.rawValue, andQueryItems: queryItems), completion: completion)
+        self.fetch(with: self.buildRequest(fromUrl: BusURL.pathDetails.rawValue, andQueryItems: queryItems, withApiKey: self.key), andSession: self.urlSession, completion: completion)
            
        }
     
@@ -128,7 +128,7 @@ extension BusClient {
             
         }
         
-        self.fetch(with: self.buildRequest(fromUrl: BusURL.routeSchedule.rawValue, andQueryItems: queryItems), completion: completion)
+        self.fetch(with: self.buildRequest(fromUrl: BusURL.routeSchedule.rawValue, andQueryItems: queryItems, withApiKey: self.key), andSession: self.urlSession, completion: completion)
         
     }
     
@@ -141,7 +141,7 @@ extension BusClient {
     /// - parameter stop: Stop to get next arrival times for
     /// - parameter completion: Completion handler which returns `BusPredictions`
     public func nextBuses(for stop: String, completion: @escaping (Result<BusPredictions, WMATAError>) -> ()) {
-        self.fetch(with: self.buildRequest(fromUrl: BusURL.nextBuses.rawValue, andQueryItems: [("StopID", stop)]), completion: completion)
+        self.fetch(with: self.buildRequest(fromUrl: BusURL.nextBuses.rawValue, andQueryItems: [("StopID", stop)], withApiKey: self.key), andSession: self.urlSession, completion: completion)
         
     }
     
@@ -158,23 +158,7 @@ extension BusClient {
             
         }
         
-        self.fetch(with: self.buildRequest(fromUrl: BusURL.stopSchedule.rawValue, andQueryItems: queryItems), completion: completion)
-        
-    }
-    
-}
-
-extension BusClient: ApiKey {
-    func apiKey() -> String {
-        self.key
-        
-    }
-    
-}
-
-extension BusClient: Session {
-    func session() -> URLSession {
-        self.urlSession
+        self.fetch(with: self.buildRequest(fromUrl: BusURL.stopSchedule.rawValue, andQueryItems: queryItems, withApiKey: self.key), andSession: self.urlSession, completion: completion)
         
     }
     
