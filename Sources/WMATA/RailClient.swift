@@ -42,7 +42,7 @@ extension RailClient {
     /// - parameter longitude: Longitude to search at
     /// - parameter radius: Radius in meters to search within
     /// - parameter completion: Completion handler which returns `StationEntrances`
-    public func entrances(at radiusAtLatLong: RadiusAtLatLong?, completion: @escaping (Result<StationEntrances, WMATAError>) -> ()) {
+    public func entrances(at radiusAtLatLong: RadiusAtCoordinates?, completion: @escaping (Result<StationEntrances, WMATAError>) -> ()) {
         var queryItems = [(String, String)]()
         
         if let radiusAtLatLong = radiusAtLatLong {

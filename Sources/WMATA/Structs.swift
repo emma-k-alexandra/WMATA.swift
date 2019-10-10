@@ -7,18 +7,27 @@
 
 import Foundation
 
-public struct RadiusAtLatLong {
-    let radius: UInt
-    let latitude: Double
-    let longitude: Double
+public struct RadiusAtCoordinates {
+    public let radius: UInt
+    public let coordinates: Coordinates
     
     func toQueryItems() -> [(String, String)] {
-        return [
-            ("Lat", String(latitude)),
-            ("Lon", String(longitude)),
+        return coordinates.toQueryItems() + [
             ("Radius", String(radius))
         ]
         
     }
     
+}
+
+public struct Coordinates {
+    public let latitude: Double
+    public let longitude: Double
+    
+    func toQueryItems() -> [(String, String)] {
+        return [
+            ("Lat", String(latitude)),
+            ("Lon", String(longitude))
+        ]
+    }
 }

@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  BusClient.swift
 //  
 //
 //  Created by Emma Foster on 10/6/19.
@@ -40,7 +40,7 @@ extension BusClient {
     ///
     /// - parameter radiusAtLatLong: Radius at latitude and longitude to search at
     /// - parameter completion: Completion handler which returns `StopsSearchResponse`
-    public func searchStops(at radiusAtLatLong: RadiusAtLatLong?, completion: @escaping (Result<StopsSearchResponse, WMATAError>) -> ()) {
+    public func searchStops(at radiusAtLatLong: RadiusAtCoordinates?, completion: @escaping (Result<StopsSearchResponse, WMATAError>) -> ()) {
         var queryItems = [(String, String)]()
         
         if let radiusAtLatLong = radiusAtLatLong {
@@ -60,7 +60,7 @@ extension BusClient {
     /// - parameter routeId: Get bus positions along this route
     /// - parameter radiusAtLatLong: Radius at latitude and longitude to search at
     /// - parameter completion: Completion handler which returns `BusPositions`
-    public func positions(on routeId: RouteID?, at radiusAtLatLong: RadiusAtLatLong?, completion: @escaping (Result<BusPositions, WMATAError>) -> ()){
+    public func positions(on routeId: RouteID?, at radiusAtLatLong: RadiusAtCoordinates?, completion: @escaping (Result<BusPositions, WMATAError>) -> ()){
         var queryItems = [(String, String)]()
         
         if let routeId = routeId {

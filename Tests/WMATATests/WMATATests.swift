@@ -23,7 +23,7 @@ final class RailTests: XCTestCase {
         let exp = self.expectation(description: "testRailEntrances")
         let rail = RailClient(key: TEST_API_KEY)
         
-        rail.entrances(at: RadiusAtLatLong(radius: 1, latitude: 1.0, longitude: 1.0)) { result in
+        rail.entrances(at: RadiusAtCoordinates(radius: 1, coordinates: Coordinates(latitude: 1.0, longitude: 1.0))) { result in
             exp.fulfill()
             
         }
@@ -195,7 +195,7 @@ final class BusTests: XCTestCase {
         let exp = self.expectation(description: "testBusPositions")
         let bus = BusClient(key: TEST_API_KEY)
         
-        bus.positions(on: ._10A, at: RadiusAtLatLong(radius: 1, latitude: 1.0, longitude: 1.0)) { result in
+        bus.positions(on: ._10A, at: RadiusAtCoordinates(radius: 1, coordinates: Coordinates(latitude: 1.0, longitude: 1.0))) { result in
             exp.fulfill()
             
         }
@@ -221,7 +221,7 @@ final class BusTests: XCTestCase {
         let exp = self.expectation(description: "testBusRoutes")
         let bus = BusClient(key: TEST_API_KEY)
         
-        bus.searchStops(at: RadiusAtLatLong(radius: 1, latitude: 1.0, longitude: 1.0)) { result in
+        bus.searchStops(at: RadiusAtCoordinates(radius: 1, coordinates: Coordinates(latitude: 1.0, longitude: 1.0))) { result in
             exp.fulfill()
             
         }
@@ -247,7 +247,7 @@ final class BusTests: XCTestCase {
         let exp = self.expectation(description: "testRoutePositions")
         let route = BusClient(key: TEST_API_KEY)
         
-        route.positions(on: ._10A, at: RadiusAtLatLong(radius: 1, latitude: 1.0, longitude: 1.0)) { result in
+        route.positions(on: ._10A, at: RadiusAtCoordinates(radius: 1, coordinates: Coordinates(latitude: 1.0, longitude: 1.0))) { result in
             exp.fulfill()
             
         }
