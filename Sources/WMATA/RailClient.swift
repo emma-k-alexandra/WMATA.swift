@@ -42,11 +42,11 @@ extension RailClient {
     /// - parameter longitude: Longitude to search at
     /// - parameter radius: Radius in meters to search within
     /// - parameter completion: Completion handler which returns `StationEntrances`
-    public func entrances(at radiusAtLatLong: RadiusAtCoordinates?, completion: @escaping (Result<StationEntrances, WMATAError>) -> ()) {
+    public func entrances(at radiusAtCoordinates: RadiusAtCoordinates?, completion: @escaping (Result<StationEntrances, WMATAError>) -> ()) {
         var queryItems = [(String, String)]()
         
-        if let radiusAtLatLong = radiusAtLatLong {
-            queryItems.append(contentsOf: radiusAtLatLong.toQueryItems())
+        if let radiusAtCoordinates = radiusAtCoordinates {
+            queryItems.append(contentsOf: radiusAtCoordinates.toQueryItems())
         }
         
         self.fetch(with: self.buildRequest(fromUrl: RailURL.entrances.rawValue,andQueryItems: queryItems, withApiKey: self.key), andSession: self.urlSession, completion: completion)

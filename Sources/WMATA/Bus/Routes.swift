@@ -8,7 +8,7 @@
 import Foundation
 
 /// Route ids as defined by WMATA
-public enum RouteID: String {
+public enum Route: String {
     case _10A = "10A"
     case _10B = "10B"
     case _10E = "10E"
@@ -482,4 +482,23 @@ public enum RouteID: String {
     case Z8v4
     case Z8v5
     case Z8v6
+}
+
+extension Route: NeedsRoute {
+    func positions(at radiusAtCoordinates: RadiusAtCoordinates?, withApiKey apiKey: String, andSession session: URLSession = URLSession.shared, completion: @escaping (Result<BusPositions, WMATAError>) -> ()) {
+        (self as NeedsRoute).positions(on: self, at: radiusAtCoordinates, withApiKey: apiKey, andSession: session, completion: completion)
+    }
+    
+    func incidents(withApiKey apiKey: String, andSession session: URLSession = URLSession.shared, completion: @escaping (Result<BusIncidents, WMATAError>) -> ()) {
+        (self as NeedsRoute).incidents(on: self, withApiKey: apiKey, andSession: session, completion: completion)
+    }
+    
+    func pathDetails(on date: String? = nil, withApiKey apiKey: String, andSession session: URLSession = URLSession.shared, completion: @escaping (Result<PathDetails, WMATAError>) -> ()) {
+        (self as NeedsRoute).pathDetails(for: self, on: date, withApiKey: apiKey, andSession: session, completion: completion)
+    }
+    
+    func schedule(on date: String? = nil, includingVariations: Bool? = false, withApiKey apiKey: String, andSession session: URLSession = URLSession.shared, completion: @escaping (Result<RoutesResponse, WMATAError>) -> ()) {
+        (self as NeedsRoute).schedule(for: self, on: date, includingVariations: includingVariations, withApiKey: apiKey, andSession: session, completion: completion)
+    }
+    
 }

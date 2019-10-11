@@ -286,7 +286,7 @@ final class BusTests: XCTestCase {
         let exp = self.expectation(description: "testStopNextBuses")
         let stop = BusClient(key: TEST_API_KEY)
         
-        stop.nextBuses(for: "1001195") { result in
+        stop.nextBuses(for: Stop(id: "1001195")) { result in
             exp.fulfill()
             
         }
@@ -299,7 +299,7 @@ final class BusTests: XCTestCase {
         let exp = self.expectation(description: "testStopSchedule")
         let stop = BusClient(key: TEST_API_KEY)
         
-        stop.schedule(for: "1001195") { result in
+        stop.schedule(for: Stop(id: "1001195")) { result in
             exp.fulfill()
             
         }
