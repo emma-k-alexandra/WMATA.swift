@@ -8,8 +8,9 @@ WMATA.swift is a lightweight Swift interface to the [Washington Metropolitan Are
 - [Usage](#usage)
     - [Getting Started](#getting-started)
     - [Design](#design)
-    - [Using `RailClient`](#using-railclient)
-    - [Using `BusClient`](#using-busclient)
+    - [New in v4](#new-in-v4)
+    - [Using `MetroRail`](#using-MetroRail)
+    - [Using `MetroBus`](#using-MetroBus)
 - [Dependencies](#dependencies)
 - [Contact](#contact)
 - [License](#license)
@@ -23,7 +24,7 @@ WMATA.swift is a lightweight Swift interface to the [Washington Metropolitan Are
 ### Swift Package Manager
 ```swift
 dependencies: [
-    .package(url: "https://github.com/emma-foster/WMATA.swift.git", from: "3.0.0")
+    .package(url: "https://github.com/emma-foster/WMATA.swift.git", from: "4.0.0")
 ]
 ```
 
@@ -33,7 +34,7 @@ dependencies: [
 ```swift
 import WMATA
 
-RailClient(key: apiKey).nextTrains(at: .A01) { result in
+MetroRail(key: apiKey).nextTrains(at: .A01) { result in
     switch result {
     case .success(let predictions):
         print(predictions)
@@ -44,16 +45,19 @@ RailClient(key: apiKey).nextTrains(at: .A01) { result in
 ```
 
 ### Design
-WMATA.swift breaks the WMATA API into MetroRail and MetroBus via the `RailClient` and `BusClient`.
+WMATA.swift breaks the WMATA API into MetroRail and MetroBus via the `MetroRail` and `MetroBus`.
 
-### Using `RailClient`
+### New in v4
+`MetroRail` and `MetroBus` still have all API methods associated with MetroRail and MetroBus respectively. In addition, `Stop`, `Route`, `Line` and `Station` have all API methods relevant to their respective data types. So, for example you can now call `nextBuses` on `Stop` and receive the next buses for that stop, without needing a `MetroBus` object.
+
+### Using `MetroRail`
  
  #### `lines`
  [WMATA Documentation](https://developer.wmata.com/docs/services/5476364f031f590f38092507/operations/5476364f031f5909e4fe330c)  
  Returns basic information on all MetroRail lines.
  
  ```swift
- RailClient(key: apiKey).lines { result in
+ MetroRail(key: apiKey).lines { result in
     switch result {
     case .success(let lines):
         print(lines)
@@ -68,7 +72,7 @@ WMATA.swift breaks the WMATA API into MetroRail and MetroBus via the `RailClient
 Station entrances within a latlong pair and radius (in meters). Omit all parameters to receive all entrances.
 
 ```swift
-RailClient(apiKey: apiKey).entrances(at: RadiusAtLatLong(radius: 1000, latitude: 38.8817596, longitude: -77.0166426)) { result in
+MetroRail(apiKey: apiKey).entrances(at: RadiusAtCoordinates(radius: 1000, coordinates: Coordinates(latitude: 38.8817596, longitude: -77.0166426))) { result in
     switch result {
     case .success(let entrances):
         print(entrances)
@@ -83,7 +87,7 @@ RailClient(apiKey: apiKey).entrances(at: RadiusAtLatLong(radius: 1000, latitude:
 Stations along a Line (optional)
 
 ```swift
-RailClient(key: apiKey).stations(for: .BL) { result in
+MetroRail(key: apiKey).stations(for: .BL) { result in
     switch result {
     case .success(let stations):
         print(stations)
@@ -98,7 +102,7 @@ RailClient(key: apiKey).stations(for: .BL) { result in
 Distance, fare information and estimated travel time between two stations. Omit both station codes for all possible trips.
 
 ```swift
-RailClient(key: apiKey).station(.A01, to: .A02) { result in 
+MetroRail(key: apiKey).station(.A01, to: .A02) { result in 
     switch result {
     case .success(let travelInfo):
         print(travelInfo)
@@ -113,7 +117,7 @@ RailClient(key: apiKey).station(.A01, to: .A02) { result in
 Uniquely identifiable trains in service and what track circuits they currently occupy
 
 ```swift
-RailClient(key: apiKey).positions { result in
+MetroRail(key: apiKey).positions { result in
     switch result {
     case .success(let positions):
         print(positions)
@@ -128,7 +132,7 @@ RailClient(key: apiKey).positions { result in
 Ordered list of track circuits, arranged by line and track number
 
 ```swift
-RailClient(key: apiKey).routes { result in 
+MetroRail(key: apiKey).routes { result in 
     switch result {
     case .success(let routes):
         print(routes)
@@ -143,7 +147,7 @@ RailClient(key: apiKey).routes { result in
 List of all track circuits - also see [TrainPositionsFAQ](https://developer.wmata.com/TrainPositionsFAQ)
 
 ```swift
-RailClient(key: apiKey).circuits { result in 
+MetroRail(key: apiKey).circuits { result in 
     switch result {
     case .success(let circuits):
         print(circuits)
@@ -158,7 +162,7 @@ RailClient(key: apiKey).circuits { result in
 Reported elevator and escalator incidents
 
 ```swift
-RailClient(key: apiKey).elevatorAndEscalatorIncidents(at: .A01) { result in
+MetroRail(key: apiKey).elevatorAndEscalatorIncidents(at: .A01) { result in
     switch result {
     case .success(let incidents):
         print(incidents)
@@ -173,7 +177,7 @@ RailClient(key: apiKey).elevatorAndEscalatorIncidents(at: .A01) { result in
 Reported MetroRail incidents at a particular station (optional)
 
 ```swift
-RailClient(key: apiKey).incidents(at: .A01) { result in
+MetroRail(key: apiKey).incidents(at: .A01) { result in
     switch result {
     case .success(let incidents):
         print(incidents)
@@ -188,7 +192,7 @@ RailClient(key: apiKey).incidents(at: .A01) { result in
  Stations along a Line
  
  ```swift
- RailClient(key: apiKey).stations(for: .BL) { result in 
+ MetroRail(key: apiKey).stations(for: .BL) { result in 
     switch result {
     case .success(let stations):
         print(stations)
@@ -203,7 +207,7 @@ RailClient(key: apiKey).incidents(at: .A01) { result in
   Next train arrivals for this station.
   
   ```swift
-RailClient(key: apiKey).nextTrains(at: .A01) { result in
+MetroRail(key: apiKey).nextTrains(at: .A01) { result in
     switch result {
     case .success(let predictions):
         print(predictions)
@@ -218,7 +222,7 @@ RailClient(key: apiKey).nextTrains(at: .A01) { result in
   Location and address information for this station.
   
   ```swift
-RailClient(key: apiKey).information(for: .A01) { result in
+MetroRail(key: apiKey).information(for: .A01) { result in
     switch result {
     case .success(let information):
         print(information)
@@ -233,7 +237,7 @@ RailClient(key: apiKey).information(for: .A01) { result in
 Parking information for this station.
 
 ```swift
-RailClient(key: apiKey).parkingInformation(for: .A01) { result in
+MetroRail(key: apiKey).parkingInformation(for: .A01) { result in
     switch result {
     case .success(let parkingInfo):
         print(parkingInfo)
@@ -248,7 +252,7 @@ RailClient(key: apiKey).parkingInformation(for: .A01) { result in
 Returns a set of ordered stations and distances between stations *on the same line*
 
 ```swift
-RailClient(key: apiKey).path(from: .A01 to: .A02) { result in
+MetroRail(key: apiKey).path(from: .A01 to: .A02) { result in
     switch result {
     case .success(let path):
         print(path)
@@ -263,7 +267,7 @@ RailClient(key: apiKey).path(from: .A01 to: .A02) { result in
 Opening times and scheduled first and last trains for this station
 
 ```swift
-RailClient(key: apiKey).timings(for: .A01) { result in
+MetroRail(key: apiKey).timings(for: .A01) { result in
     switch result {
     case .success(let timings):
         print(timings)
@@ -273,14 +277,14 @@ RailClient(key: apiKey).timings(for: .A01) { result in
 }
 ```
 
-### Using `BusClient`
+### Using `MetroBus`
 
 #### `positions`
 [WMATA Documentation](https://developer.wmata.com/docs/services/54763629281d83086473f231/operations/5476362a281d830c946a3d68)  
 Bus positions along a route (optional), at a latlong and within a radius (in meters)
 
 ```swift
-BusClient(key: apiKey).positions(on: ._10A, at: RadiusAtLatLong(radius: 1000, latitude: 38.8817596, longitude: -77.0166426)) { result in
+MetroBus(key: apiKey).positions(on: ._10A, at: RadiusAtCoordinates(radius: 1000, coordinates: Coordinates(latitude: 38.8817596, longitude: -77.0166426))) { result in
     switch result {
     case .success(let positions):
         print(positions)
@@ -295,7 +299,7 @@ BusClient(key: apiKey).positions(on: ._10A, at: RadiusAtLatLong(radius: 1000, la
 All bus routes
 
 ```swift
-BusClient(key: apiKey).routes { result in
+MetroBus(key: apiKey).routes { result in
     switch result {
     case .success(let routes):
         print(routes)
@@ -310,7 +314,7 @@ BusClient(key: apiKey).routes { result in
 Stops near a given latlong and within a given radius. Omit all parameters to receive all stops.
 
 ```swift
-BusClient(apiKey: apiKey).searchStops(at: RadiusAtLatLong(radius: 1000, latitude: 38.8817596, longitude: -77.0166426)) { result in
+MetroBus(apiKey: apiKey).searchStops(at: RadiusAtCoordinates(radius: 1000, coordinates: Coordinates(latitude: 38.8817596, longitude: -77.0166426))) { result in
     switch result {
     case .success(let stops):
         print(stops)
@@ -325,7 +329,7 @@ BusClient(apiKey: apiKey).searchStops(at: RadiusAtLatLong(radius: 1000, latitude
 MetroBus incidents along an optional route.
 
 ```swift
-BusClient(key: apiKey).incidents(on: ._10A) { result in
+MetroBus(key: apiKey).incidents(on: ._10A) { result in
     switch result {
     case .success(let incidents):
         print(incidents)
@@ -340,7 +344,7 @@ BusClient(key: apiKey).incidents(on: ._10A) { result in
 Bus positions along this route, within an optional latlong and radius (in meters).
 
 ```swift
-BusClient(key: apiKey).positions(at: ._10A, at: RadiusAtLatLong(radius: 1000, latitude: 38.8817596, longitude: -77.0166426)) { result in
+MetroBus(key: apiKey).positions(at: ._10A, at: RadiusAtCoordinates(radius: 1000, coordinates: Coordinates(latitude: 38.8817596, longitude: -77.0166426))) { result in
     switch result {
     case .success(let positions):
         print(positions)
@@ -355,7 +359,7 @@ BusClient(key: apiKey).positions(at: ._10A, at: RadiusAtLatLong(radius: 1000, la
 Ordered latlong points along this Route for a given date (in `YYYY-MM-DD` format). Omit for today.
 
 ```swift
-BusClient(key: apiKey).pathDetails(for: ._10A) { result in
+MetroBus(key: apiKey).pathDetails(for: ._10A) { result in
     switch result {
     case .success(let path):
         print(path)
@@ -370,7 +374,7 @@ BusClient(key: apiKey).pathDetails(for: ._10A) { result in
 Scheduled stops for this Route
 
 ```swift
-BusClient(key: apiKey).schedule(for: ._10A) { result in
+MetroBus(key: apiKey).schedule(for: ._10A) { result in
     switch result {
     case .success(let schedule):
         print(schedule)
@@ -385,7 +389,7 @@ BusClient(key: apiKey).schedule(for: ._10A) { result in
 Next bus arrivals at this Stop
 
 ```swift
-BusClient(key: apiKey).nextBuses(for: "1001195") { result in
+MetroBus(key: apiKey).nextBuses(for: Stop(id: "1001195")) { result in
     switch result {
     case .success(let predictions):
         print(predictions)
@@ -400,7 +404,7 @@ BusClient(key: apiKey).nextBuses(for: "1001195") { result in
 Buses scheduled to arrival at this Stop at a given date (in `YYYY-MM-DD` format, optional)
 
 ```swift
-BusClient(key: apiKey).schedule(for: "1001195") { result in
+MetroBus(key: apiKey).schedule(for: Stop(id: "1001195")) { result in
     switch result {
     case .success(let schedule):
         print(schedule)

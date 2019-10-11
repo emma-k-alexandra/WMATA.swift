@@ -6,20 +6,8 @@
 //
 import Foundation
 
-/// Indicates the implementor has a WMATA API key
-protocol ApiKey {
-    func apiKey() -> String
-}
-
-/// Indicates the implementor has a URLSession
-protocol Session {
-    func session() -> URLSession
-}
-
 /// Incidates the implementors can deserialize data
-protocol Deserializer {
-    func deserialize<T: Codable>(_ data: Data) -> Result<T, WMATAError>
-}
+protocol Deserializer {}
 
 extension Deserializer {
     /// Default implemention for deserialize.
@@ -46,19 +34,16 @@ extension Deserializer {
 }
 
 /// Indicates the implementors can send an HTTP request
-protocol Requester: Session {
-    func request(with request: URLRequest, completion: @escaping (Result<Data, WMATAError>) -> ())
-    
-}
+protocol Requester {}
 
 extension Requester {
     /// Default implementation for sending an HTTP request.
     ///
     /// - parameter request: The URLRequest to send
     /// - parameter completion: Completion handler to receive output of request.
-    func request(with request: URLRequest, completion: @escaping (Result<Data, WMATAError>) -> ()) {
+    func request(with request: URLRequest, andSession session: URLSession, completion: @escaping (Result<Data, WMATAError>) -> ()) {
         
-        self.session().dataTask(with: request) { (data, response, error) in
+        session.dataTask(with: request) { (data, response, error) in
             guard let populatedData = data else {
                 if let populatedError = error {
                     completion(.failure(populatedError.toWMATAError()))
@@ -80,14 +65,12 @@ extension Requester {
 }
 
 /// Indicates the implementor can request and deserialize data
-protocol Fetcher: Requester, Deserializer {
-    func fetch<T: Codable>(with urlRequest: URLRequest, completion: @escaping (Result<T, WMATAError>) -> ())
-}
+protocol Fetcher: Requester, Deserializer {}
 
 extension Fetcher {
     /// Default implementation for requesting and deserializing data
-    func fetch<T: Codable>(with urlRequest: URLRequest, completion: @escaping (Result<T, WMATAError>) -> ()) {
-        request(with: urlRequest) { (result) in
+    func fetch<T: Codable>(with urlRequest: URLRequest, andSession session: URLSession, completion: @escaping (Result<T, WMATAError>) -> ()) {
+        request(with: urlRequest, andSession: session) { (result) in
             switch result {
             case .success(let data):
                 completion(self.deserialize(data))
@@ -104,10 +87,7 @@ extension Fetcher {
 }
 
 /// Incidates the implmentor can build a URLRequest
-protocol RequestBuilder: ApiKey {
-    func buildRequest(fromUrl url: String, andQueryItems queryItems: [(String, String)]) -> URLRequest
-    
-}
+protocol RequestBuilder {}
 
 extension RequestBuilder {
     /// Default implemention of buildRequest.
@@ -115,13 +95,13 @@ extension RequestBuilder {
     /// - parameter url: URL to request
     /// - parameter queryItems: Query parameters for request
     /// - returns: A URLRequest
-    func buildRequest(fromUrl url: String, andQueryItems queryItems: [(String, String)]) -> URLRequest {
+    func buildRequest(fromUrl url: String, andQueryItems queryItems: [(String, String)], withApiKey apiKey: String) -> URLRequest {
         var urlComponents = URLComponents(string: url)!
         
         urlComponents.queryItems = queryItems.compactMap { URLQueryItem(name: $0, value: $1) }
         
         var request = URLRequest(url: urlComponents.url!)
-        request.setValue(self.apiKey(), forHTTPHeaderField: "api_key")
+        request.setValue(apiKey, forHTTPHeaderField: "api_key")
         
         return request
         

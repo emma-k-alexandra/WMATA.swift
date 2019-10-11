@@ -8,7 +8,7 @@
 import Foundation
 
 /// Route ids as defined by WMATA
-public enum RouteID: String {
+public enum Route: String {
     case _10A = "10A"
     case _10B = "10B"
     case _10E = "10E"
@@ -482,4 +482,45 @@ public enum RouteID: String {
     case Z8v4
     case Z8v5
     case Z8v6
+}
+
+extension Route: NeedsRoute {
+    /// Bus positions on this Route including latlong and direction.
+    ///
+    /// - Parameter radiusAtCoordinates: Radius at latlong to search at
+    /// - Parameter apiKey: WMATA API Key to use with this request
+    /// - Parameter session: Optional. URL Session to make this request with
+    /// - Parameter completion: completion handler which returns `BusPositions`
+    func positions(at radiusAtCoordinates: RadiusAtCoordinates?, withApiKey apiKey: String, andSession session: URLSession = URLSession.shared, completion: @escaping (Result<BusPositions, WMATAError>) -> ()) {
+        (self as NeedsRoute).positions(on: self, at: radiusAtCoordinates, withApiKey: apiKey, andSession: session, completion: completion)
+    }
+    
+    
+    /// Bus incidents along this Route.
+    /// - Parameter apiKey: WMATA API Key to use with this request
+    /// - Parameter session: Optional. URL Session to make this request with
+    /// - Parameter completion: completion handler which return `BusIncidents`
+    func incidents(withApiKey apiKey: String, andSession session: URLSession = URLSession.shared, completion: @escaping (Result<BusIncidents, WMATAError>) -> ()) {
+        (self as NeedsRoute).incidents(on: self, withApiKey: apiKey, andSession: session, completion: completion)
+    }
+    
+    /// Ordered latlong points along this Route for a given date.
+    /// - Parameter date: Optional . Date in `YYYY-MM-DD` format for which to receive path information. Omit for today.
+    /// - Parameter apiKey: WMATA API Key to use with this request
+    /// - Parameter session: Optional. URL Session to make this request with
+    /// - Parameter completion: completion handler which returns `PathDetails`
+    func pathDetails(on date: String? = nil, withApiKey apiKey: String, andSession session: URLSession = URLSession.shared, completion: @escaping (Result<PathDetails, WMATAError>) -> ()) {
+        (self as NeedsRoute).pathDetails(for: self, on: date, withApiKey: apiKey, andSession: session, completion: completion)
+    }
+    
+    /// Scheduled stops for this Route
+    /// - Parameter date: Optional. Date in `YYYY-MM-DD` format. Omit for today.
+    /// - Parameter includingVariations: Whether to include route variations. Example: B30v1 and B30v2 for Route B30
+    /// - Parameter apiKey: WMATA API Key to use with this request
+    /// - Parameter session: Optional. URL Session to make this request with
+    /// - Parameter completion: completion handler which returns `RoutesResponse`
+    func schedule(on date: String? = nil, includingVariations: Bool? = false, withApiKey apiKey: String, andSession session: URLSession = URLSession.shared, completion: @escaping (Result<RoutesResponse, WMATAError>) -> ()) {
+        (self as NeedsRoute).schedule(for: self, on: date, includingVariations: includingVariations, withApiKey: apiKey, andSession: session, completion: completion)
+    }
+    
 }

@@ -5,10 +5,9 @@ import Foundation
 let TEST_API_KEY = "9e38c3eab34c4e6c990828002828f5ed" // Get your own @ https://developer.wmata.com using this one will probably result in some weird behavior
 
 final class RailTests: XCTestCase {
-    
     func testRailLines() {
         let exp = self.expectation(description: "testRailLines")
-        let rail = RailClient(key: TEST_API_KEY)
+        let rail = MetroRail(key: TEST_API_KEY)
         
         rail.lines { result in
             exp.fulfill()
@@ -21,9 +20,9 @@ final class RailTests: XCTestCase {
     
     func testRailEntrances() {
         let exp = self.expectation(description: "testRailEntrances")
-        let rail = RailClient(key: TEST_API_KEY)
+        let rail = MetroRail(key: TEST_API_KEY)
         
-        rail.entrances(at: RadiusAtLatLong(radius: 1, latitude: 1.0, longitude: 1.0)) { result in
+        rail.entrances(at: RadiusAtCoordinates(radius: 1, coordinates: Coordinates(latitude: 1.0, longitude: 1.0))) { result in
             exp.fulfill()
             
         }
@@ -34,7 +33,7 @@ final class RailTests: XCTestCase {
     
     func testRailStations() {
         let exp = self.expectation(description: "testRailStations")
-        let rail = RailClient(key: TEST_API_KEY)
+        let rail = MetroRail(key: TEST_API_KEY)
         
         rail.stations(for: .BL) { error in
             exp.fulfill()
@@ -47,7 +46,7 @@ final class RailTests: XCTestCase {
     
     func testRailStation() {
         let exp = self.expectation(description: "testRailStation")
-        let rail = RailClient(key: TEST_API_KEY)
+        let rail = MetroRail(key: TEST_API_KEY)
         
         rail.station(.A01, to: .A02) { result in
             exp.fulfill()
@@ -60,7 +59,7 @@ final class RailTests: XCTestCase {
     
     func testRailPositions() {
         let exp = self.expectation(description: "testRailPositions")
-        let rail = RailClient(key: TEST_API_KEY)
+        let rail = MetroRail(key: TEST_API_KEY)
         
         rail.positions { result in
             exp.fulfill()
@@ -73,7 +72,7 @@ final class RailTests: XCTestCase {
     
     func testRailRoutes() {
         let exp = self.expectation(description: "testRailRoutes")
-        let rail = RailClient(key: TEST_API_KEY)
+        let rail = MetroRail(key: TEST_API_KEY)
         
         rail.routes { result in
             exp.fulfill()
@@ -86,7 +85,7 @@ final class RailTests: XCTestCase {
     
     func testRailCircuits() {
         let exp = self.expectation(description: "testRailCircuits")
-        let rail = RailClient(key: TEST_API_KEY)
+        let rail = MetroRail(key: TEST_API_KEY)
         
         rail.circuits { result in
             exp.fulfill()
@@ -99,7 +98,7 @@ final class RailTests: XCTestCase {
     
     func testRailElevatorAndEscalatorIncidents() {
         let exp = self.expectation(description: "testRailElevatorAndEscalatorIncidents")
-        let rail = RailClient(key: TEST_API_KEY)
+        let rail = MetroRail(key: TEST_API_KEY)
         
         rail.elevatorAndEscalatorIncidents(at: .A01) { result in
             exp.fulfill()
@@ -112,7 +111,7 @@ final class RailTests: XCTestCase {
     
     func testRailIncidents() {
         let exp = self.expectation(description: "testRailIncidents")
-        let rail = RailClient(key: TEST_API_KEY)
+        let rail = MetroRail(key: TEST_API_KEY)
         
         rail.incidents(at: .A01) { result in
             exp.fulfill()
@@ -125,7 +124,7 @@ final class RailTests: XCTestCase {
 
     func testStationNextTrains() {
         let exp = self.expectation(description: "testStationNextTrains")
-        let station = RailClient(key: TEST_API_KEY)
+        let station = MetroRail(key: TEST_API_KEY)
         
         station.nextTrains(at: .A01) { result in
             exp.fulfill()
@@ -138,7 +137,7 @@ final class RailTests: XCTestCase {
     
     func testStationInformation() {
         let exp = self.expectation(description: "testStationInformation")
-        let station = RailClient(key: TEST_API_KEY)
+        let station = MetroRail(key: TEST_API_KEY)
         
         station.information(for: .A01) { result in
             exp.fulfill()
@@ -151,7 +150,7 @@ final class RailTests: XCTestCase {
     
     func testStationParkingInformation() {
         let exp = self.expectation(description: "testStationParkingInformation")
-        let station = RailClient(key: TEST_API_KEY)
+        let station = MetroRail(key: TEST_API_KEY)
         
         station.parkingInformation(for: .A01) { result in
             exp.fulfill()
@@ -164,7 +163,7 @@ final class RailTests: XCTestCase {
     
     func testStationPath() {
         let exp = self.expectation(description: "testStationPath")
-        let station = RailClient(key: TEST_API_KEY)
+        let station = MetroRail(key: TEST_API_KEY)
         
         station.path(from: .A01, to: .A02) { result in
             exp.fulfill()
@@ -177,7 +176,7 @@ final class RailTests: XCTestCase {
     
     func testStationTimings() {
         let exp = self.expectation(description: "testStationTimings")
-        let station = RailClient(key: TEST_API_KEY)
+        let station = MetroRail(key: TEST_API_KEY)
         
         station.timings(for: .A01) { result in
             exp.fulfill()
@@ -193,9 +192,9 @@ final class RailTests: XCTestCase {
 final class BusTests: XCTestCase {
     func testBusPositions() {
         let exp = self.expectation(description: "testBusPositions")
-        let bus = BusClient(key: TEST_API_KEY)
+        let bus = MetroBus(key: TEST_API_KEY)
         
-        bus.positions(on: ._10A, at: RadiusAtLatLong(radius: 1, latitude: 1.0, longitude: 1.0)) { result in
+        bus.positions(on: ._10A, at: RadiusAtCoordinates(radius: 1, coordinates: Coordinates(latitude: 1.0, longitude: 1.0))) { result in
             exp.fulfill()
             
         }
@@ -206,7 +205,7 @@ final class BusTests: XCTestCase {
     
     func testBusRoutes() {
         let exp = self.expectation(description: "testBusRoutes")
-        let bus = BusClient(key: TEST_API_KEY)
+        let bus = MetroBus(key: TEST_API_KEY)
         
         bus.routes { result in
             exp.fulfill()
@@ -219,9 +218,9 @@ final class BusTests: XCTestCase {
     
     func testBusSearchStops() {
         let exp = self.expectation(description: "testBusRoutes")
-        let bus = BusClient(key: TEST_API_KEY)
+        let bus = MetroBus(key: TEST_API_KEY)
         
-        bus.searchStops(at: RadiusAtLatLong(radius: 1, latitude: 1.0, longitude: 1.0)) { result in
+        bus.searchStops(at: RadiusAtCoordinates(radius: 1, coordinates: Coordinates(latitude: 1.0, longitude: 1.0))) { result in
             exp.fulfill()
             
         }
@@ -232,7 +231,7 @@ final class BusTests: XCTestCase {
     
     func testBusIncidents() {
         let exp = self.expectation(description: "testBusRoutes")
-        let bus = BusClient(key: TEST_API_KEY)
+        let bus = MetroBus(key: TEST_API_KEY)
         
         bus.incidents(on: ._10A) { result in
             exp.fulfill()
@@ -245,9 +244,9 @@ final class BusTests: XCTestCase {
     
     func testRoutePositions() {
         let exp = self.expectation(description: "testRoutePositions")
-        let route = BusClient(key: TEST_API_KEY)
+        let route = MetroBus(key: TEST_API_KEY)
         
-        route.positions(on: ._10A, at: RadiusAtLatLong(radius: 1, latitude: 1.0, longitude: 1.0)) { result in
+        route.positions(on: ._10A, at: RadiusAtCoordinates(radius: 1, coordinates: Coordinates(latitude: 1.0, longitude: 1.0))) { result in
             exp.fulfill()
             
         }
@@ -258,7 +257,7 @@ final class BusTests: XCTestCase {
     
     func testRoutePathDetails() {
         let exp = self.expectation(description: "testRoutePathDetails")
-        let route = BusClient(key: TEST_API_KEY)
+        let route = MetroBus(key: TEST_API_KEY)
         
         route.pathDetails(for: ._10A, on: nil) { result in
             exp.fulfill()
@@ -271,7 +270,7 @@ final class BusTests: XCTestCase {
     
     func testRouteSchedule() {
         let exp = self.expectation(description: "testRouteSchedule")
-        let route = BusClient(key: TEST_API_KEY)
+        let route = MetroBus(key: TEST_API_KEY)
         
         route.schedule(for: ._10A, on: nil, includingVariations: true) { result in
             exp.fulfill()
@@ -284,9 +283,9 @@ final class BusTests: XCTestCase {
 
     func testStopNextBuses() {
         let exp = self.expectation(description: "testStopNextBuses")
-        let stop = BusClient(key: TEST_API_KEY)
+        let stop = MetroBus(key: TEST_API_KEY)
         
-        stop.nextBuses(for: "1001195") { result in
+        stop.nextBuses(for: Stop(id: "1001195")) { result in
             exp.fulfill()
             
         }
@@ -297,9 +296,9 @@ final class BusTests: XCTestCase {
     
     func testStopSchedule() {
         let exp = self.expectation(description: "testStopSchedule")
-        let stop = BusClient(key: TEST_API_KEY)
+        let stop = MetroBus(key: TEST_API_KEY)
         
-        stop.schedule(for: "1001195") { result in
+        stop.schedule(for: Stop(id: "1001195")) { result in
             exp.fulfill()
             
         }
