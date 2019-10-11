@@ -8,7 +8,7 @@
 import Foundation
 
 /// MetroRail related methods
-public struct RailClient: Fetcher, RequestBuilder {
+public struct MetroRail: Fetcher, RequestBuilder {
     public let key: String
     public var urlSession: URLSession
     
@@ -27,7 +27,7 @@ public struct RailClient: Fetcher, RequestBuilder {
 }
 
 // These don't required a Station or Line Code
-extension RailClient {
+extension MetroRail {
     /// General information on all MetroRail lines
     ///
     /// - parameter completion: Completion handler which returns `LinesResponse`
@@ -78,7 +78,7 @@ extension RailClient {
     }
 }
 
-extension RailClient: NeedsStation {
+extension MetroRail: NeedsStation {
     /// Distance, fare information, and estimated travel time between any two stations. Omit both station codes to receive information for all possible trips.
     ///
     /// - parameter station: Station to start trip at
@@ -147,7 +147,7 @@ extension RailClient: NeedsStation {
     
 }
 
-extension RailClient: NeedsLine {
+extension MetroRail: NeedsLine {
     /// Stations along a Line
     ///
     /// - parameter line: Line to receive stations along. Omit to receive all stations.

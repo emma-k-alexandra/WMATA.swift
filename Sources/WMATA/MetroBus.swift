@@ -8,7 +8,7 @@
 import Foundation
 
 /// MetroBus related methods
-public struct BusClient: Fetcher, RequestBuilder {
+public struct MetroBus: Fetcher, RequestBuilder {
     public let key: String
     public var urlSession: URLSession
     
@@ -27,7 +27,7 @@ public struct BusClient: Fetcher, RequestBuilder {
 }
 
 // These don't require any Route or Stop IDs
-extension BusClient {
+extension MetroBus {
     /// All bus routes and variants
     ///
     /// - parameter completion: Completion handler which returns `RoutesResponse`
@@ -53,7 +53,7 @@ extension BusClient {
     
 }
 
-extension BusClient: NeedsRoute {
+extension MetroBus: NeedsRoute {
     /// Bus positions including latlong and direction. Omit routeId, latitude, longitude and radius to receive all bus positions.
     ///
     /// - parameter routeId: Get bus positions along this route
@@ -91,7 +91,7 @@ extension BusClient: NeedsRoute {
     }
 }
 
-extension BusClient: NeedsStop {
+extension MetroBus: NeedsStop {
     /// Next bus arrival times at this Stop
     ///
     /// - parameter stop: Stop to get next arrival times for
