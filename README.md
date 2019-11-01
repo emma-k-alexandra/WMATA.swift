@@ -12,6 +12,7 @@ WMATA.swift is a lightweight Swift interface to the [Washington Metropolitan Are
     - [Using `MetroRail`](#using-MetroRail)
     - [Using `MetroBus`](#using-MetroBus)
 - [Dependencies](#dependencies)
+- [Testing](#testing)
 - [Contact](#contact)
 - [License](#license)
 
@@ -24,7 +25,7 @@ WMATA.swift is a lightweight Swift interface to the [Washington Metropolitan Are
 ### Swift Package Manager
 ```swift
 dependencies: [
-    .package(url: "https://github.com/emma-foster/WMATA.swift.git", from: "4.0.0")
+    .package(url: "https://github.com/emma-foster/WMATA.swift.git", from: "5.0.0")
 ]
 ```
 
@@ -417,9 +418,11 @@ MetroBus(key: apiKey).schedule(for: Stop(id: "1001195")) { result in
 ## Dependencies
 None!
 
+## Testing
+Currently, afaik Xcode doesn't provide a way to run tests in succession rather than in parallel. So, as of v5, tests musts be run manually & individually. No fun, I know. Working on a solution for future versions.
+
 ## Contact
 Feel free to email questions and comments to [emma@emma.sh](mailto:emma@emma.sh)
-
 
 ## License
 
