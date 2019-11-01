@@ -1,14 +1,14 @@
 //
-//  StationCodes.swift
+//  Stations.swift
 //  
 //
-//  Created by Emma Foster on 10/6/19.
+//  Created by Emma K Alexandra on 10/6/19.
 //
 
 import Foundation
 
 /// Station codes as defined by WMATA
-public enum Station: String, CaseIterable {
+public enum Station: String, CaseIterable, Codable {
     case A01
     case A02
     case A03

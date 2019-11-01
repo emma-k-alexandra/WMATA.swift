@@ -2,7 +2,7 @@
 //  BusProtocols.swift
 //  
 //
-//  Created by Emma Foster on 10/10/19.
+//  Created by Emma K Alexandra on 10/10/19.
 //
 
 import Foundation
@@ -37,11 +37,11 @@ extension NeedsRoute {
         self.fetch(with: self.buildRequest(fromUrl: BusURL.incidents.rawValue, andQueryItems: queryItems, withApiKey: apiKey), andSession: session, completion: completion)
     }
     
-    func pathDetails(for route: Route, on date: String? = nil, withApiKey apiKey: String, andSession session: URLSession = URLSession.shared, completion: @escaping (Result<PathDetails, WMATAError>) -> ()) {
+    func pathDetails(for route: Route, on date: WMATADate? = nil, withApiKey apiKey: String, andSession session: URLSession = URLSession.shared, completion: @escaping (Result<PathDetails, WMATAError>) -> ()) {
         var queryItems = [("RouteID", route.rawValue)]
         
         if let date = date {
-            queryItems.append(("Date", date))
+            queryItems.append(("Date", date.description))
             
         }
         
@@ -49,11 +49,11 @@ extension NeedsRoute {
         
     }
     
-    func schedule(for route: Route, on date: String? = nil, includingVariations: Bool? = false, withApiKey apiKey: String, andSession session: URLSession = URLSession.shared, completion: @escaping (Result<RoutesResponse, WMATAError>) -> ()) {
+    func schedule(for route: Route, on date: WMATADate? = nil, includingVariations: Bool? = false, withApiKey apiKey: String, andSession session: URLSession = URLSession.shared, completion: @escaping (Result<RouteSchedule, WMATAError>) -> ()) {
         var queryItems = [("RouteID", route.rawValue)]
         
         if let date = date {
-            queryItems.append(("Date", date))
+            queryItems.append(("Date", date.description))
             
         }
         
@@ -76,11 +76,11 @@ extension NeedsStop {
         
     }
     
-    func schedule(for stop: Stop, at date: String? = nil, withApiKey apiKey: String, andSession session: URLSession = URLSession.shared, completion: @escaping (Result<StopSchedule, WMATAError>) -> ()) {
+    func schedule(for stop: Stop, at date: WMATADate? = nil, withApiKey apiKey: String, andSession session: URLSession = URLSession.shared, completion: @escaping (Result<StopSchedule, WMATAError>) -> ()) {
         var queryItems = [("StopID", stop.id)]
         
         if let date = date {
-            queryItems.append(("Date", date))
+            queryItems.append(("Date", date.description))
             
         }
         

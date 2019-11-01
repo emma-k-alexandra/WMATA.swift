@@ -10,11 +10,18 @@ final class RailTests: XCTestCase {
         let rail = MetroRail(key: TEST_API_KEY)
         
         rail.lines { result in
-            exp.fulfill()
+            switch result {
+            case .success:
+                exp.fulfill()
+                
+            case .failure(let error):
+                print(error)
+                
+            }
             
         }
         
-        waitForExpectations(timeout: 10, handler: nil)
+        waitForExpectations(timeout: 1)
         
     }
     
@@ -23,11 +30,18 @@ final class RailTests: XCTestCase {
         let rail = MetroRail(key: TEST_API_KEY)
         
         rail.entrances(at: RadiusAtCoordinates(radius: 1, coordinates: Coordinates(latitude: 1.0, longitude: 1.0))) { result in
-            exp.fulfill()
+            switch result {
+            case .success:
+                exp.fulfill()
+            
+            case.failure(let error):
+                print(error)
+                
+            }
             
         }
         
-        waitForExpectations(timeout: 10, handler: nil)
+        waitForExpectations(timeout: 1)
         
     }
     
@@ -35,12 +49,19 @@ final class RailTests: XCTestCase {
         let exp = self.expectation(description: "testRailStations")
         let rail = MetroRail(key: TEST_API_KEY)
         
-        rail.stations(for: .BL) { error in
-            exp.fulfill()
+        rail.stations(for: .BL) { result in
+            switch result {
+            case .success:
+                exp.fulfill()
+                
+            case .failure(let error):
+                print(error)
+                
+            }
             
         }
         
-        waitForExpectations(timeout: 10, handler: nil)
+        waitForExpectations(timeout: 1)
         
     }
     
@@ -49,11 +70,18 @@ final class RailTests: XCTestCase {
         let rail = MetroRail(key: TEST_API_KEY)
         
         rail.station(.A01, to: .A02) { result in
-            exp.fulfill()
+            switch result {
+            case .success:
+                exp.fulfill()
+                
+            case .failure(let error):
+                print(error)
+                
+            }
             
         }
         
-        waitForExpectations(timeout: 10, handler: nil)
+        waitForExpectations(timeout: 1)
         
     }
     
@@ -62,11 +90,18 @@ final class RailTests: XCTestCase {
         let rail = MetroRail(key: TEST_API_KEY)
         
         rail.positions { result in
-            exp.fulfill()
+            switch result {
+            case .success:
+                exp.fulfill()
+                
+            case .failure(let error):
+                print(error)
+                
+            }
             
         }
         
-        waitForExpectations(timeout: 10, handler: nil)
+        waitForExpectations(timeout: 1)
         
     }
     
@@ -75,11 +110,18 @@ final class RailTests: XCTestCase {
         let rail = MetroRail(key: TEST_API_KEY)
         
         rail.routes { result in
-            exp.fulfill()
+            switch result {
+            case .success:
+                exp.fulfill()
+                
+            case .failure(let error):
+                print(error)
+                
+            }
             
         }
         
-        waitForExpectations(timeout: 10, handler: nil)
+        waitForExpectations(timeout: 1)
         
     }
     
@@ -88,11 +130,18 @@ final class RailTests: XCTestCase {
         let rail = MetroRail(key: TEST_API_KEY)
         
         rail.circuits { result in
-            exp.fulfill()
+            switch result {
+            case .success:
+                exp.fulfill()
+                
+            case .failure(let error):
+                print(error)
+                
+            }
             
         }
         
-        waitForExpectations(timeout: 10, handler: nil)
+        waitForExpectations(timeout: 1)
         
     }
     
@@ -101,11 +150,18 @@ final class RailTests: XCTestCase {
         let rail = MetroRail(key: TEST_API_KEY)
         
         rail.elevatorAndEscalatorIncidents(at: .A01) { result in
-            exp.fulfill()
+            switch result {
+            case .success:
+                exp.fulfill()
+                
+            case .failure(let error):
+                print(error)
+                
+            }
             
         }
         
-        waitForExpectations(timeout: 10, handler: nil)
+        waitForExpectations(timeout: 1)
         
     }
     
@@ -114,11 +170,18 @@ final class RailTests: XCTestCase {
         let rail = MetroRail(key: TEST_API_KEY)
         
         rail.incidents(at: .A01) { result in
-            exp.fulfill()
+            switch result {
+            case .success:
+                exp.fulfill()
+                
+            case .failure(let error):
+                print(error)
+                
+            }
             
         }
         
-        waitForExpectations(timeout: 10, handler: nil)
+        waitForExpectations(timeout: 1)
         
     }
 
@@ -127,11 +190,18 @@ final class RailTests: XCTestCase {
         let station = MetroRail(key: TEST_API_KEY)
         
         station.nextTrains(at: .A01) { result in
-            exp.fulfill()
+            switch result {
+            case .success:
+                exp.fulfill()
+                
+            case .failure(let error):
+                print(error)
+                
+            }
             
         }
         
-        waitForExpectations(timeout: 10, handler: nil)
+        waitForExpectations(timeout: 1)
         
     }
     
@@ -140,11 +210,18 @@ final class RailTests: XCTestCase {
         let station = MetroRail(key: TEST_API_KEY)
         
         station.information(for: .A01) { result in
-            exp.fulfill()
+            switch result {
+            case .success:
+                exp.fulfill()
+                
+            case .failure(let error):
+                print(error)
+                
+            }
             
         }
         
-        waitForExpectations(timeout: 10, handler: nil)
+        waitForExpectations(timeout: 1)
         
     }
     
@@ -153,11 +230,18 @@ final class RailTests: XCTestCase {
         let station = MetroRail(key: TEST_API_KEY)
         
         station.parkingInformation(for: .A01) { result in
-            exp.fulfill()
+            switch result {
+            case .success:
+                exp.fulfill()
+                
+            case .failure(let error):
+                print(error)
+                
+            }
             
         }
         
-        waitForExpectations(timeout: 10, handler: nil)
+        waitForExpectations(timeout: 1)
         
     }
     
@@ -166,11 +250,18 @@ final class RailTests: XCTestCase {
         let station = MetroRail(key: TEST_API_KEY)
         
         station.path(from: .A01, to: .A02) { result in
-            exp.fulfill()
+            switch result {
+            case .success:
+                exp.fulfill()
+                
+            case .failure(let error):
+                print(error)
+                
+            }
             
         }
         
-        waitForExpectations(timeout: 10, handler: nil)
+        waitForExpectations(timeout: 1)
         
     }
     
@@ -179,11 +270,18 @@ final class RailTests: XCTestCase {
         let station = MetroRail(key: TEST_API_KEY)
         
         station.timings(for: .A01) { result in
-            exp.fulfill()
+            switch result {
+            case .success:
+                exp.fulfill()
+                
+            case .failure(let error):
+                print(error)
+                
+            }
             
         }
         
-        waitForExpectations(timeout: 10, handler: nil)
+        waitForExpectations(timeout: 1)
         
     }
     
@@ -195,11 +293,18 @@ final class BusTests: XCTestCase {
         let bus = MetroBus(key: TEST_API_KEY)
         
         bus.positions(on: ._10A, at: RadiusAtCoordinates(radius: 1, coordinates: Coordinates(latitude: 1.0, longitude: 1.0))) { result in
-            exp.fulfill()
+            switch result {
+            case .success:
+                exp.fulfill()
+                
+            case .failure(let error):
+                print(error)
+                
+            }
             
         }
         
-        waitForExpectations(timeout: 10, handler: nil)
+        waitForExpectations(timeout: 1)
         
     }
     
@@ -208,11 +313,18 @@ final class BusTests: XCTestCase {
         let bus = MetroBus(key: TEST_API_KEY)
         
         bus.routes { result in
-            exp.fulfill()
+            switch result {
+            case .success:
+                exp.fulfill()
+                
+            case .failure(let error):
+                print(error)
+                
+            }
             
         }
         
-        waitForExpectations(timeout: 10, handler: nil)
+        waitForExpectations(timeout: 1)
         
     }
     
@@ -221,11 +333,18 @@ final class BusTests: XCTestCase {
         let bus = MetroBus(key: TEST_API_KEY)
         
         bus.searchStops(at: RadiusAtCoordinates(radius: 1, coordinates: Coordinates(latitude: 1.0, longitude: 1.0))) { result in
-            exp.fulfill()
+            switch result {
+            case .success:
+                exp.fulfill()
+                
+            case .failure(let error):
+                print(error)
+                
+            }
             
         }
         
-        waitForExpectations(timeout: 10, handler: nil)
+        waitForExpectations(timeout: 1)
         
     }
     
@@ -234,11 +353,18 @@ final class BusTests: XCTestCase {
         let bus = MetroBus(key: TEST_API_KEY)
         
         bus.incidents(on: ._10A) { result in
-            exp.fulfill()
+            switch result {
+            case .success:
+                exp.fulfill()
+                
+            case .failure(let error):
+                print(error)
+                
+            }
             
         }
         
-        waitForExpectations(timeout: 10, handler: nil)
+        waitForExpectations(timeout: 1)
         
     }
     
@@ -247,11 +373,18 @@ final class BusTests: XCTestCase {
         let route = MetroBus(key: TEST_API_KEY)
         
         route.positions(on: ._10A, at: RadiusAtCoordinates(radius: 1, coordinates: Coordinates(latitude: 1.0, longitude: 1.0))) { result in
-            exp.fulfill()
+            switch result {
+            case .success:
+                exp.fulfill()
+                
+            case .failure(let error):
+                print(error)
+                
+            }
             
         }
         
-        waitForExpectations(timeout: 10, handler: nil)
+        waitForExpectations(timeout: 1)
         
     }
     
@@ -260,11 +393,18 @@ final class BusTests: XCTestCase {
         let route = MetroBus(key: TEST_API_KEY)
         
         route.pathDetails(for: ._10A, on: nil) { result in
-            exp.fulfill()
+            switch result {
+            case .success:
+                exp.fulfill()
+                
+            case .failure(let error):
+                print(error)
+                
+            }
             
         }
         
-        waitForExpectations(timeout: 10, handler: nil)
+        waitForExpectations(timeout: 1)
         
     }
     
@@ -273,11 +413,18 @@ final class BusTests: XCTestCase {
         let route = MetroBus(key: TEST_API_KEY)
         
         route.schedule(for: ._10A, on: nil, includingVariations: true) { result in
-            exp.fulfill()
+            switch result {
+            case .success:
+                exp.fulfill()
+                
+            case .failure(let error):
+                print(error)
+                
+            }
             
         }
         
-        waitForExpectations(timeout: 10, handler: nil)
+        waitForExpectations(timeout: 1)
         
     }
 
@@ -286,11 +433,18 @@ final class BusTests: XCTestCase {
         let stop = MetroBus(key: TEST_API_KEY)
         
         stop.nextBuses(for: Stop(id: "1001195")) { result in
-            exp.fulfill()
+            switch result {
+            case .success:
+                exp.fulfill()
+                
+            case .failure(let error):
+                print(error)
+                
+            }
             
         }
         
-        waitForExpectations(timeout: 10, handler: nil)
+        waitForExpectations(timeout: 1)
         
     }
     
@@ -299,11 +453,18 @@ final class BusTests: XCTestCase {
         let stop = MetroBus(key: TEST_API_KEY)
         
         stop.schedule(for: Stop(id: "1001195")) { result in
-            exp.fulfill()
+            switch result {
+            case .success:
+                exp.fulfill()
+                
+            case .failure(let error):
+                print(error)
+                
+            }
             
         }
         
-        waitForExpectations(timeout: 10, handler: nil)
+        waitForExpectations(timeout: 1)
         
     }
     

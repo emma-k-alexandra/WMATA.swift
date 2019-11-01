@@ -1,20 +1,21 @@
 //
-//  File.swift
+//  Lines.swift
 //  
 //
-//  Created by Emma Foster on 10/6/19.
+//  Created by Emma K Alexandra on 10/6/19.
 //
 
 import Foundation
 
 /// Line codes as defined by WMATA
-public enum Line: String {
+public enum Line: String, Codable {
     case RD
     case BL
     case YL
     case OR
     case GR
     case SV
+    case YLRP
 }
 
 extension Line: NeedsLine {

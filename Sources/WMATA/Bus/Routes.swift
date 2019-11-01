@@ -1,14 +1,14 @@
 //
-//  File.swift
+//  Routes.swift
 //  
 //
-//  Created by Emma Foster on 10/6/19.
+//  Created by Emma K Alexandra on 10/6/19.
 //
 
 import Foundation
 
 /// Route ids as defined by WMATA
-public enum Route: String {
+public enum Route: String, Codable {
     case _10A = "10A"
     case _10B = "10B"
     case _10E = "10E"
@@ -110,6 +110,8 @@ public enum Route: String {
     case _54v1 = "54v1"
     case _59 = "59"
     case _5A = "5A"
+    case _54v2 = "54v2"
+    case _54v3 = "54v3"
     case _60 = "60"
     case _62 = "62"
     case _62v1 = "62v1"
@@ -213,8 +215,8 @@ public enum Route: String {
     case B8v1
     case B8v2
     case B9
-    case BL1
-    case BL5
+    case B98
+    case B99
     case C11
     case C12
     case C13
@@ -232,10 +234,12 @@ public enum Route: String {
     case C26v1
     case C28
     case C28v1
-    case C29_1
-    case C29_2
-    case C29_4
     case C29
+    case C29_1 = "C29*1"
+    case C29_2 = "C29*2"
+    case C29_4 = "C29*4"
+    case C29_ = "C29/"
+    case C290
     case C4
     case C4v1
     case C4v2
@@ -263,6 +267,7 @@ public enum Route: String {
     case D4v1
     case D4v2
     case D5
+    case D51
     case D6
     case D6v1
     case D6v2
@@ -293,6 +298,7 @@ public enum Route: String {
     case F6v1
     case F6v2
     case F8
+    case F99
     case G12
     case G12v1
     case G12v2
@@ -340,6 +346,7 @@ public enum Route: String {
     case L2
     case L2v1
     case L2v2
+    case L99
     case L8
     case M4
     case M4v1
@@ -347,11 +354,13 @@ public enum Route: String {
     case M6
     case M6v1
     case MW1
+    case M99
     case N2
     case N4
     case N4v1
     case N6
     case NH1
+    case NH2
     case P12
     case P12v1
     case P12v2
@@ -362,6 +371,7 @@ public enum Route: String {
     case P6v2
     case P6v3
     case P6v4
+    case P99
     case Q1
     case Q2
     case Q2v1
@@ -381,13 +391,13 @@ public enum Route: String {
     case REX
     case REXv1
     case REXv2
+    case REXv3
+    case REXv4
     case S1
-    case S1v1
     case S2
     case S2v1
     case S35
     case S4
-    case S4v1
     case S41
     case S80
     case S80v1
@@ -396,6 +406,7 @@ public enum Route: String {
     case S9v1
     case S91
     case S91v1
+    case SH99
     case T14
     case T14v1
     case T18
@@ -462,8 +473,6 @@ public enum Route: String {
     case Y2
     case Y7
     case Y8
-    case YL3
-    case YL4
     case Z11
     case Z11v1
     case Z2
@@ -505,21 +514,21 @@ extension Route: NeedsRoute {
     }
     
     /// Ordered latlong points along this Route for a given date.
-    /// - Parameter date: Optional . Date in `YYYY-MM-DD` format for which to receive path information. Omit for today.
+    /// - Parameter date: `WMATADate`. nil for today.
     /// - Parameter apiKey: WMATA API Key to use with this request
     /// - Parameter session: Optional. URL Session to make this request with
     /// - Parameter completion: completion handler which returns `PathDetails`
-    func pathDetails(on date: String? = nil, withApiKey apiKey: String, andSession session: URLSession = URLSession.shared, completion: @escaping (Result<PathDetails, WMATAError>) -> ()) {
+    func pathDetails(on date: WMATADate? = nil, withApiKey apiKey: String, andSession session: URLSession = URLSession.shared, completion: @escaping (Result<PathDetails, WMATAError>) -> ()) {
         (self as NeedsRoute).pathDetails(for: self, on: date, withApiKey: apiKey, andSession: session, completion: completion)
     }
     
     /// Scheduled stops for this Route
-    /// - Parameter date: Optional. Date in `YYYY-MM-DD` format. Omit for today.
+    /// - Parameter date: `WMATADate`. Omit for today.
     /// - Parameter includingVariations: Whether to include route variations. Example: B30v1 and B30v2 for Route B30
     /// - Parameter apiKey: WMATA API Key to use with this request
     /// - Parameter session: Optional. URL Session to make this request with
     /// - Parameter completion: completion handler which returns `RoutesResponse`
-    func schedule(on date: String? = nil, includingVariations: Bool? = false, withApiKey apiKey: String, andSession session: URLSession = URLSession.shared, completion: @escaping (Result<RoutesResponse, WMATAError>) -> ()) {
+    func schedule(on date: WMATADate? = nil, includingVariations: Bool? = false, withApiKey apiKey: String, andSession session: URLSession = URLSession.shared, completion: @escaping (Result<RouteSchedule, WMATAError>) -> ()) {
         (self as NeedsRoute).schedule(for: self, on: date, includingVariations: includingVariations, withApiKey: apiKey, andSession: session, completion: completion)
     }
     

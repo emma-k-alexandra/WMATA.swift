@@ -12,6 +12,7 @@ WMATA.swift is a lightweight Swift interface to the [Washington Metropolitan Are
     - [Using `MetroRail`](#using-MetroRail)
     - [Using `MetroBus`](#using-MetroBus)
 - [Dependencies](#dependencies)
+- [Testing](#testing)
 - [Contact](#contact)
 - [License](#license)
 
@@ -24,7 +25,7 @@ WMATA.swift is a lightweight Swift interface to the [Washington Metropolitan Are
 ### Swift Package Manager
 ```swift
 dependencies: [
-    .package(url: "https://github.com/emma-foster/WMATA.swift.git", from: "4.0.0")
+    .package(url: "https://github.com/emma-foster/WMATA.swift.git", from: "5.0.0")
 ]
 ```
 
@@ -72,7 +73,7 @@ WMATA.swift breaks the WMATA API into MetroRail and MetroBus via the `MetroRail`
 Station entrances within a latlong pair and radius (in meters). Omit all parameters to receive all entrances.
 
 ```swift
-MetroRail(apiKey: apiKey).entrances(at: RadiusAtCoordinates(radius: 1000, coordinates: Coordinates(latitude: 38.8817596, longitude: -77.0166426))) { result in
+MetroRail(key: apiKey).entrances(at: RadiusAtCoordinates(radius: 1000, coordinates: Coordinates(latitude: 38.8817596, longitude: -77.0166426))) { result in
     switch result {
     case .success(let entrances):
         print(entrances)
@@ -314,7 +315,7 @@ MetroBus(key: apiKey).routes { result in
 Stops near a given latlong and within a given radius. Omit all parameters to receive all stops.
 
 ```swift
-MetroBus(apiKey: apiKey).searchStops(at: RadiusAtCoordinates(radius: 1000, coordinates: Coordinates(latitude: 38.8817596, longitude: -77.0166426))) { result in
+MetroBus(key: apiKey).searchStops(at: RadiusAtCoordinates(radius: 1000, coordinates: Coordinates(latitude: 38.8817596, longitude: -77.0166426))) { result in
     switch result {
     case .success(let stops):
         print(stops)
@@ -356,7 +357,7 @@ MetroBus(key: apiKey).positions(at: ._10A, at: RadiusAtCoordinates(radius: 1000,
 
 #### `pathDetails`
 [WMATA Documentation](https://developer.wmata.com/docs/services/54763629281d83086473f231/operations/5476362a281d830c946a3d69?)  
-Ordered latlong points along this Route for a given date (in `YYYY-MM-DD` format). Omit for today.
+Ordered latlong points along this Route for a given date. Omit for today.
 
 ```swift
 MetroBus(key: apiKey).pathDetails(for: ._10A) { result in
@@ -401,7 +402,7 @@ MetroBus(key: apiKey).nextBuses(for: Stop(id: "1001195")) { result in
 
 #### `schedule`
 [WMATA Documentation](https://developer.wmata.com/docs/services/54763629281d83086473f231/operations/5476362a281d830c946a3d6c?)  
-Buses scheduled to arrival at this Stop at a given date (in `YYYY-MM-DD` format, optional)
+Buses scheduled to arrival at this Stop at a given date. Omit for today.
 
 ```swift
 MetroBus(key: apiKey).schedule(for: Stop(id: "1001195")) { result in
@@ -417,9 +418,11 @@ MetroBus(key: apiKey).schedule(for: Stop(id: "1001195")) { result in
 ## Dependencies
 None!
 
+## Testing
+Currently, afaik Xcode doesn't provide a way to run tests in succession rather than in parallel. So, as of v5, tests musts be run manually & individually. No fun, I know. Working on a solution for future versions.
+
 ## Contact
 Feel free to email questions and comments to [emma@emma.sh](mailto:emma@emma.sh)
-
 
 ## License
 

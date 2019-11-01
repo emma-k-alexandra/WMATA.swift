@@ -1,37 +1,10 @@
 //
-//  WMATA.swift
+//  Requests.swift
 //  
 //
-//  Created by Emma Foster on 6/16/19.
+//  Created by Emma K Alexandra on 6/16/19.
 //
 import Foundation
-
-/// Incidates the implementors can deserialize data
-protocol Deserializer {}
-
-extension Deserializer {
-    /// Default implemention for deserialize.
-    ///
-    /// - parameter data: Data to deserialize
-    /// - returns: Result container the deserialized data, or an error
-    func deserialize<T: Codable>(_ data: Data) -> Result<T, WMATAError> {
-        do {
-            return .success(try JSONDecoder().decode(T.self, from: data))
-            
-        } catch {
-            do {
-                return .failure(try JSONDecoder().decode(WMATAError.self, from: data))
-                
-            } catch {
-                return .failure(error.toWMATAError())
-                
-            }
-            
-        }
-        
-    }
-    
-}
 
 /// Indicates the implementors can send an HTTP request
 protocol Requester {}
@@ -69,7 +42,7 @@ protocol Fetcher: Requester, Deserializer {}
 
 extension Fetcher {
     /// Default implementation for requesting and deserializing data
-    func fetch<T: Codable>(with urlRequest: URLRequest, andSession session: URLSession, completion: @escaping (Result<T, WMATAError>) -> ()) {
+    func fetch<T: Decodable>(with urlRequest: URLRequest, andSession session: URLSession, completion: @escaping (Result<T, WMATAError>) -> ()) {
         request(with: urlRequest, andSession: session) { (result) in
             switch result {
             case .success(let data):

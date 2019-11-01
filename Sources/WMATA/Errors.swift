@@ -1,8 +1,8 @@
 //
-//  GeneralResponses.swift
+//  Errors.swift
 //  
 //
-//  Created by Emma Foster on 6/23/19.
+//  Created by Emma K Alexandra on 6/23/19.
 //
 
 public struct WMATAError: Codable, Error {
