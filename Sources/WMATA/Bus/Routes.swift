@@ -514,21 +514,21 @@ extension Route: NeedsRoute {
     }
     
     /// Ordered latlong points along this Route for a given date.
-    /// - Parameter date: Optional . Date in `YYYY-MM-DD` format for which to receive path information. Omit for today.
+    /// - Parameter date: `WMATADate`. nil for today.
     /// - Parameter apiKey: WMATA API Key to use with this request
     /// - Parameter session: Optional. URL Session to make this request with
     /// - Parameter completion: completion handler which returns `PathDetails`
-    func pathDetails(on date: String? = nil, withApiKey apiKey: String, andSession session: URLSession = URLSession.shared, completion: @escaping (Result<PathDetails, WMATAError>) -> ()) {
+    func pathDetails(on date: WMATADate? = nil, withApiKey apiKey: String, andSession session: URLSession = URLSession.shared, completion: @escaping (Result<PathDetails, WMATAError>) -> ()) {
         (self as NeedsRoute).pathDetails(for: self, on: date, withApiKey: apiKey, andSession: session, completion: completion)
     }
     
     /// Scheduled stops for this Route
-    /// - Parameter date: Optional. Date in `YYYY-MM-DD` format. Omit for today.
+    /// - Parameter date: `WMATADate`. Omit for today.
     /// - Parameter includingVariations: Whether to include route variations. Example: B30v1 and B30v2 for Route B30
     /// - Parameter apiKey: WMATA API Key to use with this request
     /// - Parameter session: Optional. URL Session to make this request with
     /// - Parameter completion: completion handler which returns `RoutesResponse`
-    func schedule(on date: String? = nil, includingVariations: Bool? = false, withApiKey apiKey: String, andSession session: URLSession = URLSession.shared, completion: @escaping (Result<RouteSchedule, WMATAError>) -> ()) {
+    func schedule(on date: WMATADate? = nil, includingVariations: Bool? = false, withApiKey apiKey: String, andSession session: URLSession = URLSession.shared, completion: @escaping (Result<RouteSchedule, WMATAError>) -> ()) {
         (self as NeedsRoute).schedule(for: self, on: date, includingVariations: includingVariations, withApiKey: apiKey, andSession: session, completion: completion)
     }
     

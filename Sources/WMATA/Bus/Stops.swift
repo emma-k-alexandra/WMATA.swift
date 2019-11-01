@@ -21,11 +21,11 @@ extension Stop: NeedsStop {
     }
     
     /// Set of buses scheduled to arrive at this Stop at a given date.
-    /// - Parameter date: Date in `YYYY-MM-DD` format. Omit for today.
+    /// - Parameter date: `WMATADate`. Omit for today.
     /// - Parameter apiKey: WMATA API Key to use with this request
     /// - Parameter session: Optional. URL Session to make this request with
     /// - Parameter completion: completion handler which returns `StopSchedule`
-    func schedule(at date: String? = nil, withApiKey apiKey: String, andSession session: URLSession = URLSession.shared, completion: @escaping (Result<StopSchedule, WMATAError>) -> ()) {
+    func schedule(at date: WMATADate? = nil, withApiKey apiKey: String, andSession session: URLSession = URLSession.shared, completion: @escaping (Result<StopSchedule, WMATAError>) -> ()) {
         (self as NeedsStop).schedule(for: self, at: date, withApiKey: apiKey, andSession: session, completion: completion)
     }
 }

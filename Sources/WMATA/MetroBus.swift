@@ -74,19 +74,19 @@ extension MetroBus: NeedsRoute {
     /// Ordered latlong points along this Route for a given date. Omit date to get path information for today.
     ///
     /// - parameter route: `Route` to get path details for
-    /// - parameter date: Date in `YYYY-MM-DD` format for which to receive path information. Omit for today.
+    /// - parameter date: `WMATADate`  for which to receive path information. Omit for today.
     /// - parameter completion: Completion handler which returns `PathDetails`
-    public func pathDetails(for route: Route, on date: String? = nil, completion: @escaping (Result<PathDetails, WMATAError>) -> ()) {
+    public func pathDetails(for route: Route, on date: WMATADate? = nil, completion: @escaping (Result<PathDetails, WMATAError>) -> ()) {
         (self as NeedsRoute).pathDetails(for: route, on: date, withApiKey: self.key, andSession: self.urlSession, completion: completion)
     }
     
     /// Scheduled stops for this Route
     ///
     /// - parameter route: `Route` to get stops for
-    /// - parameter date: Date in `YYYY-MM-DD` format for which to receive scheduled stops
+    /// - parameter date: `WMATADate` for which to receive scheduled stops. nil for today.
     /// - parameter includingVariations: Whether to include route variations. Example: B30v1 and B30v2 for Route B30
     /// - parameter completion: Completion handler which returns `RoutesResponse`
-    public func schedule(for route: Route, on date: String? = nil, includingVariations: Bool? = false, completion: @escaping (Result<RouteSchedule, WMATAError>) -> ()) {
+    public func schedule(for route: Route, on date: WMATADate? = nil, includingVariations: Bool? = false, completion: @escaping (Result<RouteSchedule, WMATAError>) -> ()) {
         (self as NeedsRoute).schedule(for: route, on: date, includingVariations: includingVariations, withApiKey: self.key, andSession: self.urlSession, completion: completion)
     }
 }
@@ -103,9 +103,9 @@ extension MetroBus: NeedsStop {
     /// Set of buses scheduled to arrive at this Stop at a given date.
     ///
     /// - parameter stop: Stop to get schedule for
-    /// - parameter date: Date in `YYYY-MM-DD` format for which to receive schedule for. Omit for today.
+    /// - parameter date: `WMATADate` for which to receive schedule for. Omit for today.
     /// - parameter completion: Completion handler which returns `StopSchedule`
-    public func schedule(for stop: Stop, at date: String? = nil, completion: @escaping (Result<StopSchedule, WMATAError>) -> ()) {
+    public func schedule(for stop: Stop, at date: WMATADate? = nil, completion: @escaping (Result<StopSchedule, WMATAError>) -> ()) {
         (self as NeedsStop).schedule(for: stop, at: date, withApiKey: self.key, andSession: self.urlSession, completion: completion)
     }
 }
