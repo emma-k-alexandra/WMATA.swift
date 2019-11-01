@@ -78,7 +78,7 @@ extension NeedsStation {
     func nextTrains(at station: Station, withApiKey apiKey: String, andSession session: URLSession, completion: @escaping (Result<RailPredictions, WMATAError>) -> ()) {
         self.fetch(
             with: self.buildRequest(
-                fromUrl: "\(RailURL.nextTrains)/\(station)",
+                fromUrl: "\(RailURL.nextTrains.rawValue)\(station)",
                 andQueryItems: [],
                 withApiKey: apiKey
             ),

@@ -8,7 +8,7 @@
 import Foundation
 
 /// Station codes as defined by WMATA
-public enum Station: String, CaseIterable {
+public enum Station: String, CaseIterable, Codable {
     case A01
     case A02
     case A03

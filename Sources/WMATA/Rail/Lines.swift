@@ -8,13 +8,14 @@
 import Foundation
 
 /// Line codes as defined by WMATA
-public enum Line: String {
+public enum Line: String, Codable {
     case RD
     case BL
     case YL
     case OR
     case GR
     case SV
+    case YLRP
 }
 
 extension Line: NeedsLine {

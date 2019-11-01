@@ -49,7 +49,7 @@ extension NeedsRoute {
         
     }
     
-    func schedule(for route: Route, on date: String? = nil, includingVariations: Bool? = false, withApiKey apiKey: String, andSession session: URLSession = URLSession.shared, completion: @escaping (Result<RoutesResponse, WMATAError>) -> ()) {
+    func schedule(for route: Route, on date: String? = nil, includingVariations: Bool? = false, withApiKey apiKey: String, andSession session: URLSession = URLSession.shared, completion: @escaping (Result<RouteSchedule, WMATAError>) -> ()) {
         var queryItems = [("RouteID", route.rawValue)]
         
         if let date = date {

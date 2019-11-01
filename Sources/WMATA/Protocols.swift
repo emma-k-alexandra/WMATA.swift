@@ -14,16 +14,18 @@ extension Deserializer {
     ///
     /// - parameter data: Data to deserialize
     /// - returns: Result container the deserialized data, or an error
-    func deserialize<T: Codable>(_ data: Data) -> Result<T, WMATAError> {
+    func deserialize<T: Decodable>(_ data: Data) -> Result<T, WMATAError> {
         do {
             return .success(try JSONDecoder().decode(T.self, from: data))
             
         } catch {
+            let originalError = error
+            
             do {
                 return .failure(try JSONDecoder().decode(WMATAError.self, from: data))
                 
             } catch {
-                return .failure(error.toWMATAError())
+                return .failure(originalError.toWMATAError())
                 
             }
             
@@ -69,7 +71,7 @@ protocol Fetcher: Requester, Deserializer {}
 
 extension Fetcher {
     /// Default implementation for requesting and deserializing data
-    func fetch<T: Codable>(with urlRequest: URLRequest, andSession session: URLSession, completion: @escaping (Result<T, WMATAError>) -> ()) {
+    func fetch<T: Decodable>(with urlRequest: URLRequest, andSession session: URLSession, completion: @escaping (Result<T, WMATAError>) -> ()) {
         request(with: urlRequest, andSession: session) { (result) in
             switch result {
             case .success(let data):

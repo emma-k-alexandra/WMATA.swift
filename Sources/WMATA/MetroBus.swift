@@ -86,7 +86,7 @@ extension MetroBus: NeedsRoute {
     /// - parameter date: Date in `YYYY-MM-DD` format for which to receive scheduled stops
     /// - parameter includingVariations: Whether to include route variations. Example: B30v1 and B30v2 for Route B30
     /// - parameter completion: Completion handler which returns `RoutesResponse`
-    public func schedule(for route: Route, on date: String? = nil, includingVariations: Bool? = false, completion: @escaping (Result<RoutesResponse, WMATAError>) -> ()) {
+    public func schedule(for route: Route, on date: String? = nil, includingVariations: Bool? = false, completion: @escaping (Result<RouteSchedule, WMATAError>) -> ()) {
         (self as NeedsRoute).schedule(for: route, on: date, includingVariations: includingVariations, withApiKey: self.key, andSession: self.urlSession, completion: completion)
     }
 }

@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct Stop {
+public struct Stop: Codable {
     public let id: String
 }
 
