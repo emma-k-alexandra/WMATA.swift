@@ -5,6 +5,8 @@
 //  Created by Emma K Alexandra on 6/16/19.
 //
 
+import Foundation
+
 public struct BusPredictions: Decodable {
     public let predictions: [BusPrediction]
     
@@ -60,17 +62,17 @@ public struct BusPositions: Decodable {
 }
 
 public struct BusPosition: Decodable {
-    public let dateTime: String
+    public let dateTime: Date
     public let deviation: Double
     public let directionNumber: Int
     public let directionText: String
     public let latitude: Double
     public let longitude: Double
     public let route: Route
-    public let tripEndTime: String
+    public let tripEndTime: Date
     public let tripHeadsign: String
     public let tripId: String
-    public let tripStartTime: String
+    public let tripStartTime: Date
     public let vehicleId: String
     public let blockNumber: String
     
@@ -91,11 +93,9 @@ public struct BusPosition: Decodable {
     }
     
     public init(from decoder: Decoder) throws {
-        print(1)
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        print(2)
         
-        self.dateTime = try container.decode(String.self, forKey: .dateTime)
+        self.dateTime = try stringToDate(try container.decode(String.self, forKey: .dateTime)) 
         self.deviation = try container.decode(Double.self, forKey: .deviation)
         self.directionNumber = try container.decode(Int.self, forKey: .directionNumber)
         self.directionText = try container.decode(String.self, forKey: .directionText)
@@ -109,10 +109,10 @@ public struct BusPosition: Decodable {
         
         self.route = route
         
-        self.tripEndTime = try container.decode(String.self, forKey: .tripEndTime)
+        self.tripEndTime = try stringToDate(try container.decode(String.self, forKey: .tripEndTime))
         self.tripHeadsign = try container.decode(String.self, forKey: .tripHeadsign)
         self.tripId = try container.decode(String.self, forKey: .tripId)
-        self.tripStartTime = try container.decode(String.self, forKey: .tripStartTime)
+        self.tripStartTime = try stringToDate(try container.decode(String.self, forKey: .tripStartTime))
         self.vehicleId = try container.decode(String.self, forKey: .vehicleId)
         self.blockNumber = try container.decode(String.self, forKey: .blockNumber)
         
@@ -250,10 +250,10 @@ public struct StopSchedule: Decodable {
 }
 
 public struct BusArrival: Decodable {
-    public let scheduleTime: String
+    public let scheduleTime: Date
     public let directionNumber: String
-    public let startTime: String
-    public let endTime: String
+    public let startTime: Date
+    public let endTime: Date
     public let route: Route
     public let tripDirectionText: String
     public let tripHeadsign: String
@@ -273,10 +273,10 @@ public struct BusArrival: Decodable {
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
-        self.scheduleTime = try container.decode(String.self, forKey: .scheduleTime)
+        self.scheduleTime = try stringToDate(try container.decode(String.self, forKey: .scheduleTime))
         self.directionNumber = try container.decode(String.self, forKey: .directionNumber)
-        self.startTime = try container.decode(String.self, forKey: .startTime)
-        self.endTime = try container.decode(String.self, forKey: .endTime)
+        self.startTime = try stringToDate(try container.decode(String.self, forKey: .startTime))
+        self.endTime = try stringToDate(try container.decode(String.self, forKey: .endTime))
         
         guard let route = Route(rawValue: try container.decode(String.self, forKey: .route)) else {
             throw WMATAError(statusCode: 0, message: "Route provided by API was not valid")
@@ -412,8 +412,8 @@ public struct RouteInfo: Decodable {
     public let directionNumber: String
     public let tripDirectionText: String
     public let tripHeadsign: String
-    public let startTime: String
-    public let endTime: String
+    public let startTime: Date
+    public let endTime: Date
     public let stopTimes: [StopInfo]
     public let tripId: String
     
@@ -442,10 +442,11 @@ public struct RouteInfo: Decodable {
         self.directionNumber = try container.decode(String.self, forKey: .directionNumber)
         self.tripDirectionText = try container.decode(String.self, forKey: .tripDirectionText)
         self.tripHeadsign = try container.decode(String.self, forKey: .tripHeadsign)
-        self.startTime = try container.decode(String.self, forKey: .startTime)
-        self.endTime = try container.decode(String.self, forKey: .endTime)
+        self.startTime = try stringToDate(try container.decode(String.self, forKey: .startTime))
+        self.endTime = try stringToDate(try container.decode(String.self, forKey: .endTime))
         self.stopTimes = try container.decode([StopInfo].self, forKey: .stopTimes)
         self.tripId = try container.decode(String.self, forKey: .tripId)
+        
         
     }
     

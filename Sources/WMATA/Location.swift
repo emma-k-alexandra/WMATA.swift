@@ -1,5 +1,5 @@
 //
-//  Structs.swift
+//  Location.swift
 //  
 //
 //  Created by Emma K Alexandra on 10/6/19.
@@ -30,19 +30,6 @@ public struct Coordinates {
             ("Lon", String(longitude))
         ]
         
-    }
-    
-}
-
-public struct WMATADate {
-    public let year: Int
-    public let month: Int
-    public let day: Int
-}
-
-extension WMATADate: CustomStringConvertible {
-    public var description: String {
-        String(format: "%04d-%02d-%02d", self.year, self.month, self.day)
     }
     
 }

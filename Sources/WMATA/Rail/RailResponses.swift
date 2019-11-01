@@ -5,6 +5,8 @@
 //  Created by Emma K Alexandra on 6/16/19.
 //
 
+import Foundation
+
 public struct RailPredictions: Decodable {
     public let trains: [RailPrediction]
     
@@ -861,7 +863,7 @@ public struct ElevatorAndEscalatorIncident: Decodable {
     public let timeOutOfService: String
     public let symptomDescription: String
     public let displayOrder: Double
-    public let dateOutOfService: String
+    public let dateOutOfService: Date
     public let dateUpdated: String
     public let estimatedReturnToService: String
     
@@ -902,7 +904,7 @@ public struct ElevatorAndEscalatorIncident: Decodable {
         self.timeOutOfService = try container.decode(String.self, forKey: .timeOutOfService)
         self.symptomDescription = try container.decode(String.self, forKey: .symptomDescription)
         self.displayOrder = try container.decode(Double.self, forKey: .displayOrder)
-        self.dateOutOfService = try container.decode(String.self, forKey: .dateOutOfService)
+        self.dateOutOfService = try stringToDate(try container.decode(String.self, forKey: .dateOutOfService))
         self.dateUpdated = try container.decode(String.self, forKey: .dateUpdated)
         self.estimatedReturnToService = try container.decode(String.self, forKey: .estimatedReturnToService)
         
@@ -928,7 +930,7 @@ public struct RailIncident: Decodable {
     public let incidentType: String
     public let emergencyText: String?
     public let linesAffected: String
-    public let dateUpdated: String
+    public let dateUpdated: Date
     
     enum CodingKeys: String, CodingKey {
         case incidentID = "IncidentID"
@@ -941,5 +943,21 @@ public struct RailIncident: Decodable {
         case emergencyText = "EmergencyText"
         case linesAffected = "LinesAffected"
         case dateUpdated = "DateUpdated"
+    }
+    
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        
+        self.incidentID = try container.decode(String.self, forKey: .incidentID)
+        self.description = try container.decode(String.self, forKey: .description)
+        self.startLocationFullName = try container.decode(String?.self, forKey: .startLocationFullName)
+        self.endLocationFullName = try container.decode(String?.self, forKey: .endLocationFullName)
+        self.passengerDelay = try container.decode(Double.self, forKey: .passengerDelay)
+        self.delaySeverity = try container.decode(String?.self, forKey: .delaySeverity)
+        self.incidentType = try container.decode(String.self, forKey: .incidentType)
+        self.emergencyText = try container.decode(String?.self, forKey: .emergencyText)
+        self.linesAffected = try container.decode(String.self, forKey: .linesAffected)
+        self.dateUpdated = try stringToDate(try container.decode(String.self, forKey: .dateUpdated))
+        
     }
 }
