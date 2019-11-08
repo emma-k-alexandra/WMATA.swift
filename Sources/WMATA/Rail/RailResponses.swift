@@ -13,6 +13,7 @@ public struct RailPredictions: Codable {
     enum CodingKeys: String, CodingKey {
         case trains = "Trains"
     }
+    
 }
 
 public struct RailPrediction: Codable {
@@ -289,6 +290,7 @@ public struct TrackCircuits: Codable {
     enum CodingKeys: String, CodingKey {
         case trackCircuits = "TrackCircuits"
     }
+    
 }
 
 public struct TrackCircuit: Codable {
@@ -301,6 +303,7 @@ public struct TrackCircuit: Codable {
         case circuitId = "CircuitId"
         case neighbors = "Neighbors"
     }
+    
 }
 
 public struct TrackNeighbor: Codable {
@@ -311,6 +314,7 @@ public struct TrackNeighbor: Codable {
         case neighborType = "NeighborType"
         case circuitIds = "CircuitIds"
     }
+    
 }
 
 public struct LinesResponse: Codable {
