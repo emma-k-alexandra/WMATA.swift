@@ -415,7 +415,7 @@ public struct StopsSearchResponse: Codable {
     
 }
 
-public struct BusIncidents: Decodable {
+public struct BusIncidents: Codable {
     public let incidents: [BusIncident]
     
     enum CodingKeys: String, CodingKey {

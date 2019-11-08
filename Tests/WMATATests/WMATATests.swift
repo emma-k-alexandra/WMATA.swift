@@ -45,6 +45,26 @@ final class RailTests: XCTestCase {
         
     }
     
+    func testAllRailEntrances() {
+        let exp = self.expectation(description: "testRailEntrances")
+        let rail = MetroRail(key: TEST_API_KEY)
+        
+        rail.entrances(at: nil) { result in
+            switch result {
+            case .success:
+                exp.fulfill()
+            
+            case.failure(let error):
+                print(error)
+                
+            }
+            
+        }
+        
+        waitForExpectations(timeout: 1)
+        
+    }
+    
     func testRailStations() {
         let exp = self.expectation(description: "testRailStations")
         let rail = MetroRail(key: TEST_API_KEY)

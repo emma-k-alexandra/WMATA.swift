@@ -46,7 +46,7 @@ public struct RailPrediction: Codable {
         
         let destinationCode = try container.decode(String?.self, forKey: .destinationCode)
         
-        if let destinationCode = destinationCode {
+        if let destinationCode = destinationCode, destinationCode != "" {
             guard let destination = Station(rawValue: destinationCode) else {
                 throw WMATAError(statusCode: 0, message: "Station provided by API was not valid")
                 
@@ -140,7 +140,7 @@ public struct TrainPosition: Codable {
         
         let destinationCode = try container.decode(String?.self, forKey: .destination)
         
-        if let destinationCode = destinationCode {
+        if let destinationCode = destinationCode, destinationCode != "" {
             guard let destination = Station(rawValue: destinationCode) else {
                 throw WMATAError(statusCode: 0, message: "Station provided by API was not valid")
                 
@@ -155,7 +155,7 @@ public struct TrainPosition: Codable {
         
         let lineCode = try container.decode(String?.self, forKey: .line)
         
-        if let lineCode = lineCode {
+        if let lineCode = lineCode, lineCode != "" {
             guard let line = Line(rawValue: lineCode) else {
                 throw WMATAError(statusCode: 0, message: "Line provided by API was not valid")
                 
@@ -257,7 +257,7 @@ public struct TrackCircuitWithStation: Codable {
         
         let stationCode = try container.decode(String?.self, forKey: .station)
         
-        if let stationCode = stationCode {
+        if let stationCode = stationCode, stationCode != "" {
             guard let station = Station(rawValue: stationCode) else {
                 throw WMATAError(statusCode: 0, message: "Station provided by API was not valid")
                 
@@ -600,7 +600,7 @@ public struct StationEntrance: Codable {
         
         let secondStationCode = try container.decode(String?.self, forKey: .secondStation)
         
-        if let secondStationCode = secondStationCode {
+        if let secondStationCode = secondStationCode, secondStationCode != "" {
             guard let station = Station(rawValue: secondStationCode) else {
                 throw WMATAError(statusCode: 0, message: "Station provided by API was not valid")
                 
@@ -685,7 +685,7 @@ public struct StationInformation: Codable {
         
         let secondLineCode = try container.decode(String?.self, forKey: .secondLine)
         
-        if let secondLineCode = secondLineCode {
+        if let secondLineCode = secondLineCode, secondLineCode != "" {
             guard let secondLine = Line(rawValue: secondLineCode) else {
                 throw WMATAError(statusCode: 0, message: "Line provided by API was not valid")
                 
@@ -700,7 +700,7 @@ public struct StationInformation: Codable {
         
         let thirdLineCode = try container.decode(String?.self, forKey: .thirdLine)
         
-        if let thirdLineCode = thirdLineCode {
+        if let thirdLineCode = thirdLineCode, thirdLineCode != "" {
             guard let thirdLine = Line(rawValue: thirdLineCode) else {
                 throw WMATAError(statusCode: 0, message: "Line provided by API was not valid")
                 
@@ -715,7 +715,7 @@ public struct StationInformation: Codable {
         
         let fourthLineCode = try container.decode(String?.self, forKey: .fourthLine)
         
-        if let fourthLineCode = fourthLineCode {
+        if let fourthLineCode = fourthLineCode, fourthLineCode != "" {
             guard let fourthLine = Line(rawValue: fourthLineCode) else {
                 throw WMATAError(statusCode: 0, message: "Line provided by API was not valid")
                 

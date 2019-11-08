@@ -42,7 +42,7 @@ protocol Fetcher: Requester, Deserializer {}
 
 extension Fetcher {
     /// Default implementation for requesting and deserializing data
-    func fetch<T: Decodable>(with urlRequest: URLRequest, andSession session: URLSession, completion: @escaping (Result<T, WMATAError>) -> ()) {
+    func fetch<T: Codable>(with urlRequest: URLRequest, andSession session: URLSession, completion: @escaping (Result<T, WMATAError>) -> ()) {
         request(with: urlRequest, andSession: session) { (result) in
             switch result {
             case .success(let data):

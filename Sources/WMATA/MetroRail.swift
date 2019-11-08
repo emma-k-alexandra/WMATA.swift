@@ -38,18 +38,25 @@ extension MetroRail {
     
     /// Station entrances within a radius of a lat long pair, omit all parameters to receive all entrances
     ///
-    /// - parameter latitude: Latitude to search at
-    /// - parameter longitude: Longitude to search at
-    /// - parameter radius: Radius in meters to search within
+    /// - parameter radiusAtCoordinates:`RadiusAtCoordinates` to search at
     /// - parameter completion: Completion handler which returns `StationEntrances`
     public func entrances(at radiusAtCoordinates: RadiusAtCoordinates?, completion: @escaping (Result<StationEntrances, WMATAError>) -> ()) {
         var queryItems = [(String, String)]()
         
         if let radiusAtCoordinates = radiusAtCoordinates {
             queryItems.append(contentsOf: radiusAtCoordinates.toQueryItems())
+            
         }
         
-        self.fetch(with: self.buildRequest(fromUrl: RailURL.entrances.rawValue,andQueryItems: queryItems, withApiKey: self.key), andSession: self.urlSession, completion: completion)
+        self.fetch(
+            with: self.buildRequest(
+                fromUrl: RailURL.entrances.rawValue,
+                andQueryItems: queryItems,
+                withApiKey: self.key
+            ),
+            andSession: self.urlSession,
+            completion: completion
+        )
         
     }
     

@@ -15,7 +15,7 @@ extension Deserializer {
     ///
     /// - parameter data: Data to deserialize
     /// - returns: Result container the deserialized data, or an error
-    func deserialize<T: Decodable>(_ data: Data) -> Result<T, WMATAError> {
+    func deserialize<T: Codable>(_ data: Data) -> Result<T, WMATAError> {
         do {
             return .success(try JSONDecoder().decode(T.self, from: data))
             
