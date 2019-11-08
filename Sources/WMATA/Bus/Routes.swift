@@ -502,6 +502,7 @@ extension Route: NeedsRoute {
     /// - Parameter completion: completion handler which returns `BusPositions`
     func positions(at radiusAtCoordinates: RadiusAtCoordinates?, withApiKey apiKey: String, andSession session: URLSession = URLSession.shared, completion: @escaping (Result<BusPositions, WMATAError>) -> ()) {
         (self as NeedsRoute).positions(on: self, at: radiusAtCoordinates, withApiKey: apiKey, andSession: session, completion: completion)
+        
     }
     
     
@@ -511,6 +512,7 @@ extension Route: NeedsRoute {
     /// - Parameter completion: completion handler which return `BusIncidents`
     func incidents(withApiKey apiKey: String, andSession session: URLSession = URLSession.shared, completion: @escaping (Result<BusIncidents, WMATAError>) -> ()) {
         (self as NeedsRoute).incidents(on: self, withApiKey: apiKey, andSession: session, completion: completion)
+        
     }
     
     /// Ordered latlong points along this Route for a given date.
@@ -520,6 +522,7 @@ extension Route: NeedsRoute {
     /// - Parameter completion: completion handler which returns `PathDetails`
     func pathDetails(on date: WMATADate? = nil, withApiKey apiKey: String, andSession session: URLSession = URLSession.shared, completion: @escaping (Result<PathDetails, WMATAError>) -> ()) {
         (self as NeedsRoute).pathDetails(for: self, on: date, withApiKey: apiKey, andSession: session, completion: completion)
+        
     }
     
     /// Scheduled stops for this Route
@@ -530,6 +533,15 @@ extension Route: NeedsRoute {
     /// - Parameter completion: completion handler which returns `RoutesResponse`
     func schedule(on date: WMATADate? = nil, includingVariations: Bool? = false, withApiKey apiKey: String, andSession session: URLSession = URLSession.shared, completion: @escaping (Result<RouteSchedule, WMATAError>) -> ()) {
         (self as NeedsRoute).schedule(for: self, on: date, includingVariations: includingVariations, withApiKey: apiKey, andSession: session, completion: completion)
+        
+    }
+    
+}
+
+extension Route: CustomStringConvertible {
+    public var description: String {
+        self.rawValue
+        
     }
     
 }

@@ -18,6 +18,7 @@ extension Stop: NeedsStop {
     /// - Parameter completion: completion handler which returns `BusPredictions`
     func nextBuses(withApiKey apiKey: String, andSession session: URLSession = URLSession.shared, completion: @escaping (Result<BusPredictions, WMATAError>) -> ()) {
         (self as NeedsStop).nextBuses(for: self, withApiKey: apiKey, andSession: session, completion: completion)
+        
     }
     
     /// Set of buses scheduled to arrive at this Stop at a given date.
@@ -27,5 +28,15 @@ extension Stop: NeedsStop {
     /// - Parameter completion: completion handler which returns `StopSchedule`
     func schedule(at date: WMATADate? = nil, withApiKey apiKey: String, andSession session: URLSession = URLSession.shared, completion: @escaping (Result<StopSchedule, WMATAError>) -> ()) {
         (self as NeedsStop).schedule(for: self, at: date, withApiKey: apiKey, andSession: session, completion: completion)
+        
     }
+    
+}
+
+extension Stop: CustomStringConvertible {
+    public var description: String {
+        self.id
+        
+    }
+    
 }

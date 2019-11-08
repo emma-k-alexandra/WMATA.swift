@@ -22,16 +22,32 @@ extension WMATADate: CustomStringConvertible {
 
 let FORMAT = "yyyy-MM-dd'T'HH:mm:ss"
 
-func stringToDate(_ string: String) throws -> Date {
-    let formatter = DateFormatter()
-    formatter.dateFormat = FORMAT
-    formatter.locale = Locale(identifier: "en_US_POSIX")
-    formatter.timeZone = TimeZone(abbreviation: "EST")!
-    guard let date = formatter.date(from: string) else {
-        throw WMATAError(statusCode: 0, message: "Date provided not valid")
+extension String {
+    func toDate() throws -> Date {
+        let formatter = DateFormatter()
+        formatter.dateFormat = FORMAT
+        formatter.locale = Locale(identifier: "en_US_POSIX")
+        formatter.timeZone = TimeZone(abbreviation: "EST")!
+        guard let date = formatter.date(from: self) else {
+            throw WMATAError(statusCode: 0, message: "Date provided not valid")
+            
+        }
+        
+        return date
         
     }
     
-    return date
+}
+
+extension Date {
+    func toWMATAString() -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = FORMAT
+        formatter.locale = Locale(identifier: "en_US_POSIX")
+        formatter.timeZone = TimeZone(abbreviation: "EST")!
+        
+        return formatter.string(from: self)
+        
+    }
     
 }
