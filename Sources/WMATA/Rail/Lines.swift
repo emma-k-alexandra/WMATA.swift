@@ -25,5 +25,15 @@ extension Line: NeedsLine {
     /// - Parameter completion: completion handler that returns `Stations`
     public func stations(withApiKey apiKey: String, andSession session: URLSession = URLSession.shared, completion: @escaping (Result<Stations, WMATAError>) -> ()) {
         (self as NeedsLine).stations(for: self, withApiKey: apiKey, andSession: session, completion: completion)
+        
     }
+    
+}
+
+extension Line: CustomStringConvertible {
+    public var description: String {
+        self.rawValue
+        
+    }
+    
 }

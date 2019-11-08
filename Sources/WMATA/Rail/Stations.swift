@@ -114,6 +114,7 @@ extension Station: NeedsStation {
     /// - Parameter completion: completion that returns `StationToStationInfos`
     public func station(to destinationStation: Station?, withApiKey apiKey: String, andSession session: URLSession = URLSession.shared, completion: @escaping (Result<StationToStationInfos, WMATAError>) -> ()) {
         (self as NeedsStation).station(self, to: destinationStation, withApiKey: apiKey, andSession: session, completion: completion)
+        
     }
     
     /// Reported elevator and escalator incidents at this Station
@@ -122,6 +123,7 @@ extension Station: NeedsStation {
     /// - Parameter completion: completion handler that returns `ElevatorAndEscalatorIncidents`
     public func elevatorAndEscalatorIncidents(withApiKey apiKey: String, andSession session: URLSession = URLSession.shared, completion: @escaping (Result<ElevatorAndEscalatorIncidents, WMATAError>) -> ()) {
         (self as NeedsStation).elevatorAndEscalatorIncidents(at: self, withApiKey: apiKey, andSession: session, completion: completion)
+        
     }
     
     /// Reported MetroRail incidents at this Station
@@ -130,6 +132,7 @@ extension Station: NeedsStation {
     /// - Parameter completion: completion handler that returns `RailIncidents`
     public func incidents(withApiKey apiKey: String, andSession session: URLSession = URLSession.shared, completion: @escaping (Result<RailIncidents, WMATAError>) -> ()) {
         (self as NeedsStation).incidents(at: self, withApiKey: apiKey, andSession: session, completion: completion)
+        
     }
     
     ///  Next train arrival information for this Station
@@ -138,6 +141,7 @@ extension Station: NeedsStation {
     /// - Parameter completion: completion handler that returns `RailPredictions`
     public func nextTrains(withApiKey apiKey: String, andSession session: URLSession = URLSession.shared, completion: @escaping (Result<RailPredictions, WMATAError>) -> ()) {
         (self as NeedsStation).nextTrains(at: self, withApiKey: apiKey, andSession: session, completion: completion)
+        
     }
     
     /// Location and address information for this Station
@@ -146,6 +150,7 @@ extension Station: NeedsStation {
     /// - Parameter completion: completion handler that returns `StationInformation`
     public func information(withApiKey apiKey: String, andSession session: URLSession = URLSession.shared, completion: @escaping (Result<StationInformation, WMATAError>) -> ()) {
         (self as NeedsStation).information(for: self, withApiKey: apiKey, andSession: session, completion: completion)
+        
     }
     
     /// Parking information for this Station
@@ -154,6 +159,7 @@ extension Station: NeedsStation {
     /// - Parameter completion: completion handler that returns `StationsParking`
     public func parkingInformation(withApiKey apiKey: String, andSession session: URLSession = URLSession.shared, completion: @escaping (Result<StationsParking, WMATAError>) -> ()) {
         (self as NeedsStation).parkingInformation(for: self, withApiKey: apiKey, andSession: session, completion: completion)
+        
     }
     
     /// Returns a set of ordered stations and distances from this Station to another Station _on the same line_
@@ -163,6 +169,7 @@ extension Station: NeedsStation {
     /// - Parameter completion: completion handler that returns `PathBetweenStations`
     public func path(to destinationStation: Station, withApiKey apiKey: String, andSession session: URLSession = URLSession.shared, completion: @escaping (Result<PathBetweenStations, WMATAError>) -> ()) {
         (self as NeedsStation).path(from: self, to: destinationStation, withApiKey: apiKey, andSession: session, completion: completion)
+        
     }
     
     /// Opening and scheduled first and last trains for this Station
@@ -171,5 +178,15 @@ extension Station: NeedsStation {
     /// - Parameter completion: completion handler that returns `StationTimings`
     public func timings(withApiKey apiKey: String, andSession session: URLSession = URLSession.shared, completion: @escaping (Result<StationTimings, WMATAError>) -> ()) {
         (self as NeedsStation).timings(for: self, withApiKey: apiKey, andSession: session, completion: completion)
+        
     }
+    
+}
+
+extension Station: CustomStringConvertible {
+    public var description: String {
+        self.rawValue
+        
+    }
+    
 }

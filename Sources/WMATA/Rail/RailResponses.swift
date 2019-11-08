@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct RailPredictions: Decodable {
+public struct RailPredictions: Codable {
     public let trains: [RailPrediction]
     
     enum CodingKeys: String, CodingKey {
@@ -15,7 +15,7 @@ public struct RailPredictions: Decodable {
     }
 }
 
-public struct RailPrediction: Decodable {
+public struct RailPrediction: Codable {
     public let car: String?
     public let destination: String
     public let destinationCode: Station?
@@ -80,17 +80,33 @@ public struct RailPrediction: Decodable {
         
     }
     
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        
+        try container.encode(self.car, forKey: .car)
+        try container.encode(self.destination, forKey: .destination)
+        try container.encode(self.destinationCode?.description, forKey: .destinationCode)
+        try container.encode(self.destinationName, forKey: .destinationName)
+        try container.encode(self.group, forKey: .group)
+        try container.encode(self.line.description, forKey: .line)
+        try container.encode(self.location.description, forKey: .location)
+        try container.encode(self.locationName, forKey: .locationName)
+        try container.encode(self.minutes, forKey: .minutes)
+        
+    }
+    
 }
 
-public struct TrainPositions: Decodable {
+public struct TrainPositions: Codable {
     public let trainPositions: [TrainPosition]
     
     enum CodingKeys: String, CodingKey {
         case trainPositions = "TrainPositions"
     }
+    
 }
 
-public struct TrainPosition: Decodable {
+public struct TrainPosition: Codable {
     public let trainId: String
     public let trainNumber: String
     public let carCount: Int
@@ -157,17 +173,33 @@ public struct TrainPosition: Decodable {
         
     }
     
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        
+        try container.encode(self.trainId, forKey: .trainId)
+        try container.encode(self.trainNumber, forKey: .trainNumber)
+        try container.encode(self.carCount, forKey: .carCount)
+        try container.encode(self.directionNumber, forKey: .directionNumber)
+        try container.encode(self.circuitId, forKey: .circuitId)
+        try container.encode(self.destination?.description, forKey: .destination)
+        try container.encode(self.line?.description, forKey: .line)
+        try container.encode(self.secondsAtLocation, forKey: .secondsAtLocation)
+        try container.encode(self.serviceType, forKey: .serviceType)
+        
+    }
+    
 }
 
-public struct StandardRoutes: Decodable {
+public struct StandardRoutes: Codable {
     public let standardRoutes: [StandardRoute]
     
     enum CodingKeys: String, CodingKey {
         case standardRoutes = "StandardRoutes"
     }
+    
 }
 
-public struct StandardRoute: Decodable {
+public struct StandardRoute: Codable {
     public let line: Line
     public let trackNumber: Int
     public let trackCircuits: [TrackCircuitWithStation]
@@ -195,9 +227,18 @@ public struct StandardRoute: Decodable {
         
     }
     
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        
+        try container.encode(self.line.description, forKey: .line)
+        try container.encode(self.trackNumber, forKey: .trackNumber)
+        try container.encode(self.trackCircuits, forKey: .trackCircuits)
+        
+    }
+    
 }
 
-public struct TrackCircuitWithStation: Decodable {
+public struct TrackCircuitWithStation: Codable {
     public let sequenceNumber: Int
     public let circuitId: Int
     public let station: Station?
@@ -231,9 +272,18 @@ public struct TrackCircuitWithStation: Decodable {
         
     }
     
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        
+        try container.encode(self.sequenceNumber, forKey: .sequenceNumber)
+        try container.encode(self.circuitId, forKey: .circuitId)
+        try container.encode(self.station?.description, forKey: .station)
+        
+    }
+    
 }
 
-public struct TrackCircuits: Decodable {
+public struct TrackCircuits: Codable {
     public let trackCircuits: [TrackCircuit]
     
     enum CodingKeys: String, CodingKey {
@@ -241,7 +291,7 @@ public struct TrackCircuits: Decodable {
     }
 }
 
-public struct TrackCircuit: Decodable {
+public struct TrackCircuit: Codable {
     public let track: Int
     public let circuitId: Int
     public let neighbors: [TrackNeighbor]
@@ -253,7 +303,7 @@ public struct TrackCircuit: Decodable {
     }
 }
 
-public struct TrackNeighbor: Decodable {
+public struct TrackNeighbor: Codable {
     public let neighborType: String
     public let circuitIds: [Int]
     
@@ -263,15 +313,16 @@ public struct TrackNeighbor: Decodable {
     }
 }
 
-public struct LinesResponse: Decodable {
+public struct LinesResponse: Codable {
     public let lines: [LineResponse]
     
     enum CodingKeys: String, CodingKey {
         case lines = "Lines"
     }
+    
 }
 
-public struct LineResponse: Decodable {
+public struct LineResponse: Codable {
     public let line: Line
     public let displayName: String
     public let startStation: Station
@@ -345,17 +396,30 @@ public struct LineResponse: Decodable {
         
     }
     
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        
+        try container.encode(self.line.description, forKey: .line)
+        try container.encode(self.displayName, forKey: .displayName)
+        try container.encode(self.startStation.description, forKey: .startStation)
+        try container.encode(self.endStation.description, forKey: .endStation)
+        try container.encode(self.firstInternalDestination?.description, forKey: .firstInternalDestination)
+        try container.encode(self.secondInternalDestination?.description, forKey: .secondInternalDestination)
+        
+    }
+    
 }
 
-public struct StationsParking: Decodable {
+public struct StationsParking: Codable {
     public let stationsParking: [StationParking]
     
     enum CodingKeys: String, CodingKey {
         case stationsParking = "StationsParking"
     }
+    
 }
 
-public struct StationParking: Decodable {
+public struct StationParking: Codable {
     public let station: Station
     public let notes: String
     public let allDayParking: AllDayParking
@@ -385,9 +449,19 @@ public struct StationParking: Decodable {
     
     }
     
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        
+        try container.encode(self.station.description, forKey: .station)
+        try container.encode(self.notes, forKey: .notes)
+        try container.encode(self.allDayParking, forKey: .allDayParking)
+        try container.encode(self.shortTermParking, forKey: .shortTermParking)
+        
+    }
+    
 }
 
-public struct AllDayParking: Decodable {
+public struct AllDayParking: Codable {
     public let totalCount: Int
     public let riderCost: Double
     public let nonRiderCost: Double
@@ -403,7 +477,7 @@ public struct AllDayParking: Decodable {
     }
 }
 
-public struct ShortTermParking: Decodable {
+public struct ShortTermParking: Codable {
     public let totalCount: Int
     public let notes: String
     
@@ -413,15 +487,16 @@ public struct ShortTermParking: Decodable {
     }
 }
 
-public struct PathBetweenStations: Decodable {
+public struct PathBetweenStations: Codable {
     public let path: [Path]
     
     enum CodingKeys: String, CodingKey {
         case path = "Path"
     }
+    
 }
 
-public struct Path: Decodable {
+public struct Path: Codable {
     public let distanceToPreviousStation: Int
     public let line: Line
     public let sequenceNumber: Int
@@ -464,17 +539,29 @@ public struct Path: Decodable {
         
     }
     
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        
+        try container.encode(self.distanceToPreviousStation, forKey: .distanceToPreviousStation)
+        try container.encode(self.line.description, forKey: .line)
+        try container.encode(self.sequenceNumber, forKey: .sequenceNumber)
+        try container.encode(self.station.description, forKey: .station)
+        try container.encode(self.stationName, forKey: .stationName)
+        
+    }
+    
 }
 
-public struct StationEntrances: Decodable {
+public struct StationEntrances: Codable {
     public let entrances: [StationEntrance]
     
     enum CodingKeys: String, CodingKey {
         case entrances = "Entrances"
     }
+    
 }
 
-public struct StationEntrance: Decodable {
+public struct StationEntrance: Codable {
     public let description: String
     public let id: String
     public let latitude: Double
@@ -528,9 +615,23 @@ public struct StationEntrance: Decodable {
         
         
     }
+    
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        
+        try container.encode(self.description, forKey: .description)
+        try container.encode(self.id, forKey: .id)
+        try container.encode(self.latitude, forKey: .latitude)
+        try container.encode(self.longitude, forKey: .longitude)
+        try container.encode(self.name, forKey: .name)
+        try container.encode(self.firstStation.description, forKey: .firstStation)
+        try container.encode(self.secondStation?.description, forKey: .secondStation)
+        
+    }
+    
 }
 
-public struct StationInformation: Decodable {
+public struct StationInformation: Codable {
     public let address: StationAddress
     public let station: Station
     public let latitude: Double
@@ -662,9 +763,26 @@ public struct StationInformation: Decodable {
         
     }
     
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+    
+        try container.encode(self.address, forKey: .address)
+        try container.encode(self.station, forKey: .station)
+        try container.encode(self.latitude, forKey: .latitude)
+        try container.encode(self.longitude, forKey: .longitude)
+        try container.encode(self.firstLine.description, forKey: .firstLine)
+        try container.encode(self.secondLine?.description, forKey: .secondLine)
+        try container.encode(self.thirdLine?.description, forKey: .thirdLine)
+        try container.encode(self.fourthLine?.description, forKey: .fourthLine)
+        try container.encode(self.name, forKey: .name)
+        try container.encode(self.firstStationTogether?.description, forKey: .firstStationTogether)
+        try container.encode(self.secondStationTogether?.description, forKey: .secondStationTogether)
+    
+    }
+    
 }
 
-public struct StationAddress: Decodable {
+public struct StationAddress: Codable {
     public let city: String
     public let state: String
     public let street: String
@@ -678,7 +796,7 @@ public struct StationAddress: Decodable {
     }
 }
 
-public struct Stations: Decodable {
+public struct Stations: Codable {
     public let stations: [StationInformation]
     
     enum CodingKeys: String, CodingKey {
@@ -686,7 +804,7 @@ public struct Stations: Decodable {
     }
 }
 
-public struct StationTimings: Decodable {
+public struct StationTimings: Codable {
     public let stationTimes: [StationTime]
     
     enum CodingKeys: String, CodingKey {
@@ -694,7 +812,7 @@ public struct StationTimings: Decodable {
     }
 }
 
-public struct StationTime: Decodable {
+public struct StationTime: Codable {
     public let station: Station
     public let stationName: String
     public let monday: StationFirstLastTrains
@@ -739,9 +857,24 @@ public struct StationTime: Decodable {
         
     }
     
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        
+        try container.encode(self.station.description, forKey: .station)
+        try container.encode(self.stationName, forKey: .stationName)
+        try container.encode(self.monday, forKey: .monday)
+        try container.encode(self.tuesday, forKey: .tuesday)
+        try container.encode(self.wednesday, forKey: .wednesday)
+        try container.encode(self.thursday, forKey: .thursday)
+        try container.encode(self.friday, forKey: .friday)
+        try container.encode(self.saturday, forKey: .saturday)
+        try container.encode(self.sunday, forKey: .sunday)
+        
+    }
+    
 }
 
-public struct StationFirstLastTrains: Decodable {
+public struct StationFirstLastTrains: Codable {
     public let openingTime: String
     public let firstTrains: [TrainTime]
     public let lastTrains: [TrainTime]
@@ -753,7 +886,7 @@ public struct StationFirstLastTrains: Decodable {
     }
 }
 
-public struct TrainTime: Decodable {
+public struct TrainTime: Codable {
     public let time: String
     public let destination: Station
     
@@ -778,17 +911,26 @@ public struct TrainTime: Decodable {
         
     }
     
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+     
+        try container.encode(self.time, forKey: .time)
+        try container.encode(self.destination, forKey: .destination)
+        
+    }
+    
 }
 
-public struct StationToStationInfos: Decodable {
+public struct StationToStationInfos: Codable {
     public let stationToStationInfos: [StationToStationInfo]
     
     enum CodingKeys: String, CodingKey {
         case stationToStationInfos = "StationToStationInfos"
     }
+    
 }
 
-public struct StationToStationInfo: Decodable {
+public struct StationToStationInfo: Codable {
     public let compositeMiles: Double
     public let destination: Station
     public let railFare: RailFare
@@ -830,9 +972,20 @@ public struct StationToStationInfo: Decodable {
         
     }
     
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        
+        try container.encode(self.compositeMiles, forKey: .compositeMiles)
+        try container.encode(self.destination.description, forKey: .destination)
+        try container.encode(self.railFare, forKey: .railFare)
+        try container.encode(self.railTime, forKey: .railTime)
+        try container.encode(self.source.description, forKey: .source)
+        
+    }
+    
 }
 
-public struct RailFare: Decodable {
+public struct RailFare: Codable {
     public let offPeakTime: Double
     public let peakTime: Double
     public let seniorDisabled: Double
@@ -844,15 +997,16 @@ public struct RailFare: Decodable {
     }
 }
 
-public struct ElevatorAndEscalatorIncidents: Decodable {
+public struct ElevatorAndEscalatorIncidents: Codable {
     public let incidents: [ElevatorAndEscalatorIncident]
     
     enum CodingKeys: String, CodingKey {
         case incidents = "ElevatorIncidents"
     }
+    
 }
 
-public struct ElevatorAndEscalatorIncident: Decodable {
+public struct ElevatorAndEscalatorIncident: Codable {
     public let unitName: String
     public let unitType: String
     public let unitStatus: String?
@@ -904,15 +1058,34 @@ public struct ElevatorAndEscalatorIncident: Decodable {
         self.timeOutOfService = try container.decode(String.self, forKey: .timeOutOfService)
         self.symptomDescription = try container.decode(String.self, forKey: .symptomDescription)
         self.displayOrder = try container.decode(Double.self, forKey: .displayOrder)
-        self.dateOutOfService = try stringToDate(try container.decode(String.self, forKey: .dateOutOfService))
+        self.dateOutOfService = try (try container.decode(String.self, forKey: .dateOutOfService)).toDate()
         self.dateUpdated = try container.decode(String.self, forKey: .dateUpdated)
         self.estimatedReturnToService = try container.decode(String.self, forKey: .estimatedReturnToService)
         
     }
     
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+     
+        try container.encode(self.unitName, forKey: .unitName)
+        try container.encode(self.unitType, forKey: .unitType)
+        try container.encode(self.unitStatus, forKey: .unitStatus)
+        try container.encode(self.station.description, forKey: .station)
+        try container.encode(self.stationName, forKey: .stationName)
+        try container.encode(self.locationDescription, forKey: .locationDescription)
+        try container.encode(self.symptomCode, forKey: .symptomCode)
+        try container.encode(self.timeOutOfService, forKey: .timeOutOfService)
+        try container.encode(self.symptomDescription, forKey: .symptomDescription)
+        try container.encode(self.displayOrder, forKey: .displayOrder)
+        try container.encode(self.dateOutOfService.toWMATAString(), forKey: .dateOutOfService)
+        try container.encode(self.dateUpdated, forKey: .dateUpdated)
+        try container.encode(self.estimatedReturnToService, forKey: .estimatedReturnToService)
+        
+    }
+    
 }
 
-public struct RailIncidents: Decodable {
+public struct RailIncidents: Codable {
     public let incidents: [RailIncident]
     
     enum CodingKeys: String, CodingKey {
@@ -920,7 +1093,7 @@ public struct RailIncidents: Decodable {
     }
 }
 
-public struct RailIncident: Decodable {
+public struct RailIncident: Codable {
     public let incidentID: String
     public let description: String
     public let startLocationFullName: String?
@@ -957,7 +1130,24 @@ public struct RailIncident: Decodable {
         self.incidentType = try container.decode(String.self, forKey: .incidentType)
         self.emergencyText = try container.decode(String?.self, forKey: .emergencyText)
         self.linesAffected = try container.decode(String.self, forKey: .linesAffected)
-        self.dateUpdated = try stringToDate(try container.decode(String.self, forKey: .dateUpdated))
+        self.dateUpdated = try (try container.decode(String.self, forKey: .dateUpdated)).toDate()
         
     }
+    
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+     
+        try container.encode(self.incidentID, forKey: .incidentID)
+        try container.encode(self.description, forKey: .description)
+        try container.encode(self.startLocationFullName, forKey: .startLocationFullName)
+        try container.encode(self.endLocationFullName, forKey: .endLocationFullName)
+        try container.encode(self.passengerDelay, forKey: .passengerDelay)
+        try container.encode(self.delaySeverity, forKey: .delaySeverity)
+        try container.encode(self.incidentType, forKey: .incidentType)
+        try container.encode(self.emergencyText, forKey: .emergencyText)
+        try container.encode(self.linesAffected, forKey: .linesAffected)
+        try container.encode(self.dateUpdated.toWMATAString(), forKey: .dateUpdated)
+        
+    }
+    
 }
