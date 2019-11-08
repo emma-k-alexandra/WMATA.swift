@@ -9,6 +9,12 @@ import Foundation
 
 public struct Stop: Codable {
     public let id: String
+    
+    public init(id: String) {
+        self.id = id
+        
+    }
+    
 }
 
 extension Stop: NeedsStop {

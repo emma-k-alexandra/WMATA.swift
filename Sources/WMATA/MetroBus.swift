@@ -12,13 +12,13 @@ public struct MetroBus: Fetcher, RequestBuilder {
     public let key: String
     public var urlSession: URLSession
     
-    init(key: String) {
+    public init(key: String) {
         self.key = key
         self.urlSession = URLSession.shared
         
     }
     
-    init(key: String, urlSession: URLSession) {
+    public init(key: String, urlSession: URLSession) {
         self.key = key
         self.urlSession = urlSession
         
@@ -45,6 +45,7 @@ extension MetroBus {
         
         if let radiusAtCoordinates = radiusAtCoordinates {
             queryItems.append(contentsOf: radiusAtCoordinates.toQueryItems())
+            
         }
         
         self.fetch(with: self.buildRequest(fromUrl: BusURL.stops.rawValue, andQueryItems: queryItems, withApiKey: self.key), andSession: self.urlSession, completion: completion)
@@ -61,6 +62,7 @@ extension MetroBus: NeedsRoute {
     /// - parameter completion: Completion handler which returns `BusPositions`
     public func positions(on route: Route?, at radiusAtCoordinates: RadiusAtCoordinates?, completion: @escaping (Result<BusPositions, WMATAError>) -> ()) {
         (self as NeedsRoute).positions(on: route, at: radiusAtCoordinates, withApiKey: self.key, andSession: self.urlSession, completion: completion)
+        
     }
     
     /// Bus incidents along a given route.
@@ -69,6 +71,7 @@ extension MetroBus: NeedsRoute {
     /// - parameter completion: Completion handler which returns `BusIncidents`
     public func incidents(on route: Route?, completion: @escaping (Result<BusIncidents, WMATAError>) -> ()) {
         (self as NeedsRoute).incidents(on: route, withApiKey: self.key, andSession: self.urlSession, completion: completion)
+        
     }
     
     /// Ordered latlong points along this Route for a given date. Omit date to get path information for today.
@@ -78,6 +81,7 @@ extension MetroBus: NeedsRoute {
     /// - parameter completion: Completion handler which returns `PathDetails`
     public func pathDetails(for route: Route, on date: WMATADate? = nil, completion: @escaping (Result<PathDetails, WMATAError>) -> ()) {
         (self as NeedsRoute).pathDetails(for: route, on: date, withApiKey: self.key, andSession: self.urlSession, completion: completion)
+        
     }
     
     /// Scheduled stops for this Route
@@ -88,7 +92,9 @@ extension MetroBus: NeedsRoute {
     /// - parameter completion: Completion handler which returns `RoutesResponse`
     public func schedule(for route: Route, on date: WMATADate? = nil, includingVariations: Bool? = false, completion: @escaping (Result<RouteSchedule, WMATAError>) -> ()) {
         (self as NeedsRoute).schedule(for: route, on: date, includingVariations: includingVariations, withApiKey: self.key, andSession: self.urlSession, completion: completion)
+        
     }
+    
 }
 
 extension MetroBus: NeedsStop {
@@ -98,6 +104,7 @@ extension MetroBus: NeedsStop {
     /// - parameter completion: Completion handler which returns `BusPredictions`
     public func nextBuses(for stop: Stop, completion: @escaping (Result<BusPredictions, WMATAError>) -> ()) {
         (self as NeedsStop).nextBuses(for: stop, withApiKey: self.key, andSession: self.urlSession, completion: completion)
+        
     }
     
     /// Set of buses scheduled to arrive at this Stop at a given date.
@@ -107,5 +114,7 @@ extension MetroBus: NeedsStop {
     /// - parameter completion: Completion handler which returns `StopSchedule`
     public func schedule(for stop: Stop, at date: WMATADate? = nil, completion: @escaping (Result<StopSchedule, WMATAError>) -> ()) {
         (self as NeedsStop).schedule(for: stop, at: date, withApiKey: self.key, andSession: self.urlSession, completion: completion)
+        
     }
+    
 }
