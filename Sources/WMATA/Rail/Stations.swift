@@ -475,6 +475,54 @@ extension Station {
         
     }
     
+    public var lines: [Line] {
+        switch self {
+        case .A01, .C01:
+            return [.BL, .OR, .SV, .RD]
+            
+        case .A02, .A03, .A04, .A05, .A06, .A07, .A08, .A09, .A10, .A11, .A12, .A13, .A14, .A15, .B02, .B03, .B04, .B05, .B07, .B08, .B09, .B10, .B11, .B35:
+            return [.RD]
+            
+        case .B01, .B06, .E06, .F01:
+            return [.RD, .YL, .GR]
+            
+        case .C02, .C03, .C04, .C05, .D01, .D02, .D04, .D05, .D06, .D07, .D08:
+            return [.BL, .OR, .SV]
+            
+        case .C06, .J02, .J03:
+            return [.BL]
+        
+        case .C07, .C08, .C09, .C10, .C12, .C13:
+            return [.BL, .YL]
+            
+        case .C14, .C15:
+            return [.YL]
+            
+        case .D03, .F03:
+            return [.GR, .YL, .BL, .OR, .SV]
+            
+        case .D09, .D10, .D11, .D12, .D13, .K06, .K07, .K08:
+            return [.OR]
+            
+        case .E01, .E02, .E03, .E04, .E05, .E07, .E08, .E09, .E10, .F02:
+            return [.GR, .YL]
+            
+        case .F04, .F05, .F06, .F07, .F08, .F09, .F10, .F11:
+            return [.GR]
+            
+        case .G01, .G02, .G03, .G04, .G05:
+            return [.BL, .SV]
+            
+        case .K01, .K02, .K03, .K04, .K05:
+            return [.OR, .SV]
+            
+        case .N01, .N02, .N03, .N04, .N06:
+            return [.SV]
+            
+        }
+        
+    }
+    
 }
 
 extension Station: CustomStringConvertible {
