@@ -30,6 +30,36 @@ extension Line: NeedsLine {
     
 }
 
+extension Line {
+    public var name: String {
+        switch self {
+        case .RD:
+            return "Red"
+            
+        case .BL:
+            return "Blue"
+            
+        case .YL:
+            return "Yellow"
+            
+        case .OR:
+            return "Orange"
+            
+        case .GR:
+            return "Green"
+            
+        case .SV:
+            return "Silver"
+            
+        case .YLRP:
+            return "Yellow Rush Push"
+            
+        }
+        
+    }
+    
+}
+
 extension Line: CustomStringConvertible {
     public var description: String {
         self.rawValue
