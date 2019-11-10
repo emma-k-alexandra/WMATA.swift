@@ -117,10 +117,19 @@ extension MetroRail: NeedsStation {
     
     /// Next train arrival information for this station
     ///
-    /// - parameter station: `StationCode` to search for trains at
+    /// - parameter station: `Station` to search for trains at
     /// - parameter completion: Completion handler which returns `RailPredictions`
     public func nextTrains(at station: Station, completion: @escaping (Result<RailPredictions, WMATAError>) -> ()) {
         (self as NeedsStation).nextTrains(at: station, withApiKey: self.key, andSession: self.urlSession, completion: completion)
+        
+    }
+    
+    /// Next train arrival information for the given stations
+    ///
+    /// - parameter stations: `[Station]`s to look up next trains for
+    /// - parameter completion: Completion handler which returns `RailPredictions`
+    public func nextTrains(at stations: [Station], completion: @escaping (Result<RailPredictions, WMATAError>) -> ()) {
+        (self as NeedsStation).nextTrains(at: stations, withApiKey: self.key, andSession: self.urlSession, completion: completion)
         
     }
     

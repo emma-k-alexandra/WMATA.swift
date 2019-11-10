@@ -88,6 +88,21 @@ extension NeedsStation {
         
     }
     
+    func nextTrains(at stations: [Station], withApiKey apiKey: String, andSession session: URLSession, completion: @escaping (Result<RailPredictions, WMATAError>) -> ()) {
+        var urlArray = [RailURL.nextTrains.rawValue]
+        urlArray.append(contentsOf: stations.map { $0.rawValue })
+        
+        self.fetch(
+            with: self.buildRequest(
+                fromUrl: urlArray.joined(separator: ","),
+                andQueryItems: [],
+                withApiKey: apiKey
+            ),
+            andSession: session,
+            completion: completion)
+        
+    }
+    
     func information(for station: Station, withApiKey apiKey: String, andSession session: URLSession, completion: @escaping (Result<StationInformation, WMATAError>) -> ()) {
         self.fetch(
             with: self.buildRequest(
