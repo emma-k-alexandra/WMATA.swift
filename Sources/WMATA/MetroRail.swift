@@ -8,9 +8,10 @@
 import Foundation
 
 /// MetroRail related methods
-public struct MetroRail: Fetcher, RequestBuilder {
+public struct MetroRail: Fetcher {
     public let key: String
     public var urlSession: URLSession
+    public var delegate: WMATADelegate? = nil
     
     public init(key: String) {
         self.key = key
@@ -24,15 +25,40 @@ public struct MetroRail: Fetcher, RequestBuilder {
         
     }
     
+    public init(key: String, delegate: WMATADelegate) {
+        self.key = key
+        self.urlSession = URLSession(
+            configuration: URLSessionConfiguration.background(
+                withIdentifier: "WMATA Background URL Session Configuration"
+            ),
+            delegate: delegate,
+            delegateQueue: nil
+        )
+        self.delegate = delegate
+        
+    }
+    
 }
 
 // These don't required a Station or Line Code
 extension MetroRail {
+    public func lines() {
+        self.request(
+            with: URLRequest(url: RailURL.lines.rawValue, queryItems: [], apiKey: self.key),
+            and: self.urlSession
+        )
+        
+    }
+    
     /// General information on all MetroRail lines
     ///
     /// - parameter completion: Completion handler which returns `LinesResponse`
     public func lines(completion: @escaping (Result<LinesResponse, WMATAError>) -> ()) {
-        self.fetch(with: self.buildRequest(fromUrl: RailURL.lines.rawValue, andQueryItems: [], withApiKey: self.key), andSession: self.urlSession, completion: completion)
+        self.fetch(
+            with: URLRequest(url: RailURL.lines.rawValue, queryItems: [], apiKey: self.key),
+            andSession: self.urlSession,
+            completion: completion
+        )
         
     }
     
@@ -49,11 +75,7 @@ extension MetroRail {
         }
         
         self.fetch(
-            with: self.buildRequest(
-                fromUrl: RailURL.entrances.rawValue,
-                andQueryItems: queryItems,
-                withApiKey: self.key
-            ),
+            with: URLRequest(url: RailURL.entrances.rawValue, queryItems: queryItems, apiKey: self.key),
             andSession: self.urlSession,
             completion: completion
         )
@@ -64,7 +86,11 @@ extension MetroRail {
     ///
     /// - parameter completion: Completion handler which returns `TrainPositions`
     public func positions(completion: @escaping (Result<TrainPositions, WMATAError>) -> ()) {
-        self.fetch(with: self.buildRequest(fromUrl: RailURL.positions.rawValue, andQueryItems: [("contentType", "json")], withApiKey: self.key), andSession: self.urlSession, completion: completion)
+        self.fetch(
+            with: URLRequest(url: RailURL.positions.rawValue, queryItems: [("contentType", "json")], apiKey: self.key),
+            andSession: self.urlSession,
+            completion: completion
+        )
         
     }
     
@@ -72,7 +98,11 @@ extension MetroRail {
     ///
     /// - parameter completion: Completion handler which returns `StandardRoutes`
     public func routes(completion: @escaping (Result<StandardRoutes, WMATAError>) -> ()) {
-        self.fetch(with: self.buildRequest(fromUrl: RailURL.routes.rawValue, andQueryItems: [("contentType", "json")], withApiKey: self.key), andSession: self.urlSession, completion: completion)
+        self.fetch(
+            with: URLRequest(url: RailURL.routes.rawValue, queryItems: [("contentType", "json")], apiKey: self.key),
+            andSession: self.urlSession,
+            completion: completion
+        )
         
     }
     
@@ -80,7 +110,11 @@ extension MetroRail {
     ///
     /// - parameter completion: Completion handler which returns `TrackCircuits`
     public func circuits(completion: @escaping (Result<TrackCircuits, WMATAError>) -> ()) {
-        self.fetch(with: self.buildRequest(fromUrl: RailURL.circuits.rawValue, andQueryItems: [("contentType", "json")], withApiKey: self.key), andSession: self.urlSession, completion: completion)
+        self.fetch(
+            with: URLRequest(url: RailURL.circuits.rawValue, queryItems: [("contentType", "json")], apiKey: self.key),
+            andSession: self.urlSession,
+            completion: completion
+        )
         
     }
     

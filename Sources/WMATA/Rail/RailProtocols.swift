@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol NeedsStation: Fetcher, RequestBuilder {}
+protocol NeedsStation: Fetcher {}
 
 extension NeedsStation {
     func station(_ station: Station?, to destinationStation: Station?, withApiKey apiKey: String, andSession session: URLSession, completion: @escaping (Result<StationToStationInfos, WMATAError>) -> ()) {
@@ -24,11 +24,7 @@ extension NeedsStation {
         }
         
         self.fetch(
-            with: self.buildRequest(
-                fromUrl: RailURL.stationToStation.rawValue,
-                andQueryItems: queryItems,
-                withApiKey: apiKey
-            ),
+            with: URLRequest(url: RailURL.stationToStation.rawValue, queryItems: queryItems, apiKey: apiKey),
             andSession: session,
             completion: completion
         )
@@ -44,11 +40,7 @@ extension NeedsStation {
         }
         
         self.fetch(
-            with: self.buildRequest(
-                fromUrl: RailURL.elevatorAndEscalatorIncidents.rawValue,
-                andQueryItems: queryItems,
-                withApiKey: apiKey
-            ),
+            with: URLRequest(url: RailURL.elevatorAndEscalatorIncidents.rawValue, queryItems: queryItems, apiKey: apiKey),
             andSession: session,
             completion: completion
         )
@@ -64,11 +56,7 @@ extension NeedsStation {
         }
         
         self.fetch(
-            with: self.buildRequest(
-                fromUrl: RailURL.incidents.rawValue,
-                andQueryItems: queryItems,
-                withApiKey: apiKey
-            ),
+            with: URLRequest(url: RailURL.incidents.rawValue, queryItems: queryItems, apiKey: apiKey),
             andSession: session,
             completion: completion
         )
@@ -77,11 +65,7 @@ extension NeedsStation {
     
     func nextTrains(at station: Station, withApiKey apiKey: String, andSession session: URLSession, completion: @escaping (Result<RailPredictions, WMATAError>) -> ()) {
         self.fetch(
-            with: self.buildRequest(
-                fromUrl: "\(RailURL.nextTrains.rawValue)\(station)",
-                andQueryItems: [],
-                withApiKey: apiKey
-            ),
+            with: URLRequest(url: "\(RailURL.nextTrains.rawValue)\(station)", queryItems: [], apiKey: apiKey),
             andSession: session,
             completion: completion
         )
@@ -93,11 +77,7 @@ extension NeedsStation {
         urlArray.append(contentsOf: stations.map { $0.rawValue })
         
         self.fetch(
-            with: self.buildRequest(
-                fromUrl: urlArray.joined(separator: ","),
-                andQueryItems: [],
-                withApiKey: apiKey
-            ),
+            with: URLRequest(url: urlArray.joined(separator: ","), queryItems: [], apiKey: apiKey),
             andSession: session,
             completion: completion)
         
@@ -105,11 +85,7 @@ extension NeedsStation {
     
     func information(for station: Station, withApiKey apiKey: String, andSession session: URLSession, completion: @escaping (Result<StationInformation, WMATAError>) -> ()) {
         self.fetch(
-            with: self.buildRequest(
-                fromUrl: RailURL.information.rawValue,
-                andQueryItems: [("StationCode", station.rawValue)],
-                withApiKey: apiKey
-            ),
+            with: URLRequest(url: RailURL.information.rawValue, queryItems: [("StationCode", station.rawValue)], apiKey: apiKey),
             andSession: session,
             completion: completion
         )
@@ -118,11 +94,7 @@ extension NeedsStation {
     
     func parkingInformation(for station: Station, withApiKey apiKey: String, andSession session: URLSession, completion: @escaping (Result<StationsParking, WMATAError>) -> ()) {
         self.fetch(
-            with: self.buildRequest(
-                fromUrl: RailURL.parkingInformation.rawValue,
-                andQueryItems: [("StationCode", station.rawValue)],
-                withApiKey: apiKey
-            ),
+            with: URLRequest(url: RailURL.parkingInformation.rawValue, queryItems: [("StationCode", station.rawValue)], apiKey: apiKey),
             andSession: session,
             completion: completion
         )
@@ -131,10 +103,13 @@ extension NeedsStation {
     
     func path(from startingStation: Station, to destinationStation: Station, withApiKey apiKey: String, andSession session: URLSession, completion: @escaping (Result<PathBetweenStations, WMATAError>) -> ()) {
         self.fetch(
-            with: self.buildRequest(
-                fromUrl: RailURL.path.rawValue,
-                andQueryItems: [("FromStationCode", startingStation.rawValue), ("ToStationCode", destinationStation.rawValue)],
-                withApiKey: apiKey
+            with: URLRequest(
+                url: RailURL.path.rawValue,
+                queryItems: [
+                    ("FromStationCode", startingStation.rawValue),
+                    ("ToStationCode", destinationStation.rawValue)
+                ],
+                apiKey: apiKey
             ),
             andSession: session,
             completion: completion
@@ -144,11 +119,7 @@ extension NeedsStation {
     
     func timings(for station: Station, withApiKey apiKey: String, andSession session: URLSession, completion: @escaping (Result<StationTimings, WMATAError>) -> ()) {
         self.fetch(
-            with: self.buildRequest(
-                fromUrl: RailURL.timings.rawValue,
-                andQueryItems: [("StationCode", station.rawValue)],
-                withApiKey: apiKey
-            ),
+            with: URLRequest(url: RailURL.timings.rawValue, queryItems: [("StationCode", station.rawValue)], apiKey: apiKey),
             andSession: session,
             completion: completion
         )
@@ -156,7 +127,7 @@ extension NeedsStation {
     }
 }
 
-protocol NeedsLine: Fetcher, RequestBuilder {}
+protocol NeedsLine: Fetcher {}
 
 extension NeedsLine {
     func stations(for line: Line?, withApiKey apiKey: String, andSession session: URLSession, completion: @escaping (Result<Stations, WMATAError>) -> ()) {
@@ -168,11 +139,7 @@ extension NeedsLine {
         }
         
         self.fetch(
-            with: self.buildRequest(
-                fromUrl: RailURL.stations.rawValue,
-                andQueryItems: queryItems,
-                withApiKey: apiKey
-            ),
+            with: URLRequest(url: RailURL.stations.rawValue, queryItems: queryItems, apiKey: apiKey),
             andSession: session,
             completion: completion
         )

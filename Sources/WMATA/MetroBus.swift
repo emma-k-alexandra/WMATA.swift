@@ -8,7 +8,7 @@
 import Foundation
 
 /// MetroBus related methods
-public struct MetroBus: Fetcher, RequestBuilder {
+public struct MetroBus: Fetcher {
     public let key: String
     public var urlSession: URLSession
     
@@ -32,7 +32,11 @@ extension MetroBus {
     ///
     /// - parameter completion: Completion handler which returns `RoutesResponse`
     public func routes(completion: @escaping (Result<RoutesResponse, WMATAError>) -> ()) {
-        self.fetch(with: self.buildRequest(fromUrl: BusURL.routes.rawValue, andQueryItems: [], withApiKey: self.key), andSession: self.urlSession, completion: completion)
+        self.fetch(
+            with:  URLRequest(url: BusURL.routes.rawValue, queryItems: [], apiKey: self.key),
+            andSession: self.urlSession,
+            completion: completion
+        )
         
     }
     
@@ -48,7 +52,11 @@ extension MetroBus {
             
         }
         
-        self.fetch(with: self.buildRequest(fromUrl: BusURL.stops.rawValue, andQueryItems: queryItems, withApiKey: self.key), andSession: self.urlSession, completion: completion)
+        self.fetch(
+            with: URLRequest(url: BusURL.stops.rawValue, queryItems: queryItems, apiKey: self.key),
+            andSession: self.urlSession,
+            completion: completion
+        )
         
     }
     

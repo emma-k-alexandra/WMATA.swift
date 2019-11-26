@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol NeedsRoute: Fetcher, RequestBuilder {}
+protocol NeedsRoute: Fetcher {}
 
 extension NeedsRoute {
     func positions(on routeId: Route?, at radiusAtCoordinates: RadiusAtCoordinates?, withApiKey apiKey: String, andSession session: URLSession = URLSession.shared, completion: @escaping (Result<BusPositions, WMATAError>) -> ()) {
@@ -22,7 +22,11 @@ extension NeedsRoute {
             queryItems.append(contentsOf: radiusAtCoordinates.toQueryItems())
         }
         
-        self.fetch(with: self.buildRequest(fromUrl: BusURL.positions.rawValue, andQueryItems: queryItems, withApiKey: apiKey), andSession: session, completion: completion)
+        self.fetch(
+            with: URLRequest(url: BusURL.positions.rawValue, queryItems: queryItems, apiKey: apiKey),
+            andSession: session,
+            completion: completion
+        )
         
     }
     
@@ -34,7 +38,11 @@ extension NeedsRoute {
             
         }
         
-        self.fetch(with: self.buildRequest(fromUrl: BusURL.incidents.rawValue, andQueryItems: queryItems, withApiKey: apiKey), andSession: session, completion: completion)
+        self.fetch(
+            with:  URLRequest(url: BusURL.incidents.rawValue, queryItems: queryItems, apiKey: apiKey),
+            andSession: session,
+            completion: completion
+        )
     }
     
     func pathDetails(for route: Route, on date: WMATADate? = nil, withApiKey apiKey: String, andSession session: URLSession = URLSession.shared, completion: @escaping (Result<PathDetails, WMATAError>) -> ()) {
@@ -45,7 +53,11 @@ extension NeedsRoute {
             
         }
         
-     self.fetch(with: self.buildRequest(fromUrl: BusURL.pathDetails.rawValue, andQueryItems: queryItems, withApiKey: apiKey), andSession: session, completion: completion)
+         self.fetch(
+            with:  URLRequest(url: BusURL.pathDetails.rawValue, queryItems: queryItems, apiKey: apiKey),
+            andSession: session,
+            completion: completion
+        )
         
     }
     
@@ -62,17 +74,25 @@ extension NeedsRoute {
             
         }
         
-        self.fetch(with: self.buildRequest(fromUrl: BusURL.routeSchedule.rawValue, andQueryItems: queryItems, withApiKey: apiKey), andSession: session, completion: completion)
+        self.fetch(
+            with: URLRequest(url: BusURL.routeSchedule.rawValue, queryItems: queryItems, apiKey: apiKey),
+            andSession: session,
+            completion: completion
+        )
         
     }
     
 }
 
-protocol NeedsStop: Fetcher, RequestBuilder {}
+protocol NeedsStop: Fetcher {}
 
 extension NeedsStop {
     func nextBuses(for stop: Stop, withApiKey apiKey: String, andSession session: URLSession = URLSession.shared, completion: @escaping (Result<BusPredictions, WMATAError>) -> ()) {
-        self.fetch(with: self.buildRequest(fromUrl: BusURL.nextBuses.rawValue, andQueryItems: [("StopID", stop.id)], withApiKey: apiKey), andSession: session, completion: completion)
+        self.fetch(
+            with:  URLRequest(url: BusURL.nextBuses.rawValue, queryItems: [("StopID", stop.id)], apiKey: apiKey),
+            andSession: session,
+            completion: completion
+        )
         
     }
     
@@ -84,7 +104,11 @@ extension NeedsStop {
             
         }
         
-        self.fetch(with: self.buildRequest(fromUrl: BusURL.stopSchedule.rawValue, andQueryItems: queryItems, withApiKey: apiKey), andSession: session, completion: completion)
+        self.fetch(
+            with:  URLRequest(url: BusURL.stopSchedule.rawValue, queryItems: queryItems, apiKey: apiKey),
+            andSession: session,
+            completion: completion
+        )
         
     }
 }
