@@ -11,7 +11,6 @@ import Foundation
 public struct MetroRail: Fetcher {
     public let key: String
     public var urlSession: URLSession
-    public var delegate: WMATADelegate? = nil
     
     public init(key: String) {
         self.key = key
@@ -25,31 +24,10 @@ public struct MetroRail: Fetcher {
         
     }
     
-    public init(key: String, delegate: WMATADelegate) {
-        self.key = key
-        self.urlSession = URLSession(
-            configuration: URLSessionConfiguration.background(
-                withIdentifier: "WMATA Background URL Session Configuration"
-            ),
-            delegate: delegate,
-            delegateQueue: nil
-        )
-        self.delegate = delegate
-        
-    }
-    
 }
 
 // These don't required a Station or Line Code
 extension MetroRail {
-    public func lines() {
-        self.request(
-            with: URLRequest(url: RailURL.lines.rawValue, queryItems: [], apiKey: self.key),
-            and: self.urlSession
-        )
-        
-    }
-    
     /// General information on all MetroRail lines
     ///
     /// - parameter completion: Completion handler which returns `LinesResponse`

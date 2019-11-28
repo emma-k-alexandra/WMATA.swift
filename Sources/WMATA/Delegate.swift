@@ -18,11 +18,3 @@ extension WMATADelegate {
     }
     
 }
-
-extension URLSessionDataTask {
-    var responseType: Codable.Type {
-        RailPrediction.self
-        
-    }
-    
-}
