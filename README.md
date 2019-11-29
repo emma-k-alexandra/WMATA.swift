@@ -43,12 +43,12 @@ MetroRail(key: apiKey).nextTrains(at: .A01) { result in
     switch result {
     case .success(let predictions):
         print(predictions)
-        
+
     case .failure(let error):
         print(error)
-        
+
     }
-    
+
 }
 ```
 
@@ -72,12 +72,12 @@ WMATA.swift breaks the WMATA API into MetroRail and MetroBus via the `MetroRail`
     switch result {
     case .success(let lines):
         print(lines)
-        
+
     case .failure(let error):
         print(error)
-        
+
     }
-    
+
 }
 ```
 
@@ -91,12 +91,12 @@ MetroRail(key: apiKey).entrances(at: RadiusAtCoordinates(radius: 1000, coordinat
     switch result {
     case .success(let entrances):
         print(entrances)
-        
+
     case .failure(let error):
         print(error)
-        
+
     }
-    
+
 }
 ```
 
@@ -110,12 +110,12 @@ MetroRail(key: apiKey).stations(for: .BL) { result in
     switch result {
     case .success(let stations):
         print(stations)
-        
+
     case .failure(let error):
         print(error)
-        
+
     }
-    
+
 }
 ```
 
@@ -129,12 +129,12 @@ MetroRail(key: apiKey).station(.A01, to: .A02) { result in
     switch result {
     case .success(let travelInfo):
         print(travelInfo)
-        
+
     case .failure(let error):
         print(error)
-        
+
     }
-    
+
 }
 ```
 
@@ -148,12 +148,12 @@ MetroRail(key: apiKey).positions { result in
     switch result {
     case .success(let positions):
         print(positions)
-        
+
     case .failure(let error):
         print(error)
-        
+
     }
-    
+
 }
 ```
 
@@ -167,12 +167,12 @@ MetroRail(key: apiKey).routes { result in
     switch result {
     case .success(let routes):
         print(routes)
-        
+
     case .failure(let error):
         print(error)
-        
+
     }
-    
+
 }
 ```
 
@@ -186,12 +186,12 @@ MetroRail(key: apiKey).circuits { result in
     switch result {
     case .success(let circuits):
         print(circuits)
-        
+
     case .failure(let error):
         print(error)
-        
+
     }
-    
+
 }
 ```
 
@@ -205,12 +205,12 @@ MetroRail(key: apiKey).elevatorAndEscalatorIncidents(at: .A01) { result in
     switch result {
     case .success(let incidents):
         print(incidents)
-        
+
     case .failure(let error):
         print(error)
-        
+
     }
-    
+
 }
 ```
 
@@ -224,11 +224,11 @@ MetroRail(key: apiKey).incidents(at: .A01) { result in
     switch result {
     case .success(let incidents):
         print(incidents)
-        
+
     case .failure(let error):
         print(error)
     }
-    
+
 }
 ```
 
@@ -242,12 +242,12 @@ MetroRail(key: apiKey).incidents(at: .A01) { result in
     switch result {
     case .success(let stations):
         print(stations)
-        
+
     case .failure(let error):
         print(error)
-        
+
     }
-    
+
 }
 ```
 
@@ -261,12 +261,12 @@ MetroRail(key: apiKey).nextTrains(at: .A01) { result in
     switch result {
     case .success(let predictions):
         print(predictions)
-        
+
     case .failure(let error):
         print(error)
-        
+
     }
-    
+
 }
 ```
 
@@ -280,12 +280,12 @@ MetroRail(key: apiKey).information(for: .A01) { result in
     switch result {
     case .success(let information):
         print(information)
-        
+
     case .failure(let error):
         print(error)
-        
+
     }
-    
+
 }
 ```
 
@@ -299,12 +299,12 @@ MetroRail(key: apiKey).parkingInformation(for: .A01) { result in
     switch result {
     case .success(let parkingInfo):
         print(parkingInfo)
-        
+
     case .failure(let error):
         print(error)
-        
+
     }
-    
+
 }
 ```
 
@@ -318,12 +318,12 @@ MetroRail(key: apiKey).path(from: .A01 to: .A02) { result in
     switch result {
     case .success(let path):
         print(path)
-        
+
     case .failure(let error):
         print(error)
-        
+
     }
-    
+
 }
 ```
 
@@ -337,12 +337,12 @@ MetroRail(key: apiKey).timings(for: .A01) { result in
     switch result {
     case .success(let timings):
         print(timings)
-        
+
     case .failure(let error):
         print(error)
-        
+
     }
-    
+
 }
 ```
 
@@ -358,12 +358,12 @@ MetroBus(key: apiKey).positions(on: ._10A, at: RadiusAtCoordinates(radius: 1000,
     switch result {
     case .success(let positions):
         print(positions)
-        
+
     case .failure(let error):
         print(error)
-        
+
     }
-    
+
 }
 ```
 
@@ -377,12 +377,12 @@ MetroBus(key: apiKey).routes { result in
     switch result {
     case .success(let routes):
         print(routes)
-        
+
     case .failure(let error):
         print(error)
-        
+
     }
-    
+
 }
 ```
 
@@ -396,12 +396,12 @@ MetroBus(key: apiKey).searchStops(at: RadiusAtCoordinates(radius: 1000, coordina
     switch result {
     case .success(let stops):
         print(stops)
-        
+
     case .failure(let error):
         print(error)
-        
+
     }
-    
+
 }
 ```
 
@@ -415,12 +415,12 @@ MetroBus(key: apiKey).incidents(on: ._10A) { result in
     switch result {
     case .success(let incidents):
         print(incidents)
-        
+
     case .failure(let error):
         print(error)
-        
+
     }
-    
+
 }
 ```
 
@@ -434,12 +434,12 @@ MetroBus(key: apiKey).positions(at: ._10A, at: RadiusAtCoordinates(radius: 1000,
     switch result {
     case .success(let positions):
         print(positions)
-        
+
     case .failure(let error):
         print(error)
-        
+
     }
-    
+
 }
 ```
 
@@ -453,12 +453,12 @@ MetroBus(key: apiKey).pathDetails(for: ._10A) { result in
     switch result {
     case .success(let path):
         print(path)
-        
+
     case .failure(let error):
         print(error)
-        
+
     }
-    
+
 }
 ```
 
@@ -472,12 +472,12 @@ MetroBus(key: apiKey).schedule(for: ._10A) { result in
     switch result {
     case .success(let schedule):
         print(schedule)
-        
+
     case .failure(let error):
         print(error)
-        
+
     }
-    
+
 }
 ```
 
@@ -491,12 +491,12 @@ MetroBus(key: apiKey).nextBuses(for: Stop(id: "1001195")) { result in
     switch result {
     case .success(let predictions):
         print(predictions)
-        
+
     case .failure(let error):
         print(error)
-        
+
     }
-    
+
 }
 ```
 
@@ -510,12 +510,12 @@ MetroBus(key: apiKey).schedule(for: Stop(id: "1001195")) { result in
     switch result {
     case .success(let schedule):
         print(schedule)
-        
+
     case .failure(let error):
         print(error)
-        
+
     }
-    
+
 }
 ```
 
@@ -527,7 +527,7 @@ Background requests can be made using a`WMATADelegate` on `MetroRail` or `MetroB
 import WMATA
 
 class Delegate: WMATADelegate {
-    
+
 }
 ```
 
@@ -539,10 +539,10 @@ class Delegate: WMATADelegate {
         switch result {
         case .success(let lines):
             print(lines)
-        
+
         case .failure(let error):
             print(error)
-            
+
         }
 
     }
@@ -550,7 +550,12 @@ class Delegate: WMATADelegate {
 }
 ```
 
+Finally, create a `MetroBus` or `MetroRail` instance with an instance of your delegate and make requests!
 
+```swift
+let delegate = Delegate()
+let metroRail = MetroRail(key: apiKey, delegate: Delegate())
+```
 
 ## Dependencies
 
