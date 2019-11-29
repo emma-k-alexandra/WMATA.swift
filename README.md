@@ -3,26 +3,29 @@
 WMATA.swift is a lightweight Swift interface to the [Washington Metropolitan Area Transit Authority API](https://developer.wmata.com).
 
 ## Contents
+
 - [Requirements](#requirements)
 - [Installation](#installation)
 - [Usage](#usage)
-    - [Getting Started](#getting-started)
-    - [Design](#design)
-    - [New in v4](#new-in-v4)
-    - [Using `MetroRail`](#using-MetroRail)
-    - [Using `MetroBus`](#using-MetroBus)
+  - [Getting Started](#getting-started)
+  - [Design](#design)
+  - [New in v4](#new-in-v4)
+  - [Using `MetroRail`](#using-MetroRail)
+  - [Using `MetroBus`](#using-MetroBus)
+  - [Background Requests & `WMATADelegate`](#background-requests-&-WMATADelegate)
 - [Dependencies](#dependencies)
 - [Testing](#testing)
 - [Contact](#contact)
 - [License](#license)
 
-
 ## Requirements
+
 - Swift 5.1+
 
 ## Installation
 
 ### Swift Package Manager
+
 ```swift
 dependencies: [
     .package(url: "https://github.com/emma-foster/WMATA.swift.git", from: "5.4.0")
@@ -32,6 +35,7 @@ dependencies: [
 ## Usage
 
 ### Getting Started
+
 ```swift
 import WMATA
 
@@ -46,18 +50,21 @@ MetroRail(key: apiKey).nextTrains(at: .A01) { result in
 ```
 
 ### Design
+
 WMATA.swift breaks the WMATA API into MetroRail and MetroBus via the `MetroRail` and `MetroBus`.
 
 ### New in v4
+
 `MetroRail` and `MetroBus` still have all API methods associated with MetroRail and MetroBus respectively. In addition, `Stop`, `Route`, `Line` and `Station` have all API methods relevant to their respective data types. So, for example you can now call `nextBuses` on `Stop` and receive the next buses for that stop, without needing a `MetroBus` object.
 
 ### Using `MetroRail`
- 
- #### `lines`
+
+#### `lines`
+
  [WMATA Documentation](https://developer.wmata.com/docs/services/5476364f031f590f38092507/operations/5476364f031f5909e4fe330c)  
  Returns basic information on all MetroRail lines.
- 
- ```swift
+
+```swift
  MetroRail(key: apiKey).lines { result in
     switch result {
     case .success(let lines):
@@ -66,9 +73,10 @@ WMATA.swift breaks the WMATA API into MetroRail and MetroBus via the `MetroRail`
         print(error)
     }
 }
- ```
- 
- #### `entrances`
+```
+
+#### `entrances`
+
 [WMATA Documentation](https://developer.wmata.com/docs/services/5476364f031f590f38092507/operations/5476364f031f5909e4fe330f?)  
 Station entrances within a latlong pair and radius (in meters). Omit all parameters to receive all entrances.
 
@@ -84,6 +92,7 @@ MetroRail(key: apiKey).entrances(at: RadiusAtCoordinates(radius: 1000, coordinat
 ```
 
 #### `stations`
+
 [WMATA Documentation](https://developer.wmata.com/docs/services/5476364f031f590f38092507/operations/5476364f031f5909e4fe3311?)  
 Stations along a Line (optional)
 
@@ -99,6 +108,7 @@ MetroRail(key: apiKey).stations(for: .BL) { result in
 ```
 
 #### `station`
+
 [WMATA Documentation](https://developer.wmata.com/docs/services/5476364f031f590f38092507/operations/5476364f031f5909e4fe3313?)  
 Distance, fare information and estimated travel time between two stations. Omit both station codes for all possible trips.
 
@@ -114,6 +124,7 @@ MetroRail(key: apiKey).station(.A01, to: .A02) { result in
 ```
 
 #### `positions`
+
 [WMATA Documentation](https://developer.wmata.com/docs/services/5763fa6ff91823096cac1057/operations/5763fb35f91823096cac1058)  
 Uniquely identifiable trains in service and what track circuits they currently occupy
 
@@ -129,6 +140,7 @@ MetroRail(key: apiKey).positions { result in
 ```
 
 #### `routes`
+
 [WMATA Documentation](https://developer.wmata.com/docs/services/5763fa6ff91823096cac1057/operations/57641afc031f59363c586dca?)  
 Ordered list of track circuits, arranged by line and track number
 
@@ -144,6 +156,7 @@ MetroRail(key: apiKey).routes { result in
 ```
 
 #### `circuits`
+
 [WMATA Documentation](https://developer.wmata.com/docs/services/5763fa6ff91823096cac1057/operations/57644238031f59363c586dcb?)  
 List of all track circuits - also see [TrainPositionsFAQ](https://developer.wmata.com/TrainPositionsFAQ)
 
@@ -159,6 +172,7 @@ MetroRail(key: apiKey).circuits { result in
 ```
 
 #### `elevatorAndEscalatorIncidents`
+
 [WMATA Documentation](https://developer.wmata.com/docs/services/54763641281d83086473f232/operations/54763641281d830c946a3d76?)  
 Reported elevator and escalator incidents
 
@@ -174,6 +188,7 @@ MetroRail(key: apiKey).elevatorAndEscalatorIncidents(at: .A01) { result in
 ```
 
 #### `incidents`
+
 [WMATA Documentation](https://developer.wmata.com/docs/services/54763641281d83086473f232/operations/54763641281d830c946a3d77?)  
 Reported MetroRail incidents at a particular station (optional)
 
@@ -187,12 +202,13 @@ MetroRail(key: apiKey).incidents(at: .A01) { result in
     }
 }
 ```
- 
- #### `stations`
+
+#### `stations`
+
  [WMATA Documentation](https://developer.wmata.com/docs/services/5476364f031f590f38092507/operations/5476364f031f5909e4fe3311?)  
  Stations along a Line
- 
- ```swift
+
+```swift
  MetroRail(key: apiKey).stations(for: .BL) { result in 
     switch result {
     case .success(let stations):
@@ -201,13 +217,14 @@ MetroRail(key: apiKey).incidents(at: .A01) { result in
         print(error)
     }
 }
- ```
-  
-  #### `nextTrains`
+```
+
+#### `nextTrains`
+
   [WMATA Documentation](https://developer.wmata.com/docs/services/547636a6f9182302184cda78/operations/547636a6f918230da855363f)  
   Next train arrivals for this station.
-  
-  ```swift
+
+```swift
 MetroRail(key: apiKey).nextTrains(at: .A01) { result in
     switch result {
     case .success(let predictions):
@@ -217,12 +234,13 @@ MetroRail(key: apiKey).nextTrains(at: .A01) { result in
     }
 }
 ```
-  
-  #### `information`
+
+#### `information`
+
   [WMATA Documentation](https://developer.wmata.com/docs/services/5476364f031f590f38092507/operations/5476364f031f5909e4fe3310?)  
   Location and address information for this station.
-  
-  ```swift
+
+```swift
 MetroRail(key: apiKey).information(for: .A01) { result in
     switch result {
     case .success(let information):
@@ -234,6 +252,7 @@ MetroRail(key: apiKey).information(for: .A01) { result in
 ```
 
 #### `parkingInformation`
+
 [WMATA Documentation](https://developer.wmata.com/docs/services/5476364f031f590f38092507/operations/5476364f031f5909e4fe330d?)  
 Parking information for this station.
 
@@ -249,6 +268,7 @@ MetroRail(key: apiKey).parkingInformation(for: .A01) { result in
 ```
 
 #### `path`
+
 [WMATA Documentation](https://developer.wmata.com/docs/services/5476364f031f590f38092507/operations/5476364f031f5909e4fe330e?)  
 Returns a set of ordered stations and distances between stations *on the same line*
 
@@ -264,6 +284,7 @@ MetroRail(key: apiKey).path(from: .A01 to: .A02) { result in
 ```
 
 #### `timings`
+
 [WMATA Documentation](https://developer.wmata.com/docs/services/5476364f031f590f38092507/operations/5476364f031f5909e4fe3312?)  
 Opening times and scheduled first and last trains for this station
 
@@ -281,6 +302,7 @@ MetroRail(key: apiKey).timings(for: .A01) { result in
 ### Using `MetroBus`
 
 #### `positions`
+
 [WMATA Documentation](https://developer.wmata.com/docs/services/54763629281d83086473f231/operations/5476362a281d830c946a3d68)  
 Bus positions along a route (optional), at a latlong and within a radius (in meters)
 
@@ -296,6 +318,7 @@ MetroBus(key: apiKey).positions(on: ._10A, at: RadiusAtCoordinates(radius: 1000,
 ```
 
 #### `routes`
+
 [WMATA Documentation](https://developer.wmata.com/docs/services/54763629281d83086473f231/operations/5476362a281d830c946a3d6a?)  
 All bus routes
 
@@ -311,6 +334,7 @@ MetroBus(key: apiKey).routes { result in
 ```
 
 #### `searchStops`
+
 [WMATA Documentation](https://developer.wmata.com/docs/services/54763629281d83086473f231/operations/5476362a281d830c946a3d6d?)  
 Stops near a given latlong and within a given radius. Omit all parameters to receive all stops.
 
@@ -326,6 +350,7 @@ MetroBus(key: apiKey).searchStops(at: RadiusAtCoordinates(radius: 1000, coordina
 ```
 
 #### `incidents`
+
 [WMATA Documentation](https://developer.wmata.com/docs/services/54763641281d83086473f232/operations/54763641281d830c946a3d75?)  
 MetroBus incidents along an optional route.
 
@@ -341,6 +366,7 @@ MetroBus(key: apiKey).incidents(on: ._10A) { result in
 ```
 
 #### `positions`
+
 [WMATA Documentation](https://developer.wmata.com/docs/services/54763629281d83086473f231/operations/5476362a281d830c946a3d68)  
 Bus positions along this route, within an optional latlong and radius (in meters).
 
@@ -356,6 +382,7 @@ MetroBus(key: apiKey).positions(at: ._10A, at: RadiusAtCoordinates(radius: 1000,
 ```
 
 #### `pathDetails`
+
 [WMATA Documentation](https://developer.wmata.com/docs/services/54763629281d83086473f231/operations/5476362a281d830c946a3d69?)  
 Ordered latlong points along this Route for a given date. Omit for today.
 
@@ -371,6 +398,7 @@ MetroBus(key: apiKey).pathDetails(for: ._10A) { result in
 ```
 
 #### `schedule`
+
 [WMATA Documentation](https://developer.wmata.com/docs/services/54763629281d83086473f231/operations/5476362a281d830c946a3d6b?)  
 Scheduled stops for this Route
 
@@ -386,6 +414,7 @@ MetroBus(key: apiKey).schedule(for: ._10A) { result in
 ```
 
 #### `nextBuses`
+
 [WMATA Documentation](https://developer.wmata.com/docs/services/5476365e031f590f38092508/operations/5476365e031f5909e4fe331d)  
 Next bus arrivals at this Stop
 
@@ -401,6 +430,7 @@ MetroBus(key: apiKey).nextBuses(for: Stop(id: "1001195")) { result in
 ```
 
 #### `schedule`
+
 [WMATA Documentation](https://developer.wmata.com/docs/services/54763629281d83086473f231/operations/5476362a281d830c946a3d6c?)  
 Buses scheduled to arrival at this Stop at a given date. Omit for today.
 
@@ -415,13 +445,49 @@ MetroBus(key: apiKey).schedule(for: Stop(id: "1001195")) { result in
 }
 ```
 
+## Background Requests & `WMATADelegate`
+
+Background requests can be made using a`WMATADelegate` on `MetroRail` or `MetroBus`. First, create a class implementing `WMATADelegate`:
+
+```swift
+import WMATA
+
+class Delegate: WMATADelegate {
+    
+}
+```
+
+Then implement the `received` method for whichever method you plan on calling on the `MetroBus` or `MetroRail` object this delegate belongs to. For example, if yoy plan on calling `lines` on `MetroRail`, implement `received(linesResponse:` on your delegate.
+
+```swift
+class Delegate: WMATADelegate {
+    func received(linesResponse result: Result<LinesResponse, WMATAError>) {
+        switch result {
+        case .success(let lines):
+            print(lines)
+        
+        case .failure(let error):
+            print(error)
+            
+        }
+
+    }
+
+}
+```
+
+
+
 ## Dependencies
+
 None!
 
 ## Testing
+
 Currently, afaik Xcode doesn't provide a way to run tests in succession rather than in parallel. So, as of v5, tests musts be run manually & individually. No fun, I know. Working on a solution for future versions.
 
 ## Contact
+
 Feel free to email questions and comments to [emma@emma.sh](mailto:emma@emma.sh)
 
 ## License
