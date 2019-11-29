@@ -13,9 +13,9 @@ extension Requester {
     /// Default implementation for sending an HTTP request.
     ///
     /// - parameter request: The URLRequest to send
+    /// - parameter session: Session to run URLRequest with
     /// - parameter completion: Completion handler to receive output of request.
     func request(with request: URLRequest, andSession session: URLSession, completion: @escaping (Result<Data, WMATAError>) -> ()) {
-        
         session.dataTask(with: request) { (data, response, error) in
             guard let populatedData = data else {
                 if let populatedError = error {
@@ -27,11 +27,17 @@ extension Requester {
                 }
                 
                 return
+                
             }
             
             completion(.success(populatedData))
             
         }.resume()
+        
+    }
+    
+    func request(with request: URLRequest, and session: URLSession) {
+        session.dataTask(with: request).resume()
         
     }
     
@@ -54,29 +60,6 @@ extension Fetcher {
             }
             
         }
-        
-    }
-    
-}
-
-/// Incidates the implmentor can build a URLRequest
-protocol RequestBuilder {}
-
-extension RequestBuilder {
-    /// Default implemention of buildRequest.
-    ///
-    /// - parameter url: URL to request
-    /// - parameter queryItems: Query parameters for request
-    /// - returns: A URLRequest
-    func buildRequest(fromUrl url: String, andQueryItems queryItems: [(String, String)], withApiKey apiKey: String) -> URLRequest {
-        var urlComponents = URLComponents(string: url)!
-        
-        urlComponents.queryItems = queryItems.compactMap { URLQueryItem(name: $0, value: $1) }
-        
-        var request = URLRequest(url: urlComponents.url!)
-        request.setValue(apiKey, forHTTPHeaderField: "api_key")
-        
-        return request
         
     }
     
