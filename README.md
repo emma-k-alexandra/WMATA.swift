@@ -554,7 +554,9 @@ Finally, create a `MetroBus` or `MetroRail` instance with an instance of your de
 
 ```swift
 let delegate = Delegate()
-let metroRail = MetroRail(key: apiKey, delegate: Delegate())
+let metroRail = MetroRail(key: apiKey, delegate: delegate)
+
+metroRail.lines()
 ```
 
 ## Dependencies
