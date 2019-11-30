@@ -7,11 +7,58 @@
 
 import Foundation
 
-public protocol WMATADelegate {}
+public protocol WMATADelegate {
+    /// MetroRail responses
+    func received(linesResponse result: Result<LinesResponse, WMATAError>)
+    
+    func received(stationEntrances result: Result<StationEntrances, WMATAError>)
+    
+    func received(trainPositions result: Result<TrainPositions, WMATAError>)
+    
+    func received(standardRoutes result: Result<StandardRoutes, WMATAError>)
+    
+    func received(trackCircuits result: Result<TrackCircuits, WMATAError>)
+    
+    func received(elevatorAndEscalatorIncidents result: Result<ElevatorAndEscalatorIncidents, WMATAError>)
+    
+    func received(railIncidents result: Result<RailIncidents, WMATAError>)
+    
+    func received(railPredictions result: Result<RailPredictions, WMATAError>)
+    
+    func received(stationInformation result: Result<StationInformation, WMATAError>)
+    
+    func received(stationsParking result: Result<StationsParking, WMATAError>)
+    
+    func received(pathBetweenStations result: Result<PathBetweenStations, WMATAError>)
+    
+    func received(stationTimings result: Result<StationTimings, WMATAError>)
+    
+    func received(stationToStationInfos result: Result<StationToStationInfos, WMATAError>)
+    
+    func received(stations result: Result<Stations, WMATAError>)
+    
+    /// MetroBus responses
+    func received(routesResponse result: Result<RoutesResponse, WMATAError>)
+    
+    func received(stopSearchResponse result: Result<StopsSearchResponse, WMATAError>)
+    
+    func received(busIncidents result: Result<BusIncidents, WMATAError>)
+    
+    func received(busPositions result: Result<BusPositions, WMATAError>)
+    
+    func received(pathDetails result: Result<PathDetails, WMATAError>)
+    
+    func received(routeSchedule result: Result<RouteSchedule, WMATAError>)
+    
+    func received(busPredictions result: Result<BusPredictions, WMATAError>)
+    
+    func received(stopSchedule result: Result<StopSchedule, WMATAError>)
+    
+}
 
 extension WMATADelegate {
     /// MetroRail default implementations
-    /// You want to override these.
+    /// You don't want these.
     func received(linesResponse result: Result<LinesResponse, WMATAError>) {
         assertionFailure("Received LinesResponse without overriding default WMATADelegate implementation")
         
@@ -83,7 +130,7 @@ extension WMATADelegate {
     }
     
     /// MetroBus default implementations.
-    /// You want to override these.
+    /// You don't want these.
     func received(routesResponse result: Result<RoutesResponse, WMATAError>) {
         assertionFailure("Received RoutesResponse without overriding default WMATADelegate implementation")
         
