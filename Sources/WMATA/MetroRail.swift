@@ -12,7 +12,10 @@ public struct MetroRail: Fetcher {
     public let key: String
     public var delegate: WMATADelegate? = nil {
         didSet {
-            self.generateURLSession()
+            if let delegate = self.delegate {
+                self.urlSession = generateURLSession(with: delegate)
+                
+            }
             
         }
         
@@ -28,20 +31,7 @@ public struct MetroRail: Fetcher {
     public init(key: String, delegate: WMATADelegate) {
         self.key = key
         self.delegate = delegate
-        self.urlSession = URLSession(
-            configuration: URLSessionConfiguration.background(withIdentifier: "com.WMATA.swift.\(UUID())"),
-            delegate: WMATAURLSessionDataDelegate(wmataDelegate: self.delegate),
-            delegateQueue: nil
-        )
-        
-    }
-    
-    private mutating func generateURLSession() {
-        self.urlSession = URLSession(
-            configuration: URLSessionConfiguration.background(withIdentifier: "com.WMATA.swift.\(UUID())"),
-            delegate: WMATAURLSessionDataDelegate(wmataDelegate: self.delegate),
-            delegateQueue: nil
-        )
+        self.urlSession = generateURLSession(with: delegate)
         
     }
     

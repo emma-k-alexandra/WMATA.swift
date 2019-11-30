@@ -35,3 +35,12 @@ extension URLRequest {
     }
     
 }
+
+func generateURLSession(with delegate: WMATADelegate) -> URLSession {
+    return URLSession(
+        configuration: URLSessionConfiguration.background(withIdentifier: "com.WMATA.swift.\(UUID())"),
+        delegate: WMATAURLSessionDataDelegate(wmataDelegate: delegate),
+        delegateQueue: nil
+    )
+    
+}
