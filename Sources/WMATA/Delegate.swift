@@ -183,7 +183,7 @@ public class WMATAURLSessionDataDelegate: NSObject, URLSessionDataDelegate, Dese
         
     }
     
-    func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
+    public func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
         guard let delegate = self.wmataDelegate else {
             assertionFailure("Called method that required a delegate without providing a delegate. Provide a delegate before calling this method.")
             exit(1)
@@ -292,7 +292,7 @@ public class WMATAURLSessionDataDelegate: NSObject, URLSessionDataDelegate, Dese
         
     }
     
-    func urlSession(_ session: URLSession, dataTask: URLSessionDataTask, didReceive data: Data) {
+    public func urlSession(_ session: URLSession, dataTask: URLSessionDataTask, didReceive data: Data) {
         self.data.append(data)
         
     }
