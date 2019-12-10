@@ -173,12 +173,12 @@ extension WMATADelegate {
     
 }
 
-class WMATAURLSessionDataDelegate: NSObject, URLSessionDataDelegate, Deserializer {
-    let wmataDelegate: WMATADelegate?
+public class WMATAURLSessionDataDelegate: NSObject, URLSessionDataDelegate, Deserializer {
+    public let wmataDelegate: WMATADelegate?
     
     var data: Data = Data()
     
-    init(wmataDelegate: WMATADelegate?) {
+    public init(wmataDelegate: WMATADelegate?) {
         self.wmataDelegate = wmataDelegate
         
     }
