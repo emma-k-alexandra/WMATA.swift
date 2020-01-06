@@ -23,7 +23,7 @@ extension WMATADate: CustomStringConvertible {
 let FORMAT = "yyyy-MM-dd'T'HH:mm:ss"
 
 extension String {
-    func toDate() throws -> Date {
+    func toWMATADate() throws -> Date {
         let formatter = DateFormatter()
         formatter.dateFormat = FORMAT
         formatter.locale = Locale(identifier: "en_US_POSIX")

@@ -1062,7 +1062,7 @@ public struct ElevatorAndEscalatorIncident: Codable {
         self.timeOutOfService = try container.decode(String.self, forKey: .timeOutOfService)
         self.symptomDescription = try container.decode(String.self, forKey: .symptomDescription)
         self.displayOrder = try container.decode(Double.self, forKey: .displayOrder)
-        self.dateOutOfService = try (try container.decode(String.self, forKey: .dateOutOfService)).toDate()
+        self.dateOutOfService = try (try container.decode(String.self, forKey: .dateOutOfService)).toWMATADate()
         self.dateUpdated = try container.decode(String.self, forKey: .dateUpdated)
         self.estimatedReturnToService = try container.decode(String.self, forKey: .estimatedReturnToService)
         
@@ -1134,7 +1134,7 @@ public struct RailIncident: Codable {
         self.incidentType = try container.decode(String.self, forKey: .incidentType)
         self.emergencyText = try container.decode(String?.self, forKey: .emergencyText)
         self.linesAffected = try container.decode(String.self, forKey: .linesAffected)
-        self.dateUpdated = try (try container.decode(String.self, forKey: .dateUpdated)).toDate()
+        self.dateUpdated = try (try container.decode(String.self, forKey: .dateUpdated)).toWMATADate()
         
     }
     

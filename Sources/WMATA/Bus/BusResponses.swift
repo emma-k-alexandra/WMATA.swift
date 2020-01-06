@@ -107,7 +107,7 @@ public struct BusPosition: Codable {
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
-        self.dateTime = try (try container.decode(String.self, forKey: .dateTime)).toDate()
+        self.dateTime = try (try container.decode(String.self, forKey: .dateTime)).toWMATADate()
         self.deviation = try container.decode(Double.self, forKey: .deviation)
         self.directionNumber = try container.decode(Int.self, forKey: .directionNumber)
         self.directionText = try container.decode(String.self, forKey: .directionText)
@@ -121,10 +121,10 @@ public struct BusPosition: Codable {
         
         self.route = route
         
-        self.tripEndTime = try (try container.decode(String.self, forKey: .tripEndTime)).toDate()
+        self.tripEndTime = try (try container.decode(String.self, forKey: .tripEndTime)).toWMATADate()
         self.tripHeadsign = try container.decode(String.self, forKey: .tripHeadsign)
         self.tripId = try container.decode(String.self, forKey: .tripId)
-        self.tripStartTime = try (try container.decode(String.self, forKey: .tripStartTime)).toDate()
+        self.tripStartTime = try (try container.decode(String.self, forKey: .tripStartTime)).toWMATADate()
         self.vehicleId = try container.decode(String.self, forKey: .vehicleId)
         self.blockNumber = try container.decode(String.self, forKey: .blockNumber)
         
@@ -314,10 +314,10 @@ public struct BusArrival: Codable {
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
-        self.scheduleTime = try (try container.decode(String.self, forKey: .scheduleTime)).toDate()
+        self.scheduleTime = try (try container.decode(String.self, forKey: .scheduleTime)).toWMATADate()
         self.directionNumber = try container.decode(String.self, forKey: .directionNumber)
-        self.startTime = try (try container.decode(String.self, forKey: .startTime)).toDate()
-        self.endTime = try (try container.decode(String.self, forKey: .endTime)).toDate()
+        self.startTime = try (try container.decode(String.self, forKey: .startTime)).toWMATADate()
+        self.endTime = try (try container.decode(String.self, forKey: .endTime)).toWMATADate()
         
         guard let route = Route(rawValue: try container.decode(String.self, forKey: .route)) else {
             throw WMATAError(statusCode: 0, message: "Route provided by API was not valid")
@@ -511,8 +511,8 @@ public struct RouteInfo: Codable {
         self.directionNumber = try container.decode(String.self, forKey: .directionNumber)
         self.tripDirectionText = try container.decode(String.self, forKey: .tripDirectionText)
         self.tripHeadsign = try container.decode(String.self, forKey: .tripHeadsign)
-        self.startTime = try (try container.decode(String.self, forKey: .startTime)).toDate()
-        self.endTime = try (try container.decode(String.self, forKey: .endTime)).toDate()
+        self.startTime = try (try container.decode(String.self, forKey: .startTime)).toWMATADate()
+        self.endTime = try (try container.decode(String.self, forKey: .endTime)).toWMATADate()
         self.stopTimes = try container.decode([StopInfo].self, forKey: .stopTimes)
         self.tripId = try container.decode(String.self, forKey: .tripId)
         
