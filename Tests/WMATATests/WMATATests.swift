@@ -919,6 +919,50 @@ final class MetroRailTests: XCTestCase {
     
 }
 
+final class StationTests: XCTestCase {
+    func testStationName() {
+        XCTAssertEqual(Station.A01.name, "Metro Center")
+        
+    }
+    
+    func testStationLines() {
+        XCTAssertEqual(Station.A01.lines, [.BL, .OR, .SV, .RD])
+        
+    }
+    
+    func testStationOpenTime() {
+        var dateComponents = Calendar(identifier: .gregorian).dateComponents([.day, .month, .year, .timeZone, .calendar], from: Date())
+        
+        dateComponents.hour = 8
+        dateComponents.minute = 14
+        
+        XCTAssertEqual(Station.A01.openingTime(), dateComponents.date!)
+        
+    }
+    
+    func testStationOpenTimeSaturday() {
+        let date = DateComponents(calendar: .autoupdatingCurrent, timeZone: .autoupdatingCurrent, year: 2020, month: 1, day: 11, hour: 7, minute: 14).date!
+        
+        XCTAssertEqual(Station.A01.openingTime(on: date), date)
+        
+    }
+    
+    func testStationOpenTimeSunday() {
+        let date = DateComponents(calendar: .autoupdatingCurrent, timeZone: .autoupdatingCurrent, year: 2020, month: 1, day: 12, hour: 8, minute: 14).date!
+        
+        XCTAssertEqual(Station.A01.openingTime(on: date), date)
+        
+    }
+    
+    func testStationOpenTimeWeekday() {
+        let date = DateComponents(calendar: .autoupdatingCurrent, timeZone: .autoupdatingCurrent, year: 2020, month: 1, day: 13, hour: 5, minute: 14).date!
+        
+        XCTAssertEqual(Station.A01.openingTime(on: date), date)
+        
+    }
+    
+}
+
 final class MetroBusTests: XCTestCase {
     func testBusPositions() {
         let exp = self.expectation(description: "testBusPositions")

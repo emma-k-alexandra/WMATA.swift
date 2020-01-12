@@ -51,3 +51,26 @@ extension Date {
     }
     
 }
+
+extension Date {
+    func weekdaySaturdayOrSunday() -> WeekdaySaturdayOrSunday {
+        let weekday = Calendar.init(identifier: .gregorian).component(.weekday, from: self)
+        if weekday == 1 {
+            return .sunday
+            
+        } else if weekday > 1, weekday < 7 {
+            return .weekday
+            
+        } else {
+            return .saturday
+            
+        }
+        
+    }
+}
+
+enum WeekdaySaturdayOrSunday {
+    case weekday
+    case saturday
+    case sunday
+}
