@@ -17,6 +17,7 @@ WMATA.swift is a lightweight Swift interface to the [Washington Metropolitan Are
 - [Dependencies](#dependencies)
 - [Testing](#testing)
 - [Contact](#contact)
+- [Contributing](#contributing)
 - [License](#license)
 
 ## Requirements
@@ -592,6 +593,16 @@ Currently, afaik Xcode doesn't provide a way to run tests in succession rather t
 ## Contact
 
 Feel free to email questions and comments to [emma@emma.sh](mailto:emma@emma.sh)
+
+## Contributing
+Todo:
+[checkbox:unchecked] Last Train times (API doesn't provide full information here)
+[checkbox:unchecked] Documentation of response structs a la [wmata](https://github.com/emma-k-alexandra/wmata)
+[checkbox:unchecked] Figure out README structure
+[checkbox:unchecked] Provide more documentation for methods on `Station`, `Line`, `Route` and `Stop`
+[checkbox:unchecked] Figure out how to serialize tests
+[checkbox:unchecked] Automated builds
+[checkbox:unchecked] Possible support for CocoaPods/Carthage?
 
 ## License
 
