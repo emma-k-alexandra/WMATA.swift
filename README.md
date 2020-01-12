@@ -364,7 +364,7 @@ let lines = Station.A01.lines // [.BL, .OR, .SV, .RD]
 
 #### `openingTime(:)`
 ```swift
-let openingTime = Station.A01.openingTime()
+let openingTime = Station.A01.openingTime() // ("2020-01-12 08:14:00 +0000")
 ```
 `openingTime` provides the opening time of a station without making a network request. Note: This is only accurate generally, not on event days. For guaranteed accurate information use the `timings` method on a `Station` or `MetroRail`.
 
