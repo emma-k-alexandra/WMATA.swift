@@ -11,6 +11,7 @@ WMATA.swift is a lightweight Swift interface to the [Washington Metropolitan Are
   - [Design](#design)
   - [New in v4](#new-in-v4)
   - [Using `MetroRail`](#using-MetroRail)
+  - [Using `Station`](#using-Station)
   - [Using `MetroBus`](#using-MetroBus)
   - [Background Requests & `WMATADelegate`](#background-requests--wmatadelegate)
 - [Dependencies](#dependencies)
