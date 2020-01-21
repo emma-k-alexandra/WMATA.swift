@@ -606,4 +606,4 @@ Todo:
 
 ## License
 
-WMATA.swift is released under the MIT license. [See LICENSE](https://github.com/emma-foster/WMATA.swift/blob/master/LICENSE) for details.
+WMATA.swift is released under the MIT license. [See LICENSE](https://github.com/emma-k-alexandra/WMATA.swift/blob/master/LICENSE) for details.
