@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftProtobuf
 
 /// Incidates the implementors can deserialize data
 protocol Deserializer {}
@@ -29,6 +30,22 @@ extension Deserializer {
                 return .failure(originalError.toWMATAError())
                 
             }
+            
+        }
+        
+    }
+    
+}
+
+protocol GTFSDeserializer {}
+
+extension GTFSDeserializer {
+    func deserialize(_ data: Data) -> Result<TransitRealtime_FeedMessage, WMATAError> {
+        do {
+            return .success(try TransitRealtime_FeedMessage.init(serializedData: data))
+            
+        } catch {
+            return .failure(error.toWMATAError())
             
         }
         

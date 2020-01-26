@@ -54,6 +54,12 @@ public protocol WMATADelegate {
     
     func received(stopSchedule result: Result<StopSchedule, WMATAError>)
     
+    func received(alerts result: Result<TransitRealtime_FeedMessage, WMATAError>)
+    
+    func received(tripUpdates result: Result<TransitRealtime_FeedMessage, WMATAError>)
+    
+    func received(vehiclePositions result: Result<TransitRealtime_FeedMessage, WMATAError>)
+    
 }
 
 extension WMATADelegate {
@@ -171,9 +177,24 @@ extension WMATADelegate {
         
     }
     
+    func received(alerts result: Result<TransitRealtime_FeedMessage, WMATAError>) {
+        assertionFailure("Received Alerts without overriding default WMATADelegate implementation")
+        
+    }
+    
+    func received(tripUpdates result: Result<TransitRealtime_FeedMessage, WMATAError>) {
+        assertionFailure("Received TripUpdates without overriding default WMATADelegate implementation")
+        
+    }
+    
+    func received(vehiclePositions result: Result<TransitRealtime_FeedMessage, WMATAError>) {
+        assertionFailure("Received VehiclePositions without overriding default WMATADelegate implementation")
+        
+    }
+    
 }
 
-public class WMATAURLSessionDataDelegate: NSObject, URLSessionDataDelegate, Deserializer {
+public class WMATAURLSessionDataDelegate: NSObject, URLSessionDataDelegate, Deserializer, GTFSDeserializer {
     public let wmataDelegate: WMATADelegate?
     
     var data: Data = Data()
@@ -251,6 +272,32 @@ public class WMATAURLSessionDataDelegate: NSObject, URLSessionDataDelegate, Dese
                 
             case .stations:
                 delegate.received(stations: self.deserialize(self.data))
+                
+            }
+            
+        } else if let url = GTFSRTRailURL(rawValue: requestURL) {
+            switch url {
+            case .alerts:
+                delegate.received(alerts: self.deserialize(self.data))
+                
+            case .tripUpdates:
+                delegate.received(tripUpdates: self.deserialize(self.data))
+                
+            case .vehiclePositions:
+                delegate.received(vehiclePositions: self.deserialize(self.data))
+                
+            }
+            
+        } else if let url = GTFSRTBusURL(rawValue: requestURL) {
+            switch url {
+            case .alerts:
+                delegate.received(alerts: self.deserialize(self.data))
+                
+            case .tripUpdates:
+                delegate.received(tripUpdates: self.deserialize(self.data))
+                
+            case .vehiclePositions:
+                delegate.received(vehiclePositions: self.deserialize(self.data))
                 
             }
             

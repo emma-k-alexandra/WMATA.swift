@@ -18,3 +18,9 @@ enum BusURL: String {
     case nextBuses = "https://api.wmata.com/NextBusService.svc/json/jPredictions"
     case stopSchedule = "https://api.wmata.com/Bus.svc/json/jStopSchedule"
 }
+
+enum GTFSRTBusURL: String {
+    case alerts = "https://api.wmata.com/gtfs/bus-gtfsrt-alerts.pb"
+    case tripUpdates = "https://api.wmata.com/gtfs/bus-gtfsrt-tripupdates.pb"
+    case vehiclePositions = "https://api.wmata.com/gtfs/bus-gtfsrt-vehiclepositions.pb"
+}

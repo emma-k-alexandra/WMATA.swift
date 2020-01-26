@@ -8,11 +8,15 @@ let package = Package(
             name: "WMATA",
             targets: ["WMATA"]),
     ],
-    dependencies: [],
+    dependencies: [
+        .package(url: "https://github.com/apple/swift-protobuf.git", from: "1.7.0"),
+    ],
     targets: [
         .target(
             name: "WMATA",
-            dependencies: []
+            dependencies: [
+                "SwiftProtobuf"
+            ]
         ),
         .testTarget(
             name: "WMATATests",
