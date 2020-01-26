@@ -24,3 +24,9 @@ enum RailURL: String {
     case stationToStation = "https://api.wmata.com/Rail.svc/json/jSrcStationToDstStationInfo"
     case stations = "https://api.wmata.com/Rail.svc/json/jStations"
 }
+
+enum GTFSRTRailURL: String {
+    case alerts = "https://api.wmata.com/gtfs/rail-gtfsrt-alerts.pb"
+    case tripUpdates = "https://api.wmata.com/gtfs/rail-gtfsrt-tripupdates.pb"
+    case vehiclePositions = "https://api.wmata.com/gtfs/rail-gtfsrt-vehiclepositions.pb"
+}

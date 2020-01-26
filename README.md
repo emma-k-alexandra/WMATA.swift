@@ -2,6 +2,12 @@
 
 WMATA.swift is a lightweight Swift interface to the [Washington Metropolitan Area Transit Authority API](https://developer.wmata.com).
 
+## Note on WMATA.swift & coming package
+In the future, WMATA.swift will be splitting into a few libraries. Currently, WMATA.swift provides a lot of high level functionality on top of the response from the WMATA. In order to better maintain this functionality and support it fully, I am planning on keeping WMATA.swift as a high level, WMATA focused framework, and introducing a new package. This new package will handle basic API interactions and will be a better choice for those looking for lower level interactions with the API. There won't be any feature regression on WMATA.swift, simply making the package simpler to maintain for me. 
+
+## Note on GTFS
+It seems like there's very little GTFS support for Swift right now. I'd be interested in making a [gtfs-structures](https://crates.io/crates/gtfs-structures) style package for Swift in order to support future WMATA.swift development. If you'd like to collaborate on this, let me know. Email below in [Contact](#contact)
+
 ## Contents
 
 - [Requirements](#requirements)
@@ -9,7 +15,6 @@ WMATA.swift is a lightweight Swift interface to the [Washington Metropolitan Are
 - [Usage](#usage)
   - [Getting Started](#getting-started)
   - [Design](#design)
-  - [New in v4](#new-in-v4)
   - [Using `MetroRail`](#using-MetroRail)
   - [Using `Station`](#using-Station)
   - [Using `MetroBus`](#using-MetroBus)
@@ -30,7 +35,7 @@ WMATA.swift is a lightweight Swift interface to the [Washington Metropolitan Are
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/emma-k-alexandra/WMATA.swift.git", from: "7.1.1")
+.package(url: "https://github.com/emma-k-alexandra/WMATA.swift.git", from: "8.0.0")
 ]
 ```
 
@@ -57,10 +62,6 @@ MetroRail(key: apiKey).nextTrains(at: .A01) { result in
 ### Design
 
 WMATA.swift breaks the WMATA API into MetroRail and MetroBus via the `MetroRail` and `MetroBus`.
-
-### New in v4
-
-`MetroRail` and `MetroBus` still have all API methods associated with MetroRail and MetroBus respectively. In addition, `Stop`, `Route`, `Line` and `Station` have all API methods relevant to their respective data types. So, for example you can now call `nextBuses` on `Stop` and receive the next buses for that stop, without needing a `MetroBus` object.
 
 ### Using `MetroRail`
 
@@ -584,7 +585,7 @@ metroRail.lines()
 
 ## Dependencies
 
-None!
+- [swift-protobuf](https://github.com/apple/swift-protobuf), for GTFS-RT feeds.
 
 ## Testing
 

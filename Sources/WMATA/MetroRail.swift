@@ -338,3 +338,76 @@ extension MetroRail: NeedsLine {
     }
     
 }
+
+extension MetroRail: GTFSRTFetcher {}
+
+/// GTFS-RT Calls
+extension MetroRail {
+    public func alerts(completion: @escaping (Result<TransitRealtime_FeedMessage, WMATAError>) -> ()) {
+        self.fetch(
+            with: URLRequest(url: GTFSRTRailURL.alerts.rawValue, queryItems: [], apiKey: self.key),
+            andSession: self.urlSession,
+            completion: completion
+        )
+        
+    }
+    
+    public func alerts() {
+        self.request(
+            with: URLRequest(
+                url: GTFSRTRailURL.alerts.rawValue,
+                queryItems: [],
+                apiKey: self.key
+            ),
+            and: self.urlSession
+        )
+        
+    }
+    
+    public func tripUpdates(completion: @escaping (Result<TransitRealtime_FeedMessage, WMATAError>) -> ()) {
+        self.fetch(
+            with: URLRequest(
+                url: GTFSRTRailURL.tripUpdates.rawValue,
+                queryItems: [],
+                apiKey: self.key
+            ),
+            andSession: self.urlSession,
+            completion: completion
+        )
+        
+    }
+    
+    public func tripUpdates() {
+        self.request(
+            with: URLRequest(
+                url: GTFSRTRailURL.tripUpdates.rawValue,
+                queryItems: [],
+                apiKey: self.key
+            ),
+            and: self.urlSession
+        )
+        
+    }
+    
+    public func vehiclePositions(completion: @escaping (Result<TransitRealtime_FeedMessage, WMATAError>) -> ()) {
+        self.fetch(
+            with: URLRequest(url: GTFSRTRailURL.vehiclePositions.rawValue, queryItems: [], apiKey: self.key),
+            andSession: self.urlSession,
+            completion: completion
+        )
+        
+    }
+    
+    public func vehiclePositions() {
+        self.request(
+            with: URLRequest(
+                url: GTFSRTRailURL.vehiclePositions.rawValue,
+                queryItems: [],
+                apiKey: self.key
+            ),
+            and: self.urlSession
+        )
+        
+    }
+    
+}

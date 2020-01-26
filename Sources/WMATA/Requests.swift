@@ -64,3 +64,23 @@ extension Fetcher {
     }
     
 }
+
+protocol GTFSRTFetcher: Requester, GTFSDeserializer {}
+
+extension GTFSRTFetcher {
+    func fetch(with urlRequest: URLRequest, andSession session: URLSession, completion: @escaping (Result<TransitRealtime_FeedMessage, WMATAError>) -> ()) {
+        request(with: urlRequest, andSession: session) { (result) in
+            switch result {
+            case .success(let data):
+                completion(self.deserialize(data))
+                
+            case .failure(let error):
+                completion(.failure(error))
+                
+            }
+            
+        }
+        
+    }
+    
+}

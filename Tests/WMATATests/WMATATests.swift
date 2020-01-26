@@ -917,6 +917,156 @@ final class MetroRailTests: XCTestCase {
         
     }
     
+    func testGTFSRTAlerts() {
+        let exp = self.expectation(description: "testGTFSRTAlerts")
+        let client = MetroRail(key: TEST_API_KEY)
+        
+        client.alerts { result in
+            switch result {
+            case .success:
+                exp.fulfill()
+                
+            case .failure(let error):
+                print(error)
+                
+            }
+            
+        }
+        
+        waitForExpectations(timeout: 1)
+        
+    }
+    
+    func testGTFSRTAlertsWithDelegate() {
+        class Delegate: WMATADelegate {
+            let expectation: XCTestExpectation
+            
+            init(expectation: XCTestExpectation) {
+                self.expectation = expectation
+                
+            }
+            
+            func received(alerts result: Result<TransitRealtime_FeedMessage, WMATAError>) {
+                self.expectation.fulfill()
+                
+            }
+            
+        }
+        
+        let delegate = Delegate(
+            expectation: self.expectation(description: "testGTFSRTAlertsWithDelegate")
+        )
+        let client = MetroRail(
+            key: TEST_API_KEY,
+            delegate: delegate
+        )
+        
+        client.alerts()
+        
+        waitForExpectations(timeout: 1)
+        
+    }
+    
+    func testGTFSRTTripUpdates() {
+        let exp = self.expectation(description: "testGTFSRTTripUpdates")
+        let client = MetroRail(key: TEST_API_KEY)
+        
+        client.tripUpdates { result in
+            switch result {
+            case .success:
+                exp.fulfill()
+                
+            case .failure(let error):
+                print(error)
+                
+            }
+            
+        }
+        
+        waitForExpectations(timeout: 1)
+        
+    }
+    
+    func testGTFSRTTripUpdatesWithDelegate() {
+        class Delegate: WMATADelegate {
+            let expectation: XCTestExpectation
+            
+            init(expectation: XCTestExpectation) {
+                self.expectation = expectation
+                
+            }
+            
+            func received(tripUpdates result: Result<TransitRealtime_FeedMessage, WMATAError>) {
+                self.expectation.fulfill()
+                
+            }
+            
+        }
+        
+        let delegate = Delegate(
+            expectation: self.expectation(description: "testGTFSRTTripUpdatesWithDelegate")
+        )
+        let client = MetroRail(
+            key: TEST_API_KEY,
+            delegate: delegate
+        )
+        
+        client.tripUpdates()
+        
+        waitForExpectations(timeout: 1)
+        
+    }
+    
+    func testGTFSRTVehiclePositions() {
+        let exp = self.expectation(description: "testGTFSRTVehiclePositions")
+        let client = MetroRail(key: TEST_API_KEY)
+        
+        client.vehiclePositions { result in
+            switch result {
+            case .success:
+                exp.fulfill()
+                
+            case .failure(let error):
+                print(error)
+                
+            }
+            
+        }
+        
+        waitForExpectations(timeout: 1)
+        
+    }
+    
+    func testGTFSRTVehiclePositionsWithDelegate() {
+        class Delegate: WMATADelegate {
+            let expectation: XCTestExpectation
+            
+            init(expectation: XCTestExpectation) {
+                self.expectation = expectation
+                
+            }
+            
+            func received(vehiclePositions result: Result<TransitRealtime_FeedMessage, WMATAError>) {
+                self.expectation.fulfill()
+                
+            }
+            
+        }
+        
+        let delegate = Delegate(
+            expectation: self.expectation(description: "testGTFSRTVehiclePositionsWithDelegate")
+        )
+        let client = MetroRail(
+            key: TEST_API_KEY,
+            delegate: delegate
+        )
+        
+        client.vehiclePositions()
+        
+        waitForExpectations(timeout: 1)
+        
+    }
+    
 }
 
 final class StationTests: XCTestCase {
@@ -1472,6 +1622,156 @@ final class MetroBusTests: XCTestCase {
         )
         
         bus.schedule(for: Stop(id: "1001195"))
+        
+        waitForExpectations(timeout: 1)
+        
+    }
+    
+    func testGTFSRTAlerts() {
+        let exp = self.expectation(description: "testGTFSRTAlerts")
+        let client = MetroBus(key: TEST_API_KEY)
+        
+        client.alerts { result in
+            switch result {
+            case .success:
+                exp.fulfill()
+                
+            case .failure(let error):
+                print(error)
+                
+            }
+            
+        }
+        
+        waitForExpectations(timeout: 1)
+        
+    }
+    
+    func testGTFSRTAlertsWithDelegate() {
+        class Delegate: WMATADelegate {
+            let expectation: XCTestExpectation
+            
+            init(expectation: XCTestExpectation) {
+                self.expectation = expectation
+                
+            }
+            
+            func received(alerts result: Result<TransitRealtime_FeedMessage, WMATAError>) {
+                self.expectation.fulfill()
+                
+            }
+            
+        }
+        
+        let delegate = Delegate(
+            expectation: self.expectation(description: "testGTFSRTAlertsWithDelegate")
+        )
+        let client = MetroBus(
+            key: TEST_API_KEY,
+            delegate: delegate
+        )
+        
+        client.alerts()
+        
+        waitForExpectations(timeout: 1)
+        
+    }
+    
+    func testGTFSRTTripUpdates() {
+        let exp = self.expectation(description: "testGTFSRTTripUpdates")
+        let client = MetroBus(key: TEST_API_KEY)
+        
+        client.tripUpdates { result in
+            switch result {
+            case .success:
+                exp.fulfill()
+                
+            case .failure(let error):
+                print(error)
+                
+            }
+            
+        }
+        
+        waitForExpectations(timeout: 1)
+        
+    }
+    
+    func testGTFSRTTripUpdatesWithDelegate() {
+        class Delegate: WMATADelegate {
+            let expectation: XCTestExpectation
+            
+            init(expectation: XCTestExpectation) {
+                self.expectation = expectation
+                
+            }
+            
+            func received(tripUpdates result: Result<TransitRealtime_FeedMessage, WMATAError>) {
+                self.expectation.fulfill()
+                
+            }
+            
+        }
+        
+        let delegate = Delegate(
+            expectation: self.expectation(description: "testGTFSRTTripUpdatesWithDelegate")
+        )
+        let client = MetroBus(
+            key: TEST_API_KEY,
+            delegate: delegate
+        )
+        
+        client.tripUpdates()
+        
+        waitForExpectations(timeout: 1)
+        
+    }
+    
+    func testGTFSRTVehiclePositions() {
+        let exp = self.expectation(description: "testGTFSRTVehiclePositions")
+        let client = MetroBus(key: TEST_API_KEY)
+        
+        client.vehiclePositions { result in
+            switch result {
+            case .success:
+                exp.fulfill()
+                
+            case .failure(let error):
+                print(error)
+                
+            }
+            
+        }
+        
+        waitForExpectations(timeout: 1)
+        
+    }
+    
+    func testGTFSRTVehiclePositionsWithDelegate() {
+        class Delegate: WMATADelegate {
+            let expectation: XCTestExpectation
+            
+            init(expectation: XCTestExpectation) {
+                self.expectation = expectation
+                
+            }
+            
+            func received(vehiclePositions result: Result<TransitRealtime_FeedMessage, WMATAError>) {
+                self.expectation.fulfill()
+                
+            }
+            
+        }
+        
+        let delegate = Delegate(
+            expectation: self.expectation(description: "testGTFSRTVehiclePositionsWithDelegate")
+        )
+        let client = MetroBus(
+            key: TEST_API_KEY,
+            delegate: delegate
+        )
+        
+        client.vehiclePositions()
         
         waitForExpectations(timeout: 1)
         
