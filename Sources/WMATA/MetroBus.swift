@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import GTFS
 
 /// MetroBus related methods
 public struct MetroBus: Fetcher {

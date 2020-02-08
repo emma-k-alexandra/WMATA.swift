@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import SwiftProtobuf
+import GTFS
 
 /// Incidates the implementors can deserialize data
 protocol Deserializer {}

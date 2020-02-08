@@ -9,13 +9,13 @@ let package = Package(
             targets: ["WMATA"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/apple/swift-protobuf.git", from: "1.7.0"),
+        .package(url: "https://github.com/emma-k-alexandra/GTFS.git", from: "1.0.0"),
     ],
     targets: [
         .target(
             name: "WMATA",
             dependencies: [
-                "SwiftProtobuf"
+                "GTFS"
             ]
         ),
         .testTarget(

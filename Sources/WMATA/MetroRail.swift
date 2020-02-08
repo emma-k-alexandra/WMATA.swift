@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import GTFS
 
 /// MetroRail related methods
 public struct MetroRail: Fetcher {

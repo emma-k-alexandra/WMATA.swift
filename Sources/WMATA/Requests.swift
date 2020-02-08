@@ -5,6 +5,7 @@
 //  Created by Emma K Alexandra on 6/16/19.
 //
 import Foundation
+import GTFS
 
 /// Indicates the implementors can send an HTTP request
 protocol Requester {}

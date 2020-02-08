@@ -1,6 +1,7 @@
 import XCTest
 import Foundation
 @testable import WMATA
+import GTFS
 
 let TEST_API_KEY = "9e38c3eab34c4e6c990828002828f5ed" // Get your own @ https://developer.wmata.com using this one will probably result in some weird behavior
 
@@ -1077,16 +1078,6 @@ final class StationTests: XCTestCase {
     
     func testStationLines() {
         XCTAssertEqual(Station.A01.lines, [.BL, .OR, .SV, .RD])
-        
-    }
-    
-    func testStationOpenTime() {
-        var dateComponents = Calendar(identifier: .gregorian).dateComponents([.day, .month, .year, .timeZone, .calendar], from: Date())
-        
-        dateComponents.hour = 8
-        dateComponents.minute = 14
-        
-        XCTAssertEqual(Station.A01.openingTime(), dateComponents.date!)
         
     }
     

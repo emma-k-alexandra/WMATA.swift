@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import GTFS
 
 public protocol WMATADelegate {
     /// MetroRail responses
