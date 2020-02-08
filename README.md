@@ -6,7 +6,7 @@ WMATA.swift is a lightweight Swift interface to the [Washington Metropolitan Are
 In the future, WMATA.swift will be splitting into a few libraries. Currently, WMATA.swift provides a lot of high level functionality on top of the response from the WMATA. In order to better maintain this functionality and support it fully, I am planning on keeping WMATA.swift as a high level, WMATA focused framework, and introducing a new package. This new package will handle basic API interactions and will be a better choice for those looking for lower level interactions with the API. There won't be any feature regression on WMATA.swift, simply making the package simpler to maintain for me. 
 
 ## Note on GTFS
-It seems like there's very little GTFS support for Swift right now. I'd be interested in making a [gtfs-structures](https://crates.io/crates/gtfs-structures) style package for Swift in order to support future WMATA.swift development. If you'd like to collaborate on this, let me know. Email below in [Contact](#contact)
+I released a [GTFS and GTFS-RT](https://github.com/emma-k-alexandra/GTFS) package for Swift and soon this package will be using that package for interaction with GTFS-RT feeds. 
 
 ## Contents
 
