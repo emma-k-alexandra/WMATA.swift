@@ -655,7 +655,7 @@ public struct ShortTermParking: Codable {
     }
     
     public init(
-        totalCount: Int
+        totalCount: Int,
         notes: String
     ) {
         self.totalCount = totalCount
@@ -784,12 +784,12 @@ public struct StationEntrance: Codable {
     }
     
     public init(
-        description: String
-        id: String
-        latitude: Double
-        longitude: Double
-        name: String
-        firstStation: Station
+        description: String,
+        id: String,
+        latitude: Double,
+        longitude: Double,
+        name: String,
+        firstStation: Station,
         secondStation: Station?
     ) {
         self.description = description
@@ -1045,9 +1045,9 @@ public struct StationAddress: Codable {
     }
     
     public init(
-        city: String
-        state: String
-        street: String
+        city: String,
+        state: String,
+        street: String,
         zip: String
     ) {
         self.city = city
@@ -1111,14 +1111,14 @@ public struct StationTime: Codable {
     }
     
     public init(
-        station: Station
-        stationName: String
-        monday: StationFirstLastTrains
-        tuesday: StationFirstLastTrains
-        wednesday: StationFirstLastTrains
-        thursday: StationFirstLastTrains
-        friday: StationFirstLastTrains
-        saturday: StationFirstLastTrains
+        station: Station,
+        stationName: String,
+        monday: StationFirstLastTrains,
+        tuesday: StationFirstLastTrains,
+        wednesday: StationFirstLastTrains,
+        thursday: StationFirstLastTrains,
+        friday: StationFirstLastTrains,
+        saturday: StationFirstLastTrains,
         sunday: StationFirstLastTrains
     ) {
         self.station = station
@@ -1333,8 +1333,8 @@ public struct RailFare: Codable {
     }
     
     public init(
-        offPeakTime: Double
-        peakTime: Double
+        offPeakTime: Double,
+        peakTime: Double,
         seniorDisabled: Double
     ) {
         self.offPeakTime = offPeakTime
