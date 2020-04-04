@@ -14,6 +14,11 @@ public struct RailPredictions: Codable {
         case trains = "Trains"
     }
     
+    public init(trains: [RailPrediction]) {
+        self.trains = trains
+        
+    }
+    
 }
 
 public struct RailPrediction: Codable {
@@ -37,6 +42,29 @@ public struct RailPrediction: Codable {
         case location = "LocationCode"
         case locationName = "LocationName"
         case minutes = "Min"
+    }
+    
+    public init(
+        car: String?,
+        destination: String,
+        destinationCode: Station?,
+        destinationName: String,
+        group: String,
+        line: Line,
+        location: Station,
+        locationName: String,
+        minutes: String
+    ) {
+        self.car = car
+        self.destination = destination
+        self.destinationCode = destinationCode
+        self.destinationName = destinationName
+        self.group = group
+        self.line = line
+        self.location = location
+        self.locationName = locationName
+        self.minutes = minutes
+        
     }
     
     public init(from decoder: Decoder) throws {
@@ -105,6 +133,11 @@ public struct TrainPositions: Codable {
         case trainPositions = "TrainPositions"
     }
     
+    public init(trainPositions: [TrainPosition]) {
+        self.trainPositions = trainPositions
+        
+    }
+    
 }
 
 public struct TrainPosition: Codable {
@@ -128,6 +161,29 @@ public struct TrainPosition: Codable {
         case line = "LineCode"
         case secondsAtLocation = "SecondsAtLocation"
         case serviceType = "ServiceType"
+    }
+    
+    public init(
+        trainId: String,
+        trainNumber: String,
+        carCount: Int,
+        directionNumber: Int,
+        circuitId: Int,
+        destination: Station?,
+        line: Line?,
+        secondsAtLocation: Int,
+        serviceType: String
+    ) {
+        self.trainId = trainId
+        self.trainNumber = trainNumber
+        self.carCount = carCount
+        self.directionNumber = directionNumber
+        self.circuitId = circuitId
+        self.destination = destination
+        self.line = line
+        self.secondsAtLocation = secondsAtLocation
+        self.serviceType = serviceType
+        
     }
     
     public init(from decoder: Decoder) throws {
@@ -198,6 +254,11 @@ public struct StandardRoutes: Codable {
         case standardRoutes = "StandardRoutes"
     }
     
+    public init(standardRoutes: [StandardRoute]) {
+        self.standardRoutes = standardRoutes
+        
+    }
+    
 }
 
 public struct StandardRoute: Codable {
@@ -209,6 +270,17 @@ public struct StandardRoute: Codable {
         case line = "LineCode"
         case trackNumber = "TrackNum"
         case trackCircuits = "TrackCircuits"
+    }
+    
+    public init(
+        line: Line,
+        trackNumber: Int,
+        trackCircuits: [TrackCircuitWithStation]
+    ) {
+        self.line = line
+        self.trackNumber = trackNumber
+        self.trackCircuits = trackCircuits
+        
     }
     
     public init(from decoder: Decoder) throws {
@@ -248,6 +320,17 @@ public struct TrackCircuitWithStation: Codable {
         case sequenceNumber = "SeqNum"
         case circuitId = "CircuitId"
         case station = "StationCode"
+    }
+    
+    public init(
+        sequenceNumber: Int,
+        circuitId: Int,
+        station: Station?
+    ) {
+        self.sequenceNumber = sequenceNumber
+        self.circuitId = circuitId
+        self.station = station
+        
     }
     
     public init(from decoder: Decoder) throws {
@@ -291,6 +374,11 @@ public struct TrackCircuits: Codable {
         case trackCircuits = "TrackCircuits"
     }
     
+    public init(trackCircuits: [TrackCircuit]) {
+        self.trackCircuits = trackCircuits
+        
+    }
+    
 }
 
 public struct TrackCircuit: Codable {
@@ -304,6 +392,17 @@ public struct TrackCircuit: Codable {
         case neighbors = "Neighbors"
     }
     
+    public init(
+        track: Int,
+        circuitId: Int,
+        neighbors: [TrackNeighbor]
+    ) {
+        self.track = track
+        self.circuitId = circuitId
+        self.neighbors = neighbors
+        
+    }
+    
 }
 
 public struct TrackNeighbor: Codable {
@@ -315,6 +414,15 @@ public struct TrackNeighbor: Codable {
         case circuitIds = "CircuitIds"
     }
     
+    public init(
+        neighborType: String,
+        circuitIds: [Int]
+    ) {
+        self.neighborType = neighborType
+        self.circuitIds = circuitIds
+        
+    }
+    
 }
 
 public struct LinesResponse: Codable {
@@ -322,6 +430,11 @@ public struct LinesResponse: Codable {
     
     enum CodingKeys: String, CodingKey {
         case lines = "Lines"
+    }
+    
+    public init(lines: [LineResponse]) {
+        self.lines = lines
+        
     }
     
 }
@@ -341,6 +454,23 @@ public struct LineResponse: Codable {
         case endStation = "EndStationCode"
         case firstInternalDestination = "InternalDestination1"
         case secondInternalDestination = "InternalDestination2"
+    }
+    
+    public init(
+        line: Line,
+        displayName: String,
+        startStation: Station,
+        endStation: Station,
+        firstInternalDestination: Station?,
+        secondInternalDestination: Station?
+    ) {
+        self.line = line
+        self.displayName = displayName
+        self.startStation = startStation
+        self.endStation = endStation
+        self.firstInternalDestination = firstInternalDestination
+        self.secondInternalDestination = secondInternalDestination
+        
     }
     
     public init(from decoder: Decoder) throws {
@@ -421,6 +551,11 @@ public struct StationsParking: Codable {
         case stationsParking = "StationsParking"
     }
     
+    public init(stationsParking: [StationParking]) {
+        self.stationsParking = stationsParking
+        
+    }
+    
 }
 
 public struct StationParking: Codable {
@@ -434,6 +569,19 @@ public struct StationParking: Codable {
         case notes = "Notes"
         case allDayParking = "AllDayParking"
         case shortTermParking = "ShortTermParking"
+    }
+    
+    public init(
+        station: Station,
+        notes: String,
+        allDayParking: AllDayParking,
+        shortTermParking: ShortTermParking
+    ) {
+        self.station = station
+        self.notes = notes
+        self.allDayParking = allDayParking
+        self.shortTermParking = shortTermParking
+        
     }
     
     public init(from decoder: Decoder) throws {
@@ -479,6 +627,22 @@ public struct AllDayParking: Codable {
         case saturdayRiderCost = "SaturdayRiderCost"
         case saturdayNonRiderCost = "SaturdayNonRiderCost"
     }
+    
+    public init(
+        totalCount: Int,
+        riderCost: Double,
+        nonRiderCost: Double,
+        saturdayRiderCost: Double,
+        saturdayNonRiderCost: Double
+    ) {
+        self.totalCount = totalCount
+        self.riderCost = riderCost
+        self.nonRiderCost = nonRiderCost
+        self.saturdayRiderCost = saturdayRiderCost
+        self.saturdayNonRiderCost = saturdayNonRiderCost
+        
+    }
+    
 }
 
 public struct ShortTermParking: Codable {
@@ -489,6 +653,16 @@ public struct ShortTermParking: Codable {
         case totalCount = "TotalCount"
         case notes = "Notes"
     }
+    
+    public init(
+        totalCount: Int
+        notes: String
+    ) {
+        self.totalCount = totalCount
+        self.notes = notes
+        
+    }
+    
 }
 
 public struct PathBetweenStations: Codable {
@@ -496,6 +670,11 @@ public struct PathBetweenStations: Codable {
     
     enum CodingKeys: String, CodingKey {
         case path = "Path"
+    }
+    
+    public init(path: [Path]) {
+        self.path = path
+        
     }
     
 }
@@ -513,6 +692,21 @@ public struct Path: Codable {
         case sequenceNumber = "SeqNum"
         case station = "StationCode"
         case stationName = "StationName"
+    }
+    
+    public init(
+        distanceToPreviousStation: Int,
+        line: Line,
+        sequenceNumber: Int,
+        station: Station,
+        stationName: String
+    ) {
+        self.distanceToPreviousStation = distanceToPreviousStation
+        self.line = line
+        self.sequenceNumber = sequenceNumber
+        self.station = station
+        self.stationName = stationName
+        
     }
     
     public init(from decoder: Decoder) throws {
@@ -563,6 +757,11 @@ public struct StationEntrances: Codable {
         case entrances = "Entrances"
     }
     
+    public init(entrances: [StationEntrance]) {
+        self.entrances = entrances
+        
+    }
+    
 }
 
 public struct StationEntrance: Codable {
@@ -582,6 +781,25 @@ public struct StationEntrance: Codable {
         case name = "Name"
         case firstStation = "StationCode1"
         case secondStation = "StationCode2"
+    }
+    
+    public init(
+        description: String
+        id: String
+        latitude: Double
+        longitude: Double
+        name: String
+        firstStation: Station
+        secondStation: Station?
+    ) {
+        self.description = description
+        self.id = id
+        self.latitude = latitude
+        self.longitude = longitude
+        self.name = name
+        self.firstStation = firstStation
+        self.secondStation = secondStation
+        
     }
     
     public init(from decoder: Decoder) throws {
@@ -660,6 +878,33 @@ public struct StationInformation: Codable {
         case name = "Name"
         case firstStationTogether = "StationTogether1"
         case secondStationTogether = "StationTogether2"
+    }
+    
+    public init(
+        address: StationAddress,
+        station: Station,
+        latitude: Double,
+        longitude: Double,
+        firstLine: Line,
+        secondLine: Line?,
+        thirdLine: Line?,
+        fourthLine: Line?,
+        name: String,
+        firstStationTogether: Station?,
+        secondStationTogether: Station?
+    ) {
+        self.address = address
+        self.station = station
+        self.latitude = latitude
+        self.longitude = longitude
+        self.firstLine = firstLine
+        self.secondLine = secondLine
+        self.thirdLine = thirdLine
+        self.fourthLine = fourthLine
+        self.name = name
+        self.firstStationTogether = firstStationTogether
+        self.secondStationTogether = secondStationTogether
+        
     }
     
     public init(from decoder: Decoder) throws {
@@ -798,6 +1043,20 @@ public struct StationAddress: Codable {
         case street = "Street"
         case zip = "Zip"
     }
+    
+    public init(
+        city: String
+        state: String
+        street: String
+        zip: String
+    ) {
+        self.city = city
+        self.state = state
+        self.street = street
+        self.zip = zip
+        
+    }
+    
 }
 
 public struct Stations: Codable {
@@ -806,6 +1065,12 @@ public struct Stations: Codable {
     enum CodingKeys: String, CodingKey {
         case stations = "Stations"
     }
+    
+    public init(stations: [StationInformation]) {
+        self.stations = stations
+        
+    }
+    
 }
 
 public struct StationTimings: Codable {
@@ -814,6 +1079,12 @@ public struct StationTimings: Codable {
     enum CodingKeys: String, CodingKey {
         case stationTimes = "StationTimes"
     }
+    
+    public init(stationTimes: [StationTime]) {
+        self.stationTimes = stationTimes
+        
+    }
+    
 }
 
 public struct StationTime: Codable {
@@ -837,6 +1108,29 @@ public struct StationTime: Codable {
         case friday = "Friday"
         case saturday = "Saturday"
         case sunday = "Sunday"
+    }
+    
+    public init(
+        station: Station
+        stationName: String
+        monday: StationFirstLastTrains
+        tuesday: StationFirstLastTrains
+        wednesday: StationFirstLastTrains
+        thursday: StationFirstLastTrains
+        friday: StationFirstLastTrains
+        saturday: StationFirstLastTrains
+        sunday: StationFirstLastTrains
+    ) {
+        self.station = station
+        self.stationName = stationName
+        self.monday = monday
+        self.tuesday = tuesday
+        self.wednesday = wednesday
+        self.thursday = thursday
+        self.friday = friday
+        self.saturday = saturday
+        self.sunday = sunday
+        
     }
     
     public init(from decoder: Decoder) throws {
@@ -888,6 +1182,18 @@ public struct StationFirstLastTrains: Codable {
         case firstTrains = "FirstTrains"
         case lastTrains = "LastTrains"
     }
+    
+    public init(
+        openingTime: String,
+        firstTrains: [TrainTime],
+        lastTrains: [TrainTime]
+    ) {
+        self.openingTime = openingTime
+        self.firstTrains = firstTrains
+        self.lastTrains = lastTrains
+        
+    }
+    
 }
 
 public struct TrainTime: Codable {
@@ -897,6 +1203,12 @@ public struct TrainTime: Codable {
     enum CodingKeys: String, CodingKey {
         case time = "Time"
         case destination = "DestinationStation"
+    }
+    
+    public init(time: String, destination: Station) {
+        self.time = time
+        self.destination = destination
+        
     }
     
     public init(from decoder: Decoder) throws {
@@ -932,6 +1244,11 @@ public struct StationToStationInfos: Codable {
         case stationToStationInfos = "StationToStationInfos"
     }
     
+    public init(stationToStationInfos: [StationToStationInfo]) {
+        self.stationToStationInfos = stationToStationInfos
+        
+    }
+    
 }
 
 public struct StationToStationInfo: Codable {
@@ -947,6 +1264,21 @@ public struct StationToStationInfo: Codable {
         case railFare = "RailFare"
         case railTime = "RailTime"
         case source = "SourceStation"
+    }
+    
+    public init(
+        compositeMiles: Double,
+        destination: Station,
+        railFare: RailFare,
+        railTime: Int,
+        source: Station
+    ) {
+        self.compositeMiles = compositeMiles
+        self.destination = destination
+        self.railFare = railFare
+        self.railTime = railTime
+        self.source = source
+        
     }
     
     public init(from decoder: Decoder) throws {
@@ -999,6 +1331,18 @@ public struct RailFare: Codable {
         case peakTime = "PeakTime"
         case seniorDisabled = "SeniorDisabled"
     }
+    
+    public init(
+        offPeakTime: Double
+        peakTime: Double
+        seniorDisabled: Double
+    ) {
+        self.offPeakTime = offPeakTime
+        self.peakTime = peakTime
+        self.seniorDisabled = seniorDisabled
+        
+    }
+    
 }
 
 public struct ElevatorAndEscalatorIncidents: Codable {
@@ -1006,6 +1350,11 @@ public struct ElevatorAndEscalatorIncidents: Codable {
     
     enum CodingKeys: String, CodingKey {
         case incidents = "ElevatorIncidents"
+    }
+    
+    public init(incidents: [ElevatorAndEscalatorIncident]) {
+        self.incidents = incidents
+        
     }
     
 }
@@ -1039,6 +1388,37 @@ public struct ElevatorAndEscalatorIncident: Codable {
         case dateOutOfService = "DateOutOfServ"
         case dateUpdated = "DateUpdated"
         case estimatedReturnToService = "EstimatedReturnToService"
+    }
+    
+    public init(
+        unitName: String,
+        unitType: String,
+        unitStatus: String?,
+        station: Station,
+        stationName: String,
+        locationDescription: String,
+        symptomCode: String?,
+        timeOutOfService: String,
+        symptomDescription: String,
+        displayOrder: Double,
+        dateOutOfService: Date,
+        dateUpdated: String,
+        estimatedReturnToService: String
+    ) {
+        self.unitName = unitName
+        self.unitType = unitType
+        self.unitStatus = unitStatus
+        self.station = station
+        self.stationName = stationName
+        self.locationDescription = locationDescription
+        self.symptomCode = symptomCode
+        self.timeOutOfService = timeOutOfService
+        self.symptomDescription = symptomDescription
+        self.displayOrder = displayOrder
+        self.dateOutOfService = dateOutOfService
+        self.dateUpdated = dateUpdated
+        self.estimatedReturnToService = estimatedReturnToService
+        
     }
     
     public init(from decoder: Decoder) throws {
@@ -1095,6 +1475,12 @@ public struct RailIncidents: Codable {
     enum CodingKeys: String, CodingKey {
         case incidents = "Incidents"
     }
+    
+    public init(incidents: [RailIncident]) {
+        self.incidents = incidents
+        
+    }
+    
 }
 
 public struct RailIncident: Codable {
@@ -1120,6 +1506,31 @@ public struct RailIncident: Codable {
         case emergencyText = "EmergencyText"
         case linesAffected = "LinesAffected"
         case dateUpdated = "DateUpdated"
+    }
+    
+    public init(
+        incidentID: String,
+        description: String,
+        startLocationFullName: String?,
+        endLocationFullName: String?,
+        passengerDelay: Double,
+        delaySeverity: String?,
+        incidentType: String,
+        emergencyText: String?,
+        linesAffected: String,
+        dateUpdated: Date
+    ) {
+        self.incidentID = incidentID
+        self.description = description
+        self.startLocationFullName = startLocationFullName
+        self.endLocationFullName = endLocationFullName
+        self.passengerDelay = passengerDelay
+        self.delaySeverity = delaySeverity
+        self.incidentType = incidentType
+        self.emergencyText = emergencyText
+        self.linesAffected = linesAffected
+        self.dateUpdated = dateUpdated
+        
     }
     
     public init(from decoder: Decoder) throws {

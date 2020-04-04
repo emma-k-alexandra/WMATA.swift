@@ -13,6 +13,12 @@ public struct BusPredictions: Codable {
     enum CodingKeys: String, CodingKey {
         case predictions = "Predictions"
     }
+    
+    public init(predictions: [BusPrediction]) {
+        self.predictions = predictions
+        
+    }
+    
 }
 
 public struct BusPrediction: Codable {
@@ -30,6 +36,23 @@ public struct BusPrediction: Codable {
         case route = "RouteID"
         case tripId = "TripID"
         case vehicleId = "VehicleID"
+    }
+    
+    public init(
+        directionNumber: String,
+        directionText: String,
+        minutes: Int,
+        route: Route,
+        tripId: String,
+        vehicleId: String
+    ) {
+        self.directionNumber = directionNumber
+        self.directionText = directionText
+        self.minutes = minutes
+        self.route = route
+        self.tripId = tripId
+        self.vehicleId = vehicleId
+        
     }
     
     public init(from decoder: Decoder) throws {
@@ -71,6 +94,12 @@ public struct BusPositions: Codable {
     enum CodingKeys: String, CodingKey {
         case busPositions = "BusPositions"
     }
+    
+    public init(busPositions: [BusPosition]) {
+        self.busPositions = busPositions
+        
+    }
+    
 }
 
 public struct BusPosition: Codable {
@@ -102,6 +131,37 @@ public struct BusPosition: Codable {
         case tripStartTime = "TripStartTime"
         case vehicleId = "VehicleID"
         case blockNumber = "BlockNumber"
+    }
+    
+    public init(
+        dateTime: Date,
+        deviation: Double,
+        directionNumber: Int,
+        directionText: String,
+        latitude: Double,
+        longitude: Double,
+        route: Route,
+        tripEndTime: Date,
+        tripHeadsign: String,
+        tripId: String,
+        tripStartTime: Date,
+        vehicleId: String,
+        blockNumber: String
+    ) {
+        self.dateTime = dateTime
+        self.deviation = deviation
+        self.directionNumber = directionNumber
+        self.directionText = directionText
+        self.latitude = latitude
+        self.longitude = longitude
+        self.route = route
+        self.tripEndTime = tripEndTime
+        self.tripHeadsign = tripHeadsign
+        self.tripId = tripId
+        self.tripStartTime = tripStartTime
+        self.vehicleId = vehicleId
+        self.blockNumber = blockNumber
+        
     }
     
     public init(from decoder: Decoder) throws {
@@ -162,6 +222,20 @@ public struct PathDetails: Codable {
         case directionZero = "Direction0"
         case directionOne = "Direction1"
     }
+    
+    public init(
+        routeId: String,
+        name: String,
+        directionZero: PathDirection,
+        directionOne: PathDirection
+    ) {
+        self.routeId = routeId
+        self.name = name
+        self.directionZero = directionZero
+        self.directionOne = directionOne
+        
+    }
+    
 }
 
 public struct PathDirection: Codable {
@@ -178,6 +252,22 @@ public struct PathDirection: Codable {
         case shape = "Shape"
         case stops = "Stops"
     }
+    
+    public init(
+        tripHeadsign: String,
+        directionText: String,
+        directionNumber: String,
+        shape: [PathStop],
+        stops: [StopResponse]
+    ) {
+        self.tripHeadsign = tripHeadsign
+        self.directionText = directionText
+        self.directionNumber = directionNumber
+        self.shape = shape
+        self.stops = stops
+        
+    }
+    
 }
 
 public struct PathStop: Codable {
@@ -190,6 +280,18 @@ public struct PathStop: Codable {
         case longitude = "Lon"
         case sequenceNumber = "SeqNum"
     }
+    
+    public init(
+        latitude: Double,
+        longitude: Double,
+        sequenceNumber: Int
+    ) {
+        self.latitude = latitude
+        self.longitude = longitude
+        self.sequenceNumber = sequenceNumber
+        
+    }
+    
 }
 
 public struct StopResponse: Codable {
@@ -207,6 +309,20 @@ public struct StopResponse: Codable {
         case routes = "Routes"
     }
     
+    public init(
+        stop: Stop,
+        name: String,
+        latitude: Double,
+        longitude: Double,
+        routes: [Route]
+    ) {
+        self.stop = stop
+        self.name = name
+        self.latitude = latitude
+        self.longitude = longitude
+        self.routes = routes
+        
+    }
     
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
@@ -249,6 +365,12 @@ public struct RoutesResponse: Codable {
     enum CodingKeys: String, CodingKey {
         case routes = "Routes"
     }
+    
+    public init(routes: [RouteResponse]) {
+        self.routes = routes
+        
+    }
+    
 }
 
 public struct RouteResponse: Codable {
@@ -260,6 +382,17 @@ public struct RouteResponse: Codable {
         case route = "RouteID"
         case name = "Name"
         case lineDescription = "LineDescription"
+    }
+    
+    public init(
+        route: Route,
+        name: String,
+        lineDescription: String
+    ) {
+        self.route = route
+        self.name = name
+        self.lineDescription = lineDescription
+        
     }
     
     public init(from decoder: Decoder) throws {
@@ -288,6 +421,16 @@ public struct StopSchedule: Codable {
         case arrivals = "ScheduleArrivals"
         case stop = "Stop"
     }
+    
+    public init(
+        arrivals: [BusArrival],
+        stop: StopScheduleResponse
+    ) {
+        self.arrivals = arrivals
+        self.stop = stop
+        
+    }
+    
 }
 
 public struct BusArrival: Codable {
@@ -309,6 +452,27 @@ public struct BusArrival: Codable {
         case tripDirectionText = "TripDirectionText"
         case tripHeadsign = "TripHeadsign"
         case tripId = "TripID"
+    }
+    
+    public init(
+        scheduleTime: Date,
+        directionNumber: String,
+        startTime: Date,
+        endTime: Date,
+        route: Route,
+        tripDirectionText: String,
+        tripHeadsign: String,
+        tripId: String
+    ) {
+        self.scheduleTime = scheduleTime
+        self.directionNumber = directionNumber
+        self.startTime = startTime
+        self.endTime = endTime
+        self.route = route
+        self.tripDirectionText = tripDirectionText
+        self.tripHeadsign = tripHeadsign
+        self.tripId = tripId
+        
     }
     
     public init(from decoder: Decoder) throws {
@@ -362,6 +526,21 @@ public struct StopScheduleResponse: Codable {
         case routes = "Routes"
     }
     
+    public init(
+        stop: Stop?,
+        name: String,
+        latitude: Double,
+        longitude: Double,
+        routes: [Route]
+    ) {
+        self.stop = stop
+        self.name = name
+        self.latitude = latitude
+        self.longitude = longitude
+        self.routes = routes
+        
+    }
+    
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
@@ -413,6 +592,11 @@ public struct StopsSearchResponse: Codable {
         case stops = "Stops"
     }
     
+    public init(stops: [StopScheduleResponse]) {
+        self.stops = stops
+        
+    }
+    
 }
 
 public struct BusIncidents: Codable {
@@ -420,6 +604,11 @@ public struct BusIncidents: Codable {
     
     enum CodingKeys: String, CodingKey {
         case incidents = "BusIncidents"
+    }
+    
+    public init(incidents: [BusIncident]) {
+        self.incidents = incidents
+        
     }
     
 }
@@ -437,6 +626,21 @@ public struct BusIncident: Codable {
         case incidentId = "IncidentID"
         case incidentType = "IncidentType"
         case routesAffected = "RoutesAffected"
+    }
+    
+    public init(
+        dateUpdated: String,
+        description: String,
+        incidentId: String,
+        incidentType: String,
+        routesAffected: [Route]
+    ) {
+        self.dateUpdated = dateUpdated
+        self.description = description
+        self.incidentId = incidentId
+        self.incidentType = incidentType
+        self.routesAffected = routesAffected
+        
     }
     
     public init(from decoder: Decoder) throws {
@@ -474,6 +678,17 @@ public struct RouteSchedule: Codable {
         case directionOne = "Direction1"
     }
     
+    public init(
+        name: String,
+        directionZero: [RouteInfo],
+        directionOne: [RouteInfo]
+    ) {
+        self.name = name
+        self.directionZero = directionZero
+        self.directionOne = directionOne
+        
+    }
+    
 }
 
 public struct RouteInfo: Codable {
@@ -495,6 +710,27 @@ public struct RouteInfo: Codable {
         case endTime = "EndTime"
         case stopTimes = "StopTimes"
         case tripId = "TripID"
+    }
+    
+    public init(
+        route: Route,
+        directionNumber: String,
+        tripDirectionText: String,
+        tripHeadsign: String,
+        startTime: Date,
+        endTime: Date,
+        stopTimes: [StopInfo],
+        tripId: String
+    ) {
+        self.route = route
+        self.directionNumber = directionNumber
+        self.tripDirectionText = tripDirectionText
+        self.tripHeadsign = tripHeadsign
+        self.startTime = startTime
+        self.endTime = endTime
+        self.stopTimes = stopTimes
+        self.tripId = tripId
+        
     }
     
     public init(from decoder: Decoder) throws {
@@ -546,6 +782,19 @@ public struct StopInfo: Codable {
         case stopName = "StopName"
         case stopSequence = "StopSeq"
         case time = "Time"
+    }
+    
+    public init(
+        stop: Stop,
+        stopName: String,
+        stopSequence: Int,
+        time: String
+    ) {
+        self.stop = stop
+        self.stopName = stopName
+        self.stopSequence = stopSequence
+        self.time = time
+        
     }
     
     public init(from decoder: Decoder) throws {
