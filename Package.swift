@@ -6,6 +6,7 @@ let package = Package(
     products: [
         .library(
             name: "WMATA",
+            type: .dynamic,
             targets: ["WMATA"]),
     ],
     dependencies: [
