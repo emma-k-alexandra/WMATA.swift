@@ -14,25 +14,30 @@ public struct MetroRail: Fetcher {
     public var delegate: WMATADelegate? = nil {
         didSet {
             if let delegate = self.delegate {
-                self.urlSession = generateURLSession(with: delegate)
+                self.urlSession = generateURLSession(with: delegate, sharedContainerIdentifier: self.sharedContainerIdentifier)
                 
             }
             
         }
         
     }
+    public var sharedContainerIdentifier: String? = nil
     private var urlSession: URLSession
     
-    public init(key: String) {
+    public init(key: String, delegate: WMATADelegate? = nil, sharedContainerIdentifier: String? = nil) {
         self.key = key
-        self.urlSession = URLSession.shared
         
-    }
-    
-    public init(key: String, delegate: WMATADelegate) {
-        self.key = key
-        self.delegate = delegate
-        self.urlSession = generateURLSession(with: delegate)
+        self.sharedContainerIdentifier = sharedContainerIdentifier
+        
+        if let delegate = delegate {
+            self.delegate = delegate
+            self.urlSession = generateURLSession(with: delegate, sharedContainerIdentifier: self.sharedContainerIdentifier)
+            
+        } else {
+            self.delegate = nil
+            self.urlSession = URLSession.shared
+            
+        }
         
     }
     

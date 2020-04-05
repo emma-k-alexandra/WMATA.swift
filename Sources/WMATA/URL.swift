@@ -36,10 +36,13 @@ extension URLRequest {
     
 }
 
-func generateURLSession(with delegate: WMATADelegate) -> URLSession {
-    let id = UUID()
-    let config = URLSessionConfiguration.background(withIdentifier: "com.WMATA.swift.\(id)")
-    config.sharedContainerIdentifier = "com.WMATA.swift.\(id)"
+func generateURLSession(with delegate: WMATADelegate, sharedContainerIdentifier: String? = nil) -> URLSession {
+    let config = URLSessionConfiguration.background(withIdentifier: "com.WMATA.swift.\(UUID())")
+    
+    if sharedContainerIdentifier != nil {
+        config.sharedContainerIdentifier = sharedContainerIdentifier
+        
+    }
     
     return URLSession(
         configuration: config,
