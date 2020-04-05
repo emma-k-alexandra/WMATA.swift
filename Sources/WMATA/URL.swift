@@ -37,8 +37,12 @@ extension URLRequest {
 }
 
 func generateURLSession(with delegate: WMATADelegate) -> URLSession {
+    let id = UUID()
+    let config = URLSessionConfiguration.background(withIdentifier: "com.WMATA.swift.\(id)")
+    config.sharedContainerIdentifier = "com.WMATA.swift.\(id)"
+    
     return URLSession(
-        configuration: URLSessionConfiguration.background(withIdentifier: "com.WMATA.swift.\(UUID())"),
+        configuration: config,
         delegate: WMATAURLSessionDataDelegate(wmataDelegate: delegate),
         delegateQueue: nil
     )
