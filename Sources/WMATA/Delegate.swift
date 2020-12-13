@@ -63,7 +63,7 @@ public protocol WMATADelegate {
     
 }
 
-extension WMATADelegate {
+public extension WMATADelegate {
     /// MetroRail default implementations
     /// You don't want these.
     func received(linesResponse result: Result<LinesResponse, WMATAError>) {
@@ -198,7 +198,7 @@ extension WMATADelegate {
 public class WMATAURLSessionDataDelegate: NSObject, URLSessionDataDelegate, Deserializer, GTFSDeserializer {
     public let wmataDelegate: WMATADelegate?
     
-    var data: Data = Data()
+    var data = Data()
     
     public init(wmataDelegate: WMATADelegate?) {
         self.wmataDelegate = wmataDelegate
