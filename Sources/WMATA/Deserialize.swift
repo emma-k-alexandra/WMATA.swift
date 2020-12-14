@@ -1,6 +1,6 @@
 //
 //  Deserialize.swift
-//  
+//
 //
 //  Created by Emma K Alexandra on 11/1/19.
 //
@@ -19,22 +19,18 @@ extension Deserializer {
     func deserialize<T: Codable>(_ data: Data) -> Result<T, WMATAError> {
         do {
             return .success(try JSONDecoder().decode(T.self, from: data))
-            
+
         } catch {
             let originalError = error
-            
+
             do {
                 return .failure(try JSONDecoder().decode(WMATAError.self, from: data))
-                
+
             } catch {
                 return .failure(originalError.toWMATAError())
-                
             }
-            
         }
-        
     }
-    
 }
 
 protocol GTFSDeserializer {}
@@ -42,13 +38,10 @@ protocol GTFSDeserializer {}
 extension GTFSDeserializer {
     func deserialize(_ data: Data) -> Result<TransitRealtime_FeedMessage, WMATAError> {
         do {
-            return .success(try TransitRealtime_FeedMessage.init(serializedData: data))
-            
+            return .success(try TransitRealtime_FeedMessage(serializedData: data))
+
         } catch {
             return .failure(error.toWMATAError())
-            
         }
-        
     }
-    
 }

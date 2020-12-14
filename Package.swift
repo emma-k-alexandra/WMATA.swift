@@ -6,7 +6,8 @@ let package = Package(
     products: [
         .library(
             name: "WMATA",
-            targets: ["WMATA"]),
+            targets: ["WMATA"]
+        ),
     ],
     dependencies: [
         .package(url: "https://github.com/emma-k-alexandra/GTFS.git", from: "1.0.0"),
@@ -15,12 +16,12 @@ let package = Package(
         .target(
             name: "WMATA",
             dependencies: [
-                "GTFS"
+                "GTFS",
             ]
         ),
         .testTarget(
             name: "WMATATests",
             dependencies: ["WMATA"]
-        )
+        ),
     ]
 )
