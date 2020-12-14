@@ -1,6 +1,6 @@
 //
 //  Date.swift
-//  
+//
 //
 //  Created by Emma K Alexandra on 11/1/19.
 //
@@ -15,9 +15,8 @@ public struct WMATADate {
 
 extension WMATADate: CustomStringConvertible {
     public var description: String {
-        String(format: "%04d-%02d-%02d", self.year, self.month, self.day)
+        String(format: "%04d-%02d-%02d", year, month, day)
     }
-    
 }
 
 let FORMAT = "yyyy-MM-dd'T'HH:mm:ss"
@@ -30,13 +29,10 @@ extension String {
         formatter.timeZone = TimeZone(abbreviation: "EST")!
         guard let date = formatter.date(from: self) else {
             throw WMATAError(statusCode: 0, message: "Date provided not valid")
-            
         }
-        
+
         return date
-        
     }
-    
 }
 
 extension Date {
@@ -45,27 +41,23 @@ extension Date {
         formatter.dateFormat = FORMAT
         formatter.locale = Locale(identifier: "en_US_POSIX")
         formatter.timeZone = TimeZone(abbreviation: "EST")!
-        
+
         return formatter.string(from: self)
-        
     }
-    
 }
 
 extension Date {
     func weekdaySaturdayOrSunday() -> WeekdaySaturdayOrSunday {
-        let weekday = Calendar.init(identifier: .gregorian).component(.weekday, from: self)
+        let weekday = Calendar(identifier: .gregorian).component(.weekday, from: self)
         if weekday == 1 {
             return .sunday
-            
+
         } else if weekday > 1, weekday < 7 {
             return .weekday
-            
+
         } else {
             return .saturday
-            
         }
-        
     }
 }
 

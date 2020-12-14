@@ -1,6 +1,6 @@
 //
 //  Routes.swift
-//  
+//
 //
 //  Created by Emma K Alexandra on 10/6/19.
 //
@@ -500,48 +500,40 @@ extension Route: NeedsRoute {
     /// - Parameter apiKey: WMATA API Key to use with this request
     /// - Parameter session: Optional. URL Session to make this request with
     /// - Parameter completion: completion handler which returns `BusPositions`
-    func positions(at radiusAtCoordinates: RadiusAtCoordinates?, withApiKey apiKey: String, andSession session: URLSession = URLSession.shared, completion: @escaping (Result<BusPositions, WMATAError>) -> ()) {
+    func positions(at radiusAtCoordinates: RadiusAtCoordinates?, withApiKey apiKey: String, andSession session: URLSession = URLSession.shared, completion: @escaping (Result<BusPositions, WMATAError>) -> Void) {
         (self as NeedsRoute).positions(on: self, at: radiusAtCoordinates, withApiKey: apiKey, andSession: session, completion: completion)
-        
     }
-    
-    
+
     /// Bus incidents along this Route.
     /// - Parameter apiKey: WMATA API Key to use with this request
     /// - Parameter session: Optional. URL Session to make this request with
     /// - Parameter completion: completion handler which return `BusIncidents`
-    func incidents(withApiKey apiKey: String, andSession session: URLSession = URLSession.shared, completion: @escaping (Result<BusIncidents, WMATAError>) -> ()) {
+    func incidents(withApiKey apiKey: String, andSession session: URLSession = URLSession.shared, completion: @escaping (Result<BusIncidents, WMATAError>) -> Void) {
         (self as NeedsRoute).incidents(on: self, withApiKey: apiKey, andSession: session, completion: completion)
-        
     }
-    
+
     /// Ordered latlong points along this Route for a given date.
     /// - Parameter date: `WMATADate`. nil for today.
     /// - Parameter apiKey: WMATA API Key to use with this request
     /// - Parameter session: Optional. URL Session to make this request with
     /// - Parameter completion: completion handler which returns `PathDetails`
-    func pathDetails(on date: WMATADate? = nil, withApiKey apiKey: String, andSession session: URLSession = URLSession.shared, completion: @escaping (Result<PathDetails, WMATAError>) -> ()) {
+    func pathDetails(on date: WMATADate? = nil, withApiKey apiKey: String, andSession session: URLSession = URLSession.shared, completion: @escaping (Result<PathDetails, WMATAError>) -> Void) {
         (self as NeedsRoute).pathDetails(for: self, on: date, withApiKey: apiKey, andSession: session, completion: completion)
-        
     }
-    
+
     /// Scheduled stops for this Route
     /// - Parameter date: `WMATADate`. Omit for today.
     /// - Parameter includingVariations: Whether to include route variations. Example: B30v1 and B30v2 for Route B30
     /// - Parameter apiKey: WMATA API Key to use with this request
     /// - Parameter session: Optional. URL Session to make this request with
     /// - Parameter completion: completion handler which returns `RoutesResponse`
-    func schedule(on date: WMATADate? = nil, includingVariations: Bool? = false, withApiKey apiKey: String, andSession session: URLSession = URLSession.shared, completion: @escaping (Result<RouteSchedule, WMATAError>) -> ()) {
+    func schedule(on date: WMATADate? = nil, includingVariations: Bool? = false, withApiKey apiKey: String, andSession session: URLSession = URLSession.shared, completion: @escaping (Result<RouteSchedule, WMATAError>) -> Void) {
         (self as NeedsRoute).schedule(for: self, on: date, includingVariations: includingVariations, withApiKey: apiKey, andSession: session, completion: completion)
-        
     }
-    
 }
 
 extension Route: CustomStringConvertible {
     public var description: String {
-        self.rawValue
-        
+        rawValue
     }
-    
 }

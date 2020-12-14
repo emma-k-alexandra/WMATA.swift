@@ -1,6 +1,6 @@
 //
 //  BusResponses.swift
-//  
+//
 //
 //  Created by Emma K Alexandra on 6/16/19.
 //
@@ -9,16 +9,14 @@ import Foundation
 
 public struct BusPredictions: Codable {
     public let predictions: [BusPrediction]
-    
+
     enum CodingKeys: String, CodingKey {
         case predictions = "Predictions"
     }
-    
+
     public init(predictions: [BusPrediction]) {
         self.predictions = predictions
-        
     }
-    
 }
 
 public struct BusPrediction: Codable {
@@ -28,7 +26,7 @@ public struct BusPrediction: Codable {
     public let route: Route
     public let tripId: String
     public let vehicleId: String
-    
+
     enum CodingKeys: String, CodingKey {
         case directionNumber = "DirectionNum"
         case directionText = "DirectionText"
@@ -37,7 +35,7 @@ public struct BusPrediction: Codable {
         case tripId = "TripID"
         case vehicleId = "VehicleID"
     }
-    
+
     public init(
         directionNumber: String,
         directionText: String,
@@ -52,54 +50,47 @@ public struct BusPrediction: Codable {
         self.route = route
         self.tripId = tripId
         self.vehicleId = vehicleId
-        
     }
-    
+
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        
-        self.directionNumber = try container.decode(String.self, forKey: .directionNumber)
-        self.directionText = try container.decode(String.self, forKey: .directionText)
-        self.minutes = try container.decode(Int.self, forKey: .minutes)
-        
+
+        directionNumber = try container.decode(String.self, forKey: .directionNumber)
+        directionText = try container.decode(String.self, forKey: .directionText)
+        minutes = try container.decode(Int.self, forKey: .minutes)
+
         guard let route = Route(rawValue: try container.decode(String.self, forKey: .route)) else {
             throw WMATAError(statusCode: 0, message: "Route provided by API was not valid")
-            
         }
-        
+
         self.route = route
-        
-        self.tripId = try container.decode(String.self, forKey: .tripId)
-        self.vehicleId = try container.decode(String.self, forKey: .vehicleId)
-        
+
+        tripId = try container.decode(String.self, forKey: .tripId)
+        vehicleId = try container.decode(String.self, forKey: .vehicleId)
     }
-    
+
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
-     
-        try container.encode(self.directionNumber, forKey: .directionNumber)
-        try container.encode(self.directionText, forKey: .directionText)
-        try container.encode(self.minutes, forKey: .minutes)
-        try container.encode(self.route.description, forKey: .route)
-        try container.encode(self.tripId, forKey: .tripId)
-        try container.encode(self.vehicleId, forKey: .vehicleId)
-        
+
+        try container.encode(directionNumber, forKey: .directionNumber)
+        try container.encode(directionText, forKey: .directionText)
+        try container.encode(minutes, forKey: .minutes)
+        try container.encode(route.description, forKey: .route)
+        try container.encode(tripId, forKey: .tripId)
+        try container.encode(vehicleId, forKey: .vehicleId)
     }
-    
 }
 
 public struct BusPositions: Codable {
     public let busPositions: [BusPosition]
-    
+
     enum CodingKeys: String, CodingKey {
         case busPositions = "BusPositions"
     }
-    
+
     public init(busPositions: [BusPosition]) {
         self.busPositions = busPositions
-        
     }
-    
 }
 
 public struct BusPosition: Codable {
@@ -116,7 +107,7 @@ public struct BusPosition: Codable {
     public let tripStartTime: Date
     public let vehicleId: String
     public let blockNumber: String
-    
+
     enum CodingKeys: String, CodingKey {
         case dateTime = "DateTime"
         case deviation = "Deviation"
@@ -132,7 +123,7 @@ public struct BusPosition: Codable {
         case vehicleId = "VehicleID"
         case blockNumber = "BlockNumber"
     }
-    
+
     public init(
         dateTime: Date,
         deviation: Double,
@@ -161,53 +152,48 @@ public struct BusPosition: Codable {
         self.tripStartTime = tripStartTime
         self.vehicleId = vehicleId
         self.blockNumber = blockNumber
-        
     }
-    
+
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        
-        self.dateTime = try (try container.decode(String.self, forKey: .dateTime)).toWMATADate()
-        self.deviation = try container.decode(Double.self, forKey: .deviation)
-        self.directionNumber = try container.decode(Int.self, forKey: .directionNumber)
-        self.directionText = try container.decode(String.self, forKey: .directionText)
-        self.latitude = try container.decode(Double.self, forKey: .latitude)
-        self.longitude = try container.decode(Double.self, forKey: .longitude)
-        
+
+        dateTime = try (try container.decode(String.self, forKey: .dateTime)).toWMATADate()
+        deviation = try container.decode(Double.self, forKey: .deviation)
+        directionNumber = try container.decode(Int.self, forKey: .directionNumber)
+        directionText = try container.decode(String.self, forKey: .directionText)
+        latitude = try container.decode(Double.self, forKey: .latitude)
+        longitude = try container.decode(Double.self, forKey: .longitude)
+
         guard let route = Route(rawValue: try container.decode(String.self, forKey: .route)) else {
             throw WMATAError(statusCode: 0, message: "Route provided by API was not valid")
-
         }
-        
+
         self.route = route
-        
-        self.tripEndTime = try (try container.decode(String.self, forKey: .tripEndTime)).toWMATADate()
-        self.tripHeadsign = try container.decode(String.self, forKey: .tripHeadsign)
-        self.tripId = try container.decode(String.self, forKey: .tripId)
-        self.tripStartTime = try (try container.decode(String.self, forKey: .tripStartTime)).toWMATADate()
-        self.vehicleId = try container.decode(String.self, forKey: .vehicleId)
-        self.blockNumber = try container.decode(String.self, forKey: .blockNumber)
-        
+
+        tripEndTime = try (try container.decode(String.self, forKey: .tripEndTime)).toWMATADate()
+        tripHeadsign = try container.decode(String.self, forKey: .tripHeadsign)
+        tripId = try container.decode(String.self, forKey: .tripId)
+        tripStartTime = try (try container.decode(String.self, forKey: .tripStartTime)).toWMATADate()
+        vehicleId = try container.decode(String.self, forKey: .vehicleId)
+        blockNumber = try container.decode(String.self, forKey: .blockNumber)
     }
-    
+
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
-        
-        try container.encode(self.dateTime.toWMATAString(), forKey: .dateTime)
-        try container.encode(self.deviation, forKey: .deviation)
-        try container.encode(self.directionNumber, forKey: .directionNumber)
-        try container.encode(self.directionText, forKey: .directionText)
-        try container.encode(self.latitude, forKey: .latitude)
-        try container.encode(self.longitude, forKey: .longitude)
-        try container.encode(self.route.description, forKey: .route)
-        try container.encode(self.tripEndTime.toWMATAString(), forKey: .tripEndTime)
-        try container.encode(self.tripId, forKey: .tripId)
-        try container.encode(self.tripStartTime.toWMATAString(), forKey: .tripStartTime)
-        try container.encode(self.vehicleId, forKey: .vehicleId)
-        try container.encode(self.blockNumber, forKey: .blockNumber)
-        
+
+        try container.encode(dateTime.toWMATAString(), forKey: .dateTime)
+        try container.encode(deviation, forKey: .deviation)
+        try container.encode(directionNumber, forKey: .directionNumber)
+        try container.encode(directionText, forKey: .directionText)
+        try container.encode(latitude, forKey: .latitude)
+        try container.encode(longitude, forKey: .longitude)
+        try container.encode(route.description, forKey: .route)
+        try container.encode(tripEndTime.toWMATAString(), forKey: .tripEndTime)
+        try container.encode(tripId, forKey: .tripId)
+        try container.encode(tripStartTime.toWMATAString(), forKey: .tripStartTime)
+        try container.encode(vehicleId, forKey: .vehicleId)
+        try container.encode(blockNumber, forKey: .blockNumber)
     }
-    
 }
 
 public struct PathDetails: Codable {
@@ -215,14 +201,14 @@ public struct PathDetails: Codable {
     public let name: String
     public let directionZero: PathDirection
     public let directionOne: PathDirection
-    
+
     enum CodingKeys: String, CodingKey {
         case routeId = "RouteID"
         case name = "Name"
         case directionZero = "Direction0"
         case directionOne = "Direction1"
     }
-    
+
     public init(
         routeId: String,
         name: String,
@@ -233,9 +219,7 @@ public struct PathDetails: Codable {
         self.name = name
         self.directionZero = directionZero
         self.directionOne = directionOne
-        
     }
-    
 }
 
 public struct PathDirection: Codable {
@@ -244,7 +228,7 @@ public struct PathDirection: Codable {
     public let directionNumber: String
     public let shape: [PathStop]
     public let stops: [StopResponse]
-    
+
     enum CodingKeys: String, CodingKey {
         case tripHeadsign = "TripHeadsign"
         case directionText = "DirectionText"
@@ -252,7 +236,7 @@ public struct PathDirection: Codable {
         case shape = "Shape"
         case stops = "Stops"
     }
-    
+
     public init(
         tripHeadsign: String,
         directionText: String,
@@ -265,22 +249,20 @@ public struct PathDirection: Codable {
         self.directionNumber = directionNumber
         self.shape = shape
         self.stops = stops
-        
     }
-    
 }
 
 public struct PathStop: Codable {
     public let latitude: Double
     public let longitude: Double
     public let sequenceNumber: Int
-    
+
     enum CodingKeys: String, CodingKey {
         case latitude = "Lat"
         case longitude = "Lon"
         case sequenceNumber = "SeqNum"
     }
-    
+
     public init(
         latitude: Double,
         longitude: Double,
@@ -289,9 +271,7 @@ public struct PathStop: Codable {
         self.latitude = latitude
         self.longitude = longitude
         self.sequenceNumber = sequenceNumber
-        
     }
-    
 }
 
 public struct StopResponse: Codable {
@@ -300,7 +280,7 @@ public struct StopResponse: Codable {
     public let latitude: Double
     public let longitude: Double
     public let routes: [Route]
-    
+
     enum CodingKeys: String, CodingKey {
         case stop = "StopID"
         case name = "Name"
@@ -308,7 +288,7 @@ public struct StopResponse: Codable {
         case longitude = "Lat"
         case routes = "Routes"
     }
-    
+
     public init(
         stop: Stop,
         name: String,
@@ -321,69 +301,61 @@ public struct StopResponse: Codable {
         self.latitude = latitude
         self.longitude = longitude
         self.routes = routes
-        
     }
-    
+
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        
-        self.stop = Stop(id: try container.decode(String.self, forKey: .stop))
-        self.name = try container.decode(String.self, forKey: .name)
-        self.latitude = try container.decode(Double.self, forKey: .latitude)
-        self.longitude = try container.decode(Double.self, forKey: .longitude)
-        
+
+        stop = Stop(id: try container.decode(String.self, forKey: .stop))
+        name = try container.decode(String.self, forKey: .name)
+        latitude = try container.decode(Double.self, forKey: .latitude)
+        longitude = try container.decode(Double.self, forKey: .longitude)
+
         let routes = try container.decode([String].self, forKey: .routes)
-        
-        self.routes = try routes.map({ (routeString) -> Route in
+
+        self.routes = try routes.map { (routeString) -> Route in
             guard let route = Route(rawValue: routeString) else {
                 throw WMATAError(statusCode: 0, message: "Route provided by API was not valid")
-                
             }
-            
+
             return route
-            
-        })
-        
+        }
     }
-    
+
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
-        
-        try container.encode(self.stop.description, forKey: .stop)
-        try container.encode(self.name, forKey: .name)
-        try container.encode(self.latitude, forKey: .latitude)
-        try container.encode(self.longitude, forKey: .longitude)
-        try container.encode(self.routes, forKey: .routes)
-        
+
+        try container.encode(stop.description, forKey: .stop)
+        try container.encode(name, forKey: .name)
+        try container.encode(latitude, forKey: .latitude)
+        try container.encode(longitude, forKey: .longitude)
+        try container.encode(routes, forKey: .routes)
     }
-    
 }
 
 public struct RoutesResponse: Codable {
     public let routes: [RouteResponse]
-    
+
     enum CodingKeys: String, CodingKey {
         case routes = "Routes"
     }
-    
+
     public init(routes: [RouteResponse]) {
         self.routes = routes
-        
     }
-    
 }
 
 public struct RouteResponse: Codable {
     public let route: Route
     public let name: String
     public let lineDescription: String
-    
+
     enum CodingKeys: String, CodingKey {
         case route = "RouteID"
         case name = "Name"
         case lineDescription = "LineDescription"
     }
-    
+
     public init(
         route: Route,
         name: String,
@@ -392,45 +364,39 @@ public struct RouteResponse: Codable {
         self.route = route
         self.name = name
         self.lineDescription = lineDescription
-        
     }
-    
+
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        
+
         let routeCode = try container.decode(String.self, forKey: .route)
-        
+
         guard let route = Route(rawValue: routeCode) else {
             throw WMATAError(statusCode: 0, message: "Route \(routeCode) provided by API was not valid")
-            
         }
-        
+
         self.route = route
-        self.name = try container.decode(String.self, forKey: .name)
-        self.lineDescription = try container.decode(String.self, forKey: .lineDescription)
-        
+        name = try container.decode(String.self, forKey: .name)
+        lineDescription = try container.decode(String.self, forKey: .lineDescription)
     }
-    
 }
 
 public struct StopSchedule: Codable {
     public let arrivals: [BusArrival]
     public let stop: StopScheduleResponse
-    
+
     enum CodingKeys: String, CodingKey {
         case arrivals = "ScheduleArrivals"
         case stop = "Stop"
     }
-    
+
     public init(
         arrivals: [BusArrival],
         stop: StopScheduleResponse
     ) {
         self.arrivals = arrivals
         self.stop = stop
-        
     }
-    
 }
 
 public struct BusArrival: Codable {
@@ -442,7 +408,7 @@ public struct BusArrival: Codable {
     public let tripDirectionText: String
     public let tripHeadsign: String
     public let tripId: String
-    
+
     enum CodingKeys: String, CodingKey {
         case scheduleTime = "ScheduleTime"
         case directionNumber = "DirectionNum"
@@ -453,7 +419,7 @@ public struct BusArrival: Codable {
         case tripHeadsign = "TripHeadsign"
         case tripId = "TripID"
     }
-    
+
     public init(
         scheduleTime: Date,
         directionNumber: String,
@@ -472,43 +438,38 @@ public struct BusArrival: Codable {
         self.tripDirectionText = tripDirectionText
         self.tripHeadsign = tripHeadsign
         self.tripId = tripId
-        
     }
-    
+
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        
-        self.scheduleTime = try (try container.decode(String.self, forKey: .scheduleTime)).toWMATADate()
-        self.directionNumber = try container.decode(String.self, forKey: .directionNumber)
-        self.startTime = try (try container.decode(String.self, forKey: .startTime)).toWMATADate()
-        self.endTime = try (try container.decode(String.self, forKey: .endTime)).toWMATADate()
-        
+
+        scheduleTime = try (try container.decode(String.self, forKey: .scheduleTime)).toWMATADate()
+        directionNumber = try container.decode(String.self, forKey: .directionNumber)
+        startTime = try (try container.decode(String.self, forKey: .startTime)).toWMATADate()
+        endTime = try (try container.decode(String.self, forKey: .endTime)).toWMATADate()
+
         guard let route = Route(rawValue: try container.decode(String.self, forKey: .route)) else {
             throw WMATAError(statusCode: 0, message: "Route provided by API was not valid")
-            
         }
-        
+
         self.route = route
-        self.tripDirectionText = try container.decode(String.self, forKey: .tripDirectionText)
-        self.tripHeadsign = try container.decode(String.self, forKey: .tripHeadsign)
-        self.tripId = try container.decode(String.self, forKey: .tripId)
-        
+        tripDirectionText = try container.decode(String.self, forKey: .tripDirectionText)
+        tripHeadsign = try container.decode(String.self, forKey: .tripHeadsign)
+        tripId = try container.decode(String.self, forKey: .tripId)
     }
-    
+
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
-        
-        try container.encode(self.scheduleTime.toWMATAString(), forKey: .scheduleTime)
-        try container.encode(self.directionNumber, forKey: .directionNumber)
-        try container.encode(self.startTime.toWMATAString(), forKey: .startTime)
-        try container.encode(self.endTime.toWMATAString(), forKey: .endTime)
-        try container.encode(self.route, forKey: .route)
-        try container.encode(self.tripDirectionText, forKey: .tripDirectionText)
-        try container.encode(self.tripHeadsign, forKey: .tripHeadsign)
-        try container.encode(self.tripId, forKey: .tripId)
-        
+
+        try container.encode(scheduleTime.toWMATAString(), forKey: .scheduleTime)
+        try container.encode(directionNumber, forKey: .directionNumber)
+        try container.encode(startTime.toWMATAString(), forKey: .startTime)
+        try container.encode(endTime.toWMATAString(), forKey: .endTime)
+        try container.encode(route, forKey: .route)
+        try container.encode(tripDirectionText, forKey: .tripDirectionText)
+        try container.encode(tripHeadsign, forKey: .tripHeadsign)
+        try container.encode(tripId, forKey: .tripId)
     }
-    
 }
 
 public struct StopScheduleResponse: Codable {
@@ -517,7 +478,7 @@ public struct StopScheduleResponse: Codable {
     public let latitude: Double
     public let longitude: Double
     public let routes: [Route]
-    
+
     enum CodingKeys: String, CodingKey {
         case stop = "StopID"
         case name = "Name"
@@ -525,7 +486,7 @@ public struct StopScheduleResponse: Codable {
         case longitude = "Lon"
         case routes = "Routes"
     }
-    
+
     public init(
         stop: Stop?,
         name: String,
@@ -538,79 +499,68 @@ public struct StopScheduleResponse: Codable {
         self.latitude = latitude
         self.longitude = longitude
         self.routes = routes
-        
     }
-    
+
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        
+
         let stop = try container.decode(String?.self, forKey: .stop)
-        
+
         if let stop = stop {
             self.stop = Stop(id: stop)
-            
+
         } else {
             self.stop = nil
-            
         }
-        
-        self.name = try container.decode(String.self, forKey: .name)
-        self.latitude = try container.decode(Double.self, forKey: .latitude)
-        self.longitude = try container.decode(Double.self, forKey: .longitude)
-        
+
+        name = try container.decode(String.self, forKey: .name)
+        latitude = try container.decode(Double.self, forKey: .latitude)
+        longitude = try container.decode(Double.self, forKey: .longitude)
+
         let routes = try container.decode([String].self, forKey: .routes)
-        
-        self.routes = try routes.map({ (routeString) -> Route in
+
+        self.routes = try routes.map { (routeString) -> Route in
             guard let route = Route(rawValue: routeString) else {
                 throw WMATAError(statusCode: 0, message: "Route provided by API was not valid")
-                
             }
-            
+
             return route
-            
-        })
-        
+        }
     }
-    
+
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
-        
-        try container.encode(self.stop?.description, forKey: .stop)
-        try container.encode(self.name, forKey: .name)
-        try container.encode(self.latitude, forKey: .latitude)
-        try container.encode(self.longitude, forKey: .longitude)
-        try container.encode(self.routes, forKey: .routes)
-        
+
+        try container.encode(stop?.description, forKey: .stop)
+        try container.encode(name, forKey: .name)
+        try container.encode(latitude, forKey: .latitude)
+        try container.encode(longitude, forKey: .longitude)
+        try container.encode(routes, forKey: .routes)
     }
-    
 }
 
 public struct StopsSearchResponse: Codable {
     public let stops: [StopScheduleResponse]
-    
+
     enum CodingKeys: String, CodingKey {
         case stops = "Stops"
     }
-    
+
     public init(stops: [StopScheduleResponse]) {
         self.stops = stops
-        
     }
-    
 }
 
 public struct BusIncidents: Codable {
     public let incidents: [BusIncident]
-    
+
     enum CodingKeys: String, CodingKey {
         case incidents = "BusIncidents"
     }
-    
+
     public init(incidents: [BusIncident]) {
         self.incidents = incidents
-        
     }
-    
 }
 
 public struct BusIncident: Codable {
@@ -619,7 +569,7 @@ public struct BusIncident: Codable {
     public let incidentId: String
     public let incidentType: String
     public let routesAffected: [Route]
-    
+
     enum CodingKeys: String, CodingKey {
         case dateUpdated = "DateUpdated"
         case description = "Description"
@@ -627,7 +577,7 @@ public struct BusIncident: Codable {
         case incidentType = "IncidentType"
         case routesAffected = "RoutesAffected"
     }
-    
+
     public init(
         dateUpdated: String,
         description: String,
@@ -640,44 +590,39 @@ public struct BusIncident: Codable {
         self.incidentId = incidentId
         self.incidentType = incidentType
         self.routesAffected = routesAffected
-        
     }
-    
+
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        
-        self.dateUpdated = try container.decode(String.self, forKey: .dateUpdated)
-        self.description = try container.decode(String.self, forKey: .description)
-        self.incidentId = try container.decode(String.self, forKey: .incidentId)
-        self.incidentType = try container.decode(String.self, forKey: .incidentType)
-        
+
+        dateUpdated = try container.decode(String.self, forKey: .dateUpdated)
+        description = try container.decode(String.self, forKey: .description)
+        incidentId = try container.decode(String.self, forKey: .incidentId)
+        incidentType = try container.decode(String.self, forKey: .incidentType)
+
         let routes = try container.decode([String].self, forKey: .routesAffected)
-        
-        self.routesAffected = try routes.map({ (routeString) -> Route in
+
+        routesAffected = try routes.map { (routeString) -> Route in
             guard let route = Route(rawValue: routeString) else {
                 throw WMATAError(statusCode: 0, message: "Route provided by API was not valid")
-                
             }
-            
+
             return route
-            
-        })
-        
+        }
     }
-    
 }
 
 public struct RouteSchedule: Codable {
     public let name: String
     public let directionZero: [RouteInfo]
     public let directionOne: [RouteInfo]
-    
+
     enum CodingKeys: String, CodingKey {
         case name = "Name"
         case directionZero = "Direction0"
         case directionOne = "Direction1"
     }
-    
+
     public init(
         name: String,
         directionZero: [RouteInfo],
@@ -686,9 +631,7 @@ public struct RouteSchedule: Codable {
         self.name = name
         self.directionZero = directionZero
         self.directionOne = directionOne
-        
     }
-    
 }
 
 public struct RouteInfo: Codable {
@@ -700,7 +643,7 @@ public struct RouteInfo: Codable {
     public let endTime: Date
     public let stopTimes: [StopInfo]
     public let tripId: String
-    
+
     enum CodingKeys: String, CodingKey {
         case route = "RouteID"
         case directionNumber = "DirectionNum"
@@ -711,7 +654,7 @@ public struct RouteInfo: Codable {
         case stopTimes = "StopTimes"
         case tripId = "TripID"
     }
-    
+
     public init(
         route: Route,
         directionNumber: String,
@@ -730,45 +673,39 @@ public struct RouteInfo: Codable {
         self.endTime = endTime
         self.stopTimes = stopTimes
         self.tripId = tripId
-        
     }
-    
+
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        
+
         let routeCode = try container.decode(String.self, forKey: .route)
-        
+
         guard let route = Route(rawValue: routeCode) else {
             throw WMATAError(statusCode: 0, message: "Route \(routeCode) provided by API was not valid")
-            
         }
-        
+
         self.route = route
-        self.directionNumber = try container.decode(String.self, forKey: .directionNumber)
-        self.tripDirectionText = try container.decode(String.self, forKey: .tripDirectionText)
-        self.tripHeadsign = try container.decode(String.self, forKey: .tripHeadsign)
-        self.startTime = try (try container.decode(String.self, forKey: .startTime)).toWMATADate()
-        self.endTime = try (try container.decode(String.self, forKey: .endTime)).toWMATADate()
-        self.stopTimes = try container.decode([StopInfo].self, forKey: .stopTimes)
-        self.tripId = try container.decode(String.self, forKey: .tripId)
-        
-        
+        directionNumber = try container.decode(String.self, forKey: .directionNumber)
+        tripDirectionText = try container.decode(String.self, forKey: .tripDirectionText)
+        tripHeadsign = try container.decode(String.self, forKey: .tripHeadsign)
+        startTime = try (try container.decode(String.self, forKey: .startTime)).toWMATADate()
+        endTime = try (try container.decode(String.self, forKey: .endTime)).toWMATADate()
+        stopTimes = try container.decode([StopInfo].self, forKey: .stopTimes)
+        tripId = try container.decode(String.self, forKey: .tripId)
     }
-    
+
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
-        
-        try container.encode(self.route, forKey: .route)
-        try container.encode(self.directionNumber, forKey: .directionNumber)
-        try container.encode(self.tripDirectionText, forKey: .tripDirectionText)
-        try container.encode(self.tripHeadsign, forKey: .tripHeadsign)
-        try container.encode(self.startTime.toWMATAString(), forKey: .startTime)
-        try container.encode(self.endTime.toWMATAString(), forKey: .endTime)
-        try container.encode(self.stopTimes, forKey: .stopTimes)
-        try container.encode(self.tripId, forKey: .tripId)
-        
+
+        try container.encode(route, forKey: .route)
+        try container.encode(directionNumber, forKey: .directionNumber)
+        try container.encode(tripDirectionText, forKey: .tripDirectionText)
+        try container.encode(tripHeadsign, forKey: .tripHeadsign)
+        try container.encode(startTime.toWMATAString(), forKey: .startTime)
+        try container.encode(endTime.toWMATAString(), forKey: .endTime)
+        try container.encode(stopTimes, forKey: .stopTimes)
+        try container.encode(tripId, forKey: .tripId)
     }
-    
 }
 
 public struct StopInfo: Codable {
@@ -776,14 +713,14 @@ public struct StopInfo: Codable {
     public let stopName: String
     public let stopSequence: Int
     public let time: String
-    
+
     enum CodingKeys: String, CodingKey {
         case stop = "StopID"
         case stopName = "StopName"
         case stopSequence = "StopSeq"
         case time = "Time"
     }
-    
+
     public init(
         stop: Stop,
         stopName: String,
@@ -794,27 +731,23 @@ public struct StopInfo: Codable {
         self.stopName = stopName
         self.stopSequence = stopSequence
         self.time = time
-        
     }
-    
+
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        
-        self.stop = Stop(id: try container.decode(String.self, forKey: .stop))
-        self.stopName = try container.decode(String.self, forKey: .stopName)
-        self.stopSequence = try container.decode(Int.self, forKey: .stopSequence)
-        self.time = try container.decode(String.self, forKey: .time)
-        
+
+        stop = Stop(id: try container.decode(String.self, forKey: .stop))
+        stopName = try container.decode(String.self, forKey: .stopName)
+        stopSequence = try container.decode(Int.self, forKey: .stopSequence)
+        time = try container.decode(String.self, forKey: .time)
     }
-    
+
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
-        
-        try container.encode(self.stop.description, forKey: .stop)
-        try container.encode(self.stopName, forKey: .stopName)
-        try container.encode(self.stopSequence, forKey: .stopSequence)
-        try container.encode(self.time, forKey: .time)
-        
+
+        try container.encode(stop.description, forKey: .stop)
+        try container.encode(stopName, forKey: .stopName)
+        try container.encode(stopSequence, forKey: .stopSequence)
+        try container.encode(time, forKey: .time)
     }
-    
 }
