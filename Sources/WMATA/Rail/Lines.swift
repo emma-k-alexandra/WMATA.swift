@@ -50,7 +50,7 @@ public extension Line {
             return "Silver"
 
         case .YLRP:
-            return "Yellow Rush Push"
+            return "Yellow Rush Plus"
         }
     }
 }
