@@ -946,6 +946,18 @@ final class StationTests: XCTestCase {
 
         XCTAssertEqual(Station.A01.openingTime(on: date), date)
     }
+
+    func testStationTogether() {
+        XCTAssertEqual(Station.A01.together, Station.C01)
+        XCTAssertEqual(Station.C01.together, Station.A01)
+        XCTAssertEqual(Station.A02.together, nil)
+    }
+
+    func testStationAllTogether() {
+        XCTAssertEqual(Station.A01.allTogether, [Station.A01, Station.C01])
+        XCTAssertEqual(Station.C01.allTogether, [Station.C01, Station.A01])
+        XCTAssertEqual(Station.A02.allTogether, [Station.A02])
+    }
 }
 
 final class MetroBusTests: XCTestCase {
