@@ -545,7 +545,7 @@ public extension Station {
     /// This is effectively the result of joining the `StationTogether1`
     /// and `StationTogether2` values from the WMATA API.
     /// - Returns: The other stations together with this station or an empty array
-    func together() -> [Station] {
+    var together: [Station] {
         switch self {
         // Fort Totten
         case .B06:
@@ -574,10 +574,8 @@ public extension Station {
 
     /// Other stations located with this station, including this station.
     /// - Returns: This station appended to the results of `together`.
-    func allTogether() -> [Station] {
-        var together = self.together()
-        together.append(self)
-        return together
+    var allTogether: [Station] {
+        together + [self]
     }
 }
 

@@ -948,15 +948,15 @@ final class StationTests: XCTestCase {
     }
 
     func testStationTogether() {
-        XCTAssertEqual(Station.A01.together(), [Station.C01])
-        XCTAssertEqual(Station.C01.together(), [Station.A01])
-        XCTAssertEqual(Station.A02.together(), [])
+        XCTAssertEqual(Station.A01.together, [Station.C01])
+        XCTAssertEqual(Station.C01.together, [Station.A01])
+        XCTAssertEqual(Station.A02.together, [])
     }
 
     func testStationAllTogether() {
-        XCTAssertEqual(Station.A01.allTogether(), [Station.C01, Station.A01])
-        XCTAssertEqual(Station.C01.allTogether(), [Station.A01, Station.C01])
-        XCTAssertEqual(Station.A02.allTogether(), [Station.A02])
+        XCTAssertEqual(Station.A01.allTogether, [Station.C01, Station.A01])
+        XCTAssertEqual(Station.C01.allTogether, [Station.A01, Station.C01])
+        XCTAssertEqual(Station.A02.allTogether, [Station.A02])
     }
 }
 
