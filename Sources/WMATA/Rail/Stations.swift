@@ -540,6 +540,49 @@ public extension Station {
             minute: openingTimeDateComponents.minute!
         ).date!
     }
+
+    /// The station located within the same physical station as this station.
+    /// Details: https://developer.wmata.com/docs/services/5476364f031f590f38092507/operations/5476364f031f5909e4fe3310
+    /// - Returns: The `Station` within the same physical station.
+    var together: Station? {
+        switch self {
+        // Fort Totten
+        case .B06:
+            return .E06
+        case .E06:
+            return .B06
+        // Gallery Pl-Chinatown
+        case .B01:
+            return .F01
+        case .F01:
+            return .B01
+        // L'Enfant Plaza
+        case .D03:
+            return .F03
+        case .F03:
+            return .D03
+        // Metro Center
+        case .A01:
+            return .C01
+        case .C01:
+            return .A01
+        default:
+            return nil
+        }
+    }
+
+    /// Combines this station and other stations within the same physical station.
+    /// Details: https://developer.wmata.com/docs/services/5476364f031f590f38092507/operations/5476364f031f5909e4fe3310
+    /// This is effectively the result of joining the `StationTogether1`
+    /// and `StationTogether2` values from the WMATA API.
+    /// - Returns: An array containing this station and the `Station` `together`, if there is one.
+    var allTogether: [Station] {
+        if let together = self.together {
+            return [self, together]
+        }
+        
+        return [self]
+    }
 }
 
 extension Station: CustomStringConvertible {

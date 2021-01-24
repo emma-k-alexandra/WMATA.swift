@@ -35,7 +35,7 @@ I released a [GTFS and GTFS-RT](https://github.com/emma-k-alexandra/GTFS) packag
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/emma-k-alexandra/WMATA.swift.git", from: "8.3.0")
+    .package(url: "https://github.com/emma-k-alexandra/WMATA.swift.git", from: "8.4.0")
 ]
 ```
 
