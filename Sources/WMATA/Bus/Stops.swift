@@ -20,7 +20,7 @@ extension Stop: NeedsStop {
     /// - Parameter apiKey: WMATA API Key to use with this request
     /// - Parameter session: Optional. URL Session to make this request with
     /// - Parameter completion: completion handler which returns `BusPredictions`
-    func nextBuses(withApiKey apiKey: String, andSession session: URLSession = URLSession.shared, completion: @escaping (Result<BusPredictions, WMATAError>) -> Void) {
+    public func nextBuses(withApiKey apiKey: String, andSession session: URLSession = URLSession.shared, completion: @escaping (Result<BusPredictions, WMATAError>) -> Void) {
         (self as NeedsStop).nextBuses(for: self, withApiKey: apiKey, andSession: session, completion: completion)
     }
 
@@ -29,7 +29,7 @@ extension Stop: NeedsStop {
     /// - Parameter apiKey: WMATA API Key to use with this request
     /// - Parameter session: Optional. URL Session to make this request with
     /// - Parameter completion: completion handler which returns `StopSchedule`
-    func schedule(at date: WMATADate? = nil, withApiKey apiKey: String, andSession session: URLSession = URLSession.shared, completion: @escaping (Result<StopSchedule, WMATAError>) -> Void) {
+    public func schedule(at date: WMATADate? = nil, withApiKey apiKey: String, andSession session: URLSession = URLSession.shared, completion: @escaping (Result<StopSchedule, WMATAError>) -> Void) {
         (self as NeedsStop).schedule(for: self, at: date, withApiKey: apiKey, andSession: session, completion: completion)
     }
 }
