@@ -1530,4 +1530,10 @@ final class MetroBusTests: XCTestCase {
 
         waitForExpectations(timeout: 1)
     }
+
+    func testRadiusAtCoordinatesLatLongInit() {
+        let radius = RadiusAtCoordinates(radius: 1, latitude: 1.0, longitude: 1.0)
+        XCTAssertEqual(radius.coordinates.latitude, 1.0)
+        XCTAssertEqual(radius.coordinates.longitude, 1.0)
+    }
 }
