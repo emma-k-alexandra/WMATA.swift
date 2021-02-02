@@ -5,8 +5,8 @@
 //  Created by Emma K Alexandra on 10/10/19.
 //
 
-import Foundation
 import Combine
+import Foundation
 
 protocol NeedsStation: Fetcher {}
 
@@ -226,26 +226,26 @@ extension NeedsStation {
         if let destinationStation = destinationStation {
             queryItems.append(("ToStationCode", destinationStation.rawValue))
         }
-        
+
         return publisher(
             request: URLRequest(url: RailURL.stationToStation.rawValue, key: key, queryItems: queryItems),
             session: session
         )
     }
-    
+
     func elevatorAndEscalatorIncidents(at station: Station?, key: String, session: URLSession) -> AnyPublisher<ElevatorAndEscalatorIncidents, WMATAError> {
         var queryItems = [(String, String)]()
 
         if let station = station {
             queryItems.append(("StationCode", station.rawValue))
         }
-        
+
         return publisher(
             request: URLRequest(url: RailURL.elevatorAndEscalatorIncidents.rawValue, key: key, queryItems: queryItems),
             session: session
         )
     }
-    
+
     func incidents(at station: Station?, key: String, session: URLSession) -> AnyPublisher<RailIncidents, WMATAError> {
         var queryItems = [(String, String)]()
 
@@ -258,14 +258,14 @@ extension NeedsStation {
             session: session
         )
     }
-    
+
     func nextTrains(at station: Station, key: String, session: URLSession) -> AnyPublisher<RailPredictions, WMATAError> {
         publisher(
             request: URLRequest(url: "\(RailURL.nextTrains.rawValue)\(station)", key: key),
             session: session
         )
     }
-    
+
     func nextTrains(at stations: [Station], key: String, session: URLSession) -> AnyPublisher<RailPredictions, WMATAError> {
         var urlArray = [RailURL.nextTrains.rawValue]
         urlArray.append(contentsOf: stations.map { $0.rawValue })
@@ -275,21 +275,21 @@ extension NeedsStation {
             session: session
         )
     }
-    
+
     func information(for station: Station, key: String, session: URLSession) -> AnyPublisher<StationInformation, WMATAError> {
         publisher(
             request: URLRequest(url: RailURL.information.rawValue, key: key, queryItems: [("StationCode", station.rawValue)]),
             session: session
         )
     }
-    
+
     func parkingInformation(for station: Station, key: String, session: URLSession) -> AnyPublisher<StationsParking, WMATAError> {
         publisher(
             request: URLRequest(url: RailURL.parkingInformation.rawValue, key: key, queryItems: [("StationCode", station.rawValue)]),
             session: session
         )
     }
-    
+
     func path(from startingStation: Station, to destinationStation: Station, key: String, session: URLSession) -> AnyPublisher<PathBetweenStations, WMATAError> {
         publisher(
             request: URLRequest(
@@ -303,7 +303,7 @@ extension NeedsStation {
             session: session
         )
     }
-    
+
     func timings(for station: Station, key: String, session: URLSession) -> AnyPublisher<StationTimings, WMATAError> {
         publisher(
             request: URLRequest(url: RailURL.timings.rawValue, key: key, queryItems: [("StationCode", station.rawValue)]),

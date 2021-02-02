@@ -5,8 +5,8 @@
 //  Created by Emma K Alexandra on 10/10/19.
 //
 
-import Foundation
 import Combine
+import Foundation
 
 protocol NeedsRoute: Fetcher {}
 
@@ -154,7 +154,7 @@ extension NeedsRoute {
             session: session
         )
     }
-    
+
     func incidents(on route: Route?, key: String, session: URLSession) -> AnyPublisher<BusIncidents, WMATAError> {
         var queryItems = [(String, String)]()
 
@@ -167,7 +167,7 @@ extension NeedsRoute {
             session: session
         )
     }
-    
+
     func pathDetails(for route: Route, on date: WMATADate? = nil, key: String, session: URLSession) -> AnyPublisher<PathDetails, WMATAError> {
         var queryItems = [("RouteID", route.id)]
 
@@ -180,7 +180,7 @@ extension NeedsRoute {
             session: session
         )
     }
-    
+
     func schedule(for route: Route, on date: WMATADate? = nil, includingVariations: Bool? = false, key: String, session: URLSession) -> AnyPublisher<RouteSchedule, WMATAError> {
         var queryItems = [("RouteID", route.id)]
 
@@ -253,7 +253,7 @@ extension NeedsStop {
             session: session
         )
     }
-    
+
     func schedule(for stop: Stop, at date: WMATADate? = nil, key: String, session: URLSession) -> AnyPublisher<StopSchedule, WMATAError> {
         var queryItems = [("StopID", stop.id)]
 

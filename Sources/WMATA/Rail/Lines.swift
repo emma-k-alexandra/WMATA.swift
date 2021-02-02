@@ -5,8 +5,8 @@
 //  Created by Emma K Alexandra on 10/6/19.
 //
 
-import Foundation
 import Combine
+import Foundation
 
 /// Line codes as defined by WMATA
 public enum Line: String, CaseIterable, Codable {

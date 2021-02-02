@@ -5,8 +5,8 @@
 //  Created by Emma K Alexandra on 10/6/19.
 //
 
-import Foundation
 import Combine
+import Foundation
 import GTFS
 
 /// MetroBus related methods
@@ -19,11 +19,11 @@ public struct MetroBus: Fetcher {
             }
         }
     }
-    
+
     public private(set) var sharedContainerIdentifier: String?
-    
+
     private var session: URLSession
-    
+
     public init(key: String, delegate: WMATADelegate? = nil, sharedContainerIdentifier: String? = nil) {
         self.key = key
 
@@ -109,7 +109,7 @@ public extension MetroBus {
             session: session
         )
     }
-    
+
     /// Stops nearby the given latitude, longitude and radius. Omit latitude, longitude and radius to receive all stops.
     ///
     /// - parameter radiusAtCoordinates: Radius at latitude and longitude to search at
@@ -214,7 +214,7 @@ public extension MetroBus {
     func positionsPublisher(on route: Route?, at radiusAtCoordinates: RadiusAtCoordinates?) -> AnyPublisher<BusPositions, WMATAError> {
         (self as NeedsRoute).positions(on: route, at: radiusAtCoordinates, key: key, session: session)
     }
-    
+
     /// Bus incidents along a given route.
     ///
     /// - parameter route: Route to search for incidents along. Omit route to receive all incidents.
@@ -222,7 +222,7 @@ public extension MetroBus {
     func incidentsPublisher(on route: Route?) -> AnyPublisher<BusIncidents, WMATAError> {
         (self as NeedsRoute).incidents(on: route, key: key, session: session)
     }
-    
+
     /// Ordered latlong points along this Route for a given date. Omit date to get path information for today.
     ///
     /// - parameter route: `Route` to get path details for
@@ -231,7 +231,7 @@ public extension MetroBus {
     func pathDetailsPublisher(for route: Route, on date: WMATADate? = nil) -> AnyPublisher<PathDetails, WMATAError> {
         (self as NeedsRoute).pathDetails(for: route, on: date, key: key, session: session)
     }
-    
+
     /// Scheduled stops for this Route
     ///
     /// - parameter route: `Route` to get stops for
@@ -399,7 +399,7 @@ public extension MetroBus {
             session: session
         )
     }
-    
+
     /// GTFS RT 2.0 trip updates feed for WMATA bus.
     /// See https://developers.google.com/transit/gtfs-realtime/guides/trip-updates
     ///
@@ -413,7 +413,7 @@ public extension MetroBus {
             session: session
         )
     }
-    
+
     /// GTFS RT 2.0 vehicle positions feed for WMATA bus.
     /// See https://developers.google.com/transit/gtfs-realtime/guides/vehicle-positions
     ///

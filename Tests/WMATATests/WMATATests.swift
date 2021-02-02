@@ -1,5 +1,5 @@
-import Foundation
 import Combine
+import Foundation
 import GTFS
 @testable import WMATA
 import XCTest
@@ -1488,11 +1488,11 @@ class CombineTests: XCTestCase {
     // Thanks to eskimo for this solution
     // https://developer.apple.com/forums/thread/121814?answerId=378975022#378975022
     var deferredCancellables = [AnyCancellable]()
-    
+
     func deferCancellable(_ cancellable: AnyCancellable) {
         deferredCancellables.append(cancellable)
     }
-    
+
     override func tearDown() {
         deferredCancellables.removeAll()
     }
@@ -1502,7 +1502,7 @@ final class RailCombineTests: CombineTests {
     func testLinesPublisher() {
         let exp = expectation(description: #function)
         let rail = MetroRail(key: TEST_API_KEY)
-        
+
         let cancellable = rail
             .linesPublisher()
             .sink(
@@ -1516,16 +1516,16 @@ final class RailCombineTests: CombineTests {
                 },
                 receiveValue: { _ in }
             )
-        
+
         deferCancellable(cancellable)
-        
+
         waitForExpectations(timeout: 1)
     }
-    
+
     func testEntrancesPublisher() {
         let exp = expectation(description: #function)
         let rail = MetroRail(key: TEST_API_KEY)
-        
+
         let cancellable = rail
             .entrancesPublisher(at: RadiusAtCoordinates(radius: 1, coordinates: Coordinates(latitude: 1.0, longitude: 1.0)))
             .sink(
@@ -1539,16 +1539,16 @@ final class RailCombineTests: CombineTests {
                 },
                 receiveValue: { _ in }
             )
-        
+
         deferCancellable(cancellable)
-        
+
         waitForExpectations(timeout: 1)
     }
-    
+
     func testStationsPublisher() {
         let exp = expectation(description: #function)
         let rail = MetroRail(key: TEST_API_KEY)
-        
+
         let cancellable = rail
             .stationsPublisher(for: .BL)
             .sink(
@@ -1562,16 +1562,16 @@ final class RailCombineTests: CombineTests {
                 },
                 receiveValue: { _ in }
             )
-        
+
         deferCancellable(cancellable)
-        
+
         waitForExpectations(timeout: 1)
     }
-    
+
     func testStationPublisher() {
         let exp = expectation(description: #function)
         let rail = MetroRail(key: TEST_API_KEY)
-        
+
         let cancellable = rail
             .stationPublisher(.A01, to: .A02)
             .sink(
@@ -1585,16 +1585,16 @@ final class RailCombineTests: CombineTests {
                 },
                 receiveValue: { _ in }
             )
-        
+
         deferCancellable(cancellable)
-        
+
         waitForExpectations(timeout: 1)
     }
-    
+
     func testPositionsPublisher() {
         let exp = expectation(description: #function)
         let rail = MetroRail(key: TEST_API_KEY)
-        
+
         let cancellable = rail
             .positionsPublisher()
             .sink(
@@ -1608,16 +1608,16 @@ final class RailCombineTests: CombineTests {
                 },
                 receiveValue: { _ in }
             )
-        
+
         deferCancellable(cancellable)
-        
+
         waitForExpectations(timeout: 1)
     }
-    
+
     func testRoutesPublisher() {
         let exp = expectation(description: #function)
         let rail = MetroRail(key: TEST_API_KEY)
-        
+
         let cancellable = rail
             .routesPublisher()
             .sink(
@@ -1631,16 +1631,16 @@ final class RailCombineTests: CombineTests {
                 },
                 receiveValue: { _ in }
             )
-        
+
         deferCancellable(cancellable)
-        
+
         waitForExpectations(timeout: 1)
     }
-    
+
     func testCircuitsPublisher() {
         let exp = expectation(description: #function)
         let rail = MetroRail(key: TEST_API_KEY)
-        
+
         let cancellable = rail
             .circuitsPublisher()
             .sink(
@@ -1654,16 +1654,16 @@ final class RailCombineTests: CombineTests {
                 },
                 receiveValue: { _ in }
             )
-        
+
         deferCancellable(cancellable)
-        
+
         waitForExpectations(timeout: 1)
     }
-    
+
     func testElevatorAndEscalatorIncidentsPublisher() {
         let exp = expectation(description: #function)
         let rail = MetroRail(key: TEST_API_KEY)
-        
+
         let cancellable = rail
             .elevatorAndEscalatorIncidentsPublisher(at: .A01)
             .sink(
@@ -1677,16 +1677,16 @@ final class RailCombineTests: CombineTests {
                 },
                 receiveValue: { _ in }
             )
-        
+
         deferCancellable(cancellable)
-        
+
         waitForExpectations(timeout: 1)
     }
-    
+
     func testIncidentsPublisher() {
         let exp = expectation(description: #function)
         let rail = MetroRail(key: TEST_API_KEY)
-        
+
         let cancellable = rail
             .incidentsPublisher(at: .A01)
             .sink(
@@ -1700,16 +1700,16 @@ final class RailCombineTests: CombineTests {
                 },
                 receiveValue: { _ in }
             )
-        
+
         deferCancellable(cancellable)
-        
+
         waitForExpectations(timeout: 1)
     }
-    
+
     func testNextTrainPublisher() {
         let exp = expectation(description: #function)
         let rail = MetroRail(key: TEST_API_KEY)
-        
+
         let cancellable = rail
             .nextTrainsPublisher(at: .A01)
             .sink(
@@ -1723,16 +1723,16 @@ final class RailCombineTests: CombineTests {
                 },
                 receiveValue: { _ in }
             )
-        
+
         deferCancellable(cancellable)
-        
+
         waitForExpectations(timeout: 1)
     }
-    
+
     func testNextTrainsPublisher() {
         let exp = expectation(description: #function)
         let rail = MetroRail(key: TEST_API_KEY)
-        
+
         let cancellable = rail
             .nextTrainsPublisher(at: [.A01, .A02])
             .sink(
@@ -1746,16 +1746,16 @@ final class RailCombineTests: CombineTests {
                 },
                 receiveValue: { _ in }
             )
-        
+
         deferCancellable(cancellable)
-        
+
         waitForExpectations(timeout: 1)
     }
-    
+
     func testInformationPublisher() {
         let exp = expectation(description: #function)
         let rail = MetroRail(key: TEST_API_KEY)
-        
+
         let cancellable = rail
             .informationPublisher(for: .A01)
             .sink(
@@ -1769,16 +1769,16 @@ final class RailCombineTests: CombineTests {
                 },
                 receiveValue: { _ in }
             )
-        
+
         deferCancellable(cancellable)
-        
+
         waitForExpectations(timeout: 1)
     }
-    
+
     func testParkingInformationPublisher() {
         let exp = expectation(description: #function)
         let rail = MetroRail(key: TEST_API_KEY)
-        
+
         let cancellable = rail
             .parkingInformationPublisher(for: .A01)
             .sink(
@@ -1792,16 +1792,16 @@ final class RailCombineTests: CombineTests {
                 },
                 receiveValue: { _ in }
             )
-        
+
         deferCancellable(cancellable)
-        
+
         waitForExpectations(timeout: 1)
     }
-    
+
     func testPathPublisher() {
         let exp = expectation(description: #function)
         let rail = MetroRail(key: TEST_API_KEY)
-        
+
         let cancellable = rail
             .pathPublisher(from: .A01, to: .A02)
             .sink(
@@ -1815,16 +1815,16 @@ final class RailCombineTests: CombineTests {
                 },
                 receiveValue: { _ in }
             )
-        
+
         deferCancellable(cancellable)
-        
+
         waitForExpectations(timeout: 1)
     }
-    
+
     func testTimingsPublisher() {
         let exp = expectation(description: #function)
         let rail = MetroRail(key: TEST_API_KEY)
-        
+
         let cancellable = rail
             .timingsPublisher(for: .A01)
             .sink(
@@ -1838,16 +1838,16 @@ final class RailCombineTests: CombineTests {
                 },
                 receiveValue: { _ in }
             )
-        
+
         deferCancellable(cancellable)
-        
+
         waitForExpectations(timeout: 1)
     }
-    
+
     func testAlertsPublisher() {
         let exp = expectation(description: #function)
         let rail = MetroRail(key: TEST_API_KEY)
-        
+
         let cancellable = rail
             .alertsPublisher()
             .sink(
@@ -1861,16 +1861,16 @@ final class RailCombineTests: CombineTests {
                 },
                 receiveValue: { _ in }
             )
-        
+
         deferCancellable(cancellable)
-        
+
         waitForExpectations(timeout: 1)
     }
-    
+
     func testTripUpdatesPublisher() {
         let exp = expectation(description: #function)
         let rail = MetroRail(key: TEST_API_KEY)
-        
+
         let cancellable = rail
             .tripUpdatesPublisher()
             .sink(
@@ -1884,16 +1884,16 @@ final class RailCombineTests: CombineTests {
                 },
                 receiveValue: { _ in }
             )
-        
+
         deferCancellable(cancellable)
-        
+
         waitForExpectations(timeout: 1)
     }
-    
+
     func testVehiclePositionsPublisher() {
         let exp = expectation(description: #function)
         let rail = MetroRail(key: TEST_API_KEY)
-        
+
         let cancellable = rail
             .vehiclePositionsPublisher()
             .sink(
@@ -1907,9 +1907,9 @@ final class RailCombineTests: CombineTests {
                 },
                 receiveValue: { _ in }
             )
-        
+
         deferCancellable(cancellable)
-        
+
         waitForExpectations(timeout: 1)
     }
 }
@@ -1918,7 +1918,7 @@ final class BusCombineTests: CombineTests {
     func testPositionsPublisher() {
         let exp = expectation(description: #function)
         let bus = MetroBus(key: TEST_API_KEY)
-        
+
         let cancellable = bus
             .positionsPublisher(on: "10A", at: RadiusAtCoordinates(radius: 1, coordinates: Coordinates(latitude: 1.0, longitude: 1.0)))
             .sink(
@@ -1932,16 +1932,16 @@ final class BusCombineTests: CombineTests {
                 },
                 receiveValue: { _ in }
             )
-        
+
         deferCancellable(cancellable)
-        
+
         waitForExpectations(timeout: 1)
     }
-    
+
     func testRoutesPublisher() {
         let exp = expectation(description: #function)
         let bus = MetroBus(key: TEST_API_KEY)
-        
+
         let cancellable = bus
             .routesPublisher()
             .sink(
@@ -1955,16 +1955,16 @@ final class BusCombineTests: CombineTests {
                 },
                 receiveValue: { _ in }
             )
-        
+
         deferCancellable(cancellable)
-        
+
         waitForExpectations(timeout: 1)
     }
-    
+
     func testSearchStopsPublisher() {
         let exp = expectation(description: #function)
         let bus = MetroBus(key: TEST_API_KEY)
-        
+
         let cancellable = bus
             .searchStopsPublisher(at: RadiusAtCoordinates(radius: 1, coordinates: Coordinates(latitude: 1.0, longitude: 1.0)))
             .sink(
@@ -1978,16 +1978,16 @@ final class BusCombineTests: CombineTests {
                 },
                 receiveValue: { _ in }
             )
-        
+
         deferCancellable(cancellable)
-        
+
         waitForExpectations(timeout: 1)
     }
-    
+
     func testIncidentsPublisher() {
         let exp = expectation(description: #function)
         let bus = MetroBus(key: TEST_API_KEY)
-        
+
         let cancellable = bus
             .incidentsPublisher(on: "10A")
             .sink(
@@ -2001,16 +2001,16 @@ final class BusCombineTests: CombineTests {
                 },
                 receiveValue: { _ in }
             )
-        
+
         deferCancellable(cancellable)
-        
+
         waitForExpectations(timeout: 1)
     }
-    
+
     func testPathDetailsPublisher() {
         let exp = expectation(description: #function)
         let bus = MetroBus(key: TEST_API_KEY)
-        
+
         let cancellable = bus
             .pathDetailsPublisher(for: "10A", on: nil)
             .sink(
@@ -2024,16 +2024,16 @@ final class BusCombineTests: CombineTests {
                 },
                 receiveValue: { _ in }
             )
-        
+
         deferCancellable(cancellable)
-        
+
         waitForExpectations(timeout: 1)
     }
-    
+
     func testRouteSchedulePublisher() {
         let exp = expectation(description: #function)
         let bus = MetroBus(key: TEST_API_KEY)
-        
+
         let cancellable = bus
             .routeSchedulePublisher(for: "10A", on: nil, includingVariations: true)
             .sink(
@@ -2047,16 +2047,16 @@ final class BusCombineTests: CombineTests {
                 },
                 receiveValue: { _ in }
             )
-        
+
         deferCancellable(cancellable)
-        
+
         waitForExpectations(timeout: 1)
     }
-    
+
     func testNextBusesPublisher() {
         let exp = expectation(description: #function)
         let bus = MetroBus(key: TEST_API_KEY)
-        
+
         let cancellable = bus
             .nextBusesPublisher(for: "1001195")
             .sink(
@@ -2070,16 +2070,16 @@ final class BusCombineTests: CombineTests {
                 },
                 receiveValue: { _ in }
             )
-        
+
         deferCancellable(cancellable)
-        
+
         waitForExpectations(timeout: 1)
     }
-    
+
     func testSchedulePublisher() {
         let exp = expectation(description: #function)
         let bus = MetroBus(key: TEST_API_KEY)
-        
+
         let cancellable = bus
             .stopSchedulePublisher(for: "1001195")
             .sink(
@@ -2093,16 +2093,16 @@ final class BusCombineTests: CombineTests {
                 },
                 receiveValue: { _ in }
             )
-        
+
         deferCancellable(cancellable)
-        
+
         waitForExpectations(timeout: 1)
     }
-    
+
     func testAlertsPublisher() {
         let exp = expectation(description: #function)
         let bus = MetroBus(key: TEST_API_KEY)
-        
+
         let cancellable = bus
             .alertsPublisher()
             .sink(
@@ -2116,16 +2116,16 @@ final class BusCombineTests: CombineTests {
                 },
                 receiveValue: { _ in }
             )
-        
+
         deferCancellable(cancellable)
-        
+
         waitForExpectations(timeout: 1)
     }
-    
+
     func testTripUpdatesPublisher() {
         let exp = expectation(description: #function)
         let bus = MetroBus(key: TEST_API_KEY)
-        
+
         let cancellable = bus
             .tripUpdatesPublisher()
             .sink(
@@ -2139,16 +2139,16 @@ final class BusCombineTests: CombineTests {
                 },
                 receiveValue: { _ in }
             )
-        
+
         deferCancellable(cancellable)
-        
+
         waitForExpectations(timeout: 1)
     }
-    
+
     func testVehiclePositionsPublisher() {
         let exp = expectation(description: #function)
         let bus = MetroBus(key: TEST_API_KEY)
-        
+
         let cancellable = bus
             .vehiclePositionsPublisher()
             .sink(
@@ -2162,9 +2162,9 @@ final class BusCombineTests: CombineTests {
                 },
                 receiveValue: { _ in }
             )
-        
+
         deferCancellable(cancellable)
-        
+
         waitForExpectations(timeout: 1)
     }
 }

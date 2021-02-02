@@ -5,8 +5,8 @@
 //  Created by Emma K Alexandra on 10/10/19.
 //
 
-import Foundation
 import Combine
+import Foundation
 
 public struct Stop: Codable {
     public let id: String
@@ -18,7 +18,7 @@ public struct Stop: Codable {
 
 extension Stop: ExpressibleByStringLiteral {
     public init(stringLiteral value: String) {
-        self.id = value
+        id = value
     }
 }
 
@@ -52,7 +52,7 @@ public extension Stop {
     func nextBusesPublisher(key: String, session: URLSession = URLSession.shared) -> AnyPublisher<BusPredictions, WMATAError> {
         (self as NeedsStop).nextBuses(for: self, key: key, session: session)
     }
-    
+
     /// Set of buses scheduled to arrive at this Stop at a given date.
     /// - Parameter date: `WMATADate`. Omit for today.
     /// - Parameter key: WMATA API Key to use with this request

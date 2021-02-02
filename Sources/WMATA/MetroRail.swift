@@ -5,8 +5,8 @@
 //  Created by Emma K Alexandra on 10/6/19.
 //
 
-import Foundation
 import Combine
+import Foundation
 import GTFS
 
 /// MetroRail related methods
@@ -21,7 +21,7 @@ public struct MetroRail: Fetcher {
     }
 
     public private(set) var sharedContainerIdentifier: String?
-    
+
     private var urlSession: URLSession
 
     public init(key: String, delegate: WMATADelegate? = nil, sharedContainerIdentifier: String? = nil) {
@@ -170,7 +170,7 @@ public extension MetroRail {
             session: urlSession
         )
     }
-    
+
     /// Station entrances within a radius of a lat long pair, omit all parameters to receive all entrances
     ///
     /// - parameter radiusAtCoordinates:`RadiusAtCoordinates` to search at
@@ -187,7 +187,7 @@ public extension MetroRail {
             session: urlSession
         )
     }
-    
+
     /// Uniquely identifiable trains in service and what track circuits they currently occupy
     ///
     /// - returns: A Combine Publisher for `TrainPositions`
@@ -197,7 +197,7 @@ public extension MetroRail {
             session: urlSession
         )
     }
-    
+
     /// Ordered list of track circuits, arranged by line and track number
     ///
     /// - returns: A Combine Publisher for `StandardRoutes`
@@ -207,7 +207,7 @@ public extension MetroRail {
             session: urlSession
         )
     }
-    
+
     /// List of all track circuits - See https://developer.wmata.com/TrainPositionsFAQ
     ///
     /// - returns: A Combine Publisher for `TrackCircuits`
@@ -381,7 +381,7 @@ public extension MetroRail {
     func stationPublisher(_ station: Station?, to destinationStation: Station?) -> AnyPublisher<StationToStationInfos, WMATAError> {
         (self as NeedsStation).station(station, to: destinationStation, key: key, session: urlSession)
     }
-    
+
     /// Reported elevator and escalator incidents
     ///
     /// - parameter station: Which station to search for incidents at. Optional.
@@ -389,7 +389,7 @@ public extension MetroRail {
     func elevatorAndEscalatorIncidentsPublisher(at station: Station?) -> AnyPublisher<ElevatorAndEscalatorIncidents, WMATAError> {
         (self as NeedsStation).elevatorAndEscalatorIncidents(at: station, key: key, session: urlSession)
     }
-    
+
     /// Reported MetroRail incidents
     ///
     /// - parameter station: Station to search for incidents at. Optional.
@@ -397,7 +397,7 @@ public extension MetroRail {
     func incidentsPublisher(at station: Station?) -> AnyPublisher<RailIncidents, WMATAError> {
         (self as NeedsStation).incidents(at: station, key: key, session: urlSession)
     }
-    
+
     /// Next train arrival information for this station
     ///
     /// - parameter station: `Station` to search for trains at
@@ -405,7 +405,7 @@ public extension MetroRail {
     func nextTrainsPublisher(at station: Station) -> AnyPublisher<RailPredictions, WMATAError> {
         (self as NeedsStation).nextTrains(at: station, key: key, session: urlSession)
     }
-    
+
     /// Next train arrival information for the given stations
     ///
     /// - parameter stations: `[Station]`s to look up next trains for
@@ -413,7 +413,7 @@ public extension MetroRail {
     func nextTrainsPublisher(at stations: [Station]) -> AnyPublisher<RailPredictions, WMATAError> {
         (self as NeedsStation).nextTrains(at: stations, key: key, session: urlSession)
     }
-    
+
     /// Location and address information for this station
     ///
     /// - parameter station: `StationCode` search for information for
@@ -421,7 +421,7 @@ public extension MetroRail {
     func informationPublisher(for station: Station) -> AnyPublisher<StationInformation, WMATAError> {
         (self as NeedsStation).information(for: station, key: key, session: urlSession)
     }
-    
+
     /// Parking information for this station
     ///
     /// - parameter station: `StationCode` to search for parking information for
@@ -429,7 +429,7 @@ public extension MetroRail {
     func parkingInformationPublisher(for station: Station) -> AnyPublisher<StationsParking, WMATAError> {
         (self as NeedsStation).parkingInformation(for: station, key: key, session: urlSession)
     }
-    
+
     /// Returns a set of ordered stations and distances between two stations _on the same line_
     ///
     /// - parameter startingStation: Starting station to pathfind from
@@ -438,7 +438,7 @@ public extension MetroRail {
     func pathPublisher(from startingStation: Station, to destinationStation: Station) -> AnyPublisher<PathBetweenStations, WMATAError> {
         (self as NeedsStation).path(from: startingStation, to: destinationStation, key: key, session: urlSession)
     }
-    
+
     /// Opening and scheduled first and last trains for this station
     ///
     /// - parameter station: `StationCode` to search for timings for
@@ -535,7 +535,7 @@ public extension MetroRail {
             session: urlSession
         )
     }
-    
+
     /// GTFS RT 2.0 vehicle positions feed for WMATA rail.
     /// See https://developers.google.com/transit/gtfs-realtime/guides/vehicle-positions
     ///
@@ -574,7 +574,7 @@ public extension MetroRail {
             session: urlSession
         )
     }
-    
+
     /// GTFS RT 2.0 trip updates feed for WMATA rail.
     /// See https://developers.google.com/transit/gtfs-realtime/guides/trip-updates
     ///
@@ -588,7 +588,7 @@ public extension MetroRail {
             session: urlSession
         )
     }
-    
+
     /// GTFS RT 2.0 vehicle positions feed for WMATA rail.
     /// See https://developers.google.com/transit/gtfs-realtime/guides/vehicle-positions
     ///

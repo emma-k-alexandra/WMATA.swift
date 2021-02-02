@@ -5,8 +5,8 @@
 //  Created by Emma K Alexandra on 10/6/19.
 //
 
-import Foundation
 import Combine
+import Foundation
 
 /// Station codes as defined by WMATA
 /// Note that a station code represents a single level within a physical station.
@@ -198,7 +198,7 @@ public extension Station {
     func stationPublisher(to destinationStation: Station?, key: String, session: URLSession = URLSession.shared) -> AnyPublisher<StationToStationInfos, WMATAError> {
         (self as NeedsStation).station(self, to: destinationStation, key: key, session: session)
     }
-    
+
     /// Reported elevator and escalator incidents at this Station
     /// - Parameter key: WMATA API Key to use with this request
     /// - Parameter session: Optional. URL Session to make this request with
@@ -206,7 +206,7 @@ public extension Station {
     func elevatorAndEscalatorIncidentsPublisher(key: String, session: URLSession = URLSession.shared) -> AnyPublisher<ElevatorAndEscalatorIncidents, WMATAError> {
         (self as NeedsStation).elevatorAndEscalatorIncidents(at: self, key: key, session: session)
     }
-    
+
     /// Reported MetroRail incidents at this Station
     /// - Parameter key: WMATA API Key to use with this request
     /// - Parameter session: Optional. URL Session to make this request with
@@ -214,7 +214,7 @@ public extension Station {
     func incidentsPublisher(key: String, session: URLSession = URLSession.shared) -> AnyPublisher<RailIncidents, WMATAError> {
         (self as NeedsStation).incidents(at: self, key: key, session: session)
     }
-    
+
     ///  Next train arrival information for this Station
     /// - Parameter key: WMATA API Key to use with this request
     /// - Parameter session: Optional. URL Session to make this request with
@@ -222,7 +222,7 @@ public extension Station {
     func nextTrainsPublisher(key: String, session: URLSession = URLSession.shared) -> AnyPublisher<RailPredictions, WMATAError> {
         (self as NeedsStation).nextTrains(at: self, key: key, session: session)
     }
-    
+
     /// Location and address information for this Station
     /// - Parameter key: WMATA API Key to use with this request
     /// - Parameter session: Optional. URL Session to make this request with
@@ -230,7 +230,7 @@ public extension Station {
     func informationPublisher(key: String, session: URLSession = URLSession.shared) -> AnyPublisher<StationInformation, WMATAError> {
         (self as NeedsStation).information(for: self, key: key, session: session)
     }
-    
+
     /// Parking information for this Station
     /// - Parameter key: WMATA API Key to use with this request
     /// - Parameter session: Optional. URL Session to make this request with
@@ -238,7 +238,7 @@ public extension Station {
     func parkingInformationPublisher(key: String, session: URLSession = URLSession.shared) -> AnyPublisher<StationsParking, WMATAError> {
         (self as NeedsStation).parkingInformation(for: self, key: key, session: session)
     }
-    
+
     /// Returns a set of ordered stations and distances from this Station to another Station _on the same line_
     /// - Parameter destinationStation: Destination station to pathfind to
     /// - Parameter key: WMATA API Key to use with this request
@@ -247,7 +247,7 @@ public extension Station {
     func pathPublisher(to destinationStation: Station, key: String, session: URLSession = URLSession.shared) -> AnyPublisher<PathBetweenStations, WMATAError> {
         (self as NeedsStation).path(from: self, to: destinationStation, key: key, session: session)
     }
-    
+
     /// Opening and scheduled first and last trains for this Station
     /// - Parameter key: WMATA API Key to use with this request
     /// - Parameter session: Optional. URL Session to make this request with
@@ -371,7 +371,7 @@ public extension Station {
 
         case .C10:
             return "Ronald Reagan Washington National Airport"
-            
+
         case .C11:
             return "Potomac Yard"
 
@@ -548,22 +548,22 @@ public extension Station {
 
         case .N06:
             return "Wiehle-Reston East"
-            
+
         case .N07:
             return "Reston Town Center"
-            
+
         case .N10:
             return "Herndon"
-            
+
         case .N11:
             return "Innovation Center"
-            
+
         case .N12:
             return "Dulles International Airport"
-            
+
         case .N14:
             return "Loudoun Gateway"
-        
+
         case .N15:
             return "Ashburn"
         }
@@ -615,7 +615,7 @@ public extension Station {
             return [.SV]
         }
     }
-    
+
     /// Indicates if a station is open to the public. `false` if a station is part of the Potomac Yard or Silver Line Phase 2 expansions. Otherwise `true`.
     var open: Bool {
         switch self {
@@ -694,7 +694,7 @@ public extension Station {
         if let together = self.together {
             return [self, together]
         }
-        
+
         return [self]
     }
 }

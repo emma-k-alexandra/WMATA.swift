@@ -5,8 +5,8 @@
 //  Created by Emma K Alexandra on 10/6/19.
 //
 
-import Foundation
 import Combine
+import Foundation
 
 public struct Route: Codable {
     public let id: String
@@ -18,7 +18,7 @@ public struct Route: Codable {
 
 extension Route: ExpressibleByStringLiteral {
     public init(stringLiteral value: String) {
-        self.id = value
+        id = value
     }
 }
 
@@ -74,7 +74,7 @@ public extension Route {
     func positionsPublisher(at radiusAtCoordinates: RadiusAtCoordinates?, key: String, session: URLSession = URLSession.shared) -> AnyPublisher<BusPositions, WMATAError> {
         (self as NeedsRoute).positions(on: self, at: radiusAtCoordinates, key: key, session: session)
     }
-    
+
     /// Bus incidents along this Route.
     /// - Parameter key: WMATA API Key to use with this request
     /// - Parameter session: Optional. URL Session to make this request with
@@ -82,7 +82,7 @@ public extension Route {
     func incidentsPublisher(key: String, session: URLSession = URLSession.shared) -> AnyPublisher<BusIncidents, WMATAError> {
         (self as NeedsRoute).incidents(on: self, key: key, session: session)
     }
-    
+
     /// Ordered latlong points along this Route for a given date.
     /// - Parameter date: `WMATADate`. nil for today.
     /// - Parameter key: WMATA API Key to use with this request
@@ -91,7 +91,7 @@ public extension Route {
     func pathDetailsPublisher(on date: WMATADate? = nil, key: String, session: URLSession = URLSession.shared) -> AnyPublisher<PathDetails, WMATAError> {
         (self as NeedsRoute).pathDetails(for: self, on: date, key: key, session: session)
     }
-    
+
     /// Scheduled stops for this Route
     /// - Parameter date: `WMATADate`. Omit for today.
     /// - Parameter includingVariations: Whether to include route variations. Example: B30v1 and B30v2 for Route B30
