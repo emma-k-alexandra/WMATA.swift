@@ -1,13 +1,14 @@
 import Foundation
+import Combine
 import GTFS
 @testable import WMATA
 import XCTest
 
 let TEST_API_KEY = "9e38c3eab34c4e6c990828002828f5ed" // Get your own @ https://developer.wmata.com using this one will probably result in some weird behavior
 
-final class MetroRailTests: XCTestCase {
-    func testRailLines() {
-        let exp = expectation(description: "testRailLines")
+final class RailTests: XCTestCase {
+    func testLines() {
+        let exp = expectation(description: #function)
         let rail = MetroRail(key: TEST_API_KEY)
 
         rail.lines { result in
@@ -23,7 +24,7 @@ final class MetroRailTests: XCTestCase {
         waitForExpectations(timeout: 1)
     }
 
-    func testRailLinesWithDelegate() {
+    func testLinesWithDelegate() {
         class Delegate: WMATADelegate {
             let expectation: XCTestExpectation
 
@@ -43,7 +44,7 @@ final class MetroRailTests: XCTestCase {
         }
 
         let delegate = Delegate(
-            expectation: expectation(description: "testRailLinesWithDelegate")
+            expectation: expectation(description: #function)
         )
         let rail = MetroRail(
             key: TEST_API_KEY,
@@ -55,8 +56,8 @@ final class MetroRailTests: XCTestCase {
         waitForExpectations(timeout: 1)
     }
 
-    func testRailEntrances() {
-        let exp = expectation(description: "testRailEntrances")
+    func testEntrances() {
+        let exp = expectation(description: #function)
         let rail = MetroRail(key: TEST_API_KEY)
 
         rail.entrances(at: RadiusAtCoordinates(radius: 1, coordinates: Coordinates(latitude: 1.0, longitude: 1.0))) { result in
@@ -72,7 +73,7 @@ final class MetroRailTests: XCTestCase {
         waitForExpectations(timeout: 1)
     }
 
-    func testRailEntrancesWithDelegate() {
+    func testEntrancesWithDelegate() {
         class Delegate: WMATADelegate {
             let expectation: XCTestExpectation
 
@@ -92,7 +93,7 @@ final class MetroRailTests: XCTestCase {
         }
 
         let delegate = Delegate(
-            expectation: expectation(description: "testRailEntrancesWithDelegate")
+            expectation: expectation(description: #function)
         )
         let rail = MetroRail(
             key: TEST_API_KEY,
@@ -104,8 +105,8 @@ final class MetroRailTests: XCTestCase {
         waitForExpectations(timeout: 1)
     }
 
-    func testAllRailEntrances() {
-        let exp = expectation(description: "testRailEntrances")
+    func testAllEntrances() {
+        let exp = expectation(description: #function)
         let rail = MetroRail(key: TEST_API_KEY)
 
         rail.entrances(at: nil) { result in
@@ -121,7 +122,7 @@ final class MetroRailTests: XCTestCase {
         waitForExpectations(timeout: 1)
     }
 
-    func testAllRailEntrancesWithDelegate() {
+    func testAllEntrancesWithDelegate() {
         class Delegate: WMATADelegate {
             let expectation: XCTestExpectation
 
@@ -141,7 +142,7 @@ final class MetroRailTests: XCTestCase {
         }
 
         let delegate = Delegate(
-            expectation: expectation(description: "testAllRailEntrancesWithDelegate")
+            expectation: expectation(description: #function)
         )
         let rail = MetroRail(
             key: TEST_API_KEY,
@@ -153,8 +154,8 @@ final class MetroRailTests: XCTestCase {
         waitForExpectations(timeout: 1)
     }
 
-    func testRailStations() {
-        let exp = expectation(description: "testRailStations")
+    func testStations() {
+        let exp = expectation(description: #function)
         let rail = MetroRail(key: TEST_API_KEY)
 
         rail.stations(for: .BL) { result in
@@ -170,7 +171,7 @@ final class MetroRailTests: XCTestCase {
         waitForExpectations(timeout: 1)
     }
 
-    func testRailStationsWithDelegate() {
+    func testStationsWithDelegate() {
         class Delegate: WMATADelegate {
             let expectation: XCTestExpectation
 
@@ -190,7 +191,7 @@ final class MetroRailTests: XCTestCase {
         }
 
         let delegate = Delegate(
-            expectation: expectation(description: "testRailStationsWithDelegate")
+            expectation: expectation(description: #function)
         )
         let rail = MetroRail(
             key: TEST_API_KEY,
@@ -202,8 +203,8 @@ final class MetroRailTests: XCTestCase {
         waitForExpectations(timeout: 1)
     }
 
-    func testRailStation() {
-        let exp = expectation(description: "testRailStation")
+    func testStation() {
+        let exp = expectation(description: #function)
         let rail = MetroRail(key: TEST_API_KEY)
 
         rail.station(.A01, to: .A02) { result in
@@ -219,7 +220,7 @@ final class MetroRailTests: XCTestCase {
         waitForExpectations(timeout: 1)
     }
 
-    func testRailStationWithDelegate() {
+    func testStationWithDelegate() {
         class Delegate: WMATADelegate {
             let expectation: XCTestExpectation
 
@@ -239,7 +240,7 @@ final class MetroRailTests: XCTestCase {
         }
 
         let delegate = Delegate(
-            expectation: expectation(description: "testRailStationWithDelegate")
+            expectation: expectation(description: #function)
         )
         let rail = MetroRail(
             key: TEST_API_KEY,
@@ -251,8 +252,8 @@ final class MetroRailTests: XCTestCase {
         waitForExpectations(timeout: 1)
     }
 
-    func testRailPositions() {
-        let exp = expectation(description: "testRailPositions")
+    func testPositions() {
+        let exp = expectation(description: #function)
         let rail = MetroRail(key: TEST_API_KEY)
 
         rail.positions { result in
@@ -268,7 +269,7 @@ final class MetroRailTests: XCTestCase {
         waitForExpectations(timeout: 1)
     }
 
-    func testRailPositionsWithDelegate() {
+    func testPositionsWithDelegate() {
         class Delegate: WMATADelegate {
             let expectation: XCTestExpectation
 
@@ -288,7 +289,7 @@ final class MetroRailTests: XCTestCase {
         }
 
         let delegate = Delegate(
-            expectation: expectation(description: "testRailStationWithDelegate")
+            expectation: expectation(description: #function)
         )
         let rail = MetroRail(
             key: TEST_API_KEY,
@@ -300,8 +301,8 @@ final class MetroRailTests: XCTestCase {
         waitForExpectations(timeout: 1)
     }
 
-    func testRailRoutes() {
-        let exp = expectation(description: "testRailRoutes")
+    func testRoutes() {
+        let exp = expectation(description: #function)
         let rail = MetroRail(key: TEST_API_KEY)
 
         rail.routes { result in
@@ -317,7 +318,7 @@ final class MetroRailTests: XCTestCase {
         waitForExpectations(timeout: 1)
     }
 
-    func testRailRoutesWithDelegate() {
+    func testRoutesWithDelegate() {
         class Delegate: WMATADelegate {
             let expectation: XCTestExpectation
 
@@ -337,7 +338,7 @@ final class MetroRailTests: XCTestCase {
         }
 
         let delegate = Delegate(
-            expectation: expectation(description: "testRailRoutesWithDelegate")
+            expectation: expectation(description: #function)
         )
         let rail = MetroRail(
             key: TEST_API_KEY,
@@ -349,8 +350,8 @@ final class MetroRailTests: XCTestCase {
         waitForExpectations(timeout: 1)
     }
 
-    func testRailCircuits() {
-        let exp = expectation(description: "testRailCircuits")
+    func testCircuits() {
+        let exp = expectation(description: #function)
         let rail = MetroRail(key: TEST_API_KEY)
 
         rail.circuits { result in
@@ -366,7 +367,7 @@ final class MetroRailTests: XCTestCase {
         waitForExpectations(timeout: 1)
     }
 
-    func testRailCircuitsWithDelegate() {
+    func testCircuitsWithDelegate() {
         class Delegate: WMATADelegate {
             let expectation: XCTestExpectation
 
@@ -386,7 +387,7 @@ final class MetroRailTests: XCTestCase {
         }
 
         let delegate = Delegate(
-            expectation: expectation(description: "testRailRoutesWithDelegate")
+            expectation: expectation(description: #function)
         )
         let rail = MetroRail(
             key: TEST_API_KEY,
@@ -398,8 +399,8 @@ final class MetroRailTests: XCTestCase {
         waitForExpectations(timeout: 1)
     }
 
-    func testRailElevatorAndEscalatorIncidents() {
-        let exp = expectation(description: "testRailElevatorAndEscalatorIncidents")
+    func testElevatorAndEscalatorIncidents() {
+        let exp = expectation(description: #function)
         let rail = MetroRail(key: TEST_API_KEY)
 
         rail.elevatorAndEscalatorIncidents(at: .A01) { result in
@@ -415,7 +416,7 @@ final class MetroRailTests: XCTestCase {
         waitForExpectations(timeout: 1)
     }
 
-    func testRailElevatorAndEscalatorIncidentsWithDelegate() {
+    func testElevatorAndEscalatorIncidentsWithDelegate() {
         class Delegate: WMATADelegate {
             let expectation: XCTestExpectation
 
@@ -435,7 +436,7 @@ final class MetroRailTests: XCTestCase {
         }
 
         let delegate = Delegate(
-            expectation: expectation(description: "testRailElevatorAndEscalatorIncidentsWithDelegate")
+            expectation: expectation(description: #function)
         )
         let rail = MetroRail(
             key: TEST_API_KEY,
@@ -447,8 +448,8 @@ final class MetroRailTests: XCTestCase {
         waitForExpectations(timeout: 1)
     }
 
-    func testRailIncidents() {
-        let exp = expectation(description: "testRailIncidents")
+    func testIncidents() {
+        let exp = expectation(description: #function)
         let rail = MetroRail(key: TEST_API_KEY)
 
         rail.incidents(at: .A01) { result in
@@ -464,7 +465,7 @@ final class MetroRailTests: XCTestCase {
         waitForExpectations(timeout: 1)
     }
 
-    func testRailIncidentsWithDelegate() {
+    func testIncidentsWithDelegate() {
         class Delegate: WMATADelegate {
             let expectation: XCTestExpectation
 
@@ -484,7 +485,7 @@ final class MetroRailTests: XCTestCase {
         }
 
         let delegate = Delegate(
-            expectation: expectation(description: "testRailIncidentsWithDelegate")
+            expectation: expectation(description: #function)
         )
         let rail = MetroRail(
             key: TEST_API_KEY,
@@ -496,11 +497,11 @@ final class MetroRailTests: XCTestCase {
         waitForExpectations(timeout: 1)
     }
 
-    func testStationNextTrains() {
-        let exp = expectation(description: "testStationNextTrains")
-        let station = MetroRail(key: TEST_API_KEY)
+    func testNextTrain() {
+        let exp = expectation(description: #function)
+        let rail = MetroRail(key: TEST_API_KEY)
 
-        station.nextTrains(at: .A01) { result in
+        rail.nextTrains(at: .A01) { result in
             switch result {
             case .success:
                 exp.fulfill()
@@ -513,7 +514,7 @@ final class MetroRailTests: XCTestCase {
         waitForExpectations(timeout: 1)
     }
 
-    func testStationNextTrainsWithDelegate() {
+    func testNextTrainWithDelegate() {
         class Delegate: WMATADelegate {
             let expectation: XCTestExpectation
 
@@ -533,7 +534,7 @@ final class MetroRailTests: XCTestCase {
         }
 
         let delegate = Delegate(
-            expectation: expectation(description: "testStationNextTrainsWithDelegate")
+            expectation: expectation(description: #function)
         )
         let rail = MetroRail(
             key: TEST_API_KEY,
@@ -545,11 +546,11 @@ final class MetroRailTests: XCTestCase {
         waitForExpectations(timeout: 1)
     }
 
-    func testStationsNextTrains() {
-        let exp = expectation(description: "testStationsNextTrains")
-        let metroRail = MetroRail(key: TEST_API_KEY)
+    func testNextTrains() {
+        let exp = expectation(description: #function)
+        let rail = MetroRail(key: TEST_API_KEY)
 
-        metroRail.nextTrains(at: [.A01, .A02]) { result in
+        rail.nextTrains(at: [.A01, .A02]) { result in
             switch result {
             case .success:
                 exp.fulfill()
@@ -562,7 +563,7 @@ final class MetroRailTests: XCTestCase {
         waitForExpectations(timeout: 1)
     }
 
-    func testStationsNextTrainsWithDelegate() {
+    func testNextTrainsWithDelegate() {
         class Delegate: WMATADelegate {
             let expectation: XCTestExpectation
 
@@ -582,7 +583,7 @@ final class MetroRailTests: XCTestCase {
         }
 
         let delegate = Delegate(
-            expectation: expectation(description: "testStationsNextTrainsWithDelegate")
+            expectation: expectation(description: #function)
         )
         let rail = MetroRail(
             key: TEST_API_KEY,
@@ -594,11 +595,11 @@ final class MetroRailTests: XCTestCase {
         waitForExpectations(timeout: 1)
     }
 
-    func testStationInformation() {
-        let exp = expectation(description: "testStationInformation")
-        let station = MetroRail(key: TEST_API_KEY)
+    func testInformation() {
+        let exp = expectation(description: #function)
+        let rail = MetroRail(key: TEST_API_KEY)
 
-        station.information(for: .A01) { result in
+        rail.information(for: .A01) { result in
             switch result {
             case .success:
                 exp.fulfill()
@@ -611,7 +612,7 @@ final class MetroRailTests: XCTestCase {
         waitForExpectations(timeout: 1)
     }
 
-    func testStationInformationWithDelegate() {
+    func testInformationWithDelegate() {
         class Delegate: WMATADelegate {
             let expectation: XCTestExpectation
 
@@ -631,7 +632,7 @@ final class MetroRailTests: XCTestCase {
         }
 
         let delegate = Delegate(
-            expectation: expectation(description: "testStationInformationWithDelegate")
+            expectation: expectation(description: #function)
         )
         let rail = MetroRail(
             key: TEST_API_KEY,
@@ -643,11 +644,11 @@ final class MetroRailTests: XCTestCase {
         waitForExpectations(timeout: 1)
     }
 
-    func testStationParkingInformation() {
-        let exp = expectation(description: "testStationParkingInformation")
-        let station = MetroRail(key: TEST_API_KEY)
+    func testParkingInformation() {
+        let exp = expectation(description: #function)
+        let rail = MetroRail(key: TEST_API_KEY)
 
-        station.parkingInformation(for: .A01) { result in
+        rail.parkingInformation(for: .A01) { result in
             switch result {
             case .success:
                 exp.fulfill()
@@ -660,7 +661,7 @@ final class MetroRailTests: XCTestCase {
         waitForExpectations(timeout: 1)
     }
 
-    func testStationParkingInformationWithDelegate() {
+    func testParkingInformationWithDelegate() {
         class Delegate: WMATADelegate {
             let expectation: XCTestExpectation
 
@@ -680,7 +681,7 @@ final class MetroRailTests: XCTestCase {
         }
 
         let delegate = Delegate(
-            expectation: expectation(description: "testStationParkingInformationWithDelegate")
+            expectation: expectation(description: #function)
         )
         let rail = MetroRail(
             key: TEST_API_KEY,
@@ -692,11 +693,11 @@ final class MetroRailTests: XCTestCase {
         waitForExpectations(timeout: 1)
     }
 
-    func testStationPath() {
-        let exp = expectation(description: "testStationPath")
-        let station = MetroRail(key: TEST_API_KEY)
+    func testPath() {
+        let exp = expectation(description: #function)
+        let rail = MetroRail(key: TEST_API_KEY)
 
-        station.path(from: .A01, to: .A02) { result in
+        rail.path(from: .A01, to: .A02) { result in
             switch result {
             case .success:
                 exp.fulfill()
@@ -709,7 +710,7 @@ final class MetroRailTests: XCTestCase {
         waitForExpectations(timeout: 1)
     }
 
-    func testStationPathWithDelegate() {
+    func testPathWithDelegate() {
         class Delegate: WMATADelegate {
             let expectation: XCTestExpectation
 
@@ -729,7 +730,7 @@ final class MetroRailTests: XCTestCase {
         }
 
         let delegate = Delegate(
-            expectation: expectation(description: "testStationPathWithDelegate")
+            expectation: expectation(description: #function)
         )
         let rail = MetroRail(
             key: TEST_API_KEY,
@@ -741,11 +742,11 @@ final class MetroRailTests: XCTestCase {
         waitForExpectations(timeout: 1)
     }
 
-    func testStationTimings() {
-        let exp = expectation(description: "testStationTimings")
-        let station = MetroRail(key: TEST_API_KEY)
+    func testTimings() {
+        let exp = expectation(description: #function)
+        let rail = MetroRail(key: TEST_API_KEY)
 
-        station.timings(for: .A01) { result in
+        rail.timings(for: .A01) { result in
             switch result {
             case .success:
                 exp.fulfill()
@@ -758,7 +759,7 @@ final class MetroRailTests: XCTestCase {
         waitForExpectations(timeout: 1)
     }
 
-    func testStationTimingsWithDelegate() {
+    func testTimingsWithDelegate() {
         class Delegate: WMATADelegate {
             let expectation: XCTestExpectation
 
@@ -778,7 +779,7 @@ final class MetroRailTests: XCTestCase {
         }
 
         let delegate = Delegate(
-            expectation: expectation(description: "testStationPathWithDelegate")
+            expectation: expectation(description: #function)
         )
         let rail = MetroRail(
             key: TEST_API_KEY,
@@ -790,11 +791,11 @@ final class MetroRailTests: XCTestCase {
         waitForExpectations(timeout: 1)
     }
 
-    func testGTFSRTAlerts() {
-        let exp = expectation(description: "testGTFSRTAlerts")
-        let client = MetroRail(key: TEST_API_KEY)
+    func testAlerts() {
+        let exp = expectation(description: #function)
+        let rail = MetroRail(key: TEST_API_KEY)
 
-        client.alerts { result in
+        rail.alerts { result in
             switch result {
             case .success:
                 exp.fulfill()
@@ -807,7 +808,7 @@ final class MetroRailTests: XCTestCase {
         waitForExpectations(timeout: 1)
     }
 
-    func testGTFSRTAlertsWithDelegate() {
+    func testAlertsWithDelegate() {
         class Delegate: WMATADelegate {
             let expectation: XCTestExpectation
 
@@ -821,23 +822,23 @@ final class MetroRailTests: XCTestCase {
         }
 
         let delegate = Delegate(
-            expectation: expectation(description: "testGTFSRTAlertsWithDelegate")
+            expectation: expectation(description: #function)
         )
-        let client = MetroRail(
+        let rail = MetroRail(
             key: TEST_API_KEY,
             delegate: delegate
         )
 
-        client.alerts()
+        rail.alerts()
 
         waitForExpectations(timeout: 1)
     }
 
-    func testGTFSRTTripUpdates() {
-        let exp = expectation(description: "testGTFSRTTripUpdates")
-        let client = MetroRail(key: TEST_API_KEY)
+    func testTripUpdates() {
+        let exp = expectation(description: #function)
+        let rail = MetroRail(key: TEST_API_KEY)
 
-        client.tripUpdates { result in
+        rail.tripUpdates { result in
             switch result {
             case .success:
                 exp.fulfill()
@@ -850,7 +851,7 @@ final class MetroRailTests: XCTestCase {
         waitForExpectations(timeout: 1)
     }
 
-    func testGTFSRTTripUpdatesWithDelegate() {
+    func testTripUpdatesWithDelegate() {
         class Delegate: WMATADelegate {
             let expectation: XCTestExpectation
 
@@ -864,23 +865,23 @@ final class MetroRailTests: XCTestCase {
         }
 
         let delegate = Delegate(
-            expectation: expectation(description: "testGTFSRTTripUpdatesWithDelegate")
+            expectation: expectation(description: #function)
         )
-        let client = MetroRail(
+        let rail = MetroRail(
             key: TEST_API_KEY,
             delegate: delegate
         )
 
-        client.tripUpdates()
+        rail.tripUpdates()
 
         waitForExpectations(timeout: 1)
     }
 
-    func testGTFSRTVehiclePositions() {
-        let exp = expectation(description: "testGTFSRTVehiclePositions")
-        let client = MetroRail(key: TEST_API_KEY)
+    func testVehiclePositions() {
+        let exp = expectation(description: #function)
+        let rail = MetroRail(key: TEST_API_KEY)
 
-        client.vehiclePositions { result in
+        rail.vehiclePositions { result in
             switch result {
             case .success:
                 exp.fulfill()
@@ -893,7 +894,7 @@ final class MetroRailTests: XCTestCase {
         waitForExpectations(timeout: 1)
     }
 
-    func testGTFSRTVehiclePositionsWithDelegate() {
+    func testVehiclePositionsWithDelegate() {
         class Delegate: WMATADelegate {
             let expectation: XCTestExpectation
 
@@ -907,65 +908,65 @@ final class MetroRailTests: XCTestCase {
         }
 
         let delegate = Delegate(
-            expectation: expectation(description: "testGTFSRTVehiclePositionsWithDelegate")
+            expectation: expectation(description: #function)
         )
-        let client = MetroRail(
+        let rail = MetroRail(
             key: TEST_API_KEY,
             delegate: delegate
         )
 
-        client.vehiclePositions()
+        rail.vehiclePositions()
 
         waitForExpectations(timeout: 1)
     }
 }
 
 final class StationTests: XCTestCase {
-    func testStationName() {
+    func testName() {
         XCTAssertEqual(Station.A01.name, "Metro Center")
     }
 
-    func testStationLines() {
+    func testLines() {
         XCTAssertEqual(Station.A01.lines, [.BL, .OR, .SV, .RD])
     }
 
-    func testStationOpenTimeSaturday() {
+    func testOpenTimeSaturday() {
         let date = DateComponents(calendar: .autoupdatingCurrent, timeZone: .autoupdatingCurrent, year: 2020, month: 1, day: 11, hour: 7, minute: 14).date!
 
         XCTAssertEqual(Station.A01.openingTime(on: date), date)
     }
 
-    func testStationOpenTimeSunday() {
+    func testOpenTimeSunday() {
         let date = DateComponents(calendar: .autoupdatingCurrent, timeZone: .autoupdatingCurrent, year: 2020, month: 1, day: 12, hour: 8, minute: 14).date!
 
         XCTAssertEqual(Station.A01.openingTime(on: date), date)
     }
 
-    func testStationOpenTimeWeekday() {
+    func testOpenTimeWeekday() {
         let date = DateComponents(calendar: .autoupdatingCurrent, timeZone: .autoupdatingCurrent, year: 2020, month: 1, day: 13, hour: 5, minute: 14).date!
 
         XCTAssertEqual(Station.A01.openingTime(on: date), date)
     }
 
-    func testStationTogether() {
+    func testTogether() {
         XCTAssertEqual(Station.A01.together, Station.C01)
         XCTAssertEqual(Station.C01.together, Station.A01)
-        XCTAssertEqual(Station.A02.together, nil)
+        XCTAssertNil(Station.A02.together)
     }
 
-    func testStationAllTogether() {
+    func testAllTogether() {
         XCTAssertEqual(Station.A01.allTogether, [Station.A01, Station.C01])
         XCTAssertEqual(Station.C01.allTogether, [Station.C01, Station.A01])
         XCTAssertEqual(Station.A02.allTogether, [Station.A02])
     }
 }
 
-final class MetroBusTests: XCTestCase {
-    func testBusPositions() {
-        let exp = expectation(description: "testBusPositions")
+final class BusTests: XCTestCase {
+    func testPositions() {
+        let exp = expectation(description: #function)
         let bus = MetroBus(key: TEST_API_KEY)
 
-        bus.positions(on: ._10A, at: RadiusAtCoordinates(radius: 1, coordinates: Coordinates(latitude: 1.0, longitude: 1.0))) { result in
+        bus.positions(on: "10A", at: RadiusAtCoordinates(radius: 1, coordinates: Coordinates(latitude: 1.0, longitude: 1.0))) { result in
             switch result {
             case .success:
                 exp.fulfill()
@@ -978,7 +979,7 @@ final class MetroBusTests: XCTestCase {
         waitForExpectations(timeout: 1)
     }
 
-    func testBusPositionsWithDelegate() {
+    func testPositionsWithDelegate() {
         class Delegate: WMATADelegate {
             let expectation: XCTestExpectation
 
@@ -998,20 +999,20 @@ final class MetroBusTests: XCTestCase {
         }
 
         let delegate = Delegate(
-            expectation: expectation(description: "testBusPositionsWithDelegate")
+            expectation: expectation(description: #function)
         )
         let bus = MetroBus(
             key: TEST_API_KEY,
             delegate: delegate
         )
 
-        bus.positions(on: ._10A, at: RadiusAtCoordinates(radius: 1, coordinates: Coordinates(latitude: 1.0, longitude: 1.0)))
+        bus.positions(on: "10A", at: RadiusAtCoordinates(radius: 1, coordinates: Coordinates(latitude: 1.0, longitude: 1.0)))
 
         waitForExpectations(timeout: 1)
     }
 
-    func testBusRoutes() {
-        let exp = expectation(description: "testBusRoutes")
+    func testRoutes() {
+        let exp = expectation(description: #function)
         let bus = MetroBus(key: TEST_API_KEY)
 
         bus.routes { result in
@@ -1027,7 +1028,7 @@ final class MetroBusTests: XCTestCase {
         waitForExpectations(timeout: 1)
     }
 
-    func testBusRoutesWithDelegate() {
+    func testRoutesWithDelegate() {
         class Delegate: WMATADelegate {
             let expectation: XCTestExpectation
 
@@ -1047,7 +1048,7 @@ final class MetroBusTests: XCTestCase {
         }
 
         let delegate = Delegate(
-            expectation: expectation(description: "testBusPositionsWithDelegate")
+            expectation: expectation(description: #function)
         )
         let bus = MetroBus(
             key: TEST_API_KEY,
@@ -1059,8 +1060,8 @@ final class MetroBusTests: XCTestCase {
         waitForExpectations(timeout: 1)
     }
 
-    func testBusSearchStops() {
-        let exp = expectation(description: "testBusRoutes")
+    func testSearchStops() {
+        let exp = expectation(description: #function)
         let bus = MetroBus(key: TEST_API_KEY)
 
         bus.searchStops(at: RadiusAtCoordinates(radius: 1, coordinates: Coordinates(latitude: 1.0, longitude: 1.0))) { result in
@@ -1076,7 +1077,7 @@ final class MetroBusTests: XCTestCase {
         waitForExpectations(timeout: 1)
     }
 
-    func testBusSearchStopsWithDelegate() {
+    func testSearchStopsWithDelegate() {
         class Delegate: WMATADelegate {
             let expectation: XCTestExpectation
 
@@ -1096,7 +1097,7 @@ final class MetroBusTests: XCTestCase {
         }
 
         let delegate = Delegate(
-            expectation: expectation(description: "testBusPositionsWithDelegate")
+            expectation: expectation(description: #function)
         )
         let bus = MetroBus(
             key: TEST_API_KEY,
@@ -1108,11 +1109,11 @@ final class MetroBusTests: XCTestCase {
         waitForExpectations(timeout: 1)
     }
 
-    func testBusIncidents() {
-        let exp = expectation(description: "testBusRoutes")
+    func testIncidents() {
+        let exp = expectation(description: #function)
         let bus = MetroBus(key: TEST_API_KEY)
 
-        bus.incidents(on: ._10A) { result in
+        bus.incidents(on: "10A") { result in
             switch result {
             case .success:
                 exp.fulfill()
@@ -1125,7 +1126,7 @@ final class MetroBusTests: XCTestCase {
         waitForExpectations(timeout: 1)
     }
 
-    func testBusIncidentsWithDelegate() {
+    func testIncidentsWithDelegate() {
         class Delegate: WMATADelegate {
             let expectation: XCTestExpectation
 
@@ -1145,23 +1146,23 @@ final class MetroBusTests: XCTestCase {
         }
 
         let delegate = Delegate(
-            expectation: expectation(description: "testBusPositionsWithDelegate")
+            expectation: expectation(description: #function)
         )
         let bus = MetroBus(
             key: TEST_API_KEY,
             delegate: delegate
         )
 
-        bus.incidents(on: ._10A)
+        bus.incidents(on: "10A")
 
         waitForExpectations(timeout: 1)
     }
 
-    func testRoutePositions() {
-        let exp = expectation(description: "testRoutePositions")
-        let route = MetroBus(key: TEST_API_KEY)
+    func testPathDetails() {
+        let exp = expectation(description: #function)
+        let bus = MetroBus(key: TEST_API_KEY)
 
-        route.positions(on: ._10A, at: RadiusAtCoordinates(radius: 1, coordinates: Coordinates(latitude: 1.0, longitude: 1.0))) { result in
+        bus.pathDetails(for: "10A", on: nil) { result in
             switch result {
             case .success:
                 exp.fulfill()
@@ -1174,56 +1175,7 @@ final class MetroBusTests: XCTestCase {
         waitForExpectations(timeout: 1)
     }
 
-    func testRoutePositionsWithDelegate() {
-        class Delegate: WMATADelegate {
-            let expectation: XCTestExpectation
-
-            init(expectation: XCTestExpectation) {
-                self.expectation = expectation
-            }
-
-            func received(busPositions result: Result<BusPositions, WMATAError>) {
-                switch result {
-                case .success:
-                    expectation.fulfill()
-
-                case let .failure(error):
-                    print(error)
-                }
-            }
-        }
-
-        let delegate = Delegate(
-            expectation: expectation(description: "testBusPositionsWithDelegate")
-        )
-        let bus = MetroBus(
-            key: TEST_API_KEY,
-            delegate: delegate
-        )
-
-        bus.positions(on: ._10A, at: RadiusAtCoordinates(radius: 1, coordinates: Coordinates(latitude: 1.0, longitude: 1.0)))
-
-        waitForExpectations(timeout: 1)
-    }
-
-    func testRoutePathDetails() {
-        let exp = expectation(description: "testRoutePathDetails")
-        let route = MetroBus(key: TEST_API_KEY)
-
-        route.pathDetails(for: ._10A, on: nil) { result in
-            switch result {
-            case .success:
-                exp.fulfill()
-
-            case let .failure(error):
-                print(error)
-            }
-        }
-
-        waitForExpectations(timeout: 1)
-    }
-
-    func testRoutePathDetailsWithDelegate() {
+    func testPathDetailsWithDelegate() {
         class Delegate: WMATADelegate {
             let expectation: XCTestExpectation
 
@@ -1243,23 +1195,23 @@ final class MetroBusTests: XCTestCase {
         }
 
         let delegate = Delegate(
-            expectation: expectation(description: "testRoutePathDetailsWithDelegate")
+            expectation: expectation(description: #function)
         )
         let bus = MetroBus(
             key: TEST_API_KEY,
             delegate: delegate
         )
 
-        bus.pathDetails(for: ._10A, on: nil)
+        bus.pathDetails(for: "10A", on: nil)
 
         waitForExpectations(timeout: 1)
     }
 
     func testRouteSchedule() {
-        let exp = expectation(description: "testRouteSchedule")
-        let route = MetroBus(key: TEST_API_KEY)
+        let exp = expectation(description: #function)
+        let bus = MetroBus(key: TEST_API_KEY)
 
-        route.schedule(for: ._10A, on: nil, includingVariations: true) { result in
+        bus.routeSchedule(for: "10A", on: nil, includingVariations: true) { result in
             switch result {
             case .success:
                 exp.fulfill()
@@ -1292,23 +1244,23 @@ final class MetroBusTests: XCTestCase {
         }
 
         let delegate = Delegate(
-            expectation: expectation(description: "testRoutePathDetailsWithDelegate")
+            expectation: expectation(description: #function)
         )
         let bus = MetroBus(
             key: TEST_API_KEY,
             delegate: delegate
         )
 
-        bus.schedule(for: ._10A, on: nil, includingVariations: true)
+        bus.routeSchedule(for: "10A", on: nil, includingVariations: true)
 
         waitForExpectations(timeout: 1)
     }
 
-    func testStopNextBuses() {
-        let exp = expectation(description: "testStopNextBuses")
-        let stop = MetroBus(key: TEST_API_KEY)
+    func testNextBuses() {
+        let exp = expectation(description: #function)
+        let bus = MetroBus(key: TEST_API_KEY)
 
-        stop.nextBuses(for: Stop(id: "1001195")) { result in
+        bus.nextBuses(for: "1001195") { result in
             switch result {
             case .success:
                 exp.fulfill()
@@ -1321,7 +1273,7 @@ final class MetroBusTests: XCTestCase {
         waitForExpectations(timeout: 1)
     }
 
-    func testStopNextBusesWithDelegate() {
+    func testNextBusesWithDelegate() {
         class Delegate: WMATADelegate {
             let expectation: XCTestExpectation
 
@@ -1341,23 +1293,23 @@ final class MetroBusTests: XCTestCase {
         }
 
         let delegate = Delegate(
-            expectation: expectation(description: "testRoutePathDetailsWithDelegate")
+            expectation: expectation(description: #function)
         )
         let bus = MetroBus(
             key: TEST_API_KEY,
             delegate: delegate
         )
 
-        bus.nextBuses(for: Stop(id: "1001195"))
+        bus.nextBuses(for: "1001195")
 
         waitForExpectations(timeout: 1)
     }
 
-    func testStopSchedule() {
-        let exp = expectation(description: "testStopSchedule")
-        let stop = MetroBus(key: TEST_API_KEY)
+    func testSchedule() {
+        let exp = expectation(description: #function)
+        let bus = MetroBus(key: TEST_API_KEY)
 
-        stop.schedule(for: Stop(id: "1001195")) { result in
+        bus.stopSchedule(for: "1001195") { result in
             switch result {
             case .success:
                 exp.fulfill()
@@ -1370,7 +1322,7 @@ final class MetroBusTests: XCTestCase {
         waitForExpectations(timeout: 1)
     }
 
-    func testStopScheduleWithDelegate() {
+    func testScheduleWithDelegate() {
         class Delegate: WMATADelegate {
             let expectation: XCTestExpectation
 
@@ -1390,23 +1342,23 @@ final class MetroBusTests: XCTestCase {
         }
 
         let delegate = Delegate(
-            expectation: expectation(description: "testRoutePathDetailsWithDelegate")
+            expectation: expectation(description: #function)
         )
         let bus = MetroBus(
             key: TEST_API_KEY,
             delegate: delegate
         )
 
-        bus.schedule(for: Stop(id: "1001195"))
+        bus.stopSchedule(for: "1001195")
 
         waitForExpectations(timeout: 1)
     }
 
-    func testGTFSRTAlerts() {
-        let exp = expectation(description: "testGTFSRTAlerts")
-        let client = MetroBus(key: TEST_API_KEY)
+    func testAlerts() {
+        let exp = expectation(description: #function)
+        let bus = MetroBus(key: TEST_API_KEY)
 
-        client.alerts { result in
+        bus.alerts { result in
             switch result {
             case .success:
                 exp.fulfill()
@@ -1419,7 +1371,7 @@ final class MetroBusTests: XCTestCase {
         waitForExpectations(timeout: 1)
     }
 
-    func testGTFSRTAlertsWithDelegate() {
+    func testAlertsWithDelegate() {
         class Delegate: WMATADelegate {
             let expectation: XCTestExpectation
 
@@ -1433,23 +1385,23 @@ final class MetroBusTests: XCTestCase {
         }
 
         let delegate = Delegate(
-            expectation: expectation(description: "testGTFSRTAlertsWithDelegate")
+            expectation: expectation(description: #function)
         )
-        let client = MetroBus(
+        let bus = MetroBus(
             key: TEST_API_KEY,
             delegate: delegate
         )
 
-        client.alerts()
+        bus.alerts()
 
         waitForExpectations(timeout: 1)
     }
 
-    func testGTFSRTTripUpdates() {
-        let exp = expectation(description: "testGTFSRTTripUpdates")
-        let client = MetroBus(key: TEST_API_KEY)
+    func testTripUpdates() {
+        let exp = expectation(description: #function)
+        let bus = MetroBus(key: TEST_API_KEY)
 
-        client.tripUpdates { result in
+        bus.tripUpdates { result in
             switch result {
             case .success:
                 exp.fulfill()
@@ -1462,7 +1414,7 @@ final class MetroBusTests: XCTestCase {
         waitForExpectations(timeout: 1)
     }
 
-    func testGTFSRTTripUpdatesWithDelegate() {
+    func testTripUpdatesWithDelegate() {
         class Delegate: WMATADelegate {
             let expectation: XCTestExpectation
 
@@ -1476,23 +1428,23 @@ final class MetroBusTests: XCTestCase {
         }
 
         let delegate = Delegate(
-            expectation: expectation(description: "testGTFSRTTripUpdatesWithDelegate")
+            expectation: expectation(description: #function)
         )
-        let client = MetroBus(
+        let bus = MetroBus(
             key: TEST_API_KEY,
             delegate: delegate
         )
 
-        client.tripUpdates()
+        bus.tripUpdates()
 
         waitForExpectations(timeout: 1)
     }
 
-    func testGTFSRTVehiclePositions() {
-        let exp = expectation(description: "testGTFSRTVehiclePositions")
-        let client = MetroBus(key: TEST_API_KEY)
+    func testVehiclePositions() {
+        let exp = expectation(description: #function)
+        let bus = MetroBus(key: TEST_API_KEY)
 
-        client.vehiclePositions { result in
+        bus.vehiclePositions { result in
             switch result {
             case .success:
                 exp.fulfill()
@@ -1505,7 +1457,7 @@ final class MetroBusTests: XCTestCase {
         waitForExpectations(timeout: 1)
     }
 
-    func testGTFSRTVehiclePositionsWithDelegate() {
+    func testVehiclePositionsWithDelegate() {
         class Delegate: WMATADelegate {
             let expectation: XCTestExpectation
 
@@ -1519,15 +1471,700 @@ final class MetroBusTests: XCTestCase {
         }
 
         let delegate = Delegate(
-            expectation: expectation(description: "testGTFSRTVehiclePositionsWithDelegate")
+            expectation: expectation(description: #function)
         )
-        let client = MetroBus(
+        let bus = MetroBus(
             key: TEST_API_KEY,
             delegate: delegate
         )
 
-        client.vehiclePositions()
+        bus.vehiclePositions()
 
+        waitForExpectations(timeout: 1)
+    }
+}
+
+class CombineTests: XCTestCase {
+    // Thanks to eskimo for this solution
+    // https://developer.apple.com/forums/thread/121814?answerId=378975022#378975022
+    var deferredCancellables = [AnyCancellable]()
+    
+    func deferCancellable(_ cancellable: AnyCancellable) {
+        deferredCancellables.append(cancellable)
+    }
+    
+    override func tearDown() {
+        deferredCancellables.removeAll()
+    }
+}
+
+final class RailCombineTests: CombineTests {
+    func testLinesPublisher() {
+        let exp = expectation(description: #function)
+        let rail = MetroRail(key: TEST_API_KEY)
+        
+        let cancellable = rail
+            .linesPublisher()
+            .sink(
+                receiveCompletion: { completion in
+                    switch completion {
+                    case .finished:
+                        exp.fulfill()
+                    case let .failure(failure):
+                        print(failure)
+                    }
+                },
+                receiveValue: { _ in }
+            )
+        
+        deferCancellable(cancellable)
+        
+        waitForExpectations(timeout: 1)
+    }
+    
+    func testEntrancesPublisher() {
+        let exp = expectation(description: #function)
+        let rail = MetroRail(key: TEST_API_KEY)
+        
+        let cancellable = rail
+            .entrancesPublisher(at: RadiusAtCoordinates(radius: 1, coordinates: Coordinates(latitude: 1.0, longitude: 1.0)))
+            .sink(
+                receiveCompletion: { completion in
+                    switch completion {
+                    case .finished:
+                        exp.fulfill()
+                    case let .failure(failure):
+                        print(failure)
+                    }
+                },
+                receiveValue: { _ in }
+            )
+        
+        deferCancellable(cancellable)
+        
+        waitForExpectations(timeout: 1)
+    }
+    
+    func testStationsPublisher() {
+        let exp = expectation(description: #function)
+        let rail = MetroRail(key: TEST_API_KEY)
+        
+        let cancellable = rail
+            .stationsPublisher(for: .BL)
+            .sink(
+                receiveCompletion: { completion in
+                    switch completion {
+                    case .finished:
+                        exp.fulfill()
+                    case let .failure(failure):
+                        print(failure)
+                    }
+                },
+                receiveValue: { _ in }
+            )
+        
+        deferCancellable(cancellable)
+        
+        waitForExpectations(timeout: 1)
+    }
+    
+    func testStationPublisher() {
+        let exp = expectation(description: #function)
+        let rail = MetroRail(key: TEST_API_KEY)
+        
+        let cancellable = rail
+            .stationPublisher(.A01, to: .A02)
+            .sink(
+                receiveCompletion: { completion in
+                    switch completion {
+                    case .finished:
+                        exp.fulfill()
+                    case let .failure(failure):
+                        print(failure)
+                    }
+                },
+                receiveValue: { _ in }
+            )
+        
+        deferCancellable(cancellable)
+        
+        waitForExpectations(timeout: 1)
+    }
+    
+    func testPositionsPublisher() {
+        let exp = expectation(description: #function)
+        let rail = MetroRail(key: TEST_API_KEY)
+        
+        let cancellable = rail
+            .positionsPublisher()
+            .sink(
+                receiveCompletion: { completion in
+                    switch completion {
+                    case .finished:
+                        exp.fulfill()
+                    case let .failure(failure):
+                        print(failure)
+                    }
+                },
+                receiveValue: { _ in }
+            )
+        
+        deferCancellable(cancellable)
+        
+        waitForExpectations(timeout: 1)
+    }
+    
+    func testRoutesPublisher() {
+        let exp = expectation(description: #function)
+        let rail = MetroRail(key: TEST_API_KEY)
+        
+        let cancellable = rail
+            .routesPublisher()
+            .sink(
+                receiveCompletion: { completion in
+                    switch completion {
+                    case .finished:
+                        exp.fulfill()
+                    case let .failure(failure):
+                        print(failure)
+                    }
+                },
+                receiveValue: { _ in }
+            )
+        
+        deferCancellable(cancellable)
+        
+        waitForExpectations(timeout: 1)
+    }
+    
+    func testCircuitsPublisher() {
+        let exp = expectation(description: #function)
+        let rail = MetroRail(key: TEST_API_KEY)
+        
+        let cancellable = rail
+            .circuitsPublisher()
+            .sink(
+                receiveCompletion: { completion in
+                    switch completion {
+                    case .finished:
+                        exp.fulfill()
+                    case let .failure(failure):
+                        print(failure)
+                    }
+                },
+                receiveValue: { _ in }
+            )
+        
+        deferCancellable(cancellable)
+        
+        waitForExpectations(timeout: 1)
+    }
+    
+    func testElevatorAndEscalatorIncidentsPublisher() {
+        let exp = expectation(description: #function)
+        let rail = MetroRail(key: TEST_API_KEY)
+        
+        let cancellable = rail
+            .elevatorAndEscalatorIncidentsPublisher(at: .A01)
+            .sink(
+                receiveCompletion: { completion in
+                    switch completion {
+                    case .finished:
+                        exp.fulfill()
+                    case let .failure(failure):
+                        print(failure)
+                    }
+                },
+                receiveValue: { _ in }
+            )
+        
+        deferCancellable(cancellable)
+        
+        waitForExpectations(timeout: 1)
+    }
+    
+    func testIncidentsPublisher() {
+        let exp = expectation(description: #function)
+        let rail = MetroRail(key: TEST_API_KEY)
+        
+        let cancellable = rail
+            .incidentsPublisher(at: .A01)
+            .sink(
+                receiveCompletion: { completion in
+                    switch completion {
+                    case .finished:
+                        exp.fulfill()
+                    case let .failure(failure):
+                        print(failure)
+                    }
+                },
+                receiveValue: { _ in }
+            )
+        
+        deferCancellable(cancellable)
+        
+        waitForExpectations(timeout: 1)
+    }
+    
+    func testNextTrainPublisher() {
+        let exp = expectation(description: #function)
+        let rail = MetroRail(key: TEST_API_KEY)
+        
+        let cancellable = rail
+            .nextTrainsPublisher(at: .A01)
+            .sink(
+                receiveCompletion: { completion in
+                    switch completion {
+                    case .finished:
+                        exp.fulfill()
+                    case let .failure(failure):
+                        print(failure)
+                    }
+                },
+                receiveValue: { _ in }
+            )
+        
+        deferCancellable(cancellable)
+        
+        waitForExpectations(timeout: 1)
+    }
+    
+    func testNextTrainsPublisher() {
+        let exp = expectation(description: #function)
+        let rail = MetroRail(key: TEST_API_KEY)
+        
+        let cancellable = rail
+            .nextTrainsPublisher(at: [.A01, .A02])
+            .sink(
+                receiveCompletion: { completion in
+                    switch completion {
+                    case .finished:
+                        exp.fulfill()
+                    case let .failure(failure):
+                        print(failure)
+                    }
+                },
+                receiveValue: { _ in }
+            )
+        
+        deferCancellable(cancellable)
+        
+        waitForExpectations(timeout: 1)
+    }
+    
+    func testInformationPublisher() {
+        let exp = expectation(description: #function)
+        let rail = MetroRail(key: TEST_API_KEY)
+        
+        let cancellable = rail
+            .informationPublisher(for: .A01)
+            .sink(
+                receiveCompletion: { completion in
+                    switch completion {
+                    case .finished:
+                        exp.fulfill()
+                    case let .failure(failure):
+                        print(failure)
+                    }
+                },
+                receiveValue: { _ in }
+            )
+        
+        deferCancellable(cancellable)
+        
+        waitForExpectations(timeout: 1)
+    }
+    
+    func testParkingInformationPublisher() {
+        let exp = expectation(description: #function)
+        let rail = MetroRail(key: TEST_API_KEY)
+        
+        let cancellable = rail
+            .parkingInformationPublisher(for: .A01)
+            .sink(
+                receiveCompletion: { completion in
+                    switch completion {
+                    case .finished:
+                        exp.fulfill()
+                    case let .failure(failure):
+                        print(failure)
+                    }
+                },
+                receiveValue: { _ in }
+            )
+        
+        deferCancellable(cancellable)
+        
+        waitForExpectations(timeout: 1)
+    }
+    
+    func testPathPublisher() {
+        let exp = expectation(description: #function)
+        let rail = MetroRail(key: TEST_API_KEY)
+        
+        let cancellable = rail
+            .pathPublisher(from: .A01, to: .A02)
+            .sink(
+                receiveCompletion: { completion in
+                    switch completion {
+                    case .finished:
+                        exp.fulfill()
+                    case let .failure(failure):
+                        print(failure)
+                    }
+                },
+                receiveValue: { _ in }
+            )
+        
+        deferCancellable(cancellable)
+        
+        waitForExpectations(timeout: 1)
+    }
+    
+    func testTimingsPublisher() {
+        let exp = expectation(description: #function)
+        let rail = MetroRail(key: TEST_API_KEY)
+        
+        let cancellable = rail
+            .timingsPublisher(for: .A01)
+            .sink(
+                receiveCompletion: { completion in
+                    switch completion {
+                    case .finished:
+                        exp.fulfill()
+                    case let .failure(failure):
+                        print(failure)
+                    }
+                },
+                receiveValue: { _ in }
+            )
+        
+        deferCancellable(cancellable)
+        
+        waitForExpectations(timeout: 1)
+    }
+    
+    func testAlertsPublisher() {
+        let exp = expectation(description: #function)
+        let rail = MetroRail(key: TEST_API_KEY)
+        
+        let cancellable = rail
+            .alertsPublisher()
+            .sink(
+                receiveCompletion: { completion in
+                    switch completion {
+                    case .finished:
+                        exp.fulfill()
+                    case let .failure(failure):
+                        print(failure)
+                    }
+                },
+                receiveValue: { _ in }
+            )
+        
+        deferCancellable(cancellable)
+        
+        waitForExpectations(timeout: 1)
+    }
+    
+    func testTripUpdatesPublisher() {
+        let exp = expectation(description: #function)
+        let rail = MetroRail(key: TEST_API_KEY)
+        
+        let cancellable = rail
+            .tripUpdatesPublisher()
+            .sink(
+                receiveCompletion: { completion in
+                    switch completion {
+                    case .finished:
+                        exp.fulfill()
+                    case let .failure(failure):
+                        print(failure)
+                    }
+                },
+                receiveValue: { _ in }
+            )
+        
+        deferCancellable(cancellable)
+        
+        waitForExpectations(timeout: 1)
+    }
+    
+    func testVehiclePositionsPublisher() {
+        let exp = expectation(description: #function)
+        let rail = MetroRail(key: TEST_API_KEY)
+        
+        let cancellable = rail
+            .vehiclePositionsPublisher()
+            .sink(
+                receiveCompletion: { completion in
+                    switch completion {
+                    case .finished:
+                        exp.fulfill()
+                    case let .failure(failure):
+                        print(failure)
+                    }
+                },
+                receiveValue: { _ in }
+            )
+        
+        deferCancellable(cancellable)
+        
+        waitForExpectations(timeout: 1)
+    }
+}
+
+final class BusCombineTests: CombineTests {
+    func testPositionsPublisher() {
+        let exp = expectation(description: #function)
+        let bus = MetroBus(key: TEST_API_KEY)
+        
+        let cancellable = bus
+            .positionsPublisher(on: "10A", at: RadiusAtCoordinates(radius: 1, coordinates: Coordinates(latitude: 1.0, longitude: 1.0)))
+            .sink(
+                receiveCompletion: { completion in
+                    switch completion {
+                    case .finished:
+                        exp.fulfill()
+                    case let .failure(failure):
+                        print(failure)
+                    }
+                },
+                receiveValue: { _ in }
+            )
+        
+        deferCancellable(cancellable)
+        
+        waitForExpectations(timeout: 1)
+    }
+    
+    func testRoutesPublisher() {
+        let exp = expectation(description: #function)
+        let bus = MetroBus(key: TEST_API_KEY)
+        
+        let cancellable = bus
+            .routesPublisher()
+            .sink(
+                receiveCompletion: { completion in
+                    switch completion {
+                    case .finished:
+                        exp.fulfill()
+                    case let .failure(failure):
+                        print(failure)
+                    }
+                },
+                receiveValue: { _ in }
+            )
+        
+        deferCancellable(cancellable)
+        
+        waitForExpectations(timeout: 1)
+    }
+    
+    func testSearchStopsPublisher() {
+        let exp = expectation(description: #function)
+        let bus = MetroBus(key: TEST_API_KEY)
+        
+        let cancellable = bus
+            .searchStopsPublisher(at: RadiusAtCoordinates(radius: 1, coordinates: Coordinates(latitude: 1.0, longitude: 1.0)))
+            .sink(
+                receiveCompletion: { completion in
+                    switch completion {
+                    case .finished:
+                        exp.fulfill()
+                    case let .failure(failure):
+                        print(failure)
+                    }
+                },
+                receiveValue: { _ in }
+            )
+        
+        deferCancellable(cancellable)
+        
+        waitForExpectations(timeout: 1)
+    }
+    
+    func testIncidentsPublisher() {
+        let exp = expectation(description: #function)
+        let bus = MetroBus(key: TEST_API_KEY)
+        
+        let cancellable = bus
+            .incidentsPublisher(on: "10A")
+            .sink(
+                receiveCompletion: { completion in
+                    switch completion {
+                    case .finished:
+                        exp.fulfill()
+                    case let .failure(failure):
+                        print(failure)
+                    }
+                },
+                receiveValue: { _ in }
+            )
+        
+        deferCancellable(cancellable)
+        
+        waitForExpectations(timeout: 1)
+    }
+    
+    func testPathDetailsPublisher() {
+        let exp = expectation(description: #function)
+        let bus = MetroBus(key: TEST_API_KEY)
+        
+        let cancellable = bus
+            .pathDetailsPublisher(for: "10A", on: nil)
+            .sink(
+                receiveCompletion: { completion in
+                    switch completion {
+                    case .finished:
+                        exp.fulfill()
+                    case let .failure(failure):
+                        print(failure)
+                    }
+                },
+                receiveValue: { _ in }
+            )
+        
+        deferCancellable(cancellable)
+        
+        waitForExpectations(timeout: 1)
+    }
+    
+    func testRouteSchedulePublisher() {
+        let exp = expectation(description: #function)
+        let bus = MetroBus(key: TEST_API_KEY)
+        
+        let cancellable = bus
+            .routeSchedulePublisher(for: "10A", on: nil, includingVariations: true)
+            .sink(
+                receiveCompletion: { completion in
+                    switch completion {
+                    case .finished:
+                        exp.fulfill()
+                    case let .failure(failure):
+                        print(failure)
+                    }
+                },
+                receiveValue: { _ in }
+            )
+        
+        deferCancellable(cancellable)
+        
+        waitForExpectations(timeout: 1)
+    }
+    
+    func testNextBusesPublisher() {
+        let exp = expectation(description: #function)
+        let bus = MetroBus(key: TEST_API_KEY)
+        
+        let cancellable = bus
+            .nextBusesPublisher(for: "1001195")
+            .sink(
+                receiveCompletion: { completion in
+                    switch completion {
+                    case .finished:
+                        exp.fulfill()
+                    case let .failure(failure):
+                        print(failure)
+                    }
+                },
+                receiveValue: { _ in }
+            )
+        
+        deferCancellable(cancellable)
+        
+        waitForExpectations(timeout: 1)
+    }
+    
+    func testSchedulePublisher() {
+        let exp = expectation(description: #function)
+        let bus = MetroBus(key: TEST_API_KEY)
+        
+        let cancellable = bus
+            .stopSchedulePublisher(for: "1001195")
+            .sink(
+                receiveCompletion: { completion in
+                    switch completion {
+                    case .finished:
+                        exp.fulfill()
+                    case let .failure(failure):
+                        print(failure)
+                    }
+                },
+                receiveValue: { _ in }
+            )
+        
+        deferCancellable(cancellable)
+        
+        waitForExpectations(timeout: 1)
+    }
+    
+    func testAlertsPublisher() {
+        let exp = expectation(description: #function)
+        let bus = MetroBus(key: TEST_API_KEY)
+        
+        let cancellable = bus
+            .alertsPublisher()
+            .sink(
+                receiveCompletion: { completion in
+                    switch completion {
+                    case .finished:
+                        exp.fulfill()
+                    case let .failure(failure):
+                        print(failure)
+                    }
+                },
+                receiveValue: { _ in }
+            )
+        
+        deferCancellable(cancellable)
+        
+        waitForExpectations(timeout: 1)
+    }
+    
+    func testTripUpdatesPublisher() {
+        let exp = expectation(description: #function)
+        let bus = MetroBus(key: TEST_API_KEY)
+        
+        let cancellable = bus
+            .tripUpdatesPublisher()
+            .sink(
+                receiveCompletion: { completion in
+                    switch completion {
+                    case .finished:
+                        exp.fulfill()
+                    case let .failure(failure):
+                        print(failure)
+                    }
+                },
+                receiveValue: { _ in }
+            )
+        
+        deferCancellable(cancellable)
+        
+        waitForExpectations(timeout: 1)
+    }
+    
+    func testVehiclePositionsPublisher() {
+        let exp = expectation(description: #function)
+        let bus = MetroBus(key: TEST_API_KEY)
+        
+        let cancellable = bus
+            .vehiclePositionsPublisher()
+            .sink(
+                receiveCompletion: { completion in
+                    switch completion {
+                    case .finished:
+                        exp.fulfill()
+                    case let .failure(failure):
+                        print(failure)
+                    }
+                },
+                receiveValue: { _ in }
+            )
+        
+        deferCancellable(cancellable)
+        
         waitForExpectations(timeout: 1)
     }
 }

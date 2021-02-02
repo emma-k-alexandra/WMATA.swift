@@ -11,8 +11,8 @@ public struct RadiusAtCoordinates {
     public let radius: UInt
     public let coordinates: Coordinates
 
-    func toQueryItems() -> [(String, String)] {
-        return coordinates.toQueryItems() + [
+    var queryItems: [(String, String)] {
+        coordinates.queryItems + [
             ("Radius", String(radius)),
         ]
     }
@@ -22,8 +22,8 @@ public struct Coordinates {
     public let latitude: Double
     public let longitude: Double
 
-    func toQueryItems() -> [(String, String)] {
-        return [
+    var queryItems: [(String, String)] {
+        [
             ("Lat", String(latitude)),
             ("Lon", String(longitude)),
         ]

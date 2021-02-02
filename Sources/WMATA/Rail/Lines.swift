@@ -6,9 +6,10 @@
 //
 
 import Foundation
+import Combine
 
 /// Line codes as defined by WMATA
-public enum Line: String, Codable {
+public enum Line: String, CaseIterable, Codable {
     case RD
     case BL
     case YL
@@ -18,17 +19,31 @@ public enum Line: String, Codable {
     case YLRP
 }
 
-extension Line: NeedsLine {
+extension Line: NeedsLine {}
+
+public extension Line {
     /// Stations along this Line
     /// - Parameter apiKey: WMATA API Key to use with this request
     /// - Parameter session: Optional. URL Session to make this request with
     /// - Parameter completion: completion handler that returns `Stations`
-    public func stations(withApiKey apiKey: String, andSession session: URLSession = URLSession.shared, completion: @escaping (Result<Stations, WMATAError>) -> Void) {
-        (self as NeedsLine).stations(for: self, withApiKey: apiKey, andSession: session, completion: completion)
+    func stations(key: String, session: URLSession = URLSession.shared, completion: @escaping (Result<Stations, WMATAError>) -> Void) {
+        (self as NeedsLine).stations(for: self, key: key, session: session, completion: completion)
+    }
+}
+
+@available(macOS 10.15, iOS 13, watchOS 6, tvOS 13, *)
+public extension Line {
+    /// Stations along this Line
+    /// - Parameter apiKey: WMATA API Key to use with this request
+    /// - Parameter session: Optional. URL Session to make this request with
+    /// - returns: A Combine Publisher for `Stations`
+    func stationsPublisher(key: String, session: URLSession = URLSession.shared) -> AnyPublisher<Stations, WMATAError> {
+        (self as NeedsLine).stations(for: self, key: key, session: session)
     }
 }
 
 public extension Line {
+    /// A human readable and presentable line name
     var name: String {
         switch self {
         case .RD:

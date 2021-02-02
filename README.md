@@ -2,12 +2,6 @@
 
 WMATA.swift is a lightweight Swift interface to the [Washington Metropolitan Area Transit Authority API](https://developer.wmata.com).
 
-## Note on WMATA.swift & coming package
-In the future, WMATA.swift will be splitting into a few libraries. Currently, WMATA.swift provides a lot of high level functionality on top of the response from the WMATA. In order to better maintain this functionality and support it fully, I am planning on keeping WMATA.swift as a high level, WMATA focused framework, and introducing a new package. This new package will handle basic API interactions and will be a better choice for those looking for lower level interactions with the API. There won't be any feature regression on WMATA.swift, simply making the package simpler to maintain for me. 
-
-## Note on GTFS
-I released a [GTFS and GTFS-RT](https://github.com/emma-k-alexandra/GTFS) package for Swift and soon this package will be using that package for interaction with GTFS-RT feeds. 
-
 ## Contents
 
 - [Requirements](#requirements)
@@ -35,7 +29,7 @@ I released a [GTFS and GTFS-RT](https://github.com/emma-k-alexandra/GTFS) packag
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/emma-k-alexandra/WMATA.swift.git", from: "8.4.0")
+    .package(url: "https://github.com/emma-k-alexandra/WMATA.swift.git", from: "9.0.0")
 ]
 ```
 
@@ -555,7 +549,7 @@ class Delegate: WMATADelegate {
 }
 ```
 
-Then implement the `received` method for whichever method you plan on calling on the `MetroBus` or `MetroRail` object this delegate belongs to. For example, if yoy plan on calling `lines` on `MetroRail`, implement `received(linesResponse:` on your delegate.
+Then implement the `received` method for whichever method you plan on calling on the `MetroBus` or `MetroRail` object this delegate belongs to. For example, if yoy plan on calling `lines` on `MetroRail`, implement `received(linesResponse:)` on your delegate.
 
 ```swift
 class Delegate: WMATADelegate {

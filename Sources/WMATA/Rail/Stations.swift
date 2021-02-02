@@ -6,8 +6,13 @@
 //
 
 import Foundation
+import Combine
 
 /// Station codes as defined by WMATA
+/// Note that a station code represents a single level within a physical station.
+/// Physical stations with multiple levels like L'Enfant Plaza require multiple station codes
+/// to represent the entire physical station. Use `together` or `allTogether` to match
+/// station codes with their corresponding sister station codes.
 public enum Station: String, CaseIterable, Codable {
     case A01
     case A02
@@ -46,6 +51,7 @@ public enum Station: String, CaseIterable, Codable {
     case C08
     case C09
     case C10
+    case C11
     case C12
     case C13
     case C14
@@ -104,73 +110,150 @@ public enum Station: String, CaseIterable, Codable {
     case N03
     case N04
     case N06
+    case N07
+    case N10
+    case N11
+    case N12
+    case N14
+    case N15
 }
 
-extension Station: NeedsStation {
+extension Station: NeedsStation {}
+
+public extension Station {
     /// Distance, fare information, and estimated travel time between this and another station.
     /// - Parameter destinationStation: Optional. Station to travel to
-    /// - Parameter apiKey: WMATA API Key to use with this request
+    /// - Parameter key: WMATA API Key to use with this request
     /// - Parameter session: Optional. URL Session to make this request with
     /// - Parameter completion: completion that returns `StationToStationInfos`
-    public func station(to destinationStation: Station?, withApiKey apiKey: String, andSession session: URLSession = URLSession.shared, completion: @escaping (Result<StationToStationInfos, WMATAError>) -> Void) {
-        (self as NeedsStation).station(self, to: destinationStation, withApiKey: apiKey, andSession: session, completion: completion)
+    func station(to destinationStation: Station?, key: String, session: URLSession = URLSession.shared, completion: @escaping (Result<StationToStationInfos, WMATAError>) -> Void) {
+        (self as NeedsStation).station(self, to: destinationStation, key: key, session: session, completion: completion)
     }
 
     /// Reported elevator and escalator incidents at this Station
-    /// - Parameter apiKey: WMATA API Key to use with this request
+    /// - Parameter key: WMATA API Key to use with this request
     /// - Parameter session: Optional. URL Session to make this request with
     /// - Parameter completion: completion handler that returns `ElevatorAndEscalatorIncidents`
-    public func elevatorAndEscalatorIncidents(withApiKey apiKey: String, andSession session: URLSession = URLSession.shared, completion: @escaping (Result<ElevatorAndEscalatorIncidents, WMATAError>) -> Void) {
-        (self as NeedsStation).elevatorAndEscalatorIncidents(at: self, withApiKey: apiKey, andSession: session, completion: completion)
+    func elevatorAndEscalatorIncidents(key: String, session: URLSession = URLSession.shared, completion: @escaping (Result<ElevatorAndEscalatorIncidents, WMATAError>) -> Void) {
+        (self as NeedsStation).elevatorAndEscalatorIncidents(at: self, key: key, session: session, completion: completion)
     }
 
     /// Reported MetroRail incidents at this Station
-    /// - Parameter apiKey: WMATA API Key to use with this request
+    /// - Parameter key: WMATA API Key to use with this request
     /// - Parameter session: Optional. URL Session to make this request with
     /// - Parameter completion: completion handler that returns `RailIncidents`
-    public func incidents(withApiKey apiKey: String, andSession session: URLSession = URLSession.shared, completion: @escaping (Result<RailIncidents, WMATAError>) -> Void) {
-        (self as NeedsStation).incidents(at: self, withApiKey: apiKey, andSession: session, completion: completion)
+    func incidents(key: String, session: URLSession = URLSession.shared, completion: @escaping (Result<RailIncidents, WMATAError>) -> Void) {
+        (self as NeedsStation).incidents(at: self, key: key, session: session, completion: completion)
     }
 
     ///  Next train arrival information for this Station
-    /// - Parameter apiKey: WMATA API Key to use with this request
+    /// - Parameter key: WMATA API Key to use with this request
     /// - Parameter session: Optional. URL Session to make this request with
     /// - Parameter completion: completion handler that returns `RailPredictions`
-    public func nextTrains(withApiKey apiKey: String, andSession session: URLSession = URLSession.shared, completion: @escaping (Result<RailPredictions, WMATAError>) -> Void) {
-        (self as NeedsStation).nextTrains(at: self, withApiKey: apiKey, andSession: session, completion: completion)
+    func nextTrains(key: String, session: URLSession = URLSession.shared, completion: @escaping (Result<RailPredictions, WMATAError>) -> Void) {
+        (self as NeedsStation).nextTrains(at: self, key: key, session: session, completion: completion)
     }
 
     /// Location and address information for this Station
-    /// - Parameter apiKey: WMATA API Key to use with this request
+    /// - Parameter key: WMATA API Key to use with this request
     /// - Parameter session: Optional. URL Session to make this request with
     /// - Parameter completion: completion handler that returns `StationInformation`
-    public func information(withApiKey apiKey: String, andSession session: URLSession = URLSession.shared, completion: @escaping (Result<StationInformation, WMATAError>) -> Void) {
-        (self as NeedsStation).information(for: self, withApiKey: apiKey, andSession: session, completion: completion)
+    func information(key: String, session: URLSession = URLSession.shared, completion: @escaping (Result<StationInformation, WMATAError>) -> Void) {
+        (self as NeedsStation).information(for: self, key: key, session: session, completion: completion)
     }
 
     /// Parking information for this Station
-    /// - Parameter apiKey: WMATA API Key to use with this request
+    /// - Parameter key: WMATA API Key to use with this request
     /// - Parameter session: Optional. URL Session to make this request with
     /// - Parameter completion: completion handler that returns `StationsParking`
-    public func parkingInformation(withApiKey apiKey: String, andSession session: URLSession = URLSession.shared, completion: @escaping (Result<StationsParking, WMATAError>) -> Void) {
-        (self as NeedsStation).parkingInformation(for: self, withApiKey: apiKey, andSession: session, completion: completion)
+    func parkingInformation(key: String, session: URLSession = URLSession.shared, completion: @escaping (Result<StationsParking, WMATAError>) -> Void) {
+        (self as NeedsStation).parkingInformation(for: self, key: key, session: session, completion: completion)
     }
 
     /// Returns a set of ordered stations and distances from this Station to another Station _on the same line_
     /// - Parameter destinationStation: Destination station to pathfind to
-    /// - Parameter apiKey: WMATA API Key to use with this request
+    /// - Parameter key: WMATA API Key to use with this request
     /// - Parameter session: Optional. URL Session to make this request with
     /// - Parameter completion: completion handler that returns `PathBetweenStations`
-    public func path(to destinationStation: Station, withApiKey apiKey: String, andSession session: URLSession = URLSession.shared, completion: @escaping (Result<PathBetweenStations, WMATAError>) -> Void) {
-        (self as NeedsStation).path(from: self, to: destinationStation, withApiKey: apiKey, andSession: session, completion: completion)
+    func path(to destinationStation: Station, key: String, session: URLSession = URLSession.shared, completion: @escaping (Result<PathBetweenStations, WMATAError>) -> Void) {
+        (self as NeedsStation).path(from: self, to: destinationStation, key: key, session: session, completion: completion)
     }
 
     /// Opening and scheduled first and last trains for this Station
-    /// - Parameter apiKey: WMATA API Key to use with this request
+    /// - Parameter key: WMATA API Key to use with this request
     /// - Parameter session: Optional. URL Session to make this request with
     /// - Parameter completion: completion handler that returns `StationTimings`
-    public func timings(withApiKey apiKey: String, andSession session: URLSession = URLSession.shared, completion: @escaping (Result<StationTimings, WMATAError>) -> Void) {
-        (self as NeedsStation).timings(for: self, withApiKey: apiKey, andSession: session, completion: completion)
+    func timings(key: String, session: URLSession = URLSession.shared, completion: @escaping (Result<StationTimings, WMATAError>) -> Void) {
+        (self as NeedsStation).timings(for: self, key: key, session: session, completion: completion)
+    }
+}
+
+@available(macOS 10.15, iOS 13, watchOS 6, tvOS 13, *)
+public extension Station {
+    /// Distance, fare information, and estimated travel time between this and another station.
+    /// - Parameter destinationStation: Optional. Station to travel to
+    /// - Parameter key: WMATA API Key to use with this request
+    /// - Parameter session: Optional. URL Session to make this request with
+    /// - returns: A Combine Publisher for `StationToStationInfos`
+    func stationPublisher(to destinationStation: Station?, key: String, session: URLSession = URLSession.shared) -> AnyPublisher<StationToStationInfos, WMATAError> {
+        (self as NeedsStation).station(self, to: destinationStation, key: key, session: session)
+    }
+    
+    /// Reported elevator and escalator incidents at this Station
+    /// - Parameter key: WMATA API Key to use with this request
+    /// - Parameter session: Optional. URL Session to make this request with
+    /// - returns: A Combine Publisher for `ElevatorAndEscalatorIncidents`
+    func elevatorAndEscalatorIncidentsPublisher(key: String, session: URLSession = URLSession.shared) -> AnyPublisher<ElevatorAndEscalatorIncidents, WMATAError> {
+        (self as NeedsStation).elevatorAndEscalatorIncidents(at: self, key: key, session: session)
+    }
+    
+    /// Reported MetroRail incidents at this Station
+    /// - Parameter key: WMATA API Key to use with this request
+    /// - Parameter session: Optional. URL Session to make this request with
+    /// - returns: A Combine Publisher for `RailIncidents`
+    func incidentsPublisher(key: String, session: URLSession = URLSession.shared) -> AnyPublisher<RailIncidents, WMATAError> {
+        (self as NeedsStation).incidents(at: self, key: key, session: session)
+    }
+    
+    ///  Next train arrival information for this Station
+    /// - Parameter key: WMATA API Key to use with this request
+    /// - Parameter session: Optional. URL Session to make this request with
+    /// - returns: A Combine Publisher for  `RailPredictions`
+    func nextTrainsPublisher(key: String, session: URLSession = URLSession.shared) -> AnyPublisher<RailPredictions, WMATAError> {
+        (self as NeedsStation).nextTrains(at: self, key: key, session: session)
+    }
+    
+    /// Location and address information for this Station
+    /// - Parameter key: WMATA API Key to use with this request
+    /// - Parameter session: Optional. URL Session to make this request with
+    /// - returns: A Combine Publisher for `StationInformation`
+    func informationPublisher(key: String, session: URLSession = URLSession.shared) -> AnyPublisher<StationInformation, WMATAError> {
+        (self as NeedsStation).information(for: self, key: key, session: session)
+    }
+    
+    /// Parking information for this Station
+    /// - Parameter key: WMATA API Key to use with this request
+    /// - Parameter session: Optional. URL Session to make this request with
+    /// - returns: A Combine Publisher for `StationsParking`
+    func parkingInformationPublisher(key: String, session: URLSession = URLSession.shared) -> AnyPublisher<StationsParking, WMATAError> {
+        (self as NeedsStation).parkingInformation(for: self, key: key, session: session)
+    }
+    
+    /// Returns a set of ordered stations and distances from this Station to another Station _on the same line_
+    /// - Parameter destinationStation: Destination station to pathfind to
+    /// - Parameter key: WMATA API Key to use with this request
+    /// - Parameter session: Optional. URL Session to make this request with
+    /// - returns: A Combine Publisher for `PathBetweenStations`
+    func pathPublisher(to destinationStation: Station, key: String, session: URLSession = URLSession.shared) -> AnyPublisher<PathBetweenStations, WMATAError> {
+        (self as NeedsStation).path(from: self, to: destinationStation, key: key, session: session)
+    }
+    
+    /// Opening and scheduled first and last trains for this Station
+    /// - Parameter key: WMATA API Key to use with this request
+    /// - Parameter session: Optional. URL Session to make this request with
+    /// - returns: A Combine Publisher for `StationTimings`
+    func timingsPublisher(key: String, session: URLSession = URLSession.shared) -> AnyPublisher<StationTimings, WMATAError> {
+        (self as NeedsStation).timings(for: self, key: key, session: session)
     }
 }
 
@@ -288,6 +371,9 @@ public extension Station {
 
         case .C10:
             return "Ronald Reagan Washington National Airport"
+            
+        case .C11:
+            return "Potomac Yard"
 
         case .C12:
             return "Braddock Road"
@@ -462,6 +548,24 @@ public extension Station {
 
         case .N06:
             return "Wiehle-Reston East"
+            
+        case .N07:
+            return "Reston Town Center"
+            
+        case .N10:
+            return "Herndon"
+            
+        case .N11:
+            return "Innovation Center"
+            
+        case .N12:
+            return "Dulles International Airport"
+            
+        case .N14:
+            return "Loudoun Gateway"
+        
+        case .N15:
+            return "Ashburn"
         }
     }
 
@@ -483,7 +587,7 @@ public extension Station {
         case .C06, .J02, .J03:
             return [.BL]
 
-        case .C07, .C08, .C09, .C10, .C12, .C13:
+        case .C07, .C08, .C09, .C10, .C11, .C12, .C13:
             return [.BL, .YL]
 
         case .C14, .C15:
@@ -507,8 +611,18 @@ public extension Station {
         case .K01, .K02, .K03, .K04, .K05:
             return [.OR, .SV]
 
-        case .N01, .N02, .N03, .N04, .N06:
+        case .N01, .N02, .N03, .N04, .N06, .N07, .N10, .N11, .N12, .N14, .N15:
             return [.SV]
+        }
+    }
+    
+    /// Indicates if a station is open to the public. `false` if a station is part of the Potomac Yard or Silver Line Phase 2 expansions. Otherwise `true`.
+    var open: Bool {
+        switch self {
+        case .N07, .N10, .N11, .N12, .N14, .N15, .C11:
+            return false
+        default:
+            return true
         }
     }
 

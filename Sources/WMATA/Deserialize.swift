@@ -27,7 +27,7 @@ extension Deserializer {
                 return .failure(try JSONDecoder().decode(WMATAError.self, from: data))
 
             } catch {
-                return .failure(originalError.toWMATAError())
+                return .failure(originalError.wmataError)
             }
         }
     }
@@ -41,7 +41,7 @@ extension GTFSDeserializer {
             return .success(try TransitRealtime_FeedMessage(serializedData: data))
 
         } catch {
-            return .failure(error.toWMATAError())
+            return .failure(error.wmataError)
         }
     }
 }

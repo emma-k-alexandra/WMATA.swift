@@ -58,12 +58,7 @@ public struct BusPrediction: Codable {
         directionNumber = try container.decode(String.self, forKey: .directionNumber)
         directionText = try container.decode(String.self, forKey: .directionText)
         minutes = try container.decode(Int.self, forKey: .minutes)
-
-        guard let route = Route(rawValue: try container.decode(String.self, forKey: .route)) else {
-            throw WMATAError(statusCode: 0, message: "Route provided by API was not valid")
-        }
-
-        self.route = route
+        route = Route(id: try container.decode(String.self, forKey: .route))
 
         tripId = try container.decode(String.self, forKey: .tripId)
         vehicleId = try container.decode(String.self, forKey: .vehicleId)
@@ -163,12 +158,7 @@ public struct BusPosition: Codable {
         directionText = try container.decode(String.self, forKey: .directionText)
         latitude = try container.decode(Double.self, forKey: .latitude)
         longitude = try container.decode(Double.self, forKey: .longitude)
-
-        guard let route = Route(rawValue: try container.decode(String.self, forKey: .route)) else {
-            throw WMATAError(statusCode: 0, message: "Route provided by API was not valid")
-        }
-
-        self.route = route
+        route = Route(id: try container.decode(String.self, forKey: .route))
 
         tripEndTime = try (try container.decode(String.self, forKey: .tripEndTime)).toWMATADate()
         tripHeadsign = try container.decode(String.self, forKey: .tripHeadsign)
@@ -313,13 +303,7 @@ public struct StopResponse: Codable {
 
         let routes = try container.decode([String].self, forKey: .routes)
 
-        self.routes = try routes.map { (routeString) -> Route in
-            guard let route = Route(rawValue: routeString) else {
-                throw WMATAError(statusCode: 0, message: "Route provided by API was not valid")
-            }
-
-            return route
-        }
+        self.routes = routes.map(Route.init(id:))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -369,13 +353,7 @@ public struct RouteResponse: Codable {
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
-        let routeCode = try container.decode(String.self, forKey: .route)
-
-        guard let route = Route(rawValue: routeCode) else {
-            throw WMATAError(statusCode: 0, message: "Route \(routeCode) provided by API was not valid")
-        }
-
-        self.route = route
+        route = Route(id: try container.decode(String.self, forKey: .route))
         name = try container.decode(String.self, forKey: .name)
         lineDescription = try container.decode(String.self, forKey: .lineDescription)
     }
@@ -448,11 +426,7 @@ public struct BusArrival: Codable {
         startTime = try (try container.decode(String.self, forKey: .startTime)).toWMATADate()
         endTime = try (try container.decode(String.self, forKey: .endTime)).toWMATADate()
 
-        guard let route = Route(rawValue: try container.decode(String.self, forKey: .route)) else {
-            throw WMATAError(statusCode: 0, message: "Route provided by API was not valid")
-        }
-
-        self.route = route
+        route = Route(id: try container.decode(String.self, forKey: .route))
         tripDirectionText = try container.decode(String.self, forKey: .tripDirectionText)
         tripHeadsign = try container.decode(String.self, forKey: .tripHeadsign)
         tripId = try container.decode(String.self, forKey: .tripId)
@@ -519,13 +493,7 @@ public struct StopScheduleResponse: Codable {
 
         let routes = try container.decode([String].self, forKey: .routes)
 
-        self.routes = try routes.map { (routeString) -> Route in
-            guard let route = Route(rawValue: routeString) else {
-                throw WMATAError(statusCode: 0, message: "Route provided by API was not valid")
-            }
-
-            return route
-        }
+        self.routes = routes.map(Route.init(id:))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -602,13 +570,7 @@ public struct BusIncident: Codable {
 
         let routes = try container.decode([String].self, forKey: .routesAffected)
 
-        routesAffected = try routes.map { (routeString) -> Route in
-            guard let route = Route(rawValue: routeString) else {
-                throw WMATAError(statusCode: 0, message: "Route provided by API was not valid")
-            }
-
-            return route
-        }
+        routesAffected = routes.map(Route.init(id:))
     }
 }
 
@@ -678,13 +640,7 @@ public struct RouteInfo: Codable {
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
-        let routeCode = try container.decode(String.self, forKey: .route)
-
-        guard let route = Route(rawValue: routeCode) else {
-            throw WMATAError(statusCode: 0, message: "Route \(routeCode) provided by API was not valid")
-        }
-
-        self.route = route
+        route = Route(id: try container.decode(String.self, forKey: .route))
         directionNumber = try container.decode(String.self, forKey: .directionNumber)
         tripDirectionText = try container.decode(String.self, forKey: .tripDirectionText)
         tripHeadsign = try container.decode(String.self, forKey: .tripHeadsign)

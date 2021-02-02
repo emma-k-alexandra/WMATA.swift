@@ -19,13 +19,13 @@ extension URL {
 }
 
 extension URLRequest {
-    init(url: String, queryItems: [(String, String)], apiKey: String) {
+    init(url: String, key: String, queryItems: [(String, String)] = []) {
         var urlComponents = URLComponents(string: url)!
 
         urlComponents.queryItems = queryItems.compactMap { URLQueryItem(name: $0, value: $1) }
 
         var request = URLRequest(url: urlComponents.url!)
-        request.setValue(apiKey, forHTTPHeaderField: "api_key")
+        request.setValue(key, forHTTPHeaderField: "api_key")
 
         self = request
     }
