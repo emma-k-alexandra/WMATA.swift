@@ -12,7 +12,7 @@ import GTFS
 /// MetroRail related methods
 public struct MetroRail: Fetcher {
     public let key: String
-    public private(set) var delegate: WMATADelegate? {
+    public var delegate: WMATADelegate? {
         didSet {
             if let delegate = self.delegate {
                 urlSession = generateURLSession(with: delegate, sharedContainerIdentifier: sharedContainerIdentifier)
