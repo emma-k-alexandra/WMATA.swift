@@ -1,7 +1,7 @@
 # Using WMATA.swift
 
 ## Introduction
-WMATA.swift provides a pure Swift interface to the [Washington Metropolitan Area Transit Authority API](https://developer.wmata.com) and some supplemental data about MetroRail Stations and Lines.
+WMATA.swift provides a pure Swift interface to the [Washington Metropolitan Area Transit Authority API][wmata] and some supplemental data about MetroRail Stations and Lines.
 
 ## Getting your API key
 To access the WMATA API, you'll need to get an API by [signing up via WMATA][wmata-signup].
@@ -61,6 +61,7 @@ You can make background requests using a delegate on `MetroRail` or `MetroBus`. 
 ### Specifying Stations, Lines, Stops and Routes
 Rather than names, WMATA uses codes to identify stations, lines, stops and routes. MetroRail stations and lines are fairly static and thus are defined as enums within WMATA.swift. MetroBus stops and routes are far more numerous and fluid and thus are defined as structs that can be represented by String literals, as in the above Combine example.
 
+[wmata]: https://developer.wmata.com
 [metro-rail-docs]: https://github.com/emma-k-alexandra/WMATA.swift/blob/master/Documentation/MetroRail.md
 [station-docs]: https://github.com/emma-k-alexandra/WMATA.swift/blob/master/Documentation/Station.md
 [line-docs]: https://github.com/emma-k-alexandra/WMATA.swift/blob/master/Documentation/Line.md

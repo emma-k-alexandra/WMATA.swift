@@ -15,6 +15,9 @@ WMATA.swift is a Swift interface to the [Washington Metropolitan Area Transit Au
 - Advanced Usage
   - [Combine][combine-docs]
   - [Background Requests][background-docs]
+- Miscellaneous
+  - [`RadiusAtCoordinates`][radius-at-coordinates]
+  - [WMATADate][wmata-date]
 - [Dependencies](#dependencies)
 - [Testing](#testing)
 - [Contact](#contact)
@@ -70,3 +73,5 @@ WMATA.swift is released under the MIT license. [See LICENSE](https://github.com/
 [route-docs]: https://github.com/emma-k-alexandra/WMATA.swift/blob/master/Documentation/Route.md
 [combine-docs]: https://github.com/emma-k-alexandra/WMATA.swift/blob/master/Documentation/Combine.md
 [background-docs]: https://github.com/emma-k-alexandra/WMATA.swift/blob/master/Documentation/Background.md
+[radius-at-coordinates]: https://github.com/emma-k-alexandra/WMATA.swift/blob/master/Documentation/Miscellaneous.md#RadiusAtCoordinates
+[wmata-date]: https://github.com/emma-k-alexandra/WMATA.swift/blob/master/Documentation/Miscellaneous.md#WMATADate

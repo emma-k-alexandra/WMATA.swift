@@ -262,7 +262,59 @@ MetroRail(key: apiKey).timings(for: .A01) { result in
 }
 ```
 
+### `alerts`
+
+[Google Documentation][alerts] 
+GTFS RT 2.0 alerts feed for MetroRail
+
+```swift
+MetroRail(key: apiKey).alerts() { result in
+    switch result {
+    case .success(let alerts):
+        print(alerts)
+
+    case .failure(let error):
+        print(error)
+    }
+}  
+```
+
+### `tripUpdates`
+
+[Google Documentation][trip-updates] 
+GTFS RT 2.0 trip updates feed for MetroRail
+
+```swift
+MetroRail(key: apiKey).tripUpdates() { result in
+    switch result {
+    case .success(let tripUpdates):
+        print(alerts)
+
+    case .failure(let error):
+        print(error)
+    }
+}  
+```
+
+### `vehiclePositions`
+
+[Google Documentation][vehicle-positions] 
+GTFS RT 2.0 trip updates feed for MetroRail
+
+```swift
+MetroRail(key: apiKey).vehiclePositions() { result in
+    switch result {
+    case .success(let vehiclePositions):
+        print(vehiclePositions)
+
+    case .failure(let error):
+        print(error)
+    }
+}  
+```
+
 ## Delegate methods
+
 These methods are for use with a `WMATADelegate`. For information on creating your own implementation of the `WMATADelegate` protocol, check the [Background Requests][background-docs] documentation.
 
 ### `lines`
@@ -400,6 +452,33 @@ Opening times and scheduled first and last trains for this station
 
 ```swift
 MetroRail(key: apiKey, delegate: SomeDelegate()).timings(for: .A01)
+```
+
+### `alerts`
+
+[Google Documentation][alerts] 
+GTFS RT 2.0 alerts feed for MetroRail
+
+```swift
+MetroRail(key: apiKey, delegate: SomeDelegate()).alerts()
+```
+
+### `tripUpdates`
+
+[Google Documentation][trip-updates] 
+GTFS RT 2.0 trip updates feed for MetroRail
+
+```swift
+MetroRail(key: apiKey, delegate: SomeDelegate()).tripUpdates() 
+```
+
+### `vehiclePositions`
+
+[Google Documentation][vehicle-positions] 
+GTFS RT 2.0 trip updates feed for RAILBus
+
+```swift
+MetroRail(key: apiKey, delegate: SomeDelegate()).vehiclePositions()
 ```
 
 ## Combine Publisher methods
@@ -752,6 +831,75 @@ let cancellable = MetroRail(key: apiKey)
     )
 ```
 
+### `alertsPublisher`
+
+[Google Documentation][alerts] 
+GTFS RT 2.0 alerts feed for MetroRail
+
+```swift
+let cancellable = MetroRail(key: apiKey)
+    .alertsPublisher()
+    .sink(
+        receiveCompletion: { completion in
+            switch completion {
+            case .finished:
+                print("Finished")
+            case let .failure(failure):
+                print(failure)
+            }
+        },
+        receiveValue: { response in
+            print(response)
+        }
+    )
+```
+
+### `tripUpdatesPublisher`
+
+[Google Documentation][trip-updates] 
+GTFS RT 2.0 trip updates feed for MetroRail
+
+```swift
+let cancellable = MetroRail(key: apiKey)
+    .tripUpdatesPublisher()
+    .sink(
+        receiveCompletion: { completion in
+            switch completion {
+            case .finished:
+                print("Finished")
+            case let .failure(failure):
+                print(failure)
+            }
+        },
+        receiveValue: { response in
+            print(response)
+        }
+    )
+```
+
+### `vehiclePositionsPublisher`
+
+[Google Documentation][vehicle-positions] 
+GTFS RT 2.0 trip updates feed for MetroRail
+
+```swift
+let cancellable = MetroRail(key: apiKey)
+    .vehiclePositionsPublisher() 
+    .sink(
+        receiveCompletion: { completion in
+            switch completion {
+            case .finished:
+                print("Finished")
+            case let .failure(failure):
+                print(failure)
+            }
+        },
+        receiveValue: { response in
+            print(response)
+        }
+    )
+```
+
 [background-docs]: https://github.com/emma-k-alexandra/WMATA.swift/blob/master/Documentation/Background.md
 [combine-docs]: https://github.com/emma-k-alexandra/WMATA.swift/blob/master/Documentation/Combine.md
 [publisher]: https://developer.apple.com/documentation/combine/publisher
@@ -770,3 +918,6 @@ let cancellable = MetroRail(key: apiKey)
 [path]: https://developer.wmata.com/docs/services/5476364f031f590f38092507/operations/5476364f031f5909e4fe330e
 [timings]: https://developer.wmata.com/docs/services/5476364f031f590f38092507/operations/5476364f031f5909e4fe3312
 [train-positions-faq]: https://developer.wmata.com/TrainPositionsFAQ
+[alerts]: https://developers.google.com/transit/gtfs-realtime/guides/service-alerts
+[trip-updates]: https://developers.google.com/transit/gtfs-realtime/guides/trip-updates
+[vehicle-positions]: https://developers.google.com/transit/gtfs-realtime/guides/vehicle-positions
