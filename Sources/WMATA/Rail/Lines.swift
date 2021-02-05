@@ -68,7 +68,7 @@ public extension Line {
             return "Yellow Rush Plus"
         }
     }
-    
+
     var current: Bool {
         switch self {
         case .RD, .BL, .YL, .OR, .GR, .SV:

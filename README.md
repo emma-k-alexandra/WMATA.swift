@@ -1,6 +1,6 @@
 # WMATA.swift
 
-WMATA.swift is a Swift interface to the [Washington Metropolitan Area Transit Authority API](https://developer.wmata.com).
+WMATA.swift is a Swift interface to the [Washington Metropolitan Area Transit Authority API][wmata].
 
 ## Contents
 
@@ -18,6 +18,7 @@ WMATA.swift is a Swift interface to the [Washington Metropolitan Area Transit Au
 - Miscellaneous
   - [`RadiusAtCoordinates`][radius-at-coordinates]
   - [WMATADate][wmata-date]
+- [Migration Guides](#migration-guides)
 - [Dependencies](#dependencies)
 - [Testing](#testing)
 - [Contact](#contact)
@@ -38,9 +39,14 @@ dependencies: [
 ]
 ```
 
+## Migration Guides
+
+- [v9 Migration Guide][v9-migration-guide]
+
 ## Dependencies
 
-- [swift-protobuf](https://github.com/apple/swift-protobuf), for GTFS-RT feeds.
+- [GTFS][gtfs]
+- [swift-protobuf][swift-protobuf], for GTFS-RT feeds.
 
 ## Testing
 
@@ -55,7 +61,7 @@ Feel free to email questions and comments to [emma@emma.sh](mailto:emma@emma.sh)
 Todo:
 
 - [ ] Last Train times (API doesn't provide full information here)
-- [ ] Documentation of response structs a la [wmata](https://github.com/emma-k-alexandra/wmata)
+- [ ] Documentation of response structs a la [wmata][wmata-rust]
 - [ ] Figure out how to serialize tests
 - [ ] Automated builds
 - [ ] Possible support for CocoaPods/Carthage?
@@ -75,3 +81,8 @@ WMATA.swift is released under the MIT license. [See LICENSE](https://github.com/
 [background-docs]: https://github.com/emma-k-alexandra/WMATA.swift/blob/master/Documentation/Background.md
 [radius-at-coordinates]: https://github.com/emma-k-alexandra/WMATA.swift/blob/master/Documentation/Miscellaneous.md#RadiusAtCoordinates
 [wmata-date]: https://github.com/emma-k-alexandra/WMATA.swift/blob/master/Documentation/Miscellaneous.md#WMATADate
+[v9-migration-guide]: https://github.com/emma-k-alexandra/WMATA.swift/blob/master/Documentation/v9%20Migration%20Guide.md
+[gtfs]: https://github.com/emma-k-alexandra/GTFS
+[swift-protobuf]: https://github.com/apple/swift-protobuf
+[wmata]: https://developer.wmata.com
+[wmata-rust]: https://github.com/emma-k-alexandra/wmata
