@@ -17,7 +17,7 @@ WMATA.swift is a Swift interface to the [Washington Metropolitan Area Transit Au
   - [Background Requests][background-docs]
 - Miscellaneous
   - [`RadiusAtCoordinates`][radius-at-coordinates]
-  - [WMATADate][wmata-date]
+  - [`WMATADate`][wmata-date]
 - [Migration Guides](#migration-guides)
 - [Dependencies](#dependencies)
 - [Testing](#testing)
