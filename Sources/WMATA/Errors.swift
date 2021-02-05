@@ -11,7 +11,7 @@ public struct WMATAError: Codable, Error {
 }
 
 extension Error {
-    func toWMATAError() -> WMATAError {
-        return WMATAError(statusCode: 0, message: localizedDescription)
+    var wmataError: WMATAError {
+        WMATAError(statusCode: 0, message: localizedDescription)
     }
 }

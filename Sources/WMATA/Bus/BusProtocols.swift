@@ -5,102 +5,103 @@
 //  Created by Emma K Alexandra on 10/10/19.
 //
 
+import Combine
 import Foundation
 
 protocol NeedsRoute: Fetcher {}
 
 extension NeedsRoute {
-    func positions(on routeId: Route?, at radiusAtCoordinates: RadiusAtCoordinates?, with apiKey: String, and session: URLSession) {
+    func positions(on route: Route?, at radiusAtCoordinates: RadiusAtCoordinates?, key: String, session: URLSession) {
         var queryItems = [(String, String)]()
 
-        if let routeId = routeId {
-            queryItems.append(("RouteID", routeId.rawValue))
+        if let route = route {
+            queryItems.append(("RouteID", route.id))
         }
 
         if let radiusAtCoordinates = radiusAtCoordinates {
-            queryItems.append(contentsOf: radiusAtCoordinates.toQueryItems())
+            queryItems.append(contentsOf: radiusAtCoordinates.queryItems)
         }
 
         request(
-            with: URLRequest(url: BusURL.positions.rawValue, queryItems: queryItems, apiKey: apiKey),
-            and: session
+            request: URLRequest(url: BusURL.positions.rawValue, key: key, queryItems: queryItems),
+            session: session
         )
     }
 
-    func positions(on routeId: Route?, at radiusAtCoordinates: RadiusAtCoordinates?, withApiKey apiKey: String, andSession session: URLSession, completion: @escaping (Result<BusPositions, WMATAError>) -> Void) {
+    func positions(on route: Route?, at radiusAtCoordinates: RadiusAtCoordinates?, key: String, session: URLSession, completion: @escaping (Result<BusPositions, WMATAError>) -> Void) {
         var queryItems = [(String, String)]()
 
-        if let routeId = routeId {
-            queryItems.append(("RouteID", routeId.rawValue))
+        if let route = route {
+            queryItems.append(("RouteID", route.id))
         }
 
         if let radiusAtCoordinates = radiusAtCoordinates {
-            queryItems.append(contentsOf: radiusAtCoordinates.toQueryItems())
+            queryItems.append(contentsOf: radiusAtCoordinates.queryItems)
         }
 
         fetch(
-            with: URLRequest(url: BusURL.positions.rawValue, queryItems: queryItems, apiKey: apiKey),
-            andSession: session,
+            request: URLRequest(url: BusURL.positions.rawValue, key: key, queryItems: queryItems),
+            session: session,
             completion: completion
         )
     }
 
-    func incidents(on route: Route?, with apiKey: String, and session: URLSession) {
+    func incidents(on route: Route?, key: String, session: URLSession) {
         var queryItems = [(String, String)]()
 
         if let route = route {
-            queryItems.append(("Route", route.rawValue))
+            queryItems.append(("Route", route.id))
         }
 
         request(
-            with: URLRequest(url: BusURL.incidents.rawValue, queryItems: queryItems, apiKey: apiKey),
-            and: session
+            request: URLRequest(url: BusURL.incidents.rawValue, key: key, queryItems: queryItems),
+            session: session
         )
     }
 
-    func incidents(on route: Route?, withApiKey apiKey: String, andSession session: URLSession, completion: @escaping (Result<BusIncidents, WMATAError>) -> Void) {
+    func incidents(on route: Route?, key: String, session: URLSession, completion: @escaping (Result<BusIncidents, WMATAError>) -> Void) {
         var queryItems = [(String, String)]()
 
         if let route = route {
-            queryItems.append(("Route", route.rawValue))
+            queryItems.append(("Route", route.id))
         }
 
         fetch(
-            with: URLRequest(url: BusURL.incidents.rawValue, queryItems: queryItems, apiKey: apiKey),
-            andSession: session,
+            request: URLRequest(url: BusURL.incidents.rawValue, key: key, queryItems: queryItems),
+            session: session,
             completion: completion
         )
     }
 
-    func pathDetails(for route: Route, on date: WMATADate? = nil, with apiKey: String, and session: URLSession) {
-        var queryItems = [("RouteID", route.rawValue)]
+    func pathDetails(for route: Route, on date: WMATADate? = nil, key: String, session: URLSession) {
+        var queryItems = [("RouteID", route.id)]
 
         if let date = date {
             queryItems.append(("Date", date.description))
         }
 
         request(
-            with: URLRequest(url: BusURL.pathDetails.rawValue, queryItems: queryItems, apiKey: apiKey),
-            and: session
+            request: URLRequest(url: BusURL.pathDetails.rawValue, key: key, queryItems: queryItems),
+            session: session
         )
     }
 
-    func pathDetails(for route: Route, on date: WMATADate? = nil, withApiKey apiKey: String, andSession session: URLSession, completion: @escaping (Result<PathDetails, WMATAError>) -> Void) {
-        var queryItems = [("RouteID", route.rawValue)]
+    func pathDetails(for route: Route, on date: WMATADate? = nil, key: String, session: URLSession, completion: @escaping (Result<PathDetails, WMATAError>) -> Void) {
+        var queryItems = [("RouteID", route.id)]
 
         if let date = date {
             queryItems.append(("Date", date.description))
         }
 
         fetch(
-            with: URLRequest(url: BusURL.pathDetails.rawValue, queryItems: queryItems, apiKey: apiKey),
-            andSession: session,
+            request: URLRequest(url: BusURL.pathDetails.rawValue, key: key, queryItems: queryItems),
+            session: session,
             completion: completion
         )
     }
 
-    func schedule(for route: Route, on date: WMATADate? = nil, includingVariations: Bool? = false, withApiKey apiKey: String, andSession session: URLSession) {
-        var queryItems = [("RouteID", route.rawValue)]
+    func schedule(for route: Route, on date: WMATADate? = nil, includingVariations: Bool? = false, key: String, session: URLSession) {
+        var queryItems = [("RouteID", route.id)]
 
         if let date = date {
             queryItems.append(("Date", date.description))
@@ -111,13 +112,13 @@ extension NeedsRoute {
         }
 
         request(
-            with: URLRequest(url: BusURL.routeSchedule.rawValue, queryItems: queryItems, apiKey: apiKey),
-            and: session
+            request: URLRequest(url: BusURL.routeSchedule.rawValue, key: key, queryItems: queryItems),
+            session: session
         )
     }
 
-    func schedule(for route: Route, on date: WMATADate? = nil, includingVariations: Bool? = false, withApiKey apiKey: String, andSession session: URLSession, completion: @escaping (Result<RouteSchedule, WMATAError>) -> Void) {
-        var queryItems = [("RouteID", route.rawValue)]
+    func schedule(for route: Route, on date: WMATADate? = nil, includingVariations: Bool? = false, key: String, session: URLSession, completion: @escaping (Result<RouteSchedule, WMATAError>) -> Void) {
+        var queryItems = [("RouteID", route.id)]
 
         if let date = date {
             queryItems.append(("Date", date.description))
@@ -128,9 +129,72 @@ extension NeedsRoute {
         }
 
         fetch(
-            with: URLRequest(url: BusURL.routeSchedule.rawValue, queryItems: queryItems, apiKey: apiKey),
-            andSession: session,
+            request: URLRequest(url: BusURL.routeSchedule.rawValue, key: key, queryItems: queryItems),
+            session: session,
             completion: completion
+        )
+    }
+}
+
+@available(macOS 10.15, iOS 13, watchOS 6, tvOS 13, *)
+extension NeedsRoute {
+    func positions(on route: Route?, at radiusAtCoordinates: RadiusAtCoordinates?, key: String, session: URLSession) -> AnyPublisher<BusPositions, WMATAError> {
+        var queryItems = [(String, String)]()
+
+        if let route = route {
+            queryItems.append(("RouteID", route.id))
+        }
+
+        if let radiusAtCoordinates = radiusAtCoordinates {
+            queryItems.append(contentsOf: radiusAtCoordinates.queryItems)
+        }
+
+        return publisher(
+            request: URLRequest(url: BusURL.positions.rawValue, key: key, queryItems: queryItems),
+            session: session
+        )
+    }
+
+    func incidents(on route: Route?, key: String, session: URLSession) -> AnyPublisher<BusIncidents, WMATAError> {
+        var queryItems = [(String, String)]()
+
+        if let route = route {
+            queryItems.append(("Route", route.id))
+        }
+
+        return publisher(
+            request: URLRequest(url: BusURL.incidents.rawValue, key: key, queryItems: queryItems),
+            session: session
+        )
+    }
+
+    func pathDetails(for route: Route, on date: WMATADate? = nil, key: String, session: URLSession) -> AnyPublisher<PathDetails, WMATAError> {
+        var queryItems = [("RouteID", route.id)]
+
+        if let date = date {
+            queryItems.append(("Date", date.description))
+        }
+
+        return publisher(
+            request: URLRequest(url: BusURL.pathDetails.rawValue, key: key, queryItems: queryItems),
+            session: session
+        )
+    }
+
+    func schedule(for route: Route, on date: WMATADate? = nil, includingVariations: Bool? = false, key: String, session: URLSession) -> AnyPublisher<RouteSchedule, WMATAError> {
+        var queryItems = [("RouteID", route.id)]
+
+        if let date = date {
+            queryItems.append(("Date", date.description))
+        }
+
+        if let includingVariations = includingVariations {
+            queryItems.append(("IncludingVariations", String(includingVariations)))
+        }
+
+        return publisher(
+            request: URLRequest(url: BusURL.routeSchedule.rawValue, key: key, queryItems: queryItems),
+            session: session
         )
     }
 }
@@ -138,22 +202,22 @@ extension NeedsRoute {
 protocol NeedsStop: Fetcher {}
 
 extension NeedsStop {
-    func nextBuses(for stop: Stop, with apiKey: String, and session: URLSession) {
+    func nextBuses(for stop: Stop, key: String, session: URLSession) {
         request(
-            with: URLRequest(url: BusURL.nextBuses.rawValue, queryItems: [("StopID", stop.id)], apiKey: apiKey),
-            and: session
+            request: URLRequest(url: BusURL.nextBuses.rawValue, key: key, queryItems: [("StopID", stop.id)]),
+            session: session
         )
     }
 
-    func nextBuses(for stop: Stop, withApiKey apiKey: String, andSession session: URLSession, completion: @escaping (Result<BusPredictions, WMATAError>) -> Void) {
+    func nextBuses(for stop: Stop, key: String, session: URLSession, completion: @escaping (Result<BusPredictions, WMATAError>) -> Void) {
         fetch(
-            with: URLRequest(url: BusURL.nextBuses.rawValue, queryItems: [("StopID", stop.id)], apiKey: apiKey),
-            andSession: session,
+            request: URLRequest(url: BusURL.nextBuses.rawValue, key: key, queryItems: [("StopID", stop.id)]),
+            session: session,
             completion: completion
         )
     }
 
-    func schedule(for stop: Stop, at date: WMATADate? = nil, with apiKey: String, and session: URLSession) {
+    func schedule(for stop: Stop, at date: WMATADate? = nil, key: String, session: URLSession) {
         var queryItems = [("StopID", stop.id)]
 
         if let date = date {
@@ -161,12 +225,12 @@ extension NeedsStop {
         }
 
         request(
-            with: URLRequest(url: BusURL.stopSchedule.rawValue, queryItems: queryItems, apiKey: apiKey),
-            and: session
+            request: URLRequest(url: BusURL.stopSchedule.rawValue, key: key, queryItems: queryItems),
+            session: session
         )
     }
 
-    func schedule(for stop: Stop, at date: WMATADate? = nil, withApiKey apiKey: String, andSession session: URLSession, completion: @escaping (Result<StopSchedule, WMATAError>) -> Void) {
+    func schedule(for stop: Stop, at date: WMATADate? = nil, key: String, session: URLSession, completion: @escaping (Result<StopSchedule, WMATAError>) -> Void) {
         var queryItems = [("StopID", stop.id)]
 
         if let date = date {
@@ -174,9 +238,32 @@ extension NeedsStop {
         }
 
         fetch(
-            with: URLRequest(url: BusURL.stopSchedule.rawValue, queryItems: queryItems, apiKey: apiKey),
-            andSession: session,
+            request: URLRequest(url: BusURL.stopSchedule.rawValue, key: key, queryItems: queryItems),
+            session: session,
             completion: completion
+        )
+    }
+}
+
+@available(macOS 10.15, iOS 13, watchOS 6, tvOS 13, *)
+extension NeedsStop {
+    func nextBuses(for stop: Stop, key: String, session: URLSession) -> AnyPublisher<BusPredictions, WMATAError> {
+        publisher(
+            request: URLRequest(url: BusURL.nextBuses.rawValue, key: key, queryItems: [("StopID", stop.id)]),
+            session: session
+        )
+    }
+
+    func schedule(for stop: Stop, at date: WMATADate? = nil, key: String, session: URLSession) -> AnyPublisher<StopSchedule, WMATAError> {
+        var queryItems = [("StopID", stop.id)]
+
+        if let date = date {
+            queryItems.append(("Date", date.description))
+        }
+
+        return publisher(
+            request: URLRequest(url: BusURL.stopSchedule.rawValue, key: key, queryItems: queryItems),
+            session: session
         )
     }
 }
