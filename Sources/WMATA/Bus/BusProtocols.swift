@@ -138,7 +138,7 @@ extension NeedsRoute {
 
 @available(macOS 10.15, iOS 13, watchOS 6, tvOS 13, *)
 extension NeedsRoute {
-    func positions(on route: Route?, at radiusAtCoordinates: RadiusAtCoordinates?, key: String, session: URLSession) -> AnyPublisher<BusPositions, WMATAError> {
+    func positionsPublisher(on route: Route?, at radiusAtCoordinates: RadiusAtCoordinates?, key: String, session: URLSession) -> AnyPublisher<BusPositions, WMATAError> {
         var queryItems = [(String, String)]()
 
         if let route = route {
@@ -155,7 +155,7 @@ extension NeedsRoute {
         )
     }
 
-    func incidents(on route: Route?, key: String, session: URLSession) -> AnyPublisher<BusIncidents, WMATAError> {
+    func incidentsPublisher(on route: Route?, key: String, session: URLSession) -> AnyPublisher<BusIncidents, WMATAError> {
         var queryItems = [(String, String)]()
 
         if let route = route {
@@ -168,7 +168,7 @@ extension NeedsRoute {
         )
     }
 
-    func pathDetails(for route: Route, on date: WMATADate? = nil, key: String, session: URLSession) -> AnyPublisher<PathDetails, WMATAError> {
+    func pathDetailsPublisher(for route: Route, on date: WMATADate? = nil, key: String, session: URLSession) -> AnyPublisher<PathDetails, WMATAError> {
         var queryItems = [("RouteID", route.id)]
 
         if let date = date {
@@ -181,7 +181,7 @@ extension NeedsRoute {
         )
     }
 
-    func schedule(for route: Route, on date: WMATADate? = nil, includingVariations: Bool? = false, key: String, session: URLSession) -> AnyPublisher<RouteSchedule, WMATAError> {
+    func schedulePublisher(for route: Route, on date: WMATADate? = nil, includingVariations: Bool? = false, key: String, session: URLSession) -> AnyPublisher<RouteSchedule, WMATAError> {
         var queryItems = [("RouteID", route.id)]
 
         if let date = date {
@@ -247,14 +247,14 @@ extension NeedsStop {
 
 @available(macOS 10.15, iOS 13, watchOS 6, tvOS 13, *)
 extension NeedsStop {
-    func nextBuses(for stop: Stop, key: String, session: URLSession) -> AnyPublisher<BusPredictions, WMATAError> {
+    func nextBusesPublisher(for stop: Stop, key: String, session: URLSession) -> AnyPublisher<BusPredictions, WMATAError> {
         publisher(
             request: URLRequest(url: BusURL.nextBuses.rawValue, key: key, queryItems: [("StopID", stop.id)]),
             session: session
         )
     }
 
-    func schedule(for stop: Stop, at date: WMATADate? = nil, key: String, session: URLSession) -> AnyPublisher<StopSchedule, WMATAError> {
+    func schedulePublisher(for stop: Stop, at date: WMATADate? = nil, key: String, session: URLSession) -> AnyPublisher<StopSchedule, WMATAError> {
         var queryItems = [("StopID", stop.id)]
 
         if let date = date {

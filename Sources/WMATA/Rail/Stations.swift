@@ -196,7 +196,7 @@ public extension Station {
     /// - Parameter session: Optional. URL Session to make this request with
     /// - returns: A Combine Publisher for `StationToStationInfos`
     func stationPublisher(to destinationStation: Station?, key: String, session: URLSession = URLSession.shared) -> AnyPublisher<StationToStationInfos, WMATAError> {
-        (self as NeedsStation).station(self, to: destinationStation, key: key, session: session)
+        (self as NeedsStation).stationPublisher(self, to: destinationStation, key: key, session: session)
     }
 
     /// Reported elevator and escalator incidents at this Station
@@ -204,7 +204,7 @@ public extension Station {
     /// - Parameter session: Optional. URL Session to make this request with
     /// - returns: A Combine Publisher for `ElevatorAndEscalatorIncidents`
     func elevatorAndEscalatorIncidentsPublisher(key: String, session: URLSession = URLSession.shared) -> AnyPublisher<ElevatorAndEscalatorIncidents, WMATAError> {
-        (self as NeedsStation).elevatorAndEscalatorIncidents(at: self, key: key, session: session)
+        (self as NeedsStation).elevatorAndEscalatorIncidentsPublisher(at: self, key: key, session: session)
     }
 
     /// Reported MetroRail incidents at this Station
@@ -212,7 +212,7 @@ public extension Station {
     /// - Parameter session: Optional. URL Session to make this request with
     /// - returns: A Combine Publisher for `RailIncidents`
     func incidentsPublisher(key: String, session: URLSession = URLSession.shared) -> AnyPublisher<RailIncidents, WMATAError> {
-        (self as NeedsStation).incidents(at: self, key: key, session: session)
+        (self as NeedsStation).incidentsPublisher(at: self, key: key, session: session)
     }
 
     ///  Next train arrival information for this Station
@@ -220,7 +220,7 @@ public extension Station {
     /// - Parameter session: Optional. URL Session to make this request with
     /// - returns: A Combine Publisher for  `RailPredictions`
     func nextTrainsPublisher(key: String, session: URLSession = URLSession.shared) -> AnyPublisher<RailPredictions, WMATAError> {
-        (self as NeedsStation).nextTrains(at: self, key: key, session: session)
+        (self as NeedsStation).nextTrainsPublisher(at: self, key: key, session: session)
     }
 
     /// Location and address information for this Station
@@ -228,7 +228,7 @@ public extension Station {
     /// - Parameter session: Optional. URL Session to make this request with
     /// - returns: A Combine Publisher for `StationInformation`
     func informationPublisher(key: String, session: URLSession = URLSession.shared) -> AnyPublisher<StationInformation, WMATAError> {
-        (self as NeedsStation).information(for: self, key: key, session: session)
+        (self as NeedsStation).informationPublisher(for: self, key: key, session: session)
     }
 
     /// Parking information for this Station
@@ -236,7 +236,7 @@ public extension Station {
     /// - Parameter session: Optional. URL Session to make this request with
     /// - returns: A Combine Publisher for `StationsParking`
     func parkingInformationPublisher(key: String, session: URLSession = URLSession.shared) -> AnyPublisher<StationsParking, WMATAError> {
-        (self as NeedsStation).parkingInformation(for: self, key: key, session: session)
+        (self as NeedsStation).parkingInformationPublisher(for: self, key: key, session: session)
     }
 
     /// Returns a set of ordered stations and distances from this Station to another Station _on the same line_
@@ -245,7 +245,7 @@ public extension Station {
     /// - Parameter session: Optional. URL Session to make this request with
     /// - returns: A Combine Publisher for `PathBetweenStations`
     func pathPublisher(to destinationStation: Station, key: String, session: URLSession = URLSession.shared) -> AnyPublisher<PathBetweenStations, WMATAError> {
-        (self as NeedsStation).path(from: self, to: destinationStation, key: key, session: session)
+        (self as NeedsStation).pathPublisher(from: self, to: destinationStation, key: key, session: session)
     }
 
     /// Opening and scheduled first and last trains for this Station
@@ -253,7 +253,7 @@ public extension Station {
     /// - Parameter session: Optional. URL Session to make this request with
     /// - returns: A Combine Publisher for `StationTimings`
     func timingsPublisher(key: String, session: URLSession = URLSession.shared) -> AnyPublisher<StationTimings, WMATAError> {
-        (self as NeedsStation).timings(for: self, key: key, session: session)
+        (self as NeedsStation).timingsPublisher(for: self, key: key, session: session)
     }
 }
 

@@ -1484,6 +1484,7 @@ final class BusTests: XCTestCase {
     }
 }
 
+@available(macOS 10.15, iOS 13, watchOS 6, tvOS 13, *)
 class CombineTests: XCTestCase {
     // Thanks to eskimo for this solution
     // https://developer.apple.com/forums/thread/121814?answerId=378975022#378975022
@@ -1498,6 +1499,7 @@ class CombineTests: XCTestCase {
     }
 }
 
+@available(macOS 10.15, iOS 13, watchOS 6, tvOS 13, *)
 final class RailCombineTests: CombineTests {
     func testLinesPublisher() {
         let exp = expectation(description: #function)
@@ -1914,6 +1916,7 @@ final class RailCombineTests: CombineTests {
     }
 }
 
+@available(macOS 10.15, iOS 13, watchOS 6, tvOS 13, *)
 final class BusCombineTests: CombineTests {
     func testPositionsPublisher() {
         let exp = expectation(description: #function)
