@@ -7,6 +7,7 @@
 
 import Foundation
 
+/// Container for [RailPrediction](x-source-tag://railPrediction)s
 public struct RailPredictions: Codable {
     public let trains: [RailPrediction]
 
@@ -19,6 +20,7 @@ public struct RailPredictions: Codable {
     }
 }
 
+/// - Tag: railPrediction
 public struct RailPrediction: Codable {
     public let car: String?
     public let destination: String

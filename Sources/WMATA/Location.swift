@@ -7,15 +7,30 @@
 
 import Foundation
 
+/// For defining a location and radius from that location
 public struct RadiusAtCoordinates {
+    /// Radius from location in meters
     public let radius: UInt
+    
+    /// Location in latlong
     public let coordinates: Coordinates
 
+    /// Create a new location and radius
+    ///
+    /// - Parameters:
+    ///     - radius: Radius in meters from the given coordinates
+    ///     - coordinates: Coordinates of location
     public init(radius: UInt, coordinates: Coordinates) {
         self.radius = radius
         self.coordinates = coordinates
     }
 
+    /// Create a new location and radius
+    ///
+    /// - Parameters:
+    ///     - radius: Radius in meters from the given coordinates
+    ///     - latitude: Latitude of location
+    ///     - longitude: Longitude of location
     public init(radius: UInt, latitude: Double, longitude: Double) {
         self.init(radius: radius, coordinates: Coordinates(latitude: latitude, longitude: longitude))
     }
@@ -25,10 +40,19 @@ public struct RadiusAtCoordinates {
     }
 }
 
+/// Location in latlong
 public struct Coordinates {
+    /// Latitude in degrees, positive
     public let latitude: Double
+    
+    /// Longitude in degrees, negative
     public let longitude: Double
 
+    /// Create a new location
+    ///
+    /// - Parameters:
+    ///     - latitude: Latitude of location in degrees, positive
+    ///     - longitude: Longitude of location in degrees, negative
     public init(latitude: Double, longitude: Double) {
         self.latitude = latitude
         self.longitude = longitude

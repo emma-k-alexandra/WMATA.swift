@@ -14,10 +14,12 @@ protocol Requester {}
 extension Requester {
     /// Default implementation for sending an HTTP request.
     ///
-    /// - parameter request: The URLRequest to send
-    /// - parameter session: Session to run URLRequest with
-    /// - parameter completion: Completion handler to receive output of request.
-    func request(request: URLRequest, session: URLSession, completion: @escaping (Result<Data, WMATAError>) -> Void) {
+    /// - Parameters:
+    ///     - request: The URLRequest to send
+    ///     - session: Session to run URLRequest with
+    ///     - completion: A completion handler
+    ///     - result: Data of response or [WMATAError](x-source-tag://WMATAError)
+    func request(request: URLRequest, session: URLSession, completion: @escaping (_ result: Result<Data, WMATAError>) -> Void) {
         session.dataTask(with: request) { data, _, error in
             guard let populatedData = data else {
                 if let populatedError = error {
@@ -58,8 +60,8 @@ extension Fetcher {
     }
 }
 
+@available(macOS 10.15, iOS 13, watchOS 6, tvOS 13, *)
 extension Fetcher {
-    @available(macOS 10.15, iOS 13, watchOS 6, tvOS 13, *)
     func publisher<T: Codable>(request: URLRequest, session: URLSession) -> AnyPublisher<T, WMATAError> {
         session
             .dataTaskPublisher(for: request)

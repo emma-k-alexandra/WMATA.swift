@@ -14,8 +14,10 @@ protocol Deserializer {}
 extension Deserializer {
     /// Default implemention for deserialize.
     ///
-    /// - parameter data: Data to deserialize
-    /// - returns: Result container the deserialized data, or an error
+    /// - Parameters:
+    ///     - data: Data to deserialize
+    ///
+    /// - Returns: Result container the deserialized data, or an error
     func deserialize<T: Codable>(_ data: Data) -> Result<T, WMATAError> {
         do {
             return .success(try JSONDecoder().decode(T.self, from: data))

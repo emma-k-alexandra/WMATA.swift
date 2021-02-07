@@ -359,6 +359,7 @@ public struct RouteResponse: Codable {
     }
 }
 
+/// - Tag: StopSchedule
 public struct StopSchedule: Codable {
     public let arrivals: [BusArrival]
     public let stop: StopScheduleResponse
