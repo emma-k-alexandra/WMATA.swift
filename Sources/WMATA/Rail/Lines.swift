@@ -38,7 +38,7 @@ public extension Line {
     /// - Parameter session: Optional. URL Session to make this request with
     /// - returns: A Combine Publisher for `Stations`
     func stationsPublisher(key: String, session: URLSession = URLSession.shared) -> AnyPublisher<Stations, WMATAError> {
-        (self as NeedsLine).stations(for: self, key: key, session: session)
+        (self as NeedsLine).stationsPublisher(for: self, key: key, session: session)
     }
 }
 

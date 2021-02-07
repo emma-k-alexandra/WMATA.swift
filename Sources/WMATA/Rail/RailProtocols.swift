@@ -216,7 +216,7 @@ extension NeedsStation {
 @available(macOS 10.15, iOS 13, watchOS 6, tvOS 13, *)
 extension NeedsStation {
     /// For requests using Combine
-    func station(_ station: Station?, to destinationStation: Station?, key: String, session: URLSession) -> AnyPublisher<StationToStationInfos, WMATAError> {
+    func stationPublisher(_ station: Station?, to destinationStation: Station?, key: String, session: URLSession) -> AnyPublisher<StationToStationInfos, WMATAError> {
         var queryItems = [(String, String)]()
 
         if let station = station {
@@ -233,7 +233,7 @@ extension NeedsStation {
         )
     }
 
-    func elevatorAndEscalatorIncidents(at station: Station?, key: String, session: URLSession) -> AnyPublisher<ElevatorAndEscalatorIncidents, WMATAError> {
+    func elevatorAndEscalatorIncidentsPublisher(at station: Station?, key: String, session: URLSession) -> AnyPublisher<ElevatorAndEscalatorIncidents, WMATAError> {
         var queryItems = [(String, String)]()
 
         if let station = station {
@@ -246,7 +246,7 @@ extension NeedsStation {
         )
     }
 
-    func incidents(at station: Station?, key: String, session: URLSession) -> AnyPublisher<RailIncidents, WMATAError> {
+    func incidentsPublisher(at station: Station?, key: String, session: URLSession) -> AnyPublisher<RailIncidents, WMATAError> {
         var queryItems = [(String, String)]()
 
         if let station = station {
@@ -259,14 +259,14 @@ extension NeedsStation {
         )
     }
 
-    func nextTrains(at station: Station, key: String, session: URLSession) -> AnyPublisher<RailPredictions, WMATAError> {
+    func nextTrainsPublisher(at station: Station, key: String, session: URLSession) -> AnyPublisher<RailPredictions, WMATAError> {
         publisher(
             request: URLRequest(url: "\(RailURL.nextTrains.rawValue)\(station)", key: key),
             session: session
         )
     }
 
-    func nextTrains(at stations: [Station], key: String, session: URLSession) -> AnyPublisher<RailPredictions, WMATAError> {
+    func nextTrainsPublisher(at stations: [Station], key: String, session: URLSession) -> AnyPublisher<RailPredictions, WMATAError> {
         var urlArray = [RailURL.nextTrains.rawValue]
         urlArray.append(contentsOf: stations.map { $0.rawValue })
 
@@ -276,21 +276,21 @@ extension NeedsStation {
         )
     }
 
-    func information(for station: Station, key: String, session: URLSession) -> AnyPublisher<StationInformation, WMATAError> {
+    func informationPublisher(for station: Station, key: String, session: URLSession) -> AnyPublisher<StationInformation, WMATAError> {
         publisher(
             request: URLRequest(url: RailURL.information.rawValue, key: key, queryItems: [("StationCode", station.rawValue)]),
             session: session
         )
     }
 
-    func parkingInformation(for station: Station, key: String, session: URLSession) -> AnyPublisher<StationsParking, WMATAError> {
+    func parkingInformationPublisher(for station: Station, key: String, session: URLSession) -> AnyPublisher<StationsParking, WMATAError> {
         publisher(
             request: URLRequest(url: RailURL.parkingInformation.rawValue, key: key, queryItems: [("StationCode", station.rawValue)]),
             session: session
         )
     }
 
-    func path(from startingStation: Station, to destinationStation: Station, key: String, session: URLSession) -> AnyPublisher<PathBetweenStations, WMATAError> {
+    func pathPublisher(from startingStation: Station, to destinationStation: Station, key: String, session: URLSession) -> AnyPublisher<PathBetweenStations, WMATAError> {
         publisher(
             request: URLRequest(
                 url: RailURL.path.rawValue,
@@ -304,7 +304,7 @@ extension NeedsStation {
         )
     }
 
-    func timings(for station: Station, key: String, session: URLSession) -> AnyPublisher<StationTimings, WMATAError> {
+    func timingsPublisher(for station: Station, key: String, session: URLSession) -> AnyPublisher<StationTimings, WMATAError> {
         publisher(
             request: URLRequest(url: RailURL.timings.rawValue, key: key, queryItems: [("StationCode", station.rawValue)]),
             session: session
@@ -345,7 +345,7 @@ extension NeedsLine {
 
 @available(macOS 10.15, iOS 13, watchOS 6, tvOS 13, *)
 extension NeedsLine {
-    func stations(for line: Line?, key: String, session: URLSession) -> AnyPublisher<Stations, WMATAError> {
+    func stationsPublisher(for line: Line?, key: String, session: URLSession) -> AnyPublisher<Stations, WMATAError> {
         var queryItems = [(String, String)]()
 
         if let line = line {

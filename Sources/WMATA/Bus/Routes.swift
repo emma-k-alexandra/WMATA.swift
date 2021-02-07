@@ -72,7 +72,7 @@ public extension Route {
     /// - Parameter session: Optional. URL Session to make this request with
     /// - returns: A Combine Publisher for `BusPositions`
     func positionsPublisher(at radiusAtCoordinates: RadiusAtCoordinates?, key: String, session: URLSession = URLSession.shared) -> AnyPublisher<BusPositions, WMATAError> {
-        (self as NeedsRoute).positions(on: self, at: radiusAtCoordinates, key: key, session: session)
+        (self as NeedsRoute).positionsPublisher(on: self, at: radiusAtCoordinates, key: key, session: session)
     }
 
     /// Bus incidents along this Route.
@@ -80,7 +80,7 @@ public extension Route {
     /// - Parameter session: Optional. URL Session to make this request with
     /// - returns: A Combine Publisher for `BusIncidents`
     func incidentsPublisher(key: String, session: URLSession = URLSession.shared) -> AnyPublisher<BusIncidents, WMATAError> {
-        (self as NeedsRoute).incidents(on: self, key: key, session: session)
+        (self as NeedsRoute).incidentsPublisher(on: self, key: key, session: session)
     }
 
     /// Ordered latlong points along this Route for a given date.
@@ -89,7 +89,7 @@ public extension Route {
     /// - Parameter session: Optional. URL Session to make this request with
     /// - returns: A Combine Publisher for `PathDetails`
     func pathDetailsPublisher(on date: WMATADate? = nil, key: String, session: URLSession = URLSession.shared) -> AnyPublisher<PathDetails, WMATAError> {
-        (self as NeedsRoute).pathDetails(for: self, on: date, key: key, session: session)
+        (self as NeedsRoute).pathDetailsPublisher(for: self, on: date, key: key, session: session)
     }
 
     /// Scheduled stops for this Route
@@ -99,7 +99,7 @@ public extension Route {
     /// - Parameter session: Optional. URL Session to make this request with
     /// - returns: A Combine Publisher for `RoutesResponse`
     func schedulePublisher(on date: WMATADate? = nil, includingVariations: Bool? = false, key: String, session: URLSession = URLSession.shared) -> AnyPublisher<RouteSchedule, WMATAError> {
-        (self as NeedsRoute).schedule(for: self, on: date, includingVariations: includingVariations, key: key, session: session)
+        (self as NeedsRoute).schedulePublisher(for: self, on: date, includingVariations: includingVariations, key: key, session: session)
     }
 }
 

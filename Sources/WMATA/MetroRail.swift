@@ -379,7 +379,7 @@ public extension MetroRail {
     /// - parameter destinationStation: Station to travel to
     /// - returns: A Combine Publisher for `StationToStationInfos`
     func stationPublisher(_ station: Station?, to destinationStation: Station?) -> AnyPublisher<StationToStationInfos, WMATAError> {
-        (self as NeedsStation).station(station, to: destinationStation, key: key, session: urlSession)
+        (self as NeedsStation).stationPublisher(station, to: destinationStation, key: key, session: urlSession)
     }
 
     /// Reported elevator and escalator incidents
@@ -387,7 +387,7 @@ public extension MetroRail {
     /// - parameter station: Which station to search for incidents at. Optional.
     /// - returns: A Combine Publisher for `ElevatorAndEscalatorIncidents`
     func elevatorAndEscalatorIncidentsPublisher(at station: Station?) -> AnyPublisher<ElevatorAndEscalatorIncidents, WMATAError> {
-        (self as NeedsStation).elevatorAndEscalatorIncidents(at: station, key: key, session: urlSession)
+        (self as NeedsStation).elevatorAndEscalatorIncidentsPublisher(at: station, key: key, session: urlSession)
     }
 
     /// Reported MetroRail incidents
@@ -395,7 +395,7 @@ public extension MetroRail {
     /// - parameter station: Station to search for incidents at. Optional.
     /// - returns: A Combine Publisher for `RailIncidents`
     func incidentsPublisher(at station: Station?) -> AnyPublisher<RailIncidents, WMATAError> {
-        (self as NeedsStation).incidents(at: station, key: key, session: urlSession)
+        (self as NeedsStation).incidentsPublisher(at: station, key: key, session: urlSession)
     }
 
     /// Next train arrival information for this station
@@ -403,7 +403,7 @@ public extension MetroRail {
     /// - parameter station: `Station` to search for trains at
     /// - returns: A Combine Publisher for  `RailPredictions`
     func nextTrainsPublisher(at station: Station) -> AnyPublisher<RailPredictions, WMATAError> {
-        (self as NeedsStation).nextTrains(at: station, key: key, session: urlSession)
+        (self as NeedsStation).nextTrainsPublisher(at: station, key: key, session: urlSession)
     }
 
     /// Next train arrival information for the given stations
@@ -411,7 +411,7 @@ public extension MetroRail {
     /// - parameter stations: `[Station]`s to look up next trains for
     /// - returns: A Combine Publisher for  `RailPredictions`
     func nextTrainsPublisher(at stations: [Station]) -> AnyPublisher<RailPredictions, WMATAError> {
-        (self as NeedsStation).nextTrains(at: stations, key: key, session: urlSession)
+        (self as NeedsStation).nextTrainsPublisher(at: stations, key: key, session: urlSession)
     }
 
     /// Location and address information for this station
@@ -419,7 +419,7 @@ public extension MetroRail {
     /// - parameter station: `StationCode` search for information for
     /// - returns: A Combine Publisher for `StationInformation`
     func informationPublisher(for station: Station) -> AnyPublisher<StationInformation, WMATAError> {
-        (self as NeedsStation).information(for: station, key: key, session: urlSession)
+        (self as NeedsStation).informationPublisher(for: station, key: key, session: urlSession)
     }
 
     /// Parking information for this station
@@ -427,7 +427,7 @@ public extension MetroRail {
     /// - parameter station: `StationCode` to search for parking information for
     /// - returns: A Combine Publisher for `StationsParking`
     func parkingInformationPublisher(for station: Station) -> AnyPublisher<StationsParking, WMATAError> {
-        (self as NeedsStation).parkingInformation(for: station, key: key, session: urlSession)
+        (self as NeedsStation).parkingInformationPublisher(for: station, key: key, session: urlSession)
     }
 
     /// Returns a set of ordered stations and distances between two stations _on the same line_
@@ -436,7 +436,7 @@ public extension MetroRail {
     /// - parameter destinationStation: Destination station to pathfind to
     /// - returns: A Combine Publisher for  `PathBetweenStations`
     func pathPublisher(from startingStation: Station, to destinationStation: Station) -> AnyPublisher<PathBetweenStations, WMATAError> {
-        (self as NeedsStation).path(from: startingStation, to: destinationStation, key: key, session: urlSession)
+        (self as NeedsStation).pathPublisher(from: startingStation, to: destinationStation, key: key, session: urlSession)
     }
 
     /// Opening and scheduled first and last trains for this station
@@ -444,7 +444,7 @@ public extension MetroRail {
     /// - parameter station: `StationCode` to search for timings for
     /// - returns: A Combine Publisher for  `StationTimings`
     func timingsPublisher(for station: Station) -> AnyPublisher<StationTimings, WMATAError> {
-        (self as NeedsStation).timings(for: station, key: key, session: urlSession)
+        (self as NeedsStation).timingsPublisher(for: station, key: key, session: urlSession)
     }
 }
 
@@ -475,7 +475,7 @@ public extension MetroRail {
     /// - parameter line: Line to receive stations along. Omit to receive all stations.
     /// - returns: A Combine Publisher for `Stations`
     func stationsPublisher(for line: Line?) -> AnyPublisher<Stations, WMATAError> {
-        (self as NeedsLine).stations(for: line, key: key, session: urlSession)
+        (self as NeedsLine).stationsPublisher(for: line, key: key, session: urlSession)
     }
 }
 

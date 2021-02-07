@@ -50,7 +50,7 @@ public extension Stop {
     /// - Parameter session: Optional. URL Session to make this request with
     /// - returns: A Combine Publisher for `BusPredictions`
     func nextBusesPublisher(key: String, session: URLSession = URLSession.shared) -> AnyPublisher<BusPredictions, WMATAError> {
-        (self as NeedsStop).nextBuses(for: self, key: key, session: session)
+        (self as NeedsStop).nextBusesPublisher(for: self, key: key, session: session)
     }
 
     /// Set of buses scheduled to arrive at this Stop at a given date.
@@ -59,7 +59,7 @@ public extension Stop {
     /// - Parameter session: Optional. URL Session to make this request with
     /// - returns: A Combine Publisher for `StopSchedule`
     func schedulePublisher(at date: WMATADate? = nil, key: String, session: URLSession = URLSession.shared) -> AnyPublisher<StopSchedule, WMATAError> {
-        (self as NeedsStop).schedule(for: self, at: date, key: key, session: session)
+        (self as NeedsStop).schedulePublisher(for: self, at: date, key: key, session: session)
     }
 }
 

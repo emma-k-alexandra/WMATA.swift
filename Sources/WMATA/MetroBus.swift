@@ -212,7 +212,7 @@ public extension MetroBus {
     /// - parameter radiusAtCoordinates: Radius at latitude and longitude to search at
     /// - returns: A Combine Publisher for`BusPositions`
     func positionsPublisher(on route: Route?, at radiusAtCoordinates: RadiusAtCoordinates?) -> AnyPublisher<BusPositions, WMATAError> {
-        (self as NeedsRoute).positions(on: route, at: radiusAtCoordinates, key: key, session: session)
+        (self as NeedsRoute).positionsPublisher(on: route, at: radiusAtCoordinates, key: key, session: session)
     }
 
     /// Bus incidents along a given route.
@@ -220,7 +220,7 @@ public extension MetroBus {
     /// - parameter route: Route to search for incidents along. Omit route to receive all incidents.
     /// - returns: A Combine Publisher for`BusIncidents`
     func incidentsPublisher(on route: Route?) -> AnyPublisher<BusIncidents, WMATAError> {
-        (self as NeedsRoute).incidents(on: route, key: key, session: session)
+        (self as NeedsRoute).incidentsPublisher(on: route, key: key, session: session)
     }
 
     /// Ordered latlong points along this Route for a given date. Omit date to get path information for today.
@@ -229,7 +229,7 @@ public extension MetroBus {
     /// - parameter date: `WMATADate`  for which to receive path information. Omit for today.
     /// - returns: A Combine Publisher for`PathDetails`
     func pathDetailsPublisher(for route: Route, on date: WMATADate? = nil) -> AnyPublisher<PathDetails, WMATAError> {
-        (self as NeedsRoute).pathDetails(for: route, on: date, key: key, session: session)
+        (self as NeedsRoute).pathDetailsPublisher(for: route, on: date, key: key, session: session)
     }
 
     /// Scheduled stops for this Route
@@ -239,7 +239,7 @@ public extension MetroBus {
     /// - parameter includingVariations: Whether to include route variations. Example: B30v1 and B30v2 for Route B30
     /// - returns: A Combine Publisher for`RouteSchedule`
     func routeSchedulePublisher(for route: Route, on date: WMATADate? = nil, includingVariations: Bool? = false) -> AnyPublisher<RouteSchedule, WMATAError> {
-        (self as NeedsRoute).schedule(for: route, on: date, includingVariations: includingVariations, key: key, session: session)
+        (self as NeedsRoute).schedulePublisher(for: route, on: date, includingVariations: includingVariations, key: key, session: session)
     }
 }
 
@@ -288,7 +288,7 @@ public extension MetroBus {
     /// - parameter stop: Stop to get next arrival times for
     /// - returns: A Combine Publisher for `BusPredictions`
     func nextBusesPublisher(for stop: Stop) -> AnyPublisher<BusPredictions, WMATAError> {
-        (self as NeedsStop).nextBuses(for: stop, key: key, session: session)
+        (self as NeedsStop).nextBusesPublisher(for: stop, key: key, session: session)
     }
 
     /// Set of buses scheduled to arrive at this Stop at a given date.
@@ -297,7 +297,7 @@ public extension MetroBus {
     /// - parameter date: `WMATADate` for which to receive schedule for. Omit for today.
     /// - returns: A Combine Publisher for `StopSchedule`
     func stopSchedulePublisher(for stop: Stop, at date: WMATADate? = nil) -> AnyPublisher<StopSchedule, WMATAError> {
-        (self as NeedsStop).schedule(for: stop, at: date, key: key, session: session)
+        (self as NeedsStop).schedulePublisher(for: stop, at: date, key: key, session: session)
     }
 }
 
