@@ -7,24 +7,49 @@
 
 import Foundation
 
+/// Response from the [Next Buses API](https://developer.wmata.com/docs/services/5476365e031f590f38092508/operations/5476365e031f5909e4fe331d)
+/// - Tag: BusPredictions
 public struct BusPredictions: Codable {
+    /// List of predictions
     public let predictions: [BusPrediction]
+    
+    /// The full name from the given stop
+    public let stopName: String
 
     enum CodingKeys: String, CodingKey {
         case predictions = "Predictions"
+        case stopName = "StopName"
     }
-
-    public init(predictions: [BusPrediction]) {
+    
+    /// Create a new response
+    ///
+    /// - Parameters:
+    ///     - predictions: A list of predictions
+    public init(predictions: [BusPrediction], stopName: String) {
         self.predictions = predictions
+        self.stopName = stopName
     }
 }
 
+/// Response from the [Next Buses API](https://developer.wmata.com/docs/services/5476365e031f590f38092508/operations/5476365e031f5909e4fe331d)
+/// - Tag: BusPrediction
 public struct BusPrediction: Codable {
+    /// Denotes a binary direction (0 or 1) of the bus. There is no specific mapping to direction, but a different value for the same route signifies that the buses are traveling in opposite directions. Use the DirectionText element to show the actual destination of the bus.
     public let directionNumber: String
+    
+    /// Customer-friendly description of direction and destination for a bus.
     public let directionText: String
+    
+    /// Minutes until bus arrival at this stop.
     public let minutes: Int
+    
+    /// Route ID of the bus. Base route name as shown on the bus. This can be used in other bus-related methods. Note that all variants will be shown as their base route names (i.e.: 10Av1 and 10Av2 will be shown as 10A).
     public let route: Route
+    
+    /// Trip identifier. This can be correlated with the data in our bus schedule information as well as bus positions.
     public let tripId: String
+    
+    /// Bus identifier. This can be correlated with results returned from bus positions.
     public let vehicleId: String
 
     enum CodingKeys: String, CodingKey {
@@ -36,6 +61,15 @@ public struct BusPrediction: Codable {
         case vehicleId = "VehicleID"
     }
 
+    /// Create a prediction
+    ///
+    /// - Parameters:
+    ///     - directionNumber: Direction of the bus
+    ///     - directionText: Customer friend description of direction and destination of bus
+    ///     - minutes: Time until arrival at this stop
+    ///     - route: Route ID of the bus
+    ///     - tripId: Trip ID of this bus
+    ///     - vehicleId: Unique vehicle identifier
     public init(
         directionNumber: String,
         directionText: String,
@@ -76,31 +110,65 @@ public struct BusPrediction: Codable {
     }
 }
 
+/// Response from the [Bus Position API](https://developer.wmata.com/docs/services/54763629281d83086473f231/operations/5476362a281d830c946a3d68)
+/// - Tag: BusPositions
 public struct BusPositions: Codable {
+    /// List of bus positions
     public let busPositions: [BusPosition]
 
     enum CodingKeys: String, CodingKey {
         case busPositions = "BusPositions"
     }
 
+    /// Create a bus position response
+    ///
+    /// - Parameters:
+    ///     - busPositions: List of bus positions
     public init(busPositions: [BusPosition]) {
         self.busPositions = busPositions
     }
 }
 
+/// Response from the [Bus Position API](https://developer.wmata.com/docs/services/54763629281d83086473f231/operations/5476362a281d830c946a3d68)
+/// - Tag: BusPosition
 public struct BusPosition: Codable {
+    /// Date and time (Eastern Standard Time) of last position update.
     public let dateTime: Date
+    
+    /// Deviation, in minutes, from schedule. Positive values indicate that the bus is running late while negative ones are for buses running ahead of schedule.
     public let deviation: Double
+    
+    /// Deprecated. Use the DirectionText for a customer-friendly description of direction.
     public let directionNumber: Int
+    
+    /// General direction of the trip, not the bus itself (e.g.: NORTH, SOUTH, EAST, WEST).
     public let directionText: String
+    
+    /// Latitude of bus.
     public let latitude: Double
+    
+    /// Longitude of bus.
     public let longitude: Double
+    
+    /// Base route name as shown on the bus. Note that the base route name could also refer to any variant, so a RouteID of 10A could refer to 10A, 10Av1, 10Av2, etc.
     public let route: Route
+    
+    /// Scheduled end date and time (Eastern Standard Time) of the bus's current trip.
     public let tripEndTime: Date
+    
+    /// Destination of the bus.
     public let tripHeadsign: String
+    
+    /// Unique trip ID. This can be correlated with the data returned from the schedule-related methods.
     public let tripId: String
+    
+    /// Scheduled start date and time (Eastern Standard Time) of the bus's current trip.
     public let tripStartTime: Date
+    
+    /// Unique identifier for the bus. This is usually visible on the bus itself.
     public let vehicleId: String
+    
+    /// Undocumented by WMATA
     public let blockNumber: String
 
     enum CodingKeys: String, CodingKey {
@@ -119,6 +187,22 @@ public struct BusPosition: Codable {
         case blockNumber = "BlockNumber"
     }
 
+    /// Create a bus position
+    ///
+    /// - Parameters:
+    ///     - dateTime: Time of last position update
+    ///     - deviation: Deviation in minutes from schedule
+    ///     - directionNumber: Deprecated. Use directionText
+    ///     - directionText: General direction of trip
+    ///     - latitude: Latitude of bus
+    ///     - longitude: Longitude of bus
+    ///     - route: Route ID of this bus
+    ///     - tripEndTime: Scheduled end of this trip
+    ///     - tripHeadsign: Destination of bus
+    ///     - tripId: Unique trip ID
+    ///     - tripStartTime: Schedule start time of this trip
+    ///     - vehicleId: Unique id for this vehicle
+    ///     - blockNumber: Undocumented by WMATA
     public init(
         dateTime: Date,
         deviation: Double,
@@ -186,10 +270,24 @@ public struct BusPosition: Codable {
     }
 }
 
+/// Response from the [Path Details API](https://developer.wmata.com/docs/services/54763629281d83086473f231/operations/5476362a281d830c946a3d69)
+/// - Tag: PathDetails
 public struct PathDetails: Codable {
+    
+    /// Bus route variant
     public let routeId: String
+    
+    /// Descriptive name for the route.
     public let name: String
+    
+    /// Structures describing path/stop information.
+    /// Most routes will return content in both Direction0 and Direction1 elements, though a few will return NULL for Direction0 or for Direction1.
+    /// 0 or 1 are binary properties. There is no specific mapping to direction, but a different value for the same route signifies that the route is in an opposite direction.
     public let directionZero: PathDirection
+    
+    /// Structures describing path/stop information.
+    /// Most routes will return content in both Direction0 and Direction1 elements, though a few will return NULL for Direction0 or for Direction1.
+    /// 0 or 1 are binary properties. There is no specific mapping to direction, but a different value for the same route signifies that the route is in an opposite direction.
     public let directionOne: PathDirection
 
     enum CodingKeys: String, CodingKey {
@@ -199,6 +297,13 @@ public struct PathDetails: Codable {
         case directionOne = "Direction1"
     }
 
+    /// Create path details
+    ///
+    /// - Parameters:
+    ///     - routeId: Bus route variant
+    ///     - name: Name of the route
+    ///     - directionZero: Path information
+    ///     - directionOne: Path information
     public init(
         routeId: String,
         name: String,
@@ -212,11 +317,23 @@ public struct PathDetails: Codable {
     }
 }
 
+/// Structures describing path/stop information. From the [Path Details API](https://developer.wmata.com/docs/services/54763629281d83086473f231/operations/5476362a281d830c946a3d69)
+/// - Tag: PathDirection
 public struct PathDirection: Codable {
+    
+    /// Descriptive text of where the bus is headed. This is similar, but not necessarily identical, to what is displayed on the bus.
     public let tripHeadsign: String
+    
+    /// General direction of the route variant (NORTH, SOUTH, EAST, WEST, LOOP, etc.).
     public let directionText: String
+    
+    /// Warning: Deprecated. Use the DirectionText element to denote the general direction of the route variant.
     public let directionNumber: String
+    
+    /// Array containing shape point information. See  [PathStop](x-source-tag://PathStop)
     public let shape: [PathStop]
+    
+    /// Array containing stop information. See [StopResponse](x-source-tag://StopResponse)
     public let stops: [StopResponse]
 
     enum CodingKeys: String, CodingKey {
@@ -227,6 +344,14 @@ public struct PathDirection: Codable {
         case stops = "Stops"
     }
 
+    /// Create a path direction
+    ///
+    /// - Parameters:
+    ///     - tripHeadsign: Description of where the bus is headed
+    ///     - directionText: General direction of route
+    ///     - directionNumber: Deprecated. Use directionText
+    ///     - shape: Shape point information
+    ///     - stops: Stop information
     public init(
         tripHeadsign: String,
         directionText: String,
@@ -242,9 +367,16 @@ public struct PathDirection: Codable {
     }
 }
 
+/// Shape point information. From the [Path Details API](https://developer.wmata.com/docs/services/54763629281d83086473f231/operations/5476362a281d830c946a3d69)
+/// - Tag: PathStop
 public struct PathStop: Codable {
+    /// Latitude of stop.
     public let latitude: Double
+    
+    /// Longitude of stop.
     public let longitude: Double
+    
+    /// Order of the point in the sequence of PathStop.
     public let sequenceNumber: Int
 
     enum CodingKeys: String, CodingKey {
@@ -253,6 +385,12 @@ public struct PathStop: Codable {
         case sequenceNumber = "SeqNum"
     }
 
+    /// Create a path stop
+    ///
+    /// - Parameters:
+    ///     - latitude: Latitude of stop
+    ///     - longitude: Longitude of stop
+    ///     - sequenceNumber: Index of this point
     public init(
         latitude: Double,
         longitude: Double,
@@ -264,11 +402,22 @@ public struct PathStop: Codable {
     }
 }
 
+/// Stop information. From the [Path Details API](https://developer.wmata.com/docs/services/54763629281d83086473f231/operations/5476362a281d830c946a3d69)
+/// - Tag: StopResponse
 public struct StopResponse: Codable {
+    /// 7-digit regional ID which can be used in various bus-related methods.
     public let stop: Stop
+    
+    /// Stop name. May be slightly different from what is spoken or displayed in the bus.
     public let name: String
+    
+    /// Latitude of stop.
     public let latitude: Double
+    
+    /// Longitude of stop.
     public let longitude: Double
+    
+    /// Array of route variants which provide service at this stop. Note that these are not date-specific; any route variant which stops at this stop on any day will be listed.
     public let routes: [Route]
 
     enum CodingKeys: String, CodingKey {
@@ -279,6 +428,14 @@ public struct StopResponse: Codable {
         case routes = "Routes"
     }
 
+    /// Create a Stop response
+    ///
+    /// - Parameters:
+    ///     - stop: Stop ID of the stop
+    ///     - name: Name of stop
+    ///     - latitude: latitude of stop
+    ///     - longitude: longitude of stop
+    ///     - routes: Routes that provide service to this stop
     public init(
         stop: Stop,
         name: String,
@@ -317,6 +474,8 @@ public struct StopResponse: Codable {
     }
 }
 
+
+/// - Tag: RoutesResponse
 public struct RoutesResponse: Codable {
     public let routes: [RouteResponse]
 
@@ -329,6 +488,7 @@ public struct RoutesResponse: Codable {
     }
 }
 
+/// - Tag: RouteResponse
 public struct RouteResponse: Codable {
     public let route: Route
     public let name: String
@@ -378,6 +538,7 @@ public struct StopSchedule: Codable {
     }
 }
 
+/// - Tag: BusArrival
 public struct BusArrival: Codable {
     public let scheduleTime: Date
     public let directionNumber: String
@@ -447,6 +608,7 @@ public struct BusArrival: Codable {
     }
 }
 
+/// - Tag: StopScheduleResponse
 public struct StopScheduleResponse: Codable {
     public let stop: Stop?
     public let name: String
@@ -508,6 +670,7 @@ public struct StopScheduleResponse: Codable {
     }
 }
 
+/// - Tag: StopsSearchResponse
 public struct StopsSearchResponse: Codable {
     public let stops: [StopScheduleResponse]
 
@@ -520,6 +683,7 @@ public struct StopsSearchResponse: Codable {
     }
 }
 
+/// - Tag: BusIncidents
 public struct BusIncidents: Codable {
     public let incidents: [BusIncident]
 
@@ -532,6 +696,7 @@ public struct BusIncidents: Codable {
     }
 }
 
+/// - Tag: BusIncident
 public struct BusIncident: Codable {
     public let dateUpdated: String
     public let description: String
@@ -575,6 +740,7 @@ public struct BusIncident: Codable {
     }
 }
 
+/// - Tag: RouteSchedule
 public struct RouteSchedule: Codable {
     public let name: String
     public let directionZero: [RouteInfo]
@@ -597,6 +763,7 @@ public struct RouteSchedule: Codable {
     }
 }
 
+/// - Tag: RouteInfo
 public struct RouteInfo: Codable {
     public let route: Route
     public let directionNumber: String
@@ -665,6 +832,7 @@ public struct RouteInfo: Codable {
     }
 }
 
+/// - Tag: StopInfo
 public struct StopInfo: Codable {
     public let stop: Stop
     public let stopName: String
