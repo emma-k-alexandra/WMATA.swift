@@ -122,67 +122,91 @@ extension Station: NeedsStation {}
 
 public extension Station {
     /// Distance, fare information, and estimated travel time between this and another station.
-    /// - Parameter destinationStation: Optional. Station to travel to
-    /// - Parameter key: WMATA API Key to use with this request
-    /// - Parameter session: Optional. URL Session to make this request with
-    /// - Parameter completion: completion that returns `StationToStationInfos`
-    func station(to destinationStation: Station?, key: String, session: URLSession = URLSession.shared, completion: @escaping (Result<StationToStationInfos, WMATAError>) -> Void) {
+    ///
+    /// - Parameters:
+    ///     - destinationStation: Optional. Station to travel to
+    ///     - key: WMATA API Key to use with this request
+    ///     - session: Optional. URL Session to make this request with
+    ///     - completion: A completion handler
+    ///     - result: [StationToStationInfos](x-source-tag://StationToStationInfos) if successful, otherwise [WMATAError](x-source-tag://WMATAError)
+    func station(to destinationStation: Station? = nil, key: String, session: URLSession = URLSession.shared, completion: @escaping (_ result: Result<StationToStationInfos, WMATAError>) -> Void) {
         (self as NeedsStation).station(self, to: destinationStation, key: key, session: session, completion: completion)
     }
 
     /// Reported elevator and escalator incidents at this Station
-    /// - Parameter key: WMATA API Key to use with this request
-    /// - Parameter session: Optional. URL Session to make this request with
-    /// - Parameter completion: completion handler that returns `ElevatorAndEscalatorIncidents`
-    func elevatorAndEscalatorIncidents(key: String, session: URLSession = URLSession.shared, completion: @escaping (Result<ElevatorAndEscalatorIncidents, WMATAError>) -> Void) {
+    ///
+    /// - Parameters:
+    ///     - key: WMATA API Key to use with this request
+    ///     - session: Optional. URL Session to make this request with
+    ///     - completion: A completion handler
+    ///     - result: [ElevatorAndEscalatorIncidents](x-source-tag://ElevatorAndEscalatorIncidents) if successful, otherwise [WMATAError](x-source-tag://WMATAError)
+    func elevatorAndEscalatorIncidents(key: String, session: URLSession = URLSession.shared, completion: @escaping (_ result: Result<ElevatorAndEscalatorIncidents, WMATAError>) -> Void) {
         (self as NeedsStation).elevatorAndEscalatorIncidents(at: self, key: key, session: session, completion: completion)
     }
 
     /// Reported MetroRail incidents at this Station
-    /// - Parameter key: WMATA API Key to use with this request
-    /// - Parameter session: Optional. URL Session to make this request with
-    /// - Parameter completion: completion handler that returns `RailIncidents`
-    func incidents(key: String, session: URLSession = URLSession.shared, completion: @escaping (Result<RailIncidents, WMATAError>) -> Void) {
+    ///
+    /// - Parameters:
+    ///     - key: WMATA API Key to use with this request
+    ///     - session: Optional. URL Session to make this request with
+    ///     - completion: A completion handler
+    ///     - result: [RailIncidents](x-source-tag://RailIncidents) if successful, otherwise [WMATAError](x-source-tag://WMATAError)
+    func incidents(key: String, session: URLSession = URLSession.shared, completion: @escaping (_ result: Result<RailIncidents, WMATAError>) -> Void) {
         (self as NeedsStation).incidents(at: self, key: key, session: session, completion: completion)
     }
 
     ///  Next train arrival information for this Station
-    /// - Parameter key: WMATA API Key to use with this request
-    /// - Parameter session: Optional. URL Session to make this request with
-    /// - Parameter completion: completion handler that returns `RailPredictions`
-    func nextTrains(key: String, session: URLSession = URLSession.shared, completion: @escaping (Result<RailPredictions, WMATAError>) -> Void) {
+    ///
+    /// - Parameters:
+    ///     - key: WMATA API Key to use with this request
+    ///     - session: Optional. URL Session to make this request with
+    ///     - completion: A completion handler
+    ///     - result: [RailPredictions](x-source-tag://RailPredictions) if successful, otherwise [WMATAError](x-source-tag://WMATAError)
+    func nextTrains(key: String, session: URLSession = URLSession.shared, completion: @escaping (_ result: Result<RailPredictions, WMATAError>) -> Void) {
         (self as NeedsStation).nextTrains(at: self, key: key, session: session, completion: completion)
     }
 
     /// Location and address information for this Station
-    /// - Parameter key: WMATA API Key to use with this request
-    /// - Parameter session: Optional. URL Session to make this request with
-    /// - Parameter completion: completion handler that returns `StationInformation`
-    func information(key: String, session: URLSession = URLSession.shared, completion: @escaping (Result<StationInformation, WMATAError>) -> Void) {
+    ///
+    /// - Parameters:
+    ///     - key: WMATA API Key to use with this request
+    ///     - session: Optional. URL Session to make this request with
+    ///     - completion: A completion handler
+    ///     - result: [StationInformation](x-source-tag://StationInformation) if successful, otherwise [WMATAError](x-source-tag://WMATAError)
+    func information(key: String, session: URLSession = URLSession.shared, completion: @escaping (_ result: Result<StationInformation, WMATAError>) -> Void) {
         (self as NeedsStation).information(for: self, key: key, session: session, completion: completion)
     }
 
     /// Parking information for this Station
-    /// - Parameter key: WMATA API Key to use with this request
-    /// - Parameter session: Optional. URL Session to make this request with
-    /// - Parameter completion: completion handler that returns `StationsParking`
-    func parkingInformation(key: String, session: URLSession = URLSession.shared, completion: @escaping (Result<StationsParking, WMATAError>) -> Void) {
+    ///
+    /// - Parameters:
+    ///     - key: WMATA API Key to use with this request
+    ///     - session: Optional. URL Session to make this request with
+    ///     - completion: A completion handler
+    ///     - result: [StationsParking](x-source-tag://StationsParking) if successful, otherwise [WMATAError](x-source-tag://WMATAError)
+    func parkingInformation(key: String, session: URLSession = URLSession.shared, completion: @escaping (_ result: Result<StationsParking, WMATAError>) -> Void) {
         (self as NeedsStation).parkingInformation(for: self, key: key, session: session, completion: completion)
     }
 
     /// Returns a set of ordered stations and distances from this Station to another Station _on the same line_
-    /// - Parameter destinationStation: Destination station to pathfind to
-    /// - Parameter key: WMATA API Key to use with this request
-    /// - Parameter session: Optional. URL Session to make this request with
-    /// - Parameter completion: completion handler that returns `PathBetweenStations`
-    func path(to destinationStation: Station, key: String, session: URLSession = URLSession.shared, completion: @escaping (Result<PathBetweenStations, WMATAError>) -> Void) {
+    ///
+    /// - Parameters:
+    ///     - destinationStation: Destination station to pathfind to
+    ///     - key: WMATA API Key to use with this request
+    ///     - session: Optional. URL Session to make this request with
+    ///     - completion: A completion handler
+    ///     - result: [PathBetweenStations](x-source-tag://PathBetweenStations) if successful, otherwise [WMATAError](x-source-tag://WMATAError)
+    func path(to destinationStation: Station, key: String, session: URLSession = URLSession.shared, completion: @escaping (_ result: Result<PathBetweenStations, WMATAError>) -> Void) {
         (self as NeedsStation).path(from: self, to: destinationStation, key: key, session: session, completion: completion)
     }
 
     /// Opening and scheduled first and last trains for this Station
-    /// - Parameter key: WMATA API Key to use with this request
-    /// - Parameter session: Optional. URL Session to make this request with
-    /// - Parameter completion: completion handler that returns `StationTimings`
+    ///
+    /// - Parameters:
+    ///     - key: WMATA API Key to use with this request
+    ///     - session: Optional. URL Session to make this request with
+    ///     - completion: A completion handler
+    ///     - result: [StationTimings](x-source-tag://StationTimings) if successful, otherwise [WMATAError](x-source-tag://WMATAError)
     func timings(key: String, session: URLSession = URLSession.shared, completion: @escaping (Result<StationTimings, WMATAError>) -> Void) {
         (self as NeedsStation).timings(for: self, key: key, session: session, completion: completion)
     }
@@ -191,67 +215,91 @@ public extension Station {
 @available(macOS 10.15, iOS 13, watchOS 6, tvOS 13, *)
 public extension Station {
     /// Distance, fare information, and estimated travel time between this and another station.
-    /// - Parameter destinationStation: Optional. Station to travel to
-    /// - Parameter key: WMATA API Key to use with this request
-    /// - Parameter session: Optional. URL Session to make this request with
-    /// - returns: A Combine Publisher for `StationToStationInfos`
-    func stationPublisher(to destinationStation: Station?, key: String, session: URLSession = URLSession.shared) -> AnyPublisher<StationToStationInfos, WMATAError> {
+    ///
+    /// - Parameters:
+    ///     - destinationStation: Optional. Station to travel to
+    ///     - key: WMATA API Key to use with this request
+    ///     - session: Optional. URL Session to make this request with
+    ///
+    /// - Returns: A Combine Publisher for [StationToStationInfos](x-source-tag://StationToStationInfos)
+    func stationPublisher(to destinationStation: Station? = nil, key: String, session: URLSession = URLSession.shared) -> AnyPublisher<StationToStationInfos, WMATAError> {
         (self as NeedsStation).stationPublisher(self, to: destinationStation, key: key, session: session)
     }
 
     /// Reported elevator and escalator incidents at this Station
-    /// - Parameter key: WMATA API Key to use with this request
-    /// - Parameter session: Optional. URL Session to make this request with
-    /// - returns: A Combine Publisher for `ElevatorAndEscalatorIncidents`
+    ///
+    /// - Parameters:
+    ///     - key: WMATA API Key to use with this request
+    ///     - session: Optional. URL Session to make this request with
+    ///
+    /// - Returns: A Combine Publisher for [ElevatorAndEscalatorIncidents](x-source-tag://ElevatorAndEscalatorIncidents)
     func elevatorAndEscalatorIncidentsPublisher(key: String, session: URLSession = URLSession.shared) -> AnyPublisher<ElevatorAndEscalatorIncidents, WMATAError> {
         (self as NeedsStation).elevatorAndEscalatorIncidentsPublisher(at: self, key: key, session: session)
     }
 
     /// Reported MetroRail incidents at this Station
-    /// - Parameter key: WMATA API Key to use with this request
-    /// - Parameter session: Optional. URL Session to make this request with
-    /// - returns: A Combine Publisher for `RailIncidents`
+    ///
+    /// - Parameters:
+    ///     - key: WMATA API Key to use with this request
+    ///     - session: Optional. URL Session to make this request with
+    ///
+    /// - Returns: A Combine Publisher for [RailIncidents](x-source-tag://RailIncidents)
     func incidentsPublisher(key: String, session: URLSession = URLSession.shared) -> AnyPublisher<RailIncidents, WMATAError> {
         (self as NeedsStation).incidentsPublisher(at: self, key: key, session: session)
     }
 
     ///  Next train arrival information for this Station
-    /// - Parameter key: WMATA API Key to use with this request
-    /// - Parameter session: Optional. URL Session to make this request with
-    /// - returns: A Combine Publisher for  `RailPredictions`
+    ///
+    /// - Parameters:
+    ///     - key: WMATA API Key to use with this request
+    ///     - session: Optional. URL Session to make this request with
+    ///
+    /// - Returns: A Combine Publisher for [RailPredictions](x-source-tag://RailPredictions)
     func nextTrainsPublisher(key: String, session: URLSession = URLSession.shared) -> AnyPublisher<RailPredictions, WMATAError> {
         (self as NeedsStation).nextTrainsPublisher(at: self, key: key, session: session)
     }
 
     /// Location and address information for this Station
-    /// - Parameter key: WMATA API Key to use with this request
-    /// - Parameter session: Optional. URL Session to make this request with
-    /// - returns: A Combine Publisher for `StationInformation`
+    ///
+    /// - Parameters:
+    ///     - key: WMATA API Key to use with this request
+    ///     - session: Optional. URL Session to make this request with
+    ///
+    /// - Returns: A Combine Publisher for [StationInformation](x-source-tag://StationInformation)
     func informationPublisher(key: String, session: URLSession = URLSession.shared) -> AnyPublisher<StationInformation, WMATAError> {
         (self as NeedsStation).informationPublisher(for: self, key: key, session: session)
     }
 
     /// Parking information for this Station
-    /// - Parameter key: WMATA API Key to use with this request
-    /// - Parameter session: Optional. URL Session to make this request with
-    /// - returns: A Combine Publisher for `StationsParking`
+    ///
+    /// - Parameters:
+    ///     - key: WMATA API Key to use with this request
+    ///     - session: Optional. URL Session to make this request with
+    ///
+    /// - Returns: A Combine Publisher for [StationsParking](x-source-tag://StationsParking)
     func parkingInformationPublisher(key: String, session: URLSession = URLSession.shared) -> AnyPublisher<StationsParking, WMATAError> {
         (self as NeedsStation).parkingInformationPublisher(for: self, key: key, session: session)
     }
 
     /// Returns a set of ordered stations and distances from this Station to another Station _on the same line_
-    /// - Parameter destinationStation: Destination station to pathfind to
-    /// - Parameter key: WMATA API Key to use with this request
-    /// - Parameter session: Optional. URL Session to make this request with
-    /// - returns: A Combine Publisher for `PathBetweenStations`
+    ///
+    /// - Parameters:
+    ///     - destinationStation: Destination station to pathfind to
+    ///     - key: WMATA API Key to use with this request
+    ///     - session: Optional. URL Session to make this request with
+    ///
+    /// - Returns: A Combine Publisher for [PathBetweenStations](x-source-tag://PathBetweenStations)
     func pathPublisher(to destinationStation: Station, key: String, session: URLSession = URLSession.shared) -> AnyPublisher<PathBetweenStations, WMATAError> {
         (self as NeedsStation).pathPublisher(from: self, to: destinationStation, key: key, session: session)
     }
 
     /// Opening and scheduled first and last trains for this Station
-    /// - Parameter key: WMATA API Key to use with this request
-    /// - Parameter session: Optional. URL Session to make this request with
-    /// - returns: A Combine Publisher for `StationTimings`
+    ///
+    /// - Parameters:
+    ///     - key: WMATA API Key to use with this request
+    ///     - session: Optional. URL Session to make this request with
+    ///
+    /// - Returns: A Combine Publisher for [StationTimings](x-source-tag://StationTimings)
     func timingsPublisher(key: String, session: URLSession = URLSession.shared) -> AnyPublisher<StationTimings, WMATAError> {
         (self as NeedsStation).timingsPublisher(for: self, key: key, session: session)
     }

@@ -20,6 +20,12 @@ public struct Route: Codable {
     public init(id: String) {
         self.id = id
     }
+    
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.singleValueContainer()
+        
+        try container.encode(id)
+    }
 }
 
 extension Route: ExpressibleByStringLiteral {
@@ -39,7 +45,7 @@ public extension Route {
     ///     - session: Optional. URL Session to make this request with
     ///     - completion: A completion handler
     ///     - result: [BusPositions](x-source-tag://BusPositions) if successful, otherwise [WMATAError](x-source-tag://WMATAError)
-    func positions(at radiusAtCoordinates: RadiusAtCoordinates?, key: String, session: URLSession = URLSession.shared, completion: @escaping (_ result: Result<BusPositions, WMATAError>) -> Void) {
+    func positions(at radiusAtCoordinates: RadiusAtCoordinates? = nil, key: String, session: URLSession = URLSession.shared, completion: @escaping (_ result: Result<BusPositions, WMATAError>) -> Void) {
         (self as NeedsRoute).positions(on: self, at: radiusAtCoordinates, key: key, session: session, completion: completion)
     }
 
@@ -90,7 +96,7 @@ public extension Route {
     ///     - session: Optional. URL Session to make this request with
     ///
     /// - Returns: A Combine Publisher for [BusPositions](x-source-tag://BusPositions)
-    func positionsPublisher(at radiusAtCoordinates: RadiusAtCoordinates?, key: String, session: URLSession = URLSession.shared) -> AnyPublisher<BusPositions, WMATAError> {
+    func positionsPublisher(at radiusAtCoordinates: RadiusAtCoordinates? = nil, key: String, session: URLSession = URLSession.shared) -> AnyPublisher<BusPositions, WMATAError> {
         (self as NeedsRoute).positionsPublisher(on: self, at: radiusAtCoordinates, key: key, session: session)
     }
 

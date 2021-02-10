@@ -54,7 +54,7 @@ public struct MetroBus: Fetcher {
 // These don't require any Route or Stop IDs
 public extension MetroBus {
     /// All bus routes and variants
-    /// For use with a `WMATADelegate`
+    /// For use with a [WMATADelegate](x-source-tag://WMATADelegate)
     func routes() {
         request(
             request: URLRequest(url: BusURL.routes.rawValue, key: key),
@@ -76,11 +76,11 @@ public extension MetroBus {
     }
 
     /// Stops nearby the given latitude, longitude and radius. Omit latitude, longitude and radius to receive all stops.
-    /// For use with a `WMATADelegate`
+    /// For use with a [WMATADelegate](x-source-tag://WMATADelegate)
     ///
     /// - Parameters:
-    /// - radiusAtCoordinates: Radius at latitude and longitude to search at
-    func searchStops(at radiusAtCoordinates: RadiusAtCoordinates?) {
+    ///     - radiusAtCoordinates: Radius at latitude and longitude to search at
+    func searchStops(at radiusAtCoordinates: RadiusAtCoordinates? = nil) {
         var queryItems = [(String, String)]()
 
         if let radiusAtCoordinates = radiusAtCoordinates {
@@ -99,7 +99,7 @@ public extension MetroBus {
     ///     - radiusAtCoordinates: Radius at latitude and longitude to search at
     ///     - completion: A completion handler
     ///     - result: [StopsSearchResponse](x-source-tag://StopsSearchResponse) if successful, otherwise [WMATAError](x-source-tag://WMATAError)
-    func searchStops(at radiusAtCoordinates: RadiusAtCoordinates?, completion: @escaping (_ result: Result<StopsSearchResponse, WMATAError>) -> Void) {
+    func searchStops(at radiusAtCoordinates: RadiusAtCoordinates? = nil, completion: @escaping (_ result: Result<StopsSearchResponse, WMATAError>) -> Void) {
         var queryItems = [(String, String)]()
 
         if let radiusAtCoordinates = radiusAtCoordinates {
@@ -132,7 +132,7 @@ public extension MetroBus {
     ///     - radiusAtCoordinates: Radius at latitude and longitude to search at
     ///
     /// - Returns: A Combine Publisher for [StopsSearchResponse](x-source-tag://StopsSearchResponse)
-    func searchStopsPublisher(at radiusAtCoordinates: RadiusAtCoordinates?) -> AnyPublisher<StopsSearchResponse, WMATAError> {
+    func searchStopsPublisher(at radiusAtCoordinates: RadiusAtCoordinates? = nil) -> AnyPublisher<StopsSearchResponse, WMATAError> {
         var queryItems = [(String, String)]()
 
         if let radiusAtCoordinates = radiusAtCoordinates {
@@ -150,12 +150,12 @@ extension MetroBus: NeedsRoute {}
 
 public extension MetroBus {
     /// Bus positions including latlong and direction. Omit routeId, latitude, longitude and radius to receive all bus positions.
-    /// For use with a `WMATADelegate`
+    /// For use with a [WMATADelegate](x-source-tag://WMATADelegate)
     ///
     /// - Parameters:
     ///     - route: Get bus positions along this route
     ///     - radiusAtCoordinates: Radius at latitude and longitude to search at
-    func positions(on route: Route?, at radiusAtCoordinates: RadiusAtCoordinates?) {
+    func positions(on route: Route? = nil, at radiusAtCoordinates: RadiusAtCoordinates? = nil) {
         (self as NeedsRoute).positions(on: route, at: radiusAtCoordinates, key: key, session: session)
     }
 
@@ -166,16 +166,16 @@ public extension MetroBus {
     ///     - radiusAtCoordinates: Radius at latitude and longitude to search at
     ///     - completion: Completion handler which returns `BusPositions`
     ///     - result: [BusPositions](x-source-tag://BusPositions) if successful, otherwise [WMATAError](x-source-tag://WMATAError)
-    func positions(on route: Route?, at radiusAtCoordinates: RadiusAtCoordinates?, completion: @escaping (_ result: Result<BusPositions, WMATAError>) -> Void) {
+    func positions(on route: Route? = nil, at radiusAtCoordinates: RadiusAtCoordinates? = nil, completion: @escaping (_ result: Result<BusPositions, WMATAError>) -> Void) {
         (self as NeedsRoute).positions(on: route, at: radiusAtCoordinates, key: key, session: session, completion: completion)
     }
 
     /// Bus incidents along a given route.
-    /// For use with a `WMATADelegate`
+    /// For use with a [WMATADelegate](x-source-tag://WMATADelegate)
     ///
     /// - Parameters:
     ///     - route: Route to search for incidents along. Omit route to receive all incidents.
-    func incidents(on route: Route?) {
+    func incidents(on route: Route? = nil) {
         (self as NeedsRoute).incidents(on: route, key: key, session: session)
     }
 
@@ -185,12 +185,12 @@ public extension MetroBus {
     ///     - route: Route to search for incidents along. Omit route to receive all incidents.
     ///     - completion: A completion handler
     ///     - result: [BusIncidents](x-source-tag://BusIncidents) if successful, otherwise [WMATAError](x-source-tag://WMATAError)
-    func incidents(on route: Route?, completion: @escaping (_ result: Result<BusIncidents, WMATAError>) -> Void) {
+    func incidents(on route: Route? = nil, completion: @escaping (_ result: Result<BusIncidents, WMATAError>) -> Void) {
         (self as NeedsRoute).incidents(on: route, key: key, session: session, completion: completion)
     }
 
     /// Ordered latlong points along this Route for a given date. Omit date to get path information for today.
-    /// For use with a `WMATADelegate`
+    /// For use with a [WMATADelegate](x-source-tag://WMATADelegate)
     ///
     /// - Parameters:
     ///     - route: Route to get path details for
@@ -211,7 +211,7 @@ public extension MetroBus {
     }
 
     /// Scheduled stops for this Route
-    /// For use with a `WMATADelegate`
+    /// For use with a [WMATADelegate](x-source-tag://WMATADelegate)
     ///
     /// - Parameters:
     ///     - route: Route to get stops for
@@ -243,7 +243,7 @@ public extension MetroBus {
     ///     - radiusAtCoordinates: Radius at latitude and longitude to search at
     ///
     /// - Returns: A Combine Publisher for [BusPositions](x-source-tag://BusPositions)
-    func positionsPublisher(on route: Route?, at radiusAtCoordinates: RadiusAtCoordinates?) -> AnyPublisher<BusPositions, WMATAError> {
+    func positionsPublisher(on route: Route? = nil, at radiusAtCoordinates: RadiusAtCoordinates? = nil) -> AnyPublisher<BusPositions, WMATAError> {
         (self as NeedsRoute).positionsPublisher(on: route, at: radiusAtCoordinates, key: key, session: session)
     }
 
@@ -253,7 +253,7 @@ public extension MetroBus {
     ///     - route: Route to search for incidents along. Omit route to receive all incidents.
     ///
     /// - Returns: A Combine Publisher for [BusIncidents](x-source-tag://BusIncidents)
-    func incidentsPublisher(on route: Route?) -> AnyPublisher<BusIncidents, WMATAError> {
+    func incidentsPublisher(on route: Route? = nil) -> AnyPublisher<BusIncidents, WMATAError> {
         (self as NeedsRoute).incidentsPublisher(on: route, key: key, session: session)
     }
 
@@ -285,7 +285,7 @@ extension MetroBus: NeedsStop {}
 
 public extension MetroBus {
     /// Next bus arrival times at this Stop
-    /// For use with a `WMATADelegate`
+    /// For use with a [WMATADelegate](x-source-tag://WMATADelegate)
     ///
     /// - Parameters:
     ///     - stop: Stop to get next arrival times for
@@ -304,7 +304,7 @@ public extension MetroBus {
     }
 
     /// Set of buses scheduled to arrive at this Stop at a given date.
-    /// For use with a `WMATADelegate`
+    /// For use with a [WMATADelegate](x-source-tag://WMATADelegate)
     ///
     /// - Parameters:
     ///     - stop: Stop to get schedule for
@@ -369,7 +369,7 @@ public extension MetroBus {
 
     /// GTFS RT 2.0 service alerts feed for WMATA bus.
     /// See https://developers.google.com/transit/gtfs-realtime/guides/service-alerts
-    /// For use with a `WMATADelegate`
+    /// For use with a [WMATADelegate](x-source-tag://WMATADelegate)
     func alerts() {
         request(
             request: URLRequest(
@@ -399,7 +399,7 @@ public extension MetroBus {
 
     /// GTFS RT 2.0 trip updates feed for WMATA bus.
     /// See https://developers.google.com/transit/gtfs-realtime/guides/trip-updates
-    /// For use with a `WMATADelegate`
+    /// For use with a [WMATADelegate](x-source-tag://WMATADelegate)
     func tripUpdates() {
         request(
             request: URLRequest(
@@ -426,7 +426,7 @@ public extension MetroBus {
 
     /// GTFS RT 2.0 vehicle positions feed for WMATA bus.
     /// See https://developers.google.com/transit/gtfs-realtime/guides/vehicle-positions
-    /// For use with a `WMATADelegate`
+    /// For use with a [WMATADelegate](x-source-tag://WMATADelegate)
     func vehiclePositions() {
         request(
             request: URLRequest(

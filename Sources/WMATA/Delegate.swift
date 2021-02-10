@@ -9,6 +9,7 @@ import Foundation
 import GTFS
 
 /// Implement this protocol in order to receive requests in the background.
+/// - Tag: WMATADelegate
 public protocol WMATADelegate {
     /// MetroRail responses
     func received(linesResponse result: Result<LinesResponse, WMATAError>)

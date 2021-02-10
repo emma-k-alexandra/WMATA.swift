@@ -20,6 +20,12 @@ public struct Stop: Codable {
     public init(id: String) {
         self.id = id
     }
+    
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.singleValueContainer()
+        
+        try container.encode(id)
+    }
 }
 
 extension Stop: ExpressibleByStringLiteral {
