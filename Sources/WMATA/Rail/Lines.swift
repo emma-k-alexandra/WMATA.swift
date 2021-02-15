@@ -23,10 +23,16 @@ extension Line: NeedsLine {}
 
 public extension Line {
     /// Stations along this Line
-    /// - Parameter apiKey: WMATA API Key to use with this request
-    /// - Parameter session: Optional. URL Session to make this request with
-    /// - Parameter completion: completion handler that returns `Stations`
-    func stations(key: String, session: URLSession = URLSession.shared, completion: @escaping (Result<Stations, WMATAError>) -> Void) {
+    ///
+    /// - Note:
+    ///     [WMATA Stations Documentation](https://developer.wmata.com/docs/services/5476364f031f590f38092507/operations/5476364f031f5909e4fe3311)
+    ///
+    /// - Parameters:
+    ///     - key: WMATA API Key to use with this request
+    ///     - session: Optional. URL Session to make this request with
+    ///     - completion: A completion handler
+    ///     - result: [Stations](x-source-tag://Stations) if successful, otherwise [WMATAError](x-source-tag://WMATAError)
+    func stations(key: String, session: URLSession = URLSession.shared, completion: @escaping (_ result: Result<Stations, WMATAError>) -> Void) {
         (self as NeedsLine).stations(for: self, key: key, session: session, completion: completion)
     }
 }
@@ -34,9 +40,15 @@ public extension Line {
 @available(macOS 10.15, iOS 13, watchOS 6, tvOS 13, *)
 public extension Line {
     /// Stations along this Line
-    /// - Parameter apiKey: WMATA API Key to use with this request
-    /// - Parameter session: Optional. URL Session to make this request with
-    /// - returns: A Combine Publisher for `Stations`
+    ///
+    /// - Note:
+    ///     [WMATA Stations Documentation](https://developer.wmata.com/docs/services/5476364f031f590f38092507/operations/5476364f031f5909e4fe3311)
+    ///
+    /// - Parameters:
+    ///     - key: WMATA API Key to use with this request
+    ///     - session: Optional. URL Session to make this request with
+    ///
+    /// - Returns: A Combine Publisher for [Stations](x-source-tag://Stations)
     func stationsPublisher(key: String, session: URLSession = URLSession.shared) -> AnyPublisher<Stations, WMATAError> {
         (self as NeedsLine).stationsPublisher(for: self, key: key, session: session)
     }

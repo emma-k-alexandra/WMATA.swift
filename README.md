@@ -35,13 +35,14 @@ WMATA.swift is a Swift interface to the [Washington Metropolitan Area Transit Au
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/emma-k-alexandra/WMATA.swift.git", .upToNextMajor(from: "9.0.0"))
+    .package(url: "https://github.com/emma-k-alexandra/WMATA.swift.git", .upToNextMajor(from: "10.0.0"))
 ]
 ```
 
 ## Migration Guides
 
 - [v9 Migration Guide][v9-migration-guide]
+- [v10 Migration Guide][v10-migration-guide]
 
 ## Dependencies
 
@@ -82,6 +83,7 @@ WMATA.swift is released under the MIT license. [See LICENSE](https://github.com/
 [radius-at-coordinates]: https://github.com/emma-k-alexandra/WMATA.swift/blob/master/Documentation/Miscellaneous.md#RadiusAtCoordinates
 [wmata-date]: https://github.com/emma-k-alexandra/WMATA.swift/blob/master/Documentation/Miscellaneous.md#WMATADate
 [v9-migration-guide]: https://github.com/emma-k-alexandra/WMATA.swift/blob/master/Documentation/v9%20Migration%20Guide.md
+[v10-migration-guide]: https://github.com/emma-k-alexandra/WMATA.swift/blob/master/Documentation/v10%20Migration%20Guide.md
 [gtfs]: https://github.com/emma-k-alexandra/GTFS
 [swift-protobuf]: https://github.com/apple/swift-protobuf
 [wmata]: https://developer.wmata.com

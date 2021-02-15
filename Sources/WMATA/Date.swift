@@ -7,11 +7,23 @@
 
 import Foundation
 
+/// Structure describing a day, month and year in a format the WMATA API will understand
 public struct WMATADate {
+    /// Year of the date
     public let year: Int
+    
+    /// Month of the date
     public let month: Int
+    
+    /// Day of the date
     public let day: Int
 
+    /// Create a WMATA Date
+    ///
+    /// - Parameters:
+    ///     - year: Year of the date
+    ///     - month: Month of the date
+    ///     - day: Day of the date
     public init(year: Int, month: Int, day: Int) {
         self.year = year
         self.month = month
