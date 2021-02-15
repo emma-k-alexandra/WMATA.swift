@@ -123,6 +123,9 @@ extension Station: NeedsStation {}
 public extension Station {
     /// Distance, fare information, and estimated travel time between this and another station.
     ///
+    /// - Note:
+    ///     [WMATA Station To Station Documentation](https://developer.wmata.com/docs/services/5476364f031f590f38092507/operations/5476364f031f5909e4fe3313)
+    ///
     /// - Parameters:
     ///     - destinationStation: Optional. Station to travel to
     ///     - key: WMATA API Key to use with this request
@@ -135,6 +138,9 @@ public extension Station {
 
     /// Reported elevator and escalator incidents at this Station
     ///
+    /// - Note:
+    ///     [WMATA Elevator and Escalator Incidents](https://developer.wmata.com/docs/services/54763641281d83086473f232/operations/54763641281d830c946a3d76)
+    ///
     /// - Parameters:
     ///     - key: WMATA API Key to use with this request
     ///     - session: Optional. URL Session to make this request with
@@ -145,6 +151,9 @@ public extension Station {
     }
 
     /// Reported MetroRail incidents at this Station
+    ///
+    /// - Note:
+    ///     [WMATA Station Incidents Documentation](https://developer.wmata.com/docs/services/54763641281d83086473f232/operations/54763641281d830c946a3d77)
     ///
     /// - Parameters:
     ///     - key: WMATA API Key to use with this request
@@ -157,6 +166,9 @@ public extension Station {
 
     ///  Next train arrival information for this Station
     ///
+    /// - Note:
+    ///     [WMATA Next Trains Documentation](https://developer.wmata.com/docs/services/547636a6f9182302184cda78/operations/547636a6f918230da855363f)
+    ///
     /// - Parameters:
     ///     - key: WMATA API Key to use with this request
     ///     - session: Optional. URL Session to make this request with
@@ -167,6 +179,9 @@ public extension Station {
     }
 
     /// Location and address information for this Station
+    ///
+    /// - Note:
+    ///     [WMATA Station Information Documentation](https://developer.wmata.com/docs/services/5476364f031f590f38092507/operations/5476364f031f5909e4fe3310)
     ///
     /// - Parameters:
     ///     - key: WMATA API Key to use with this request
@@ -179,6 +194,9 @@ public extension Station {
 
     /// Parking information for this Station
     ///
+    /// - Note:
+    ///     [WMATA Parking Information Documentation](https://developer.wmata.com/docs/services/5476364f031f590f38092507/operations/5476364f031f5909e4fe330d)
+    ///
     /// - Parameters:
     ///     - key: WMATA API Key to use with this request
     ///     - session: Optional. URL Session to make this request with
@@ -189,6 +207,9 @@ public extension Station {
     }
 
     /// Returns a set of ordered stations and distances from this Station to another Station _on the same line_
+    ///
+    /// - Note:
+    ///     [WMATA Path Documentation](https://developer.wmata.com/docs/services/5476364f031f590f38092507/operations/5476364f031f5909e4fe330e)
     ///
     /// - Parameters:
     ///     - destinationStation: Destination station to pathfind to
@@ -202,12 +223,15 @@ public extension Station {
 
     /// Opening and scheduled first and last trains for this Station
     ///
+    /// - Note:
+    ///     [WMATA Timings Documentation](https://developer.wmata.com/docs/services/5476364f031f590f38092507/operations/5476364f031f5909e4fe3312)
+    ///
     /// - Parameters:
     ///     - key: WMATA API Key to use with this request
     ///     - session: Optional. URL Session to make this request with
     ///     - completion: A completion handler
     ///     - result: [StationTimings](x-source-tag://StationTimings) if successful, otherwise [WMATAError](x-source-tag://WMATAError)
-    func timings(key: String, session: URLSession = URLSession.shared, completion: @escaping (Result<StationTimings, WMATAError>) -> Void) {
+    func timings(key: String, session: URLSession = URLSession.shared, completion: @escaping (_ result: Result<StationTimings, WMATAError>) -> Void) {
         (self as NeedsStation).timings(for: self, key: key, session: session, completion: completion)
     }
 }
@@ -215,6 +239,9 @@ public extension Station {
 @available(macOS 10.15, iOS 13, watchOS 6, tvOS 13, *)
 public extension Station {
     /// Distance, fare information, and estimated travel time between this and another station.
+    ///
+    /// - Note:
+    ///     [WMATA Station To Station Documentation](https://developer.wmata.com/docs/services/5476364f031f590f38092507/operations/5476364f031f5909e4fe3313)
     ///
     /// - Parameters:
     ///     - destinationStation: Optional. Station to travel to
@@ -228,6 +255,9 @@ public extension Station {
 
     /// Reported elevator and escalator incidents at this Station
     ///
+    /// - Note:
+    ///     [WMATA Elevator and Escalator Incidents Documentation](https://developer.wmata.com/docs/services/54763641281d83086473f232/operations/54763641281d830c946a3d76)
+    ///
     /// - Parameters:
     ///     - key: WMATA API Key to use with this request
     ///     - session: Optional. URL Session to make this request with
@@ -238,6 +268,9 @@ public extension Station {
     }
 
     /// Reported MetroRail incidents at this Station
+    ///
+    /// - Note:
+    ///     [WMATA Station Incidents Documentation](https://developer.wmata.com/docs/services/54763641281d83086473f232/operations/54763641281d830c946a3d77)
     ///
     /// - Parameters:
     ///     - key: WMATA API Key to use with this request
@@ -250,6 +283,9 @@ public extension Station {
 
     ///  Next train arrival information for this Station
     ///
+    ///  - Note:
+    ///     [WMATA Next Trains Documentation](https://developer.wmata.com/docs/services/547636a6f9182302184cda78/operations/547636a6f918230da855363f)
+    ///
     /// - Parameters:
     ///     - key: WMATA API Key to use with this request
     ///     - session: Optional. URL Session to make this request with
@@ -260,6 +296,9 @@ public extension Station {
     }
 
     /// Location and address information for this Station
+    ///
+    /// - Note:
+    ///     [WMATA Station Information Documentation](https://developer.wmata.com/docs/services/5476364f031f590f38092507/operations/5476364f031f5909e4fe3310)
     ///
     /// - Parameters:
     ///     - key: WMATA API Key to use with this request
@@ -272,6 +311,9 @@ public extension Station {
 
     /// Parking information for this Station
     ///
+    /// - Note:
+    ///     [WMATA Parking Information Documentation](https://developer.wmata.com/docs/services/5476364f031f590f38092507/operations/5476364f031f5909e4fe330d)
+    ///
     /// - Parameters:
     ///     - key: WMATA API Key to use with this request
     ///     - session: Optional. URL Session to make this request with
@@ -282,6 +324,9 @@ public extension Station {
     }
 
     /// Returns a set of ordered stations and distances from this Station to another Station _on the same line_
+    ///
+    /// - Note:
+    ///     [WMATA Path Documentation](https://developer.wmata.com/docs/services/5476364f031f590f38092507/operations/5476364f031f5909e4fe330e)
     ///
     /// - Parameters:
     ///     - destinationStation: Destination station to pathfind to
@@ -294,6 +339,9 @@ public extension Station {
     }
 
     /// Opening and scheduled first and last trains for this Station
+    ///
+    /// - Note:
+    ///     [WMATA Timings Documentation](https://developer.wmata.com/docs/services/5476364f031f590f38092507/operations/5476364f031f5909e4fe3312)
     ///
     /// - Parameters:
     ///     - key: WMATA API Key to use with this request
@@ -675,8 +723,11 @@ public extension Station {
     }
 
     /// The opening time for this station on the given date.
-    /// - Parameter date: Date to check the opening time for. Omit for today.
-    /// - Returns: The time
+    ///
+    /// - Parameters:
+    ///     - date: Date to check the opening time for. Omit for today.
+    ///
+    /// - Returns: The opening time
     func openingTime(on date: Date? = nil) -> Date {
         let day: WeekdaySaturdayOrSunday
         let openingDate: Date
@@ -704,7 +755,10 @@ public extension Station {
     }
 
     /// The station located within the same physical station as this station.
-    /// Details: https://developer.wmata.com/docs/services/5476364f031f590f38092507/operations/5476364f031f5909e4fe3310
+    ///
+    /// - Note:
+    ///     [WMATA Station Information Documentation](https://developer.wmata.com/docs/services/5476364f031f590f38092507/operations/5476364f031f5909e4fe3310)
+    ///
     /// - Returns: The `Station` within the same physical station.
     var together: Station? {
         switch self {
@@ -734,9 +788,12 @@ public extension Station {
     }
 
     /// Combines this station and other stations within the same physical station.
-    /// Details: https://developer.wmata.com/docs/services/5476364f031f590f38092507/operations/5476364f031f5909e4fe3310
     /// This is effectively the result of joining the `StationTogether1`
     /// and `StationTogether2` values from the WMATA API.
+    ///
+    /// - Note:
+    ///     [WMATA Station Information Documentation](https://developer.wmata.com/docs/services/5476364f031f590f38092507/operations/5476364f031f5909e4fe3310)
+    ///
     /// - Returns: An array containing this station and the `Station` `together`, if there is one.
     var allTogether: [Station] {
         if let together = self.together {

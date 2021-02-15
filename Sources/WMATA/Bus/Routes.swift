@@ -39,8 +39,11 @@ extension Route: NeedsRoute {}
 public extension Route {
     /// Bus positions on this Route including latlong and direction.
     ///
+    /// - Note:
+    ///     [WMATA Positions Documentation](https://developer.wmata.com/docs/services/54763629281d83086473f231/operations/5476362a281d830c946a3d68)
+    ///
     /// - Parameters:
-    ///     - radiusAtCoordinates: Radius at latlong to search at
+    ///     - radiusAtCoordinates: Radius at latlong to search at. Optional.
     ///     - key: WMATA API Key to use with this request
     ///     - session: Optional. URL Session to make this request with
     ///     - completion: A completion handler
@@ -50,6 +53,9 @@ public extension Route {
     }
 
     /// Bus incidents along this Route.
+    ///
+    /// - Note:
+    ///     [WMATA Incidents Documentation](https://developer.wmata.com/docs/services/54763641281d83086473f232/operations/54763641281d830c946a3d75)
     ///
     /// - Parameters:
     ///     - key: WMATA API Key to use with this request
@@ -61,6 +67,9 @@ public extension Route {
     }
 
     /// Ordered latlong points along this Route for a given date.
+    ///
+    /// - Note:
+    ///     [WMATA Path Details Documentation](https://developer.wmata.com/docs/services/54763629281d83086473f231/operations/5476362a281d830c946a3d69)
     ///
     /// - Parameters:
     ///     - date: Day to get details for. Omit for today
@@ -74,9 +83,12 @@ public extension Route {
 
     /// Scheduled stops for this Route
     ///
+    /// - Note:
+    ///     [WMATA Route Schedule Documentation](https://developer.wmata.com/docs/services/54763629281d83086473f231/operations/5476362a281d830c946a3d6b)
+    ///
     /// - Parameters:
     ///     - date: Day to get stops for. Omit for today.
-    ///     - includingVariations: Whether to include route variations. Example: B30v1 and B30v2 for Route B30
+    ///     - includingVariations: Whether to include route variations. Optional. Example: B30v1 and B30v2 for Route B30.
     ///     - key: WMATA API Key to use with this request
     ///     - session: Optional. URL Session to make this request with
     ///     - completion: A completion handler
@@ -90,6 +102,9 @@ public extension Route {
 public extension Route {
     /// Bus positions on this Route including latlong and direction.
     ///
+    /// - Note:
+    ///     [WMATA Positions Documentation](https://developer.wmata.com/docs/services/54763629281d83086473f231/operations/5476362a281d830c946a3d68)
+    ///
     /// - Parameters:
     ///     - radiusAtCoordinates: Radius at latlong to search at
     ///     - key: WMATA API Key to use with this request
@@ -102,6 +117,9 @@ public extension Route {
 
     /// Bus incidents along this Route.
     ///
+    /// - Note:
+    ///     [WMATA Incidents Documentation](https://developer.wmata.com/docs/services/54763641281d83086473f232/operations/54763641281d830c946a3d75)
+    ///
     /// - Parameters:
     ///     - key: WMATA API Key to use with this request
     ///     - session: Optional. URL Session to make this request with
@@ -112,6 +130,9 @@ public extension Route {
     }
 
     /// Ordered latlong points along this Route for a given date.
+    ///
+    /// - Note:
+    ///     [WMATA Path Details Documentation](https://developer.wmata.com/docs/services/54763629281d83086473f231/operations/5476362a281d830c946a3d69)
     ///
     /// - Parameters:
     ///     - date: Day to get route. Omit for today.
@@ -125,9 +146,12 @@ public extension Route {
 
     /// Scheduled stops for this Route
     ///
+    /// - Note:
+    ///     [WMATA Route Schedule Documentation](https://developer.wmata.com/docs/services/54763629281d83086473f231/operations/5476362a281d830c946a3d6b)
+    ///
     /// - Parameters:
     ///     - date: Day to get stops for`. Omit for today.
-    ///     - includingVariations: Whether to include route variations. Example: B30v1 and B30v2 for Route B30
+    ///     - includingVariations: Whether to include route variations. Optional. Example: B30v1 and B30v2 for Route B30
     ///     - key: WMATA API Key to use with this request
     ///     - session: Optional. URL Session to make this request with
     ///

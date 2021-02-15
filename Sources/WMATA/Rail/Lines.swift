@@ -24,6 +24,9 @@ extension Line: NeedsLine {}
 public extension Line {
     /// Stations along this Line
     ///
+    /// - Note:
+    ///     [WMATA Stations Documentation](https://developer.wmata.com/docs/services/5476364f031f590f38092507/operations/5476364f031f5909e4fe3311)
+    ///
     /// - Parameters:
     ///     - key: WMATA API Key to use with this request
     ///     - session: Optional. URL Session to make this request with
@@ -37,6 +40,9 @@ public extension Line {
 @available(macOS 10.15, iOS 13, watchOS 6, tvOS 13, *)
 public extension Line {
     /// Stations along this Line
+    ///
+    /// - Note:
+    ///     [WMATA Stations Documentation](https://developer.wmata.com/docs/services/5476364f031f590f38092507/operations/5476364f031f5909e4fe3311)
     ///
     /// - Parameters:
     ///     - key: WMATA API Key to use with this request

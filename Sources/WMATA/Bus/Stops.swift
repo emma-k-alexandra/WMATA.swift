@@ -39,6 +39,9 @@ extension Stop: NeedsStop {}
 public extension Stop {
     /// Next bus arrival times at this Stop
     ///
+    /// - Note:
+    ///     [WMATA Next Buses Documentation](https://developer.wmata.com/docs/services/5476365e031f590f38092508/operations/5476365e031f5909e4fe331d)
+    ///
     /// - Parameters:
     ///     - key: WMATA API Key to use with this request
     ///     - session: Optional. URL Session to make this request with
@@ -49,6 +52,9 @@ public extension Stop {
     }
 
     /// Set of buses scheduled to arrive at this Stop at a given date.
+    ///
+    /// - Note:
+    ///     [WMATA Stop Schedule Documentation](https://developer.wmata.com/docs/services/54763629281d83086473f231/operations/5476362a281d830c946a3d6c)
     ///
     /// - Parameters:
     ///     - date: Day to get arrivals. Omit for today.
@@ -65,6 +71,9 @@ public extension Stop {
 public extension Stop {
     /// Next bus arrival times at this Stop
     ///
+    /// - Note:
+    ///     [WMATA Next Buses Documentation](https://developer.wmata.com/docs/services/5476365e031f590f38092508/operations/5476365e031f5909e4fe331d)
+    ///
     /// - Parameters:
     ///     - key: WMATA API Key to use with this request
     ///     - session: Optional. URL Session to make this request with
@@ -75,6 +84,9 @@ public extension Stop {
     }
 
     /// Set of buses scheduled to arrive at this Stop at a given date.
+    ///
+    /// - Note:
+    ///     [WMATA Stop Schedule Documentation](https://developer.wmata.com/docs/services/54763629281d83086473f231/operations/5476362a281d830c946a3d6c)
     ///
     /// - Parameters:
     ///     - date: Day to get scheduled arrivals. Omit for today.

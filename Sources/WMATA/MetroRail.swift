@@ -33,8 +33,8 @@ public struct MetroRail: Fetcher {
     ///
     /// - Parameters:
     ///     - key: Your WMATA API key
-    ///     - delegate: The delegate to use for all delegate calls
-    ///     - sharedContainerIdentifier: Identifier for use with app extensions
+    ///     - delegate: The delegate to use for all delegate calls. Optional.
+    ///     - sharedContainerIdentifier: Identifier for use with app extensions. Optional.
     public init(key: String, delegate: WMATADelegate? = nil, sharedContainerIdentifier: String? = nil) {
         self.key = key
 
@@ -53,8 +53,12 @@ public struct MetroRail: Fetcher {
 
 // These don't require a Station or Line
 public extension MetroRail {
-    /// General information on all MetroRail lines
+    /// General information on all MetroRail lines.
+    ///
     /// For use with a [WMATADelegate](x-source-tag://WMATADelegate)
+    ///
+    /// - Note:
+    ///     [WMATA Lines API Documentation](https://developer.wmata.com/docs/services/5476364f031f590f38092507/operations/5476364f031f5909e4fe330c)
     func lines() {
         request(
             request: URLRequest(url: RailURL.lines.rawValue, key: key),
@@ -63,6 +67,9 @@ public extension MetroRail {
     }
 
     /// General information on all MetroRail lines
+    ///
+    /// - Note:
+    ///     [WMATA Lines Documentation](https://developer.wmata.com/docs/services/5476364f031f590f38092507/operations/5476364f031f5909e4fe330c)
     ///
     /// - Parameters:
     ///     - completion: A completion handler
@@ -78,8 +85,11 @@ public extension MetroRail {
     /// Station entrances within a radius of a lat long pair, omit all parameters to receive all entrances
     /// For use with a [WMATADelegate](x-source-tag://WMATADelegate)
     ///
+    /// - Note:
+    ///     [WMATA Entrances Documentation](https://developer.wmata.com/docs/services/5476364f031f590f38092507/operations/5476364f031f5909e4fe330f)
+    ///
     /// - Parameters:
-    ///     - radiusAtCoordinates: Radius at latitude and longitude to search at
+    ///     - radiusAtCoordinates: Radius at latitude and longitude to search at. Optional.
     func entrances(at radiusAtCoordinates: RadiusAtCoordinates? = nil) {
         var queryItems = [(String, String)]()
 
@@ -95,8 +105,11 @@ public extension MetroRail {
 
     /// Station entrances within a radius of a lat long pair, omit all parameters to receive all entrances
     ///
+    /// - Note:
+    ///     [WMATA Entrances Documentation](https://developer.wmata.com/docs/services/5476364f031f590f38092507/operations/5476364f031f5909e4fe330f)
+    ///
     /// - Parameters:
-    ///     - radiusAtCoordinates: Radius at latitude and longitude to search at
+    ///     - radiusAtCoordinates: Radius at latitude and longitude to search at. Optional.
     ///     - completion: A completion handler
     ///     - result: [StationEntrances](x-source-tag://StationEntrances) if successful, otherwise [WMATAError](x-source-tag://WMATAError)
     func entrances(at radiusAtCoordinates: RadiusAtCoordinates? = nil, completion: @escaping (_ result: Result<StationEntrances, WMATAError>) -> Void) {
@@ -115,6 +128,9 @@ public extension MetroRail {
 
     /// Uniquely identifiable trains in service and what track circuits they currently occupy
     /// For use with a [WMATADelegate](x-source-tag://WMATADelegate)
+    ///
+    /// - Note:
+    ///     [WMATA Positions Documentation](https://developer.wmata.com/docs/services/5763fa6ff91823096cac1057/operations/5763fb35f91823096cac1058)
     func positions() {
         request(
             request: URLRequest(url: RailURL.positions.rawValue, key: key, queryItems: [("contentType", "json")]),
@@ -123,6 +139,9 @@ public extension MetroRail {
     }
 
     /// Uniquely identifiable trains in service and what track circuits they currently occupy
+    ///
+    /// - Note:
+    ///     [WMATA Positions Documentation](https://developer.wmata.com/docs/services/5763fa6ff91823096cac1057/operations/5763fb35f91823096cac1058)
     ///
     /// - Parameters:
     ///     - completion: A completion handler
@@ -137,6 +156,9 @@ public extension MetroRail {
 
     /// Ordered list of track circuits, arranged by line and track number
     /// For use with a [WMATADelegate](x-source-tag://WMATADelegate)
+    ///
+    /// - Note:
+    ///     [WMATA Routes Documentation](https://developer.wmata.com/docs/services/5763fa6ff91823096cac1057/operations/57641afc031f59363c586dca)
     func routes() {
         request(
             request: URLRequest(url: RailURL.routes.rawValue, key: key, queryItems: [("contentType", "json")]),
@@ -145,6 +167,9 @@ public extension MetroRail {
     }
 
     /// Ordered list of track circuits, arranged by line and track number
+    ///
+    /// - Note:
+    ///     [WMATA Routes Documentation](https://developer.wmata.com/docs/services/5763fa6ff91823096cac1057/operations/57641afc031f59363c586dca)
     ///
     /// - Parameters:
     ///     - completion: A completion handler
@@ -159,6 +184,9 @@ public extension MetroRail {
 
     /// List of all track circuits - See https://developer.wmata.com/TrainPositionsFAQ
     /// For use with a [WMATADelegate](x-source-tag://WMATADelegate)
+    ///
+    /// - Note:
+    ///     [WMATA Circuits Documentation](https://developer.wmata.com/docs/services/5763fa6ff91823096cac1057/operations/57644238031f59363c586dcb)
     func circuits() {
         request(
             request: URLRequest(url: RailURL.circuits.rawValue, key: key, queryItems: [("contentType", "json")]),
@@ -167,6 +195,9 @@ public extension MetroRail {
     }
 
     /// List of all track circuits - See https://developer.wmata.com/TrainPositionsFAQ
+    ///
+    /// - Note:
+    ///     [WMATA Circuits Documentation](https://developer.wmata.com/docs/services/5763fa6ff91823096cac1057/operations/57644238031f59363c586dcb)
     ///
     /// - Parameters:
     ///     - completion: A completion handler
@@ -185,6 +216,9 @@ public extension MetroRail {
 public extension MetroRail {
     /// General information on all MetroRail lines
     ///
+    /// - Note:
+    ///     [WMATA Lines Documentation](https://developer.wmata.com/docs/services/5476364f031f590f38092507/operations/5476364f031f5909e4fe330c)
+    ///
     /// - Returns: A Combine Publisher for [LinesResponse](x-source-tag://LinesResponse)
     func linesPublisher() -> AnyPublisher<LinesResponse, WMATAError> {
         publisher(
@@ -195,8 +229,11 @@ public extension MetroRail {
 
     /// Station entrances within a radius of a lat long pair, omit all parameters to receive all entrances
     ///
+    /// - Note:
+    ///     [WMATA Entrances Documentation](https://developer.wmata.com/docs/services/5476364f031f590f38092507/operations/5476364f031f5909e4fe330f)
+    ///
     /// - Parameters:
-    ///     - radiusAtCoordinates: Radius at latitude and longitude to search at
+    ///     - radiusAtCoordinates: Radius at latitude and longitude to search at. Optional.
     ///
     /// - Returns: A Combine Publisher for [StationEntrances](x-source-tag://StationEntrances)
     func entrancesPublisher(at radiusAtCoordinates: RadiusAtCoordinates? = nil) -> AnyPublisher<StationEntrances, WMATAError> {
@@ -214,6 +251,9 @@ public extension MetroRail {
 
     /// Uniquely identifiable trains in service and what track circuits they currently occupy
     ///
+    /// - Note:
+    ///     [WMATA Positions Documentation](https://developer.wmata.com/docs/services/5763fa6ff91823096cac1057/operations/5763fb35f91823096cac1058)
+    ///
     /// - Returns: A Combine Publisher for [TrainPositions](x-source-tag://TrainPositions)
     func positionsPublisher() -> AnyPublisher<TrainPositions, WMATAError> {
         publisher(
@@ -224,6 +264,9 @@ public extension MetroRail {
 
     /// Ordered list of track circuits, arranged by line and track number
     ///
+    /// - Note:
+    ///     [WMATA Routes Documentation](https://developer.wmata.com/docs/services/5763fa6ff91823096cac1057/operations/57641afc031f59363c586dca)
+    ///
     /// - Returns: A Combine Publisher for [StandardRoutes](x-source-tag://StandardRoutes)
     func routesPublisher() -> AnyPublisher<StandardRoutes, WMATAError> {
         publisher(
@@ -233,6 +276,9 @@ public extension MetroRail {
     }
 
     /// List of all track circuits - See https://developer.wmata.com/TrainPositionsFAQ
+    ///
+    /// - Note:
+    ///     [WMATA Circuits Documentation](https://developer.wmata.com/docs/services/5763fa6ff91823096cac1057/operations/57644238031f59363c586dcb)
     ///
     /// - Returns: A Combine Publisher for [TrackCircuits](x-source-tag://TrackCircuits)
     func circuitsPublisher() -> AnyPublisher<TrackCircuits, WMATAError> {
@@ -249,18 +295,24 @@ public extension MetroRail {
     /// Distance, fare information, and estimated travel time between any two stations. Omit both station codes to receive information for all possible trips.
     /// For use with a [WMATADelegate](x-source-tag://WMATADelegate)
     ///
+    /// - Note:
+    ///     [WMATA Station To Station Documentation](https://developer.wmata.com/docs/services/5476364f031f590f38092507/operations/5476364f031f5909e4fe3313)
+    ///
     /// - Parameters:
-    ///     - station: Station to start trip at
-    ///     - destinationStation: Station to travel to
+    ///     - station: Station to start trip at. Optional.
+    ///     - destinationStation: Station to travel to. Optional.
     func station(_ station: Station? = nil, to destinationStation: Station? = nil) {
         (self as NeedsStation).station(station, to: destinationStation, key: key, session: urlSession)
     }
 
     /// Distance, fare information, and estimated travel time between any two stations. Omit both station codes to receive information for all possible trips.
     ///
+    /// - Note:
+    ///     [WMATA Station To Station Documentation](https://developer.wmata.com/docs/services/5476364f031f590f38092507/operations/5476364f031f5909e4fe3313)
+    ///
     /// - Parameters:
-    ///     - station: Station to start trip at
-    ///     - destinationStation: Station to travel to
+    ///     - station: Station to start trip at. Optional.
+    ///     - destinationStation: Station to travel to. Optional.
     ///     - completion: A completion handler
     ///     - result: [StationToStationInfos](x-source-tag://StationToStationInfos) if successful, otherwise [WMATAError](x-source-tag://WMATAError)
     func station(_ station: Station? = nil, to destinationStation: Station? = nil, completion: @escaping (_ result: Result<StationToStationInfos, WMATAError>) -> Void) {
@@ -270,6 +322,9 @@ public extension MetroRail {
     /// Reported elevator and escalator incidents
     /// For use with a [WMATADelegate](x-source-tag://WMATADelegate)
     ///
+    /// - Note:
+    ///     [WMATA Elevator and Escalator Incidents Documentation](https://developer.wmata.com/docs/services/54763641281d83086473f232/operations/54763641281d830c946a3d76)
+    ///
     /// - Parameters:
     ///     - station: Which station to search for incidents at. Optional.
     func elevatorAndEscalatorIncidents(at station: Station? = nil) {
@@ -277,6 +332,9 @@ public extension MetroRail {
     }
 
     /// Reported elevator and escalator incidents
+    ///
+    /// - Note:
+    ///     [WMATA Elevator and Escalator Incidents Documentation](https://developer.wmata.com/docs/services/54763641281d83086473f232/operations/54763641281d830c946a3d76)
     ///
     /// - Parameters:
     ///     - station: Which station to search for incidents at. Optional.
@@ -289,6 +347,9 @@ public extension MetroRail {
     /// Reported MetroRail incidents
     /// For use with a [WMATADelegate](x-source-tag://WMATADelegate)
     ///
+    /// - Note:
+    ///     [WMATA Rail Incidents Documentation](https://developer.wmata.com/docs/services/54763641281d83086473f232/operations/54763641281d830c946a3d77)
+    ///
     /// - Parameters:
     ///     - station: Station to search for incidents at. Optional.
     func incidents(at station: Station? = nil) {
@@ -296,6 +357,9 @@ public extension MetroRail {
     }
 
     /// Reported MetroRail incidents
+    ///
+    /// - Note:
+    ///     [WMATA Rail Incidents Documentation](https://developer.wmata.com/docs/services/54763641281d83086473f232/operations/54763641281d830c946a3d77)
     ///
     /// - Parameters:
     ///     - station: Station to search for incidents at. Optional.
@@ -308,6 +372,9 @@ public extension MetroRail {
     /// Next train arrival information for this station
     /// For use with a [WMATADelegate](x-source-tag://WMATADelegate)
     ///
+    /// - Note:
+    ///     [WMATA Next Trains Documentation](https://developer.wmata.com/docs/services/547636a6f9182302184cda78/operations/547636a6f918230da855363f)
+    ///
     /// - Parameters:
     ///     - station: Station to search for trains at
     func nextTrains(at station: Station) {
@@ -315,6 +382,9 @@ public extension MetroRail {
     }
 
     /// Next train arrival information for this station
+    ///
+    /// - Note:
+    ///     [WMATA Next Trains Documentation](https://developer.wmata.com/docs/services/547636a6f9182302184cda78/operations/547636a6f918230da855363f)
     ///
     /// - Parameters:
     ///     - station: `Station` to search for trains at
@@ -327,6 +397,9 @@ public extension MetroRail {
     /// Next train arrival information for the given stations
     /// For use with a [WMATADelegate](x-source-tag://WMATADelegate)
     ///
+    /// - Note:
+    ///     [WMATA Next Trains Documentation](https://developer.wmata.com/docs/services/547636a6f9182302184cda78/operations/547636a6f918230da855363f)
+    ///
     /// - Parameters:
     ///     - stations: Stations to look up next trains for
     func nextTrains(at stations: [Station]) {
@@ -334,6 +407,9 @@ public extension MetroRail {
     }
 
     /// Next train arrival information for the given stations
+    ///
+    /// - Note:
+    ///     [WMATA Next Trains Documentation](https://developer.wmata.com/docs/services/547636a6f9182302184cda78/operations/547636a6f918230da855363f)
     ///
     /// - Parameters:
     ///     - stations: Stations to look up next trains for
@@ -346,6 +422,9 @@ public extension MetroRail {
     /// Location and address information for this station
     /// For use with a [WMATADelegate](x-source-tag://WMATADelegate)
     ///
+    /// - Note:
+    ///     [WMATA Station Information Documentation](https://developer.wmata.com/docs/services/5476364f031f590f38092507/operations/5476364f031f5909e4fe3310)
+    ///
     /// - Parameters:
     ///     - station: Station to search for information on
     func information(for station: Station) {
@@ -353,6 +432,9 @@ public extension MetroRail {
     }
 
     /// Location and address information for this station
+    ///
+    /// - Note:
+    ///     [WMATA Station Information Documentation](https://developer.wmata.com/docs/services/5476364f031f590f38092507/operations/5476364f031f5909e4fe3310)
     ///
     /// - Parameters:
     ///     - station: Station to search for information on
@@ -365,6 +447,9 @@ public extension MetroRail {
     /// Parking information for this station
     /// For use with a [WMATADelegate](x-source-tag://WMATADelegate)
     ///
+    /// - Note:
+    ///     [WMATA Station Parking Documentation](https://developer.wmata.com/docs/services/5476364f031f590f38092507/operations/5476364f031f5909e4fe330d)
+    ///
     /// - Parameters:
     ///     - station: Station to search for parking information on
     func parkingInformation(for station: Station) {
@@ -372,6 +457,9 @@ public extension MetroRail {
     }
 
     /// Parking information for this station
+    ///
+    /// - Note:
+    ///     [WMATA Station Parking Documentation](https://developer.wmata.com/docs/services/5476364f031f590f38092507/operations/5476364f031f5909e4fe330d)
     ///
     /// - Parameters:
     ///     - station: Station  to search for parking information on
@@ -384,6 +472,9 @@ public extension MetroRail {
     /// Returns a set of ordered stations and distances between two stations _on the same line_
     /// For use with a [WMATADelegate](x-source-tag://WMATADelegate)
     ///
+    /// - Note:
+    ///     [WMATA Path Documentation](https://developer.wmata.com/docs/services/5476364f031f590f38092507/operations/5476364f031f5909e4fe330e)
+    ///
     /// - Parameters:
     ///     - startingStation: Starting station to pathfind from
     ///     - destinationStation: Destination station to pathfind to
@@ -392,6 +483,9 @@ public extension MetroRail {
     }
 
     /// Returns a set of ordered stations and distances between two stations _on the same line_
+    ///
+    /// - Note:
+    ///     [WMATA Path Documentation](https://developer.wmata.com/docs/services/5476364f031f590f38092507/operations/5476364f031f5909e4fe330e)
     ///
     /// - Parameters:
     ///     - startingStation: Starting station to pathfind from
@@ -405,6 +499,9 @@ public extension MetroRail {
     /// Opening and scheduled first and last trains for this station
     /// For use with a [WMATADelegate](x-source-tag://WMATADelegate)
     ///
+    /// - Note:
+    ///     [WMATA Timings Documentation](https://developer.wmata.com/docs/services/5476364f031f590f38092507/operations/5476364f031f5909e4fe3312)
+    ///
     /// - Parameters:
     ///     - station: Station to search for timings on
     func timings(for station: Station) {
@@ -412,6 +509,9 @@ public extension MetroRail {
     }
 
     /// Opening and scheduled first and last trains for this station
+    ///
+    /// - Note:
+    ///     [WMATA Timings Documentation](https://developer.wmata.com/docs/services/5476364f031f590f38092507/operations/5476364f031f5909e4fe3312)
     ///
     /// - Parameters:
     ///     - station: Station to search for timings on
@@ -426,9 +526,12 @@ public extension MetroRail {
 public extension MetroRail {
     /// Distance, fare information, and estimated travel time between any two stations. Omit both station codes to receive information for all possible trips.
     ///
+    /// - Note:
+    ///     [WMATA Station To Station Documentation](https://developer.wmata.com/docs/services/5476364f031f590f38092507/operations/5476364f031f5909e4fe3313)
+    ///
     /// - Parameters:
-    ///     - station: Station to start trip at
-    ///     - destinationStation: Station to travel to
+    ///     - station: Station to start trip at. Optional.
+    ///     - destinationStation: Station to travel to. Optional.
     ///
     /// - Returns: A Combine Publisher for [StationToStationInfos](x-source-tag://StationToStationInfos)
     func stationPublisher(_ station: Station? = nil, to destinationStation: Station? = nil) -> AnyPublisher<StationToStationInfos, WMATAError> {
@@ -436,6 +539,9 @@ public extension MetroRail {
     }
 
     /// Reported elevator and escalator incidents
+    ///
+    /// - Note:
+    ///     [WMATA Elevator to Escalator Incidents Documentation](https://developer.wmata.com/docs/services/54763641281d83086473f232/operations/54763641281d830c946a3d76)
     ///
     /// - Parameters:
     ///     - station: Which station to search for incidents at. Optional.
@@ -447,6 +553,9 @@ public extension MetroRail {
 
     /// Reported MetroRail incidents
     ///
+    /// - Note:
+    ///     [WMATA Rail Incidents Documentation](https://developer.wmata.com/docs/services/54763641281d83086473f232/operations/54763641281d830c946a3d77)
+    ///
     /// - Parameters:
     ///     - station: Station to search for incidents at. Optional.
     ///
@@ -456,6 +565,9 @@ public extension MetroRail {
     }
 
     /// Next train arrival information for this station
+    ///
+    /// - Note:
+    ///     [WMATA Next Trains Documentation](https://developer.wmata.com/docs/services/547636a6f9182302184cda78/operations/547636a6f918230da855363f)
     ///
     /// - Parameters:
     ///     - station: Station to search for trains at
@@ -467,6 +579,9 @@ public extension MetroRail {
 
     /// Next train arrival information for the given stations
     ///
+    /// - Note:
+    ///     [WMATA Next Trains Documentation](https://developer.wmata.com/docs/services/547636a6f9182302184cda78/operations/547636a6f918230da855363f)
+    ///
     /// - Parameters:
     ///     - stations: Stations to look up next trains for
     ///
@@ -476,6 +591,9 @@ public extension MetroRail {
     }
 
     /// Location and address information for this station
+    ///
+    /// - Note:
+    ///     [WMATA Station Information Documentation](https://developer.wmata.com/docs/services/5476364f031f590f38092507/operations/5476364f031f5909e4fe3310)
     ///
     /// - Parameters:
     ///     - station: Station search for information on
@@ -487,6 +605,9 @@ public extension MetroRail {
 
     /// Parking information for this station
     ///
+    /// - Note:
+    ///     [WMATA Station Parking Documentation](https://developer.wmata.com/docs/services/5476364f031f590f38092507/operations/5476364f031f5909e4fe330d)
+    ///
     /// - Parameters:
     ///     - station: Station to search for parking information on
     ///
@@ -496,6 +617,9 @@ public extension MetroRail {
     }
 
     /// Returns a set of ordered stations and distances between two stations _on the same line_
+    ///
+    /// - Note:
+    ///     [WMATA Path Documentation](https://developer.wmata.com/docs/services/5476364f031f590f38092507/operations/5476364f031f5909e4fe330e)
     ///
     /// - Parameters:
     ///     - startingStation: Starting station to pathfind from
@@ -507,6 +631,9 @@ public extension MetroRail {
     }
 
     /// Opening and scheduled first and last trains for this station
+    ///
+    /// - Note:
+    ///     [WMATA Timings Documentation](https://developer.wmata.com/docs/services/5476364f031f590f38092507/operations/5476364f031f5909e4fe3312)
     ///
     /// - Parameters:
     ///     - station: Station to search for timings for
@@ -523,6 +650,9 @@ public extension MetroRail {
     /// Stations along a Line
     /// For use with a [WMATADelegate](x-source-tag://WMATADelegate)
     ///
+    /// - Note:
+    ///     [WMATA Stations Documentation]( https://developer.wmata.com/docs/services/5476364f031f590f38092507/operations/5476364f031f5909e4fe3311)
+    ///
     /// - Parameters:
     ///     - line: Line to receive stations along. Omit to receive all stations.
     func stations(for line: Line? = nil) {
@@ -530,6 +660,9 @@ public extension MetroRail {
     }
 
     /// Stations along a Line
+    ///
+    /// - Note:
+    ///     [WMATA Stations Documentation]( https://developer.wmata.com/docs/services/5476364f031f590f38092507/operations/5476364f031f5909e4fe3311)
     ///
     /// - Parameters:
     ///     - line: Line to receive stations along. Omit to receive all stations.
@@ -544,9 +677,13 @@ public extension MetroRail {
 public extension MetroRail {
     /// Stations along a Line
     ///
+    /// - Note:
+    ///     [WMATA Stations Documentation]( https://developer.wmata.com/docs/services/5476364f031f590f38092507/operations/5476364f031f5909e4fe3311)
+    ///
     /// - Parameters:
     ///     - line: Line to receive stations along. Omit to receive all stations.
-    /// - returns: A Combine Publisher for [Stations](x-source-tag://Stations)
+    ///
+    /// - Returns: A Combine Publisher for [Stations](x-source-tag://Stations)
     func stationsPublisher(for line: Line? = nil) -> AnyPublisher<Stations, WMATAError> {
         (self as NeedsLine).stationsPublisher(for: line, key: key, session: urlSession)
     }
@@ -557,7 +694,9 @@ extension MetroRail: GTFSRTFetcher {}
 /// GTFS-RT Calls
 public extension MetroRail {
     /// GTFS RT 2.0 service alerts feed for WMATA rail.
-    /// See https://developers.google.com/transit/gtfs-realtime/guides/service-alerts
+    ///
+    /// - Note:
+    ///     [Google Alerts Documentation](https://developers.google.com/transit/gtfs-realtime/guides/service-alerts)
     ///
     /// - Parameters:
     ///     - completion: A completion handler
@@ -571,8 +710,10 @@ public extension MetroRail {
     }
 
     /// GTFS RT 2.0 service alerts feed for WMATA rail.
-    /// See https://developers.google.com/transit/gtfs-realtime/guides/service-alerts
     /// For use with a [WMATADelegate](x-source-tag://WMATADelegate)
+    ///
+    /// - Note:
+    ///     [Google Alerts Documentation](https://developers.google.com/transit/gtfs-realtime/guides/service-alerts)
     func alerts() {
         request(
             request: URLRequest(
@@ -584,7 +725,9 @@ public extension MetroRail {
     }
 
     /// GTFS RT 2.0 trip updates feed for WMATA rail.
-    /// See https://developers.google.com/transit/gtfs-realtime/guides/trip-updates
+    ///
+    /// - Note:
+    ///     [Google Trip Updates Documentation](https://developers.google.com/transit/gtfs-realtime/guides/trip-updates)
     ///
     /// - Parameters:
     ///     - completion: A completion handler
@@ -601,8 +744,10 @@ public extension MetroRail {
     }
 
     /// GTFS RT 2.0 trip updates feed for WMATA rail.
-    /// See https://developers.google.com/transit/gtfs-realtime/guides/trip-updates
     /// For use with a [WMATADelegate](x-source-tag://WMATADelegate)
+    ///
+    /// - Note:
+    ///     [Google Trip Updates Documentation](https://developers.google.com/transit/gtfs-realtime/guides/trip-updates)
     func tripUpdates() {
         request(
             request: URLRequest(
@@ -614,7 +759,9 @@ public extension MetroRail {
     }
 
     /// GTFS RT 2.0 vehicle positions feed for WMATA rail.
-    /// See https://developers.google.com/transit/gtfs-realtime/guides/vehicle-positions
+    ///
+    /// - Note:
+    ///     [Google Vehicle Positions Documentation]( https://developers.google.com/transit/gtfs-realtime/guides/vehicle-positions)
     ///
     /// - Parameters:
     ///     - completion: A completion handler
@@ -628,8 +775,10 @@ public extension MetroRail {
     }
 
     /// GTFS RT 2.0 vehicle positions feed for WMATA rail.
-    /// See https://developers.google.com/transit/gtfs-realtime/guides/vehicle-positions
     /// For use with a [WMATADelegate](x-source-tag://WMATADelegate)
+    ///
+    /// - Note:
+    ///     [Google Vehicle Positions Documentation]( https://developers.google.com/transit/gtfs-realtime/guides/vehicle-positions)
     func vehiclePositions() {
         request(
             request: URLRequest(
@@ -644,7 +793,9 @@ public extension MetroRail {
 @available(macOS 10.15, iOS 13, watchOS 6, tvOS 13, *)
 public extension MetroRail {
     /// GTFS RT 2.0 service alerts feed for WMATA rail.
-    /// See https://developers.google.com/transit/gtfs-realtime/guides/service-alerts
+    ///
+    /// - Note:
+    ///     [Google Alerts Documentation](https://developers.google.com/transit/gtfs-realtime/guides/service-alerts)
     ///
     /// - Returns: A Combine Publisher for `TransitRealtime_FeedMessage`
     func alertsPublisher() -> AnyPublisher<TransitRealtime_FeedMessage, WMATAError> {
@@ -655,7 +806,9 @@ public extension MetroRail {
     }
 
     /// GTFS RT 2.0 trip updates feed for WMATA rail.
-    /// See https://developers.google.com/transit/gtfs-realtime/guides/trip-updates
+    ///
+    /// - Note:
+    ///     [WMATA Trip Updates Documentation](https://developers.google.com/transit/gtfs-realtime/guides/trip-updates)
     ///
     /// - Returns: A Combine Publisher for `TransitRealtime_FeedMessage`
     func tripUpdatesPublisher() -> AnyPublisher<TransitRealtime_FeedMessage, WMATAError> {
@@ -669,7 +822,9 @@ public extension MetroRail {
     }
 
     /// GTFS RT 2.0 vehicle positions feed for WMATA rail.
-    /// See https://developers.google.com/transit/gtfs-realtime/guides/vehicle-positions
+    ///
+    /// - Note:
+    ///     [WMATA Vehicle Positions Documentation](https://developers.google.com/transit/gtfs-realtime/guides/vehicle-positions)
     ///
     /// - Returns: A Combine Publisher for`TransitRealtime_FeedMessage`
     func vehiclePositionsPublisher() -> AnyPublisher<TransitRealtime_FeedMessage, WMATAError> {
