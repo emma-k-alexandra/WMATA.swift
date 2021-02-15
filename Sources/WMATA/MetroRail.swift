@@ -57,6 +57,8 @@ public extension MetroRail {
     ///
     /// For use with a [WMATADelegate](x-source-tag://WMATADelegate)
     ///
+    /// [Corresponding WMATADelegate Handler](x-source-tag://DelegateLinesResponse)
+    ///
     /// - Note:
     ///     [WMATA Lines API Documentation](https://developer.wmata.com/docs/services/5476364f031f590f38092507/operations/5476364f031f5909e4fe330c)
     func lines() {
@@ -83,7 +85,10 @@ public extension MetroRail {
     }
 
     /// Station entrances within a radius of a lat long pair, omit all parameters to receive all entrances
+    ///
     /// For use with a [WMATADelegate](x-source-tag://WMATADelegate)
+    ///
+    /// [Corresponding WMATADelegate Handler](x-source-tag://DelegateStationEntrances)
     ///
     /// - Note:
     ///     [WMATA Entrances Documentation](https://developer.wmata.com/docs/services/5476364f031f590f38092507/operations/5476364f031f5909e4fe330f)
@@ -127,7 +132,10 @@ public extension MetroRail {
     }
 
     /// Uniquely identifiable trains in service and what track circuits they currently occupy
+    ///
     /// For use with a [WMATADelegate](x-source-tag://WMATADelegate)
+    ///
+    /// [Corresponding WMATADelegate Handler](x-source-tag://DelegateTrainPositions)
     ///
     /// - Note:
     ///     [WMATA Positions Documentation](https://developer.wmata.com/docs/services/5763fa6ff91823096cac1057/operations/5763fb35f91823096cac1058)
@@ -155,7 +163,10 @@ public extension MetroRail {
     }
 
     /// Ordered list of track circuits, arranged by line and track number
+    ///
     /// For use with a [WMATADelegate](x-source-tag://WMATADelegate)
+    ///
+    /// [Corresponding WMATADelegate Handler](x-source-tag://DelegateStandardRoutes)
     ///
     /// - Note:
     ///     [WMATA Routes Documentation](https://developer.wmata.com/docs/services/5763fa6ff91823096cac1057/operations/57641afc031f59363c586dca)
@@ -183,7 +194,10 @@ public extension MetroRail {
     }
 
     /// List of all track circuits - See https://developer.wmata.com/TrainPositionsFAQ
+    ///
     /// For use with a [WMATADelegate](x-source-tag://WMATADelegate)
+    ///
+    /// [Corresponding WMATADelegate Handler](x-source-tag://DelegateTrackCircuits)
     ///
     /// - Note:
     ///     [WMATA Circuits Documentation](https://developer.wmata.com/docs/services/5763fa6ff91823096cac1057/operations/57644238031f59363c586dcb)
@@ -293,7 +307,10 @@ extension MetroRail: NeedsStation {}
 
 public extension MetroRail {
     /// Distance, fare information, and estimated travel time between any two stations. Omit both station codes to receive information for all possible trips.
+    ///
     /// For use with a [WMATADelegate](x-source-tag://WMATADelegate)
+    ///
+    /// [Corresponding WMATADelegate Handler](x-source-tag://DelegateStationToStationInfos)
     ///
     /// - Note:
     ///     [WMATA Station To Station Documentation](https://developer.wmata.com/docs/services/5476364f031f590f38092507/operations/5476364f031f5909e4fe3313)
@@ -320,7 +337,10 @@ public extension MetroRail {
     }
 
     /// Reported elevator and escalator incidents
+    ///
     /// For use with a [WMATADelegate](x-source-tag://WMATADelegate)
+    ///
+    /// [Corresponding WMATADelegate Handler](x-source-tag://DelegateElevatorAndEscalatorIncidents)
     ///
     /// - Note:
     ///     [WMATA Elevator and Escalator Incidents Documentation](https://developer.wmata.com/docs/services/54763641281d83086473f232/operations/54763641281d830c946a3d76)
@@ -345,7 +365,10 @@ public extension MetroRail {
     }
 
     /// Reported MetroRail incidents
+    ///
     /// For use with a [WMATADelegate](x-source-tag://WMATADelegate)
+    ///
+    /// [Corresponding WMATADelegate Handler](x-source-tag://DelegateRailIncidents)
     ///
     /// - Note:
     ///     [WMATA Rail Incidents Documentation](https://developer.wmata.com/docs/services/54763641281d83086473f232/operations/54763641281d830c946a3d77)
@@ -370,7 +393,10 @@ public extension MetroRail {
     }
 
     /// Next train arrival information for this station
+    ///
     /// For use with a [WMATADelegate](x-source-tag://WMATADelegate)
+    ///
+    /// [Corresponding WMATADelegate Handler](x-source-tag://DelegateRailPredictions)
     ///
     /// - Note:
     ///     [WMATA Next Trains Documentation](https://developer.wmata.com/docs/services/547636a6f9182302184cda78/operations/547636a6f918230da855363f)
@@ -395,7 +421,10 @@ public extension MetroRail {
     }
 
     /// Next train arrival information for the given stations
+    ///
     /// For use with a [WMATADelegate](x-source-tag://WMATADelegate)
+    ///
+    /// [Corresponding WMATADelegate Handler](x-source-tag://DelegateRailPredictions)
     ///
     /// - Note:
     ///     [WMATA Next Trains Documentation](https://developer.wmata.com/docs/services/547636a6f9182302184cda78/operations/547636a6f918230da855363f)
@@ -420,7 +449,10 @@ public extension MetroRail {
     }
 
     /// Location and address information for this station
+    ///
     /// For use with a [WMATADelegate](x-source-tag://WMATADelegate)
+    ///
+    /// [Corresponding WMATADelegate Handler](x-source-tag://DelegateStationInformation)
     ///
     /// - Note:
     ///     [WMATA Station Information Documentation](https://developer.wmata.com/docs/services/5476364f031f590f38092507/operations/5476364f031f5909e4fe3310)
@@ -445,7 +477,10 @@ public extension MetroRail {
     }
 
     /// Parking information for this station
+    ///
     /// For use with a [WMATADelegate](x-source-tag://WMATADelegate)
+    ///
+    /// [Corresponding WMATADelegate Handler](x-source-tag://DelegateStationsParking)
     ///
     /// - Note:
     ///     [WMATA Station Parking Documentation](https://developer.wmata.com/docs/services/5476364f031f590f38092507/operations/5476364f031f5909e4fe330d)
@@ -470,7 +505,10 @@ public extension MetroRail {
     }
 
     /// Returns a set of ordered stations and distances between two stations _on the same line_
+    ///
     /// For use with a [WMATADelegate](x-source-tag://WMATADelegate)
+    ///
+    /// [Corresponding WMATADelegate Handler](x-source-tag://DelegatePathBetweenStations)
     ///
     /// - Note:
     ///     [WMATA Path Documentation](https://developer.wmata.com/docs/services/5476364f031f590f38092507/operations/5476364f031f5909e4fe330e)
@@ -497,7 +535,10 @@ public extension MetroRail {
     }
 
     /// Opening and scheduled first and last trains for this station
+    ///
     /// For use with a [WMATADelegate](x-source-tag://WMATADelegate)
+    ///
+    /// [Corresponding WMATADelegate Handler](x-source-tag://DelegateStationTimings)
     ///
     /// - Note:
     ///     [WMATA Timings Documentation](https://developer.wmata.com/docs/services/5476364f031f590f38092507/operations/5476364f031f5909e4fe3312)
@@ -648,7 +689,10 @@ extension MetroRail: NeedsLine {}
 
 public extension MetroRail {
     /// Stations along a Line
+    ///
     /// For use with a [WMATADelegate](x-source-tag://WMATADelegate)
+    ///
+    /// [Corresponding WMATADelegate Handler](x-source-tag://DelegateStations)
     ///
     /// - Note:
     ///     [WMATA Stations Documentation]( https://developer.wmata.com/docs/services/5476364f031f590f38092507/operations/5476364f031f5909e4fe3311)
@@ -710,7 +754,10 @@ public extension MetroRail {
     }
 
     /// GTFS RT 2.0 service alerts feed for WMATA rail.
+    ///
     /// For use with a [WMATADelegate](x-source-tag://WMATADelegate)
+    ///
+    /// [Corresponding WMATADelegate Handler](x-source-tag://DelegateAlerts)
     ///
     /// - Note:
     ///     [Google Alerts Documentation](https://developers.google.com/transit/gtfs-realtime/guides/service-alerts)
@@ -744,7 +791,10 @@ public extension MetroRail {
     }
 
     /// GTFS RT 2.0 trip updates feed for WMATA rail.
+    ///
     /// For use with a [WMATADelegate](x-source-tag://WMATADelegate)
+    ///
+    /// [Corresponding WMATADelegate Handler](x-source-tag://DelegateTripUpdates)
     ///
     /// - Note:
     ///     [Google Trip Updates Documentation](https://developers.google.com/transit/gtfs-realtime/guides/trip-updates)
@@ -775,7 +825,10 @@ public extension MetroRail {
     }
 
     /// GTFS RT 2.0 vehicle positions feed for WMATA rail.
+    ///
     /// For use with a [WMATADelegate](x-source-tag://WMATADelegate)
+    ///
+    /// [Corresponding WMATADelegate Handler](x-source-tag://DelegateVehiclePositions)
     ///
     /// - Note:
     ///     [Google Vehicle Positions Documentation]( https://developers.google.com/transit/gtfs-realtime/guides/vehicle-positions)

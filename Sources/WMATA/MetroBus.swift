@@ -54,7 +54,10 @@ public struct MetroBus: Fetcher {
 // These don't require any Route or Stop IDs
 public extension MetroBus {
     /// All bus routes and variants
+    ///
     /// For use with a [WMATADelegate](x-source-tag://WMATADelegate)
+    ///
+    /// [Corresponding WMATADelegate Handler](x-source-tag://DelegateRoutesResponse)
     ///
     /// - Note:
     ///     [WMATA Routes Documentation](https://developer.wmata.com/docs/services/54763629281d83086473f231/operations/5476362a281d830c946a3d6a)
@@ -82,7 +85,10 @@ public extension MetroBus {
     }
 
     /// Stops nearby the given latitude, longitude and radius. Omit latitude, longitude and radius to receive all stops.
+    ///
     /// For use with a [WMATADelegate](x-source-tag://WMATADelegate)
+    ///
+    /// [Corresponding WMATADelegate Handler](x-source-tag://DelegateStopsSearchResponse)
     ///
     /// - Note:
     ///     [WMATA Search Stop Documentation](https://developer.wmata.com/docs/services/54763629281d83086473f231/operations/5476362a281d830c946a3d6d)
@@ -168,7 +174,10 @@ extension MetroBus: NeedsRoute {}
 
 public extension MetroBus {
     /// Bus positions including latlong and direction. Omit routeId, latitude, longitude and radius to receive all bus positions.
+    ///
     /// For use with a [WMATADelegate](x-source-tag://WMATADelegate)
+    ///
+    /// [Corresponding WMATADelegate Handler](x-source-tag://DelegateBusPositions)
     ///
     /// - Note:
     ///     [WMATA Positions Documentation](https://developer.wmata.com/docs/services/54763629281d83086473f231/operations/5476362a281d830c946a3d68)
@@ -195,7 +204,10 @@ public extension MetroBus {
     }
 
     /// Bus incidents along a given route.
+    ///
     /// For use with a [WMATADelegate](x-source-tag://WMATADelegate)
+    ///
+    /// [Corresponding WMATADelegate Handler](x-source-tag://DelegateBusIncidents)
     ///
     /// - Note:
     ///     [WMATA Incidents Documentation](https://developer.wmata.com/docs/services/54763641281d83086473f232/operations/54763641281d830c946a3d75)
@@ -220,7 +232,10 @@ public extension MetroBus {
     }
 
     /// Ordered latlong points along this Route for a given date. Omit date to get path information for today.
+    ///
     /// For use with a [WMATADelegate](x-source-tag://WMATADelegate)
+    ///
+    /// [Corresponding WMATADelegate Handler](x-source-tag://DelegatePathDetails)
     ///
     /// - Note:
     ///     [WMATA Path Details Documentation](https://developer.wmata.com/docs/services/54763629281d83086473f231/operations/5476362a281d830c946a3d69)
@@ -247,7 +262,10 @@ public extension MetroBus {
     }
 
     /// Scheduled stops for this Route
+    ///
     /// For use with a [WMATADelegate](x-source-tag://WMATADelegate)
+    ///
+    /// [Corresponding WMATADelegate Handler](x-source-tag://DelegateRouteSchedule)
     ///
     /// - Note:
     ///     [WMATA Route Schedule Documentation](https://developer.wmata.com/docs/services/54763629281d83086473f231/operations/5476362a281d830c946a3d6b)
@@ -339,7 +357,10 @@ extension MetroBus: NeedsStop {}
 
 public extension MetroBus {
     /// Next bus arrival times at this Stop
+    ///
     /// For use with a [WMATADelegate](x-source-tag://WMATADelegate)
+    ///
+    /// [Corresponding WMATADelegate Handler](x-source-tag://DelegateBusPredictions)
     ///
     /// - Note:
     ///     [WMATA Next Buses Documentation](https://developer.wmata.com/docs/services/5476365e031f590f38092508/operations/5476365e031f5909e4fe331d)
@@ -364,7 +385,10 @@ public extension MetroBus {
     }
 
     /// Set of buses scheduled to arrive at this Stop at a given date.
+    ///
     /// For use with a [WMATADelegate](x-source-tag://WMATADelegate)
+    ///
+    /// [Corresponding WMATADelegate Handler](x-source-tag://DelegateStopSchedule)
     ///
     /// - Note:
     ///     [WMATA Stop Schedule Documentation](https://developer.wmata.com/docs/services/54763629281d83086473f231/operations/5476362a281d830c946a3d6c)
@@ -442,7 +466,10 @@ public extension MetroBus {
     }
 
     /// GTFS RT 2.0 service alerts feed for WMATA bus.
+    ///
     /// For use with a [WMATADelegate](x-source-tag://WMATADelegate)
+    ///
+    /// [Corresponding WMATADelegate Handler](x-source-tag://DelegateAlerts)
     ///
     /// - Note:
     ///     [Google Alerts Documentation](https://developers.google.com/transit/gtfs-realtime/guides/service-alerts)
@@ -476,7 +503,10 @@ public extension MetroBus {
     }
 
     /// GTFS RT 2.0 trip updates feed for WMATA bus.
+    ///
     /// For use with a [WMATADelegate](x-source-tag://WMATADelegate)
+    ///
+    /// [Corresponding WMATADelegate Handler](x-source-tag://DelegateTripUpdates)
     ///
     /// - Note:
     ///     [Google Trip Updates Documentation](https://developers.google.com/transit/gtfs-realtime/guides/trip-updates)
@@ -507,7 +537,10 @@ public extension MetroBus {
     }
 
     /// GTFS RT 2.0 vehicle positions feed for WMATA
+    ///
     /// For use with a [WMATADelegate](x-source-tag://WMATADelegate)
+    ///
+    /// [Corresponding WMATADelegate Handler](x-source-tag://DelegateVehiclePositions)
     ///
     /// - Note:
     ///     [Google Vehicle Positions Documentation](https://developers.google.com/transit/gtfs-realtime/guides/vehicle-positions)

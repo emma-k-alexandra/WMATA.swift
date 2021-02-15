@@ -12,55 +12,84 @@ import GTFS
 /// - Tag: WMATADelegate
 public protocol WMATADelegate {
     /// MetroRail responses
+    
+    /// - Tag: DelegateLinesResponse
     func received(linesResponse result: Result<LinesResponse, WMATAError>)
 
+    /// - Tag: DelegateStationEntrances
     func received(stationEntrances result: Result<StationEntrances, WMATAError>)
 
+    /// - Tag: DelegateTrainPositions
     func received(trainPositions result: Result<TrainPositions, WMATAError>)
 
+    /// - Tag: DelegateStandardRoutes
     func received(standardRoutes result: Result<StandardRoutes, WMATAError>)
 
+    /// - Tag: DelegateTrackCircuits
     func received(trackCircuits result: Result<TrackCircuits, WMATAError>)
 
+    /// - Tag: DelegateElevatorAndEscalatorIncidents
     func received(elevatorAndEscalatorIncidents result: Result<ElevatorAndEscalatorIncidents, WMATAError>)
 
+    /// - Tag: DelegateRailIncidents
     func received(railIncidents result: Result<RailIncidents, WMATAError>)
 
+    /// - Tag: DelegateRailPredictions
     func received(railPredictions result: Result<RailPredictions, WMATAError>)
 
+    /// - Tag: DelegateStationInformation
     func received(stationInformation result: Result<StationInformation, WMATAError>)
 
+    /// - Tag: DelegateStationsParking
     func received(stationsParking result: Result<StationsParking, WMATAError>)
 
+    /// - Tag: DelegatePathBetweenStations
     func received(pathBetweenStations result: Result<PathBetweenStations, WMATAError>)
 
+    /// - Tag: DelegateStationTimings
     func received(stationTimings result: Result<StationTimings, WMATAError>)
 
+    /// - Tag: DelegateStationToStationInfos
     func received(stationToStationInfos result: Result<StationToStationInfos, WMATAError>)
 
+    /// - Tag: DelegateStations
     func received(stations result: Result<Stations, WMATAError>)
 
     /// MetroBus responses
+    
+    /// - Tag: DelegateRoutesResponse
     func received(routesResponse result: Result<RoutesResponse, WMATAError>)
 
+    /// - Tag: DelegateStopsSearchResponse
     func received(stopSearchResponse result: Result<StopsSearchResponse, WMATAError>)
 
+    /// - Tag: DelegateBusIncidents
     func received(busIncidents result: Result<BusIncidents, WMATAError>)
 
+    /// - Tag: DelegateBusPositions
     func received(busPositions result: Result<BusPositions, WMATAError>)
 
+    /// - Tag: DelegatePathDetails
     func received(pathDetails result: Result<PathDetails, WMATAError>)
 
+    /// - Tag: DelegateRouteSchedule
     func received(routeSchedule result: Result<RouteSchedule, WMATAError>)
 
+    /// - Tag: DelegateBusPredictions
     func received(busPredictions result: Result<BusPredictions, WMATAError>)
 
+    /// - Tag: DelegateStopSchedule
     func received(stopSchedule result: Result<StopSchedule, WMATAError>)
+    
+    /// GTFS-RT responses
 
+    /// - Tag: DelegateAlerts
     func received(alerts result: Result<TransitRealtime_FeedMessage, WMATAError>)
 
+    /// - Tag: DelegateTripUpdates
     func received(tripUpdates result: Result<TransitRealtime_FeedMessage, WMATAError>)
 
+    /// - Tag: DelegateVehiclePositions
     func received(vehiclePositions result: Result<TransitRealtime_FeedMessage, WMATAError>)
 }
 
