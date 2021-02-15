@@ -42,6 +42,7 @@ dependencies: [
 ## Migration Guides
 
 - [v9 Migration Guide][v9-migration-guide]
+- [v10 Migration Guide][v10-migration-guide]
 
 ## Dependencies
 
@@ -82,6 +83,7 @@ WMATA.swift is released under the MIT license. [See LICENSE](https://github.com/
 [radius-at-coordinates]: https://github.com/emma-k-alexandra/WMATA.swift/blob/master/Documentation/Miscellaneous.md#RadiusAtCoordinates
 [wmata-date]: https://github.com/emma-k-alexandra/WMATA.swift/blob/master/Documentation/Miscellaneous.md#WMATADate
 [v9-migration-guide]: https://github.com/emma-k-alexandra/WMATA.swift/blob/master/Documentation/v9%20Migration%20Guide.md
+[v10-migration-guide]: https://github.com/emma-k-alexandra/WMATA.swift/blob/master/Documentation/v10%20Migration%20Guide.md
 [gtfs]: https://github.com/emma-k-alexandra/GTFS
 [swift-protobuf]: https://github.com/apple/swift-protobuf
 [wmata]: https://developer.wmata.com
