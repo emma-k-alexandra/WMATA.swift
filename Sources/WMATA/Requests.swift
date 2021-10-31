@@ -26,7 +26,14 @@ extension Requester {
                     completion(.failure(populatedError.wmataError))
 
                 } else {
-                    completion(.failure(WMATAError(statusCode: 0, message: "Neither data or error are present from request.")))
+                    completion(
+                        .failure(
+                            WMATAError(
+                                statusCode: 0,
+                                message: "Neither data or error are present from request."
+                            )
+                        )
+                    )
                 }
 
                 return
@@ -47,7 +54,8 @@ protocol Fetcher: Requester, Deserializer {}
 
 extension Fetcher {
     /// Default implementation for requesting and deserializing data
-    func fetch<T: Codable>(request: URLRequest, session: URLSession, completion: @escaping (Result<T, WMATAError>) -> Void) {
+    func fetch<T>(request: URLRequest, session: URLSession, completion: @escaping (Result<T, WMATAError>) -> Void)
+        where T: Codable {
         self.request(request: request, session: session) { result in
             switch result {
             case let .success(data):
@@ -60,13 +68,14 @@ extension Fetcher {
     }
 }
 
-@available(macOS 10.15, iOS 13, watchOS 6, tvOS 13, *)
+
 extension Fetcher {
-    func publisher<T: Codable>(request: URLRequest, session: URLSession) -> AnyPublisher<T, WMATAError> {
+    func publisher<T>(request: URLRequest, session: URLSession) -> AnyPublisher<T, WMATAError>
+        where T: Codable {
         session
             .dataTaskPublisher(for: request)
-            .map { $0.data }
-            .decode(type: T.self, decoder: JSONDecoder())
+            .map(\.data)
+            .decode(type: T.self, decoder: WMATAJSONDecoder())
             .mapError { $0.wmataError }
             .eraseToAnyPublisher()
     }
@@ -88,7 +97,7 @@ extension GTFSRTFetcher {
     }
 }
 
-@available(macOS 10.15, iOS 13, watchOS 6, tvOS 13, *)
+
 extension GTFSRTFetcher {
     func publisher(request: URLRequest, session: URLSession) -> AnyPublisher<TransitRealtime_FeedMessage, WMATAError> {
         session

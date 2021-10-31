@@ -226,7 +226,7 @@ public extension MetroRail {
 }
 
 // These don't require a Station or Line & return Combine Publishers
-@available(macOS 10.15, iOS 13, watchOS 6, tvOS 13, *)
+
 public extension MetroRail {
     /// General information on all MetroRail lines
     ///
@@ -563,7 +563,7 @@ public extension MetroRail {
     }
 }
 
-@available(macOS 10.15, iOS 13, watchOS 6, tvOS 13, *)
+
 public extension MetroRail {
     /// Distance, fare information, and estimated travel time between any two stations. Omit both station codes to receive information for all possible trips.
     ///
@@ -717,7 +717,7 @@ public extension MetroRail {
     }
 }
 
-@available(macOS 10.15, iOS 13, watchOS 6, tvOS 13, *)
+
 public extension MetroRail {
     /// Stations along a Line
     ///
@@ -843,7 +843,7 @@ public extension MetroRail {
     }
 }
 
-@available(macOS 10.15, iOS 13, watchOS 6, tvOS 13, *)
+
 public extension MetroRail {
     /// GTFS RT 2.0 service alerts feed for WMATA rail.
     ///

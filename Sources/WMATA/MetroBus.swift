@@ -132,7 +132,7 @@ public extension MetroBus {
     }
 }
 
-@available(macOS 10.15, iOS 13, watchOS 6, tvOS 13, *)
+
 public extension MetroBus {
     /// All bus routes and variants
     ///
@@ -290,11 +290,18 @@ public extension MetroBus {
     ///     - completion: A completion handler
     ///     - result: [RouteSchedule](x-source-tag://RouteSchedule) if successful, otherwise [WMATAError](x-source-tag://WMATAError)
     func routeSchedule(for route: Route, on date: WMATADate? = nil, includingVariations: Bool? = false, completion: @escaping (_ result: Result<RouteSchedule, WMATAError>) -> Void) {
-        (self as NeedsRoute).schedule(for: route, on: date, includingVariations: includingVariations, key: key, session: session, completion: completion)
+        (self as NeedsRoute).schedule(
+            for: route,
+            on: date,
+            includingVariations: includingVariations,
+            key: key,
+            session: session,
+            completion: completion
+        )
     }
 }
 
-@available(macOS 10.15, iOS 13, watchOS 6, tvOS 13, *)
+
 public extension MetroBus {
     /// Bus positions including latlong and direction. Omit routeId, latitude, longitude and radius to receive all bus positions.
     ///
@@ -415,7 +422,7 @@ public extension MetroBus {
     }
 }
 
-@available(macOS 10.15, iOS 13, watchOS 6, tvOS 13, *)
+
 public extension MetroBus {
     /// Next bus arrival times at this Stop
     ///
@@ -555,7 +562,7 @@ public extension MetroBus {
     }
 }
 
-@available(macOS 10.15, iOS 13, watchOS 6, tvOS 13, *)
+
 public extension MetroBus {
     /// GTFS RT 2.0 service alerts feed for WMATA bus.
     ///

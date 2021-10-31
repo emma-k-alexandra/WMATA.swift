@@ -21,6 +21,12 @@ public struct Route: Codable {
         self.id = id
     }
     
+    public init(from decoder: Decoder) throws {
+        let value = try decoder.singleValueContainer()
+        
+        self.id = try value.decode(String.self)
+    }
+    
     public func encode(to encoder: Encoder) throws {
         var container = encoder.singleValueContainer()
         
@@ -98,7 +104,7 @@ public extension Route {
     }
 }
 
-@available(macOS 10.15, iOS 13, watchOS 6, tvOS 13, *)
+
 public extension Route {
     /// Bus positions on this Route including latlong and direction.
     ///

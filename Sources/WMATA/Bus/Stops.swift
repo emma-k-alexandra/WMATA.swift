@@ -21,6 +21,12 @@ public struct Stop: Codable {
         self.id = id
     }
     
+    public init(from decoder: Decoder) throws {
+        let value = try decoder.singleValueContainer()
+        
+        self.id = try value.decode(String.self)
+    }
+    
     public func encode(to encoder: Encoder) throws {
         var container = encoder.singleValueContainer()
         
@@ -67,7 +73,7 @@ public extension Stop {
     }
 }
 
-@available(macOS 10.15, iOS 13, watchOS 6, tvOS 13, *)
+
 public extension Stop {
     /// Next bus arrival times at this Stop
     ///

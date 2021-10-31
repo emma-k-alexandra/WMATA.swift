@@ -213,7 +213,7 @@ extension NeedsStation {
     }
 }
 
-@available(macOS 10.15, iOS 13, watchOS 6, tvOS 13, *)
+
 extension NeedsStation {
     /// For requests using Combine
     func stationPublisher(_ station: Station?, to destinationStation: Station?, key: String, session: URLSession) -> AnyPublisher<StationToStationInfos, WMATAError> {
@@ -343,7 +343,7 @@ extension NeedsLine {
     }
 }
 
-@available(macOS 10.15, iOS 13, watchOS 6, tvOS 13, *)
+
 extension NeedsLine {
     func stationsPublisher(for line: Line?, key: String, session: URLSession) -> AnyPublisher<Stations, WMATAError> {
         var queryItems = [(String, String)]()

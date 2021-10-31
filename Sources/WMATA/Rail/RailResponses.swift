@@ -13,10 +13,6 @@ public struct RailPredictions: Codable {
     /// List of predictions
     public let trains: [RailPrediction]
 
-    enum CodingKeys: String, CodingKey {
-        case trains = "Trains"
-    }
-
     /// Create a rail predictions response
     ///
     /// - Parameters:
@@ -33,10 +29,10 @@ public struct RailPrediction: Codable {
     public let car: String?
     
     /// Abbreviated version of the final destination for a train. This is similar to what is displayed on the signs at stations.
-    public let destination: String
+    public let destinationShortName: String
     
     /// Destination station
-    public let destinationCode: Station?
+    public let destination: Station?
     
     /// When DestinationCode is populated, this is the full name of the destination station, as shown on the WMATA website.
     public let destinationName: String
@@ -45,7 +41,7 @@ public struct RailPrediction: Codable {
     public let group: String
     
     /// Line of the train
-    public let line: Line
+     @MapToNil<Line, Dashes> public var line: Line?
     
     /// The station the train is currently arriving at
     public let location: Station
@@ -55,18 +51,6 @@ public struct RailPrediction: Codable {
     
     /// Minutes until arrival. Can be a numeric value, ARR (arriving), BRD (boarding), ---, or empty.
     public let minutes: String
-
-    enum CodingKeys: String, CodingKey {
-        case car = "Car"
-        case destination = "Destination"
-        case destinationCode = "DestinationCode"
-        case destinationName = "DestinationName"
-        case group = "Group"
-        case line = "Line"
-        case location = "LocationCode"
-        case locationName = "LocationName"
-        case minutes = "Min"
-    }
 
     /// Create a rail prediction response
     ///
@@ -82,8 +66,8 @@ public struct RailPrediction: Codable {
     ///     - minutes: Minutes until arrival
     public init(
         car: String?,
-        destination: String,
-        destinationCode: Station?,
+        destinationShortName: String,
+        destination: Station?,
         destinationName: String,
         group: String,
         line: Line,
@@ -92,65 +76,14 @@ public struct RailPrediction: Codable {
         minutes: String
     ) {
         self.car = car
+        self.destinationShortName = destinationShortName
         self.destination = destination
-        self.destinationCode = destinationCode
         self.destinationName = destinationName
         self.group = group
         self.line = line
         self.location = location
         self.locationName = locationName
         self.minutes = minutes
-    }
-
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-
-        car = try container.decode(String?.self, forKey: .car)
-        destination = try container.decode(String.self, forKey: .destination)
-
-        let destinationCode = try container.decode(String?.self, forKey: .destinationCode)
-
-        if let destinationCode = destinationCode, destinationCode != "" {
-            guard let destination = Station(rawValue: destinationCode) else {
-                throw WMATAError(statusCode: 0, message: "Station provided by API was not valid")
-            }
-
-            self.destinationCode = destination
-
-        } else {
-            self.destinationCode = nil
-        }
-
-        destinationName = try container.decode(String.self, forKey: .destinationName)
-        group = try container.decode(String.self, forKey: .group)
-
-        guard let line = Line(rawValue: try container.decode(String.self, forKey: .line)) else {
-            throw WMATAError(statusCode: 0, message: "Line provided by API was not valid")
-        }
-
-        self.line = line
-
-        guard let location = Station(rawValue: try container.decode(String.self, forKey: .location)) else {
-            throw WMATAError(statusCode: 0, message: "Station provided by API was not valid")
-        }
-
-        self.location = location
-        locationName = try container.decode(String.self, forKey: .locationName)
-        minutes = try container.decode(String.self, forKey: .minutes)
-    }
-
-    public func encode(to encoder: Encoder) throws {
-        var container = encoder.container(keyedBy: CodingKeys.self)
-
-        try container.encode(car, forKey: .car)
-        try container.encode(destination, forKey: .destination)
-        try container.encode(destinationCode?.description, forKey: .destinationCode)
-        try container.encode(destinationName, forKey: .destinationName)
-        try container.encode(group, forKey: .group)
-        try container.encode(line.description, forKey: .line)
-        try container.encode(location.description, forKey: .location)
-        try container.encode(locationName, forKey: .locationName)
-        try container.encode(minutes, forKey: .minutes)
     }
 }
 
@@ -159,10 +92,6 @@ public struct RailPrediction: Codable {
 public struct TrainPositions: Codable {
     /// List of train positions
     public let trainPositions: [TrainPosition]
-
-    enum CodingKeys: String, CodingKey {
-        case trainPositions = "TrainPositions"
-    }
 
     /// Create a train positions response
     ///
@@ -177,7 +106,7 @@ public struct TrainPositions: Codable {
 /// - Tag: TrainPosition
 public struct TrainPosition: Codable {
     /// Uniquely identifiable internal train identifier
-    public let trainId: String
+    public let trainID: String
     
     /// Non-unique train identifier, often used by WMATA's Rail Scheduling and Operations Teams, as well as over open radio communication.
     public let trainNumber: String
@@ -189,7 +118,7 @@ public struct TrainPosition: Codable {
     public let directionNumber: Int
     
     /// The circuit identifier the train is currently on.
-    public let circuitId: Int
+    public let circuitID: Int
     
     /// Destination of train
     public let destination: Station?
@@ -203,103 +132,38 @@ public struct TrainPosition: Codable {
     /// Service Type of a train.
     public let serviceType: String
 
-    enum CodingKeys: String, CodingKey {
-        case trainId = "TrainId"
-        case trainNumber = "TrainNumber"
-        case carCount = "CarCount"
-        case directionNumber = "DirectionNum"
-        case circuitId = "CircuitId"
-        case destination = "DestinationStationCode"
-        case line = "LineCode"
-        case secondsAtLocation = "SecondsAtLocation"
-        case serviceType = "ServiceType"
-    }
-
     /// Create a train position response
     ///
     /// - Parameters:
-    ///     - trainId: Unique train identifier
+    ///     - trainID: Unique train identifier
     ///     - trainNumber: Non-unique train identifier
     ///     - carCount: Number of cars on train
     ///     - directionNumber: Direction of movement
-    ///     - circuitId: Circuit identifier train is currently on
+    ///     - circuitID: Circuit identifier train is currently on
     ///     - destination: Destination of train
     ///     - line: Line the train is currently on
     ///     - secondsAtLocation: Dwell time
     ///     - serviceType: Type of service of train
     public init(
-        trainId: String,
+        trainID: String,
         trainNumber: String,
         carCount: Int,
         directionNumber: Int,
-        circuitId: Int,
+        circuitID: Int,
         destination: Station?,
         line: Line?,
         secondsAtLocation: Int,
         serviceType: String
     ) {
-        self.trainId = trainId
+        self.trainID = trainID
         self.trainNumber = trainNumber
         self.carCount = carCount
         self.directionNumber = directionNumber
-        self.circuitId = circuitId
+        self.circuitID = circuitID
         self.destination = destination
         self.line = line
         self.secondsAtLocation = secondsAtLocation
         self.serviceType = serviceType
-    }
-
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-
-        trainId = try container.decode(String.self, forKey: .trainId)
-        trainNumber = try container.decode(String.self, forKey: .trainNumber)
-        carCount = try container.decode(Int.self, forKey: .carCount)
-        directionNumber = try container.decode(Int.self, forKey: .directionNumber)
-        circuitId = try container.decode(Int.self, forKey: .circuitId)
-
-        let destinationCode = try container.decode(String?.self, forKey: .destination)
-
-        if let destinationCode = destinationCode, destinationCode != "" {
-            guard let destination = Station(rawValue: destinationCode) else {
-                throw WMATAError(statusCode: 0, message: "Station provided by API was not valid")
-            }
-
-            self.destination = destination
-
-        } else {
-            destination = nil
-        }
-
-        let lineCode = try container.decode(String?.self, forKey: .line)
-
-        if let lineCode = lineCode, lineCode != "" {
-            guard let line = Line(rawValue: lineCode) else {
-                throw WMATAError(statusCode: 0, message: "Line provided by API was not valid")
-            }
-
-            self.line = line
-
-        } else {
-            line = nil
-        }
-
-        secondsAtLocation = try container.decode(Int.self, forKey: .secondsAtLocation)
-        serviceType = try container.decode(String.self, forKey: .serviceType)
-    }
-
-    public func encode(to encoder: Encoder) throws {
-        var container = encoder.container(keyedBy: CodingKeys.self)
-
-        try container.encode(trainId, forKey: .trainId)
-        try container.encode(trainNumber, forKey: .trainNumber)
-        try container.encode(carCount, forKey: .carCount)
-        try container.encode(directionNumber, forKey: .directionNumber)
-        try container.encode(circuitId, forKey: .circuitId)
-        try container.encode(destination?.description, forKey: .destination)
-        try container.encode(line?.description, forKey: .line)
-        try container.encode(secondsAtLocation, forKey: .secondsAtLocation)
-        try container.encode(serviceType, forKey: .serviceType)
     }
 }
 
@@ -308,10 +172,6 @@ public struct TrainPosition: Codable {
 public struct StandardRoutes: Codable {
     /// List of standard routes
     public let standardRoutes: [StandardRoute]
-
-    enum CodingKeys: String, CodingKey {
-        case standardRoutes = "StandardRoutes"
-    }
 
     /// Create a standard routes response
     ///
@@ -334,12 +194,6 @@ public struct StandardRoute: Codable {
     /// Array containing ordered track circuit information
     public let trackCircuits: [TrackCircuitWithStation]
 
-    enum CodingKeys: String, CodingKey {
-        case line = "LineCode"
-        case trackNumber = "TrackNum"
-        case trackCircuits = "TrackCircuits"
-    }
-
     /// Create a standard route response
     ///
     /// - Parameters:
@@ -355,29 +209,6 @@ public struct StandardRoute: Codable {
         self.trackNumber = trackNumber
         self.trackCircuits = trackCircuits
     }
-
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-
-        let lineCode = try container.decode(String.self, forKey: .line)
-
-        guard let line = Line(rawValue: lineCode) else {
-            throw WMATAError(statusCode: 0, message: "Line provided by API was not valid")
-        }
-
-        self.line = line
-
-        trackNumber = try container.decode(Int.self, forKey: .trackNumber)
-        trackCircuits = try container.decode([TrackCircuitWithStation].self, forKey: .trackCircuits)
-    }
-
-    public func encode(to encoder: Encoder) throws {
-        var container = encoder.container(keyedBy: CodingKeys.self)
-
-        try container.encode(line.description, forKey: .line)
-        try container.encode(trackNumber, forKey: .trackNumber)
-        try container.encode(trackCircuits, forKey: .trackCircuits)
-    }
 }
 
 /// Response from the [Standard Routes API](https://developer.wmata.com/docs/services/5763fa6ff91823096cac1057/operations/57641afc031f59363c586dca)
@@ -387,16 +218,10 @@ public struct TrackCircuitWithStation: Codable {
     public let sequenceNumber: Int
     
     /// An internal system-wide uniquely identifiable circuit number.
-    public let circuitId: Int
+    public let circuitID: Int
     
     /// Station this circuit is at, if it is at a station
     public let station: Station?
-
-    enum CodingKeys: String, CodingKey {
-        case sequenceNumber = "SeqNum"
-        case circuitId = "CircuitId"
-        case station = "StationCode"
-    }
 
     /// Create a track circuit with station response
     ///
@@ -406,40 +231,12 @@ public struct TrackCircuitWithStation: Codable {
     ///     - station: Station the circuit is at, if it's at one
     public init(
         sequenceNumber: Int,
-        circuitId: Int,
+        circuitID: Int,
         station: Station?
     ) {
         self.sequenceNumber = sequenceNumber
-        self.circuitId = circuitId
+        self.circuitID = circuitID
         self.station = station
-    }
-
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-
-        sequenceNumber = try container.decode(Int.self, forKey: .sequenceNumber)
-        circuitId = try container.decode(Int.self, forKey: .circuitId)
-
-        let stationCode = try container.decode(String?.self, forKey: .station)
-
-        if let stationCode = stationCode, stationCode != "" {
-            guard let station = Station(rawValue: stationCode) else {
-                throw WMATAError(statusCode: 0, message: "Station provided by API was not valid")
-            }
-
-            self.station = station
-
-        } else {
-            station = nil
-        }
-    }
-
-    public func encode(to encoder: Encoder) throws {
-        var container = encoder.container(keyedBy: CodingKeys.self)
-
-        try container.encode(sequenceNumber, forKey: .sequenceNumber)
-        try container.encode(circuitId, forKey: .circuitId)
-        try container.encode(station?.description, forKey: .station)
     }
 }
 
@@ -448,10 +245,6 @@ public struct TrackCircuitWithStation: Codable {
 public struct TrackCircuits: Codable {
     /// List of track ciruits
     public let trackCircuits: [TrackCircuit]
-
-    enum CodingKeys: String, CodingKey {
-        case trackCircuits = "TrackCircuits"
-    }
 
     /// Create a track circuits response
     ///
@@ -469,16 +262,10 @@ public struct TrackCircuit: Codable {
     public let track: Int
     
     /// An internal system-wide uniquely identifiable circuit number.
-    public let circuitId: Int
+    public let circuitID: Int
     
     /// Array containing track circuit neighbor information. Note that some track circuits have no neighbors in one direction. All track circuits have at least one neighbor.
     public let neighbors: [TrackNeighbor]
-
-    enum CodingKeys: String, CodingKey {
-        case track = "Track"
-        case circuitId = "CircuitId"
-        case neighbors = "Neighbors"
-    }
 
     /// Create a track circuit response
     ///
@@ -488,11 +275,11 @@ public struct TrackCircuit: Codable {
     ///     - neighbors: Track circuit neighbors
     public init(
         track: Int,
-        circuitId: Int,
+        circuitID: Int,
         neighbors: [TrackNeighbor]
     ) {
         self.track = track
-        self.circuitId = circuitId
+        self.circuitID = circuitID
         self.neighbors = neighbors
     }
 }
@@ -504,12 +291,7 @@ public struct TrackNeighbor: Codable {
     public let neighborType: String
     
     /// Neighboring circuit ids.
-    public let circuitIds: [Int]
-
-    enum CodingKeys: String, CodingKey {
-        case neighborType = "NeighborType"
-        case circuitIds = "CircuitIds"
-    }
+    public let circuitIDs: [Int]
 
     /// Create a track neighbor response
     ///
@@ -518,10 +300,10 @@ public struct TrackNeighbor: Codable {
     ///     - circuitIds: Neighboring circuits
     public init(
         neighborType: String,
-        circuitIds: [Int]
+        circuitIDs: [Int]
     ) {
         self.neighborType = neighborType
-        self.circuitIds = circuitIds
+        self.circuitIDs = circuitIDs
     }
 }
 
@@ -530,10 +312,6 @@ public struct TrackNeighbor: Codable {
 public struct LinesResponse: Codable {
     /// List of lines
     public let lines: [LineResponse]
-
-    enum CodingKeys: String, CodingKey {
-        case lines = "Lines"
-    }
 
     /// Create lines response
     ///
@@ -547,7 +325,7 @@ public struct LinesResponse: Codable {
 /// Response from the [Lines API](https://developer.wmata.com/docs/services/5476364f031f590f38092507/operations/5476364f031f5909e4fe330c)
 /// - Tag: LineResponse
 public struct LineResponse: Codable {
-    /// Line code
+    /// The actual line
     public let line: Line
     
     /// Full name of the Line.
@@ -560,19 +338,10 @@ public struct LineResponse: Codable {
     public let endStation: Station
     
     /// Intermediate terminal station. During normal service, some trains on some lines might end their trip prior to the StartStationCode or EndStationCode. A good example is on the Red Line where some trains stop at A11 (Grosvenor) or B08 (Silver Spring).
-    public let firstInternalDestination: Station?
+    @MapToNil<Station, EmptyString> public var firstInternalDestination: Station?
     
     /// Intermediate terminal station. During normal service, some trains on some lines might end their trip prior to the StartStationCode or EndStationCode. A good example is on the Red Line where some trains stop at A11 (Grosvenor) or B08 (Silver Spring).
-    public let secondInternalDestination: Station?
-
-    enum CodingKeys: String, CodingKey {
-        case line = "LineCode"
-        case displayName = "DisplayName"
-        case startStation = "StartStationCode"
-        case endStation = "EndStationCode"
-        case firstInternalDestination = "InternalDestination1"
-        case secondInternalDestination = "InternalDestination2"
-    }
+    @MapToNil<Station, EmptyString> public var secondInternalDestination: Station?
 
     /// Create a line response
     ///
@@ -598,66 +367,6 @@ public struct LineResponse: Codable {
         self.firstInternalDestination = firstInternalDestination
         self.secondInternalDestination = secondInternalDestination
     }
-
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-
-        guard let line = Line(rawValue: try container.decode(String.self, forKey: .line)) else {
-            throw WMATAError(statusCode: 0, message: "Line provided by API was not valid")
-        }
-
-        self.line = line
-        displayName = try container.decode(String.self, forKey: .displayName)
-
-        guard let startStation = Station(rawValue: try container.decode(String.self, forKey: .startStation)) else {
-            throw WMATAError(statusCode: 0, message: "Station provided by API was not valid")
-        }
-
-        self.startStation = startStation
-
-        guard let endStation = Station(rawValue: try container.decode(String.self, forKey: .endStation)) else {
-            throw WMATAError(statusCode: 0, message: "Station provided by API was not valid")
-        }
-
-        self.endStation = endStation
-
-        let internalDestinationCode = try container.decode(String?.self, forKey: .firstInternalDestination)
-
-        if let internalDestinationCode = internalDestinationCode, internalDestinationCode != "" {
-            guard let destination = Station(rawValue: internalDestinationCode) else {
-                throw WMATAError(statusCode: 0, message: "Station provided by API was not valid")
-            }
-
-            firstInternalDestination = destination
-
-        } else {
-            firstInternalDestination = nil
-        }
-
-        let secondInternalDestinationCode = try container.decode(String?.self, forKey: .secondInternalDestination)
-
-        if let secondInternalDestinationCode = secondInternalDestinationCode, secondInternalDestinationCode != "" {
-            guard let destination = Station(rawValue: secondInternalDestinationCode) else {
-                throw WMATAError(statusCode: 0, message: "Station provided by API was not valid")
-            }
-
-            secondInternalDestination = destination
-
-        } else {
-            secondInternalDestination = nil
-        }
-    }
-
-    public func encode(to encoder: Encoder) throws {
-        var container = encoder.container(keyedBy: CodingKeys.self)
-
-        try container.encode(line.description, forKey: .line)
-        try container.encode(displayName, forKey: .displayName)
-        try container.encode(startStation.description, forKey: .startStation)
-        try container.encode(endStation.description, forKey: .endStation)
-        try container.encode(firstInternalDestination?.description, forKey: .firstInternalDestination)
-        try container.encode(secondInternalDestination?.description, forKey: .secondInternalDestination)
-    }
 }
 
 /// Response from the [Parking Information API](https://developer.wmata.com/docs/services/5476364f031f590f38092507/operations/5476364f031f5909e4fe330d)
@@ -665,10 +374,6 @@ public struct LineResponse: Codable {
 public struct StationsParking: Codable {
     /// List of parking information
     public let stationsParking: [StationParking]
-
-    enum CodingKeys: String, CodingKey {
-        case stationsParking = "StationsParking"
-    }
 
     /// Create stations parking response
     ///
@@ -694,13 +399,6 @@ public struct StationParking: Codable {
     /// Short-term parking options.
     public let shortTermParking: ShortTermParking
 
-    enum CodingKeys: String, CodingKey {
-        case station = "Code"
-        case notes = "Notes"
-        case allDayParking = "AllDayParking"
-        case shortTermParking = "ShortTermParking"
-    }
-
     /// Create a station parking response
     ///
     /// - Parameters:
@@ -718,30 +416,6 @@ public struct StationParking: Codable {
         self.notes = notes
         self.allDayParking = allDayParking
         self.shortTermParking = shortTermParking
-    }
-
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-
-        let stationCode = try container.decode(String.self, forKey: .station)
-
-        guard let station = Station(rawValue: stationCode) else {
-            throw WMATAError(statusCode: 0, message: "Station provided by API was not valid")
-        }
-
-        self.station = station
-        notes = try container.decode(String.self, forKey: .notes)
-        allDayParking = try container.decode(AllDayParking.self, forKey: .allDayParking)
-        shortTermParking = try container.decode(ShortTermParking.self, forKey: .shortTermParking)
-    }
-
-    public func encode(to encoder: Encoder) throws {
-        var container = encoder.container(keyedBy: CodingKeys.self)
-
-        try container.encode(station.description, forKey: .station)
-        try container.encode(notes, forKey: .notes)
-        try container.encode(allDayParking, forKey: .allDayParking)
-        try container.encode(shortTermParking, forKey: .shortTermParking)
     }
 }
 
@@ -762,14 +436,6 @@ public struct AllDayParking: Codable {
     
     /// Similar to NonRiderCost, except denoting Saturday prices.
     public let saturdayNonRiderCost: Double
-
-    enum CodingKeys: String, CodingKey {
-        case totalCount = "TotalCount"
-        case riderCost = "RiderCost"
-        case nonRiderCost = "NonRiderCost"
-        case saturdayRiderCost = "SaturdayRiderCost"
-        case saturdayNonRiderCost = "SaturdayNonRiderCost"
-    }
 
     /// Create all day parking response
     ///
@@ -803,11 +469,6 @@ public struct ShortTermParking: Codable {
     /// Misc. information relating to short-term parking.
     public let notes: String
 
-    enum CodingKeys: String, CodingKey {
-        case totalCount = "TotalCount"
-        case notes = "Notes"
-    }
-
     /// Create a short term parking response
     ///
     /// - Parameters:
@@ -827,10 +488,6 @@ public struct ShortTermParking: Codable {
 public struct PathBetweenStations: Codable {
     /// List of path information
     public let path: [Path]
-
-    enum CodingKeys: String, CodingKey {
-        case path = "Path"
-    }
 
     /// Create a path between stations response
     ///
@@ -859,14 +516,6 @@ public struct Path: Codable {
     /// Full name for this station, as shown on the WMATA website.
     public let stationName: String
 
-    enum CodingKeys: String, CodingKey {
-        case distanceToPreviousStation = "DistanceToPrev"
-        case line = "LineCode"
-        case sequenceNumber = "SeqNum"
-        case station = "StationCode"
-        case stationName = "StationName"
-    }
-
     /// Create a path response
     ///
     /// - Parameters:
@@ -888,41 +537,6 @@ public struct Path: Codable {
         self.station = station
         self.stationName = stationName
     }
-
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-
-        distanceToPreviousStation = try container.decode(Int.self, forKey: .distanceToPreviousStation)
-
-        let lineCode = try container.decode(String.self, forKey: .line)
-
-        guard let line = Line(rawValue: lineCode) else {
-            throw WMATAError(statusCode: 0, message: "Line provided by API was not valid")
-        }
-
-        self.line = line
-
-        sequenceNumber = try container.decode(Int.self, forKey: .sequenceNumber)
-
-        let stationCode = try container.decode(String.self, forKey: .station)
-
-        guard let station = Station(rawValue: stationCode) else {
-            throw WMATAError(statusCode: 0, message: "Station provided by API was not valid")
-        }
-
-        self.station = station
-        stationName = try container.decode(String.self, forKey: .stationName)
-    }
-
-    public func encode(to encoder: Encoder) throws {
-        var container = encoder.container(keyedBy: CodingKeys.self)
-
-        try container.encode(distanceToPreviousStation, forKey: .distanceToPreviousStation)
-        try container.encode(line.description, forKey: .line)
-        try container.encode(sequenceNumber, forKey: .sequenceNumber)
-        try container.encode(station.description, forKey: .station)
-        try container.encode(stationName, forKey: .stationName)
-    }
 }
 
 /// Response from the [Station Entrances API](https://developer.wmata.com/docs/services/5476364f031f590f38092507/operations/5476364f031f5909e4fe330f)
@@ -930,10 +544,6 @@ public struct Path: Codable {
 public struct StationEntrances: Codable {
     /// List of station entrances
     public let entrances: [StationEntrance]
-
-    enum CodingKeys: String, CodingKey {
-        case entrances = "Entrances"
-    }
 
     /// Create a station entrances response
     ///
@@ -966,17 +576,7 @@ public struct StationEntrance: Codable {
     public let firstStation: Station
     
     /// Second station for this entrance. See multilevel stations like L'Enfant Plaza, Metro Center
-    public let secondStation: Station?
-
-    enum CodingKeys: String, CodingKey {
-        case description = "Description"
-        case id = "ID"
-        case latitude = "Lat"
-        case longitude = "Lon"
-        case name = "Name"
-        case firstStation = "StationCode1"
-        case secondStation = "StationCode2"
-    }
+    @MapToNil<Station, EmptyString> public var secondStation: Station?
 
     /// Create a station entrance response
     ///
@@ -1004,49 +604,6 @@ public struct StationEntrance: Codable {
         self.name = name
         self.firstStation = firstStation
         self.secondStation = secondStation
-    }
-
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-
-        description = try container.decode(String.self, forKey: .description)
-        id = try container.decode(String.self, forKey: .id)
-        latitude = try container.decode(Double.self, forKey: .latitude)
-        longitude = try container.decode(Double.self, forKey: .longitude)
-        name = try container.decode(String.self, forKey: .name)
-
-        let firstStationCode = try container.decode(String.self, forKey: .firstStation)
-
-        guard let firstStation = Station(rawValue: firstStationCode) else {
-            throw WMATAError(statusCode: 0, message: "Station provided by API was not valid")
-        }
-
-        self.firstStation = firstStation
-
-        let secondStationCode = try container.decode(String?.self, forKey: .secondStation)
-
-        if let secondStationCode = secondStationCode, secondStationCode != "" {
-            guard let station = Station(rawValue: secondStationCode) else {
-                throw WMATAError(statusCode: 0, message: "Station provided by API was not valid")
-            }
-
-            secondStation = station
-
-        } else {
-            secondStation = nil
-        }
-    }
-
-    public func encode(to encoder: Encoder) throws {
-        var container = encoder.container(keyedBy: CodingKeys.self)
-
-        try container.encode(description, forKey: .description)
-        try container.encode(id, forKey: .id)
-        try container.encode(latitude, forKey: .latitude)
-        try container.encode(longitude, forKey: .longitude)
-        try container.encode(name, forKey: .name)
-        try container.encode(firstStation.description, forKey: .firstStation)
-        try container.encode(secondStation?.description, forKey: .secondStation)
     }
 }
 
@@ -1082,24 +639,10 @@ public struct StationInformation: Codable {
     public let name: String
     
     /// For stations with multiple platforms (e.g.: Gallery Place, Fort Totten, L'Enfant Plaza, and Metro Center), the additional station will be listed here.
-    public let firstStationTogether: Station?
+    @MapToNil<Station, EmptyString> public var firstStationTogether: Station?
     
     /// Unused.
-    public let secondStationTogether: Station?
-
-    enum CodingKeys: String, CodingKey {
-        case address = "Address"
-        case station = "Code"
-        case latitude = "Lat"
-        case longitude = "Lon"
-        case firstLine = "LineCode1"
-        case secondLine = "LineCode2"
-        case thirdLine = "LineCode3"
-        case fourthLine = "LineCode4"
-        case name = "Name"
-        case firstStationTogether = "StationTogether1"
-        case secondStationTogether = "StationTogether2"
-    }
+    @MapToNil<Station, EmptyString> public var secondStationTogether: Station?
 
     /// Create a station information response
     ///
@@ -1140,113 +683,6 @@ public struct StationInformation: Codable {
         self.firstStationTogether = firstStationTogether
         self.secondStationTogether = secondStationTogether
     }
-
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-
-        address = try container.decode(StationAddress.self, forKey: .address)
-
-        let stationCode = try container.decode(String.self, forKey: .station)
-
-        guard let station = Station(rawValue: stationCode) else {
-            throw WMATAError(statusCode: 0, message: "Station \(stationCode) provided by API was not valid")
-        }
-
-        self.station = station
-        latitude = try container.decode(Double.self, forKey: .latitude)
-        longitude = try container.decode(Double.self, forKey: .longitude)
-
-        let firstLineCode = try container.decode(String.self, forKey: .firstLine)
-
-        guard let firstLine = Line(rawValue: firstLineCode) else {
-            throw WMATAError(statusCode: 0, message: "Line provided by API was not valid")
-        }
-
-        self.firstLine = firstLine
-
-        let secondLineCode = try container.decode(String?.self, forKey: .secondLine)
-
-        if let secondLineCode = secondLineCode, secondLineCode != "" {
-            guard let secondLine = Line(rawValue: secondLineCode) else {
-                throw WMATAError(statusCode: 0, message: "Line provided by API was not valid")
-            }
-
-            self.secondLine = secondLine
-
-        } else {
-            secondLine = nil
-        }
-
-        let thirdLineCode = try container.decode(String?.self, forKey: .thirdLine)
-
-        if let thirdLineCode = thirdLineCode, thirdLineCode != "" {
-            guard let thirdLine = Line(rawValue: thirdLineCode) else {
-                throw WMATAError(statusCode: 0, message: "Line provided by API was not valid")
-            }
-
-            self.thirdLine = thirdLine
-
-        } else {
-            thirdLine = nil
-        }
-
-        let fourthLineCode = try container.decode(String?.self, forKey: .fourthLine)
-
-        if let fourthLineCode = fourthLineCode, fourthLineCode != "" {
-            guard let fourthLine = Line(rawValue: fourthLineCode) else {
-                throw WMATAError(statusCode: 0, message: "Line provided by API was not valid")
-            }
-
-            self.fourthLine = fourthLine
-
-        } else {
-            fourthLine = nil
-        }
-
-        name = try container.decode(String.self, forKey: .name)
-
-        let firstStationTogetherCode = try container.decode(String?.self, forKey: .firstStationTogether)
-
-        if let firstStationTogetherCode = firstStationTogetherCode, firstStationTogetherCode != "" {
-            guard let firstStationTogether = Station(rawValue: firstStationTogetherCode) else {
-                throw WMATAError(statusCode: 0, message: "Station \(firstStationTogetherCode) provided by API was not valid")
-            }
-
-            self.firstStationTogether = firstStationTogether
-
-        } else {
-            firstStationTogether = nil
-        }
-
-        let secondStationTogetherCode = try container.decode(String?.self, forKey: .secondStationTogether)
-
-        if let secondStationTogetherCode = secondStationTogetherCode, secondStationTogetherCode != "" {
-            guard let secondStationTogether = Station(rawValue: secondStationTogetherCode) else {
-                throw WMATAError(statusCode: 0, message: "Station \(secondStationTogetherCode) provided by API was not valid")
-            }
-
-            self.secondStationTogether = secondStationTogether
-
-        } else {
-            secondStationTogether = nil
-        }
-    }
-
-    public func encode(to encoder: Encoder) throws {
-        var container = encoder.container(keyedBy: CodingKeys.self)
-
-        try container.encode(address, forKey: .address)
-        try container.encode(station, forKey: .station)
-        try container.encode(latitude, forKey: .latitude)
-        try container.encode(longitude, forKey: .longitude)
-        try container.encode(firstLine.description, forKey: .firstLine)
-        try container.encode(secondLine?.description, forKey: .secondLine)
-        try container.encode(thirdLine?.description, forKey: .thirdLine)
-        try container.encode(fourthLine?.description, forKey: .fourthLine)
-        try container.encode(name, forKey: .name)
-        try container.encode(firstStationTogether?.description, forKey: .firstStationTogether)
-        try container.encode(secondStationTogether?.description, forKey: .secondStationTogether)
-    }
 }
 
 /// Response from the [Station Information API](https://developer.wmata.com/docs/services/5476364f031f590f38092507/operations/5476364f031f5909e4fe3310)
@@ -1263,13 +699,6 @@ public struct StationAddress: Codable {
     
     /// Zip code of this station.
     public let zip: String
-
-    enum CodingKeys: String, CodingKey {
-        case city = "City"
-        case state = "State"
-        case street = "Street"
-        case zip = "Zip"
-    }
 
     /// Create station address response
     ///
@@ -1297,10 +726,6 @@ public struct Stations: Codable {
     /// List of station information
     public let stations: [StationInformation]
 
-    enum CodingKeys: String, CodingKey {
-        case stations = "Stations"
-    }
-
     /// Create a stations response
     ///
     /// - Parameters:
@@ -1315,10 +740,6 @@ public struct Stations: Codable {
 public struct StationTimings: Codable {
     /// List of station times
     public let stationTimes: [StationTime]
-
-    enum CodingKeys: String, CodingKey {
-        case stationTimes = "StationTimes"
-    }
 
     /// Create a station timings response
     ///
@@ -1359,18 +780,6 @@ public struct StationTime: Codable {
     /// Timing information for Sunday
     public let sunday: StationFirstLastTrains
 
-    enum CodingKeys: String, CodingKey {
-        case station = "Code"
-        case stationName = "StationName"
-        case monday = "Monday"
-        case tuesday = "Tuesday"
-        case wednesday = "Wednesday"
-        case thursday = "Thursday"
-        case friday = "Friday"
-        case saturday = "Saturday"
-        case sunday = "Sunday"
-    }
-
     /// Create a station time response
     ///
     /// - Parameters:
@@ -1404,40 +813,6 @@ public struct StationTime: Codable {
         self.saturday = saturday
         self.sunday = sunday
     }
-
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-
-        let stationCode = try container.decode(String.self, forKey: .station)
-
-        guard let station = Station(rawValue: stationCode) else {
-            throw WMATAError(statusCode: 0, message: "Station \(stationCode) provided by API was not valid")
-        }
-
-        self.station = station
-        stationName = try container.decode(String.self, forKey: .stationName)
-        monday = try container.decode(StationFirstLastTrains.self, forKey: .monday)
-        tuesday = try container.decode(StationFirstLastTrains.self, forKey: .tuesday)
-        wednesday = try container.decode(StationFirstLastTrains.self, forKey: .wednesday)
-        thursday = try container.decode(StationFirstLastTrains.self, forKey: .thursday)
-        friday = try container.decode(StationFirstLastTrains.self, forKey: .friday)
-        saturday = try container.decode(StationFirstLastTrains.self, forKey: .saturday)
-        sunday = try container.decode(StationFirstLastTrains.self, forKey: .sunday)
-    }
-
-    public func encode(to encoder: Encoder) throws {
-        var container = encoder.container(keyedBy: CodingKeys.self)
-
-        try container.encode(station.description, forKey: .station)
-        try container.encode(stationName, forKey: .stationName)
-        try container.encode(monday, forKey: .monday)
-        try container.encode(tuesday, forKey: .tuesday)
-        try container.encode(wednesday, forKey: .wednesday)
-        try container.encode(thursday, forKey: .thursday)
-        try container.encode(friday, forKey: .friday)
-        try container.encode(saturday, forKey: .saturday)
-        try container.encode(sunday, forKey: .sunday)
-    }
 }
 
 /// Response from the [Station Timings API](https://developer.wmata.com/docs/services/5476364f031f590f38092507/operations/5476364f031f5909e4fe3312)
@@ -1451,12 +826,6 @@ public struct StationFirstLastTrains: Codable {
     
     /// Last train information
     public let lastTrains: [TrainTime]
-
-    enum CodingKeys: String, CodingKey {
-        case openingTime = "OpeningTime"
-        case firstTrains = "FirstTrains"
-        case lastTrains = "LastTrains"
-    }
 
     /// Create a station first last trains response
     ///
@@ -1484,11 +853,6 @@ public struct TrainTime: Codable {
     /// Train's destination
     public let destination: Station
 
-    enum CodingKeys: String, CodingKey {
-        case time = "Time"
-        case destination = "DestinationStation"
-    }
-
     /// Create a train time response
     ///
     /// - Parameters:
@@ -1498,27 +862,6 @@ public struct TrainTime: Codable {
         self.time = time
         self.destination = destination
     }
-
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-
-        time = try container.decode(String.self, forKey: .time)
-
-        let destinationCode = try container.decode(String.self, forKey: .destination)
-
-        guard let destination = Station(rawValue: destinationCode) else {
-            throw WMATAError(statusCode: 0, message: "Station provided by API was not valid")
-        }
-
-        self.destination = destination
-    }
-
-    public func encode(to encoder: Encoder) throws {
-        var container = encoder.container(keyedBy: CodingKeys.self)
-
-        try container.encode(time, forKey: .time)
-        try container.encode(destination, forKey: .destination)
-    }
 }
 
 /// Response from the [Station to Station Information API](https://developer.wmata.com/docs/services/5476364f031f590f38092507/operations/5476364f031f5909e4fe3313)
@@ -1526,10 +869,6 @@ public struct TrainTime: Codable {
 public struct StationToStationInfos: Codable {
     /// List of station to station info
     public let stationToStationInfos: [StationToStationInfo]
-
-    enum CodingKeys: String, CodingKey {
-        case stationToStationInfos = "StationToStationInfos"
-    }
 
     /// Create a station to station infos response
     ///
@@ -1558,14 +897,6 @@ public struct StationToStationInfo: Codable {
     /// Origin station
     public let source: Station
 
-    enum CodingKeys: String, CodingKey {
-        case compositeMiles = "CompositeMiles"
-        case destination = "DestinationStation"
-        case railFare = "RailFare"
-        case railTime = "RailTime"
-        case source = "SourceStation"
-    }
-
     /// Create a station to station info response
     ///
     /// - Parameters:
@@ -1587,40 +918,6 @@ public struct StationToStationInfo: Codable {
         self.railTime = railTime
         self.source = source
     }
-
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-
-        compositeMiles = try container.decode(Double.self, forKey: .compositeMiles)
-
-        let destinationCode = try container.decode(String.self, forKey: .destination)
-
-        guard let destination = Station(rawValue: destinationCode) else {
-            throw WMATAError(statusCode: 0, message: "Station provided by API was not valid")
-        }
-
-        self.destination = destination
-        railFare = try container.decode(RailFare.self, forKey: .railFare)
-        railTime = try container.decode(Int.self, forKey: .railTime)
-
-        let sourceCode = try container.decode(String.self, forKey: .source)
-
-        guard let source = Station(rawValue: sourceCode) else {
-            throw WMATAError(statusCode: 0, message: "Station provided by API was not valid")
-        }
-
-        self.source = source
-    }
-
-    public func encode(to encoder: Encoder) throws {
-        var container = encoder.container(keyedBy: CodingKeys.self)
-
-        try container.encode(compositeMiles, forKey: .compositeMiles)
-        try container.encode(destination.description, forKey: .destination)
-        try container.encode(railFare, forKey: .railFare)
-        try container.encode(railTime, forKey: .railTime)
-        try container.encode(source.description, forKey: .source)
-    }
 }
 
 /// Response from the [Station to Station Information API](https://developer.wmata.com/docs/services/5476364f031f590f38092507/operations/5476364f031f5909e4fe3313)
@@ -1634,12 +931,6 @@ public struct RailFare: Codable {
     
     /// Reduced fare for senior citizens or people with disabilities.
     public let seniorDisabled: Double
-
-    enum CodingKeys: String, CodingKey {
-        case offPeakTime = "OffPeakTime"
-        case peakTime = "PeakTime"
-        case seniorDisabled = "SeniorDisabled"
-    }
 
     /// Create a rail fare response
     ///
@@ -1662,24 +953,20 @@ public struct RailFare: Codable {
 /// - Tag: ElevatorAndEscalatorIncidents
 public struct ElevatorAndEscalatorIncidents: Codable {
     /// List of elevator and escalator incidents
-    public let incidents: [ElevatorAndEscalatorIncident]
-
-    enum CodingKeys: String, CodingKey {
-        case incidents = "ElevatorIncidents"
-    }
+    public let incidents: [ElevatorOrEscalatorIncident]
 
     /// Create an elevator and escalator incidents response
     ///
     /// - Parameters:
     ///     - incidents: List of elevator and escalator incidents
-    public init(incidents: [ElevatorAndEscalatorIncident]) {
+    public init(incidents: [ElevatorOrEscalatorIncident]) {
         self.incidents = incidents
     }
 }
 
 /// Response from the [Elevator and Escalator Incidents API](https://developer.wmata.com/docs/services/54763641281d83086473f232/operations/54763641281d830c946a3d76)
 /// - Tag: ElevatorAndEscalatorIncident
-public struct ElevatorAndEscalatorIncident: Codable {
+public struct ElevatorOrEscalatorIncident: Codable {
     /// Unique identifier for unit, by type (a single elevator and escalator may have the same UnitName, but no two elevators or two escalators will have the same UnitName).
     public let unitName: String
     
@@ -1718,22 +1005,6 @@ public struct ElevatorAndEscalatorIncident: Codable {
     
     /// Estimated date and time (Eastern Standard Time) by when unit is expected to return to normal service.
     public let estimatedReturnToService: String
-
-    enum CodingKeys: String, CodingKey {
-        case unitName = "UnitName"
-        case unitType = "UnitType"
-        case unitStatus = "UnitStatus"
-        case station = "StationCode"
-        case stationName = "StationName"
-        case locationDescription = "LocationDescription"
-        case symptomCode = "SymptomCode"
-        case timeOutOfService = "TimeOutOfService"
-        case symptomDescription = "SymptomDescription"
-        case displayOrder = "DisplayOrder"
-        case dateOutOfService = "DateOutOfServ"
-        case dateUpdated = "DateUpdated"
-        case estimatedReturnToService = "EstimatedReturnToService"
-    }
 
     /// Create a elevator and escalator incident response
     ///
@@ -1780,49 +1051,6 @@ public struct ElevatorAndEscalatorIncident: Codable {
         self.dateUpdated = dateUpdated
         self.estimatedReturnToService = estimatedReturnToService
     }
-
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-
-        unitName = try container.decode(String.self, forKey: .unitName)
-        unitType = try container.decode(String.self, forKey: .unitType)
-        unitStatus = try container.decode(String?.self, forKey: .unitStatus)
-
-        let stationCode = try container.decode(String.self, forKey: .station)
-
-        guard let station = Station(rawValue: stationCode) else {
-            throw WMATAError(statusCode: 0, message: "Station provided by API was not valid")
-        }
-
-        self.station = station
-        stationName = try container.decode(String.self, forKey: .stationName)
-        locationDescription = try container.decode(String.self, forKey: .locationDescription)
-        symptomCode = try container.decode(String?.self, forKey: .symptomCode)
-        timeOutOfService = try container.decode(String.self, forKey: .timeOutOfService)
-        symptomDescription = try container.decode(String.self, forKey: .symptomDescription)
-        displayOrder = try container.decode(Double.self, forKey: .displayOrder)
-        dateOutOfService = try (try container.decode(String.self, forKey: .dateOutOfService)).toWMATADate()
-        dateUpdated = try container.decode(String.self, forKey: .dateUpdated)
-        estimatedReturnToService = try container.decode(String.self, forKey: .estimatedReturnToService)
-    }
-
-    public func encode(to encoder: Encoder) throws {
-        var container = encoder.container(keyedBy: CodingKeys.self)
-
-        try container.encode(unitName, forKey: .unitName)
-        try container.encode(unitType, forKey: .unitType)
-        try container.encode(unitStatus, forKey: .unitStatus)
-        try container.encode(station.description, forKey: .station)
-        try container.encode(stationName, forKey: .stationName)
-        try container.encode(locationDescription, forKey: .locationDescription)
-        try container.encode(symptomCode, forKey: .symptomCode)
-        try container.encode(timeOutOfService, forKey: .timeOutOfService)
-        try container.encode(symptomDescription, forKey: .symptomDescription)
-        try container.encode(displayOrder, forKey: .displayOrder)
-        try container.encode(dateOutOfService.toWMATAString(), forKey: .dateOutOfService)
-        try container.encode(dateUpdated, forKey: .dateUpdated)
-        try container.encode(estimatedReturnToService, forKey: .estimatedReturnToService)
-    }
 }
 
 /// Response from the [Rail Incidents API](https://developer.wmata.com/docs/services/54763641281d83086473f232/operations/54763641281d830c946a3d77)
@@ -1830,10 +1058,6 @@ public struct ElevatorAndEscalatorIncident: Codable {
 public struct RailIncidents: Codable {
     /// List of rail incidents
     public let incidents: [RailIncident]
-
-    enum CodingKeys: String, CodingKey {
-        case incidents = "Incidents"
-    }
 
     /// Create a rail incidents response
     ///
@@ -1877,19 +1101,6 @@ public struct RailIncident: Codable {
     /// Date and time (Eastern Standard Time) of last update.
     public let dateUpdated: Date
 
-    enum CodingKeys: String, CodingKey {
-        case incidentID = "IncidentID"
-        case description = "Description"
-        case startLocationFullName = "StartLocationFullName"
-        case endLocationFullName = "EndLocationFullName"
-        case passengerDelay = "PassengerDelay"
-        case delaySeverity = "DelaySeverity"
-        case incidentType = "IncidentType"
-        case emergencyText = "EmergencyText"
-        case linesAffected = "LinesAffected"
-        case dateUpdated = "DateUpdated"
-    }
-
     /// Create a rail incident response
     ///
     /// - Parameters:
@@ -1901,7 +1112,7 @@ public struct RailIncident: Codable {
     ///     - delaySeverity: Deprecated.
     ///     - incidentType: Type of incident
     ///     - emergencyText: Deprecated.
-    ///     - linesAffected: Semi-color and space separated list of line codes. (e.g.: RD; or BL; OR; or BL; OR; RD;). =(
+    ///     - linesAffected: Semi-colon and space separated list of line codes. (e.g.: RD; or BL; OR; or BL; OR; RD;). =(
     ///     - dateUpdated: TIme of last status update
     public init(
         incidentID: String,
@@ -1926,34 +1137,48 @@ public struct RailIncident: Codable {
         self.linesAffected = linesAffected
         self.dateUpdated = dateUpdated
     }
+}
 
+@propertyWrapper
+public struct MapToNil<Wrapped, MappedValue>: Codable
+    where
+        Wrapped: Codable & RawRepresentable,
+        Wrapped.RawValue == String,
+        MappedValue: WMATAMappedValue
+    {
+    public var wrappedValue: Wrapped?
+    
+    public init(wrappedValue: Wrapped?) {
+        self.wrappedValue = wrappedValue
+    }
+    
     public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-
-        incidentID = try container.decode(String.self, forKey: .incidentID)
-        description = try container.decode(String.self, forKey: .description)
-        startLocationFullName = try container.decode(String?.self, forKey: .startLocationFullName)
-        endLocationFullName = try container.decode(String?.self, forKey: .endLocationFullName)
-        passengerDelay = try container.decode(Double.self, forKey: .passengerDelay)
-        delaySeverity = try container.decode(String?.self, forKey: .delaySeverity)
-        incidentType = try container.decode(String.self, forKey: .incidentType)
-        emergencyText = try container.decode(String?.self, forKey: .emergencyText)
-        linesAffected = try container.decode(String.self, forKey: .linesAffected)
-        dateUpdated = try (try container.decode(String.self, forKey: .dateUpdated)).toWMATADate()
+        let container = try decoder.singleValueContainer()
+        let stringValue = try container.decode(String?.self)
+        
+        guard let stringValue = stringValue, stringValue != MappedValue.value else {
+            wrappedValue = nil
+            return
+        }
+        
+        wrappedValue = Wrapped(rawValue: stringValue)
     }
-
+    
     public func encode(to encoder: Encoder) throws {
-        var container = encoder.container(keyedBy: CodingKeys.self)
-
-        try container.encode(incidentID, forKey: .incidentID)
-        try container.encode(description, forKey: .description)
-        try container.encode(startLocationFullName, forKey: .startLocationFullName)
-        try container.encode(endLocationFullName, forKey: .endLocationFullName)
-        try container.encode(passengerDelay, forKey: .passengerDelay)
-        try container.encode(delaySeverity, forKey: .delaySeverity)
-        try container.encode(incidentType, forKey: .incidentType)
-        try container.encode(emergencyText, forKey: .emergencyText)
-        try container.encode(linesAffected, forKey: .linesAffected)
-        try container.encode(dateUpdated.toWMATAString(), forKey: .dateUpdated)
+        var container = encoder.singleValueContainer()
+        
+        try container.encode(wrappedValue)
     }
+}
+
+public protocol WMATAMappedValue {
+    static var value: String { get }
+}
+
+public struct EmptyString: WMATAMappedValue {
+    public static let value = ""
+}
+
+public struct Dashes: WMATAMappedValue {
+    public static let value = "--"
 }

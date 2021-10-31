@@ -6,8 +6,8 @@
         "repositoryURL": "https://github.com/emma-k-alexandra/GTFS.git",
         "state": {
           "branch": null,
-          "revision": "c4ead92be39de76ec5a8f6dc591f2b7095f19e08",
-          "version": "1.0.0"
+          "revision": "92197f4c41aba53889a2db1e2e9d6dbe4022a223",
+          "version": "1.0.1"
         }
       },
       {
@@ -15,8 +15,8 @@
         "repositoryURL": "https://github.com/apple/swift-protobuf.git",
         "state": {
           "branch": null,
-          "revision": "7790acf0a81d08429cb20375bf42a8c7d279c5fe",
-          "version": "1.8.0"
+          "revision": "7e2c5f3cbbeea68e004915e3a8961e20bd11d824",
+          "version": "1.18.0"
         }
       }
     ]

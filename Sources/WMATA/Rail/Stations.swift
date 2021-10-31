@@ -236,7 +236,7 @@ public extension Station {
     }
 }
 
-@available(macOS 10.15, iOS 13, watchOS 6, tvOS 13, *)
+
 public extension Station {
     /// Distance, fare information, and estimated travel time between this and another station.
     ///
@@ -351,6 +351,10 @@ public extension Station {
     func timingsPublisher(key: String, session: URLSession = URLSession.shared) -> AnyPublisher<StationTimings, WMATAError> {
         (self as NeedsStation).timingsPublisher(for: self, key: key, session: session)
     }
+}
+
+extension Optional where Wrapped == Station {
+    
 }
 
 public extension Station {

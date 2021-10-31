@@ -136,7 +136,6 @@ extension NeedsRoute {
     }
 }
 
-@available(macOS 10.15, iOS 13, watchOS 6, tvOS 13, *)
 extension NeedsRoute {
     func positionsPublisher(on route: Route?, at radiusAtCoordinates: RadiusAtCoordinates?, key: String, session: URLSession) -> AnyPublisher<BusPositions, WMATAError> {
         var queryItems = [(String, String)]()
@@ -245,7 +244,6 @@ extension NeedsStop {
     }
 }
 
-@available(macOS 10.15, iOS 13, watchOS 6, tvOS 13, *)
 extension NeedsStop {
     func nextBusesPublisher(for stop: Stop, key: String, session: URLSession) -> AnyPublisher<BusPredictions, WMATAError> {
         publisher(
