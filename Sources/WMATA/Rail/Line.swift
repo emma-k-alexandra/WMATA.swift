@@ -16,7 +16,6 @@ public enum Line: String, CaseIterable, Codable {
     case OR
     case GR
     case SV
-    case YLRP
 }
 
 extension Line: NeedsLine {}
@@ -36,7 +35,6 @@ public extension Line {
         (self as NeedsLine).stations(for: self, key: key, session: session, completion: completion)
     }
 }
-
 
 public extension Line {
     /// Stations along this Line
@@ -75,24 +73,12 @@ public extension Line {
 
         case .SV:
             return "Silver"
-
-        case .YLRP:
-            return "Yellow Rush Plus"
-        }
-    }
-
-    var current: Bool {
-        switch self {
-        case .RD, .BL, .YL, .OR, .GR, .SV:
-            return true
-        case .YLRP:
-            return false
         }
     }
 }
 
-extension Line: CustomStringConvertible {
-    public var description: String {
-        rawValue
+extension Line: URLQueryItemConvertable {
+    func queryItem(name: String) -> URLQueryItem {
+        URLQueryItem(name: name, value: rawValue)
     }
 }

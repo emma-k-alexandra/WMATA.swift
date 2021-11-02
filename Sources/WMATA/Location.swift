@@ -34,9 +34,9 @@ public struct RadiusAtCoordinates {
     public init(radius: UInt, latitude: Double, longitude: Double) {
         self.init(radius: radius, coordinates: Coordinates(latitude: latitude, longitude: longitude))
     }
-
-    var queryItems: [(String, String)] {
-        coordinates.queryItems + [("Radius", String(radius))]
+    
+    func queryItems() -> [URLQueryItem] {
+        coordinates.queryItems() + [URLQueryItem(name: "Radius", value: String(radius))]
     }
 }
 
@@ -57,8 +57,11 @@ public struct Coordinates {
         self.latitude = latitude
         self.longitude = longitude
     }
-
-    var queryItems: [(String, String)] {
-        [("Lat", String(latitude)), ("Lon", String(longitude))]
+    
+    func queryItems() -> [URLQueryItem] {
+        [
+            URLQueryItem(name: "Lat", value: String(latitude)),
+            URLQueryItem(name: "Lon", value: String(longitude))
+        ]
     }
 }

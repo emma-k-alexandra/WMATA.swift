@@ -11,36 +11,16 @@ import Foundation
 protocol NeedsRoute: Fetcher {}
 
 extension NeedsRoute {
-    func positions(on route: Route?, at radiusAtCoordinates: RadiusAtCoordinates?, key: String, session: URLSession) {
-        var queryItems = [(String, String)]()
-
-        if let route = route {
-            queryItems.append(("RouteID", route.id))
-        }
-
-        if let radiusAtCoordinates = radiusAtCoordinates {
-            queryItems.append(contentsOf: radiusAtCoordinates.queryItems)
-        }
-
+    func positions(on route: Route?, at radiusAtCoordinates: RadiusAtCoordinates?, key: APIKey, session: URLSession) {
         request(
-            request: URLRequest(url: BusURL.positions.rawValue, key: key, queryItems: queryItems),
+            endpoint: API.Bus.Positions(key: key, route: route, radiusAtCoordinates: radiusAtCoordinates),
             session: session
         )
     }
 
     func positions(on route: Route?, at radiusAtCoordinates: RadiusAtCoordinates?, key: String, session: URLSession, completion: @escaping (Result<BusPositions, WMATAError>) -> Void) {
-        var queryItems = [(String, String)]()
-
-        if let route = route {
-            queryItems.append(("RouteID", route.id))
-        }
-
-        if let radiusAtCoordinates = radiusAtCoordinates {
-            queryItems.append(contentsOf: radiusAtCoordinates.queryItems)
-        }
-
         fetch(
-            request: URLRequest(url: BusURL.positions.rawValue, key: key, queryItems: queryItems),
+            endpoint: API.Bus.Positions(key: key, route: route, radiusAtCoordinates: radiusAtCoordinates),
             session: session,
             completion: completion
         )
@@ -138,18 +118,8 @@ extension NeedsRoute {
 
 extension NeedsRoute {
     func positionsPublisher(on route: Route?, at radiusAtCoordinates: RadiusAtCoordinates?, key: String, session: URLSession) -> AnyPublisher<BusPositions, WMATAError> {
-        var queryItems = [(String, String)]()
-
-        if let route = route {
-            queryItems.append(("RouteID", route.id))
-        }
-
-        if let radiusAtCoordinates = radiusAtCoordinates {
-            queryItems.append(contentsOf: radiusAtCoordinates.queryItems)
-        }
-
-        return publisher(
-            request: URLRequest(url: BusURL.positions.rawValue, key: key, queryItems: queryItems),
+        publisher(
+            endpoint: API.Bus.Positions(key: key, route: route, radiusAtCoordinates: radiusAtCoordinates),
             session: session
         )
     }

@@ -8,8 +8,8 @@
 import Combine
 import Foundation
 
-/// A WMATA Route ID
-public struct Route: Codable {
+/// A WMATA Route
+public struct Route {
     /// A WMATA Route ID
     public let id: String
 
@@ -20,7 +20,9 @@ public struct Route: Codable {
     public init(id: String) {
         self.id = id
     }
-    
+}
+
+extension Route: Codable {
     public init(from decoder: Decoder) throws {
         let value = try decoder.singleValueContainer()
         
@@ -104,7 +106,6 @@ public extension Route {
     }
 }
 
-
 public extension Route {
     /// Bus positions on this Route including latlong and direction.
     ///
@@ -167,8 +168,8 @@ public extension Route {
     }
 }
 
-extension Route: CustomStringConvertible {
-    public var description: String {
-        id
+extension Route: URLQueryItemConvertable {
+    func queryItem(name: String) -> URLQueryItem {
+        URLQueryItem(name: name, value: id)
     }
 }

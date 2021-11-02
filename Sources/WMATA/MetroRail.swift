@@ -78,7 +78,7 @@ public extension MetroRail {
     ///     - result: [LinesResponse](x-source-tag://LinesResponse) if successful, otherwise [WMATAError](x-source-tag://WMATAError)
     func lines(completion: @escaping (_ result: Result<LinesResponse, WMATAError>) -> Void) {
         fetch(
-            request: URLRequest(url: RailURL.lines.rawValue, key: key),
+            request: Lines(key).request(),
             session: urlSession,
             completion: completion
         )
@@ -96,14 +96,8 @@ public extension MetroRail {
     /// - Parameters:
     ///     - radiusAtCoordinates: Radius at latitude and longitude to search at. Optional.
     func entrances(at radiusAtCoordinates: RadiusAtCoordinates? = nil) {
-        var queryItems = [(String, String)]()
-
-        if let radiusAtCoordinates = radiusAtCoordinates {
-            queryItems.append(contentsOf: radiusAtCoordinates.queryItems)
-        }
-
         request(
-            request: URLRequest(url: RailURL.entrances.rawValue, key: key, queryItems: queryItems),
+            request: Entrances(key, radiusAtCoordinates: radiusAtCoordinates).request(),
             session: urlSession
         )
     }
@@ -118,14 +112,8 @@ public extension MetroRail {
     ///     - completion: A completion handler
     ///     - result: [StationEntrances](x-source-tag://StationEntrances) if successful, otherwise [WMATAError](x-source-tag://WMATAError)
     func entrances(at radiusAtCoordinates: RadiusAtCoordinates? = nil, completion: @escaping (_ result: Result<StationEntrances, WMATAError>) -> Void) {
-        var queryItems = [(String, String)]()
-
-        if let radiusAtCoordinates = radiusAtCoordinates {
-            queryItems.append(contentsOf: radiusAtCoordinates.queryItems)
-        }
-
         fetch(
-            request: URLRequest(url: RailURL.entrances.rawValue, key: key, queryItems: queryItems),
+            request: Entrances(key, radiusAtCoordinates: radiusAtCoordinates).request(),
             session: urlSession,
             completion: completion
         )
@@ -236,7 +224,7 @@ public extension MetroRail {
     /// - Returns: A Combine Publisher for [LinesResponse](x-source-tag://LinesResponse)
     func linesPublisher() -> AnyPublisher<LinesResponse, WMATAError> {
         publisher(
-            request: URLRequest(url: RailURL.lines.rawValue, key: key),
+            request: Lines(key).request(),
             session: urlSession
         )
     }
@@ -251,14 +239,8 @@ public extension MetroRail {
     ///
     /// - Returns: A Combine Publisher for [StationEntrances](x-source-tag://StationEntrances)
     func entrancesPublisher(at radiusAtCoordinates: RadiusAtCoordinates? = nil) -> AnyPublisher<StationEntrances, WMATAError> {
-        var queryItems = [(String, String)]()
-
-        if let radiusAtCoordinates = radiusAtCoordinates {
-            queryItems.append(contentsOf: radiusAtCoordinates.queryItems)
-        }
-
-        return publisher(
-            request: URLRequest(url: RailURL.entrances.rawValue, key: key, queryItems: queryItems),
+        publisher(
+            request: Entrances(key, radiusAtCoordinates: radiusAtCoordinates).request(),
             session: urlSession
         )
     }

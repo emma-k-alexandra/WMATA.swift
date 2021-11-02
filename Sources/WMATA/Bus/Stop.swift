@@ -8,19 +8,21 @@
 import Combine
 import Foundation
 
-/// A WMATA Stop ID
-public struct Stop: Codable {
+/// A bus stop
+public struct Stop {
     /// A WMATA Stop ID
     public let id: String
 
-    /// Create a Stop ID
+    /// Create a bus stop
     ///
     /// - Parameters:
     ///     - id: A Stop ID
     public init(id: String) {
         self.id = id
     }
-    
+}
+
+extension Stop: Codable {
     public init(from decoder: Decoder) throws {
         let value = try decoder.singleValueContainer()
         
@@ -73,7 +75,6 @@ public extension Stop {
     }
 }
 
-
 public extension Stop {
     /// Next bus arrival times at this Stop
     ///
@@ -105,8 +106,8 @@ public extension Stop {
     }
 }
 
-extension Stop: CustomStringConvertible {
-    public var description: String {
-        id
+extension Stop: URLQueryItemConvertable {
+    func queryItem(name: String) -> URLQueryItem {
+        URLQueryItem(name: name, value: id)
     }
 }

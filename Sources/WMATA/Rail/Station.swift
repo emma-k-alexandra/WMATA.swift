@@ -236,7 +236,6 @@ public extension Station {
     }
 }
 
-
 public extension Station {
     /// Distance, fare information, and estimated travel time between this and another station.
     ///
@@ -351,10 +350,6 @@ public extension Station {
     func timingsPublisher(key: String, session: URLSession = URLSession.shared) -> AnyPublisher<StationTimings, WMATAError> {
         (self as NeedsStation).timingsPublisher(for: self, key: key, session: session)
     }
-}
-
-extension Optional where Wrapped == Station {
-    
 }
 
 public extension Station {
@@ -808,9 +803,9 @@ public extension Station {
     }
 }
 
-extension Station: CustomStringConvertible {
-    public var description: String {
-        rawValue
+extension Station: URLQueryItemConvertable {
+    func queryItem(name: String) -> URLQueryItem {
+        URLQueryItem(name: name, value: rawValue)
     }
 }
 

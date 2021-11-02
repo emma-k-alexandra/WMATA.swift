@@ -27,7 +27,7 @@ WMATA.swift is a Swift interface to the [Washington Metropolitan Area Transit Au
 
 ## Requirements
 
-- Swift 5.1+
+- Swift 5.4
 
 ## Installation
 
@@ -35,14 +35,14 @@ WMATA.swift is a Swift interface to the [Washington Metropolitan Area Transit Au
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/emma-k-alexandra/WMATA.swift.git", .upToNextMajor(from: "10.0.0"))
+    .package(url: "https://github.com/emma-k-alexandra/WMATA.swift.git", .upToNextMajor(from: "11.0.0"))
 ]
 ```
 
 ## Migration Guides
 
-- [v9 Migration Guide][v9-migration-guide]
 - [v10 Migration Guide][v10-migration-guide]
+- [v9 Migration Guide][v9-migration-guide]
 
 ## Dependencies
 

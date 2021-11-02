@@ -217,15 +217,10 @@ extension NeedsStation {
 extension NeedsStation {
     /// For requests using Combine
     func stationPublisher(_ station: Station?, to destinationStation: Station?, key: String, session: URLSession) -> AnyPublisher<StationToStationInfos, WMATAError> {
-        var queryItems = [(String, String)]()
-
-        if let station = station {
-            queryItems.append(("FromStationCode", station.rawValue))
-        }
-
-        if let destinationStation = destinationStation {
-            queryItems.append(("ToStationCode", destinationStation.rawValue))
-        }
+        let queryItems = [
+            station?.queryItem(name: "FromStationCode"),
+            destinationStation?.queryItem(name: "ToStationCode")
+        ]
 
         return publisher(
             request: URLRequest(url: RailURL.stationToStation.rawValue, key: key, queryItems: queryItems),
