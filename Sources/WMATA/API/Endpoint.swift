@@ -10,6 +10,8 @@ import Combine
 import GTFS
 
 internal protocol Endpoint {
+    associatedtype Response
+    
     /// Endpoint URL for the Request
     var url: URLComponents { get }
     
@@ -44,52 +46,18 @@ extension Endpoint {
     }
 }
 
-internal protocol EndpointTest {
-    associatedtype Response: Codable
-    
-    /// Endpoint URL for the Request
-    var url: URLComponents { get }
-    
-    /// WMATA API Key for this request
-    var key: APIKey { get }
-    
-    /// The query items to attach to the URL
-    func queryItems() -> [URLQueryItem?]
-}
-
-extension EndpointTest {
-    func queryItems() -> [URLQueryItem?] {
-        []
-    }
-    
-    func url(with queryItems: [URLQueryItem?]) -> URL? {
-        var components = self.url
-        components.queryItems = queryItems.withoutNil()
-        
-        return components.url
-    }
-    
-    func request() -> URLRequest? {
-        guard let url = url(with: queryItems()) else {
-            return nil
-        }
-        
-        var request = URLRequest(url: url)
-        request.setValue(key, forHTTPHeaderField: "api_key")
-        
-        return request
-    }
-}
-
 // Standard API
-extension EndpointTest {
+extension Endpoint {
     /// Default implemention for deserialize.
     ///
     /// - Parameters:
     ///     - data: Data to deserialize
     ///
     /// - Returns: Result container the deserialized data, or an error
-    private func decode(_ data: Data) -> Result<Response, WMATAError> {
+    private func decode(_ data: Data) -> Result<Response, WMATAError>
+    where
+        Response: Codable
+    {
         do {
             let decodedObject = try WMATAJSONDecoder().decode(Response.self, from: data)
             return .success(decodedObject)
@@ -105,7 +73,10 @@ extension EndpointTest {
         }
     }
 
-    func request(with session: URLSession = .shared, completion: @escaping (_ result: Result<Response, WMATAError>) -> Void) {
+    func request(with session: URLSession = .shared, completion: @escaping (_ result: Result<Response, WMATAError>) -> Void)
+    where
+        Response: Codable
+    {
         guard let request = request() else {
             completion(.failure(.init(statusCode: 1, message: "Unable to create URLRequest for endpoint \(String(describing: self))")))
             return
@@ -133,7 +104,10 @@ extension EndpointTest {
         }.resume()
     }
     
-    func publisher(with session: URLSession) -> AnyPublisher<Response, WMATAError> {
+    func publisher(with session: URLSession = .shared) -> AnyPublisher<Response, WMATAError>
+    where
+        Response: Codable
+    {
         guard let request = request() else {
             return Fail(
                 error: WMATAError(
@@ -153,7 +127,7 @@ extension EndpointTest {
 }
 
 // GTFS-RT
-extension EndpointTest {
+extension Endpoint {
     private func decode(_ data: Data) -> Result<TransitRealtime_FeedMessage, WMATAError> {
         do {
             return .success(try TransitRealtime_FeedMessage(serializedData: data))
@@ -163,7 +137,7 @@ extension EndpointTest {
         }
     }
     
-    func request(with session: URLSession, completion: @escaping (Result<TransitRealtime_FeedMessage, WMATAError>) -> Void) {
+    func request(with session: URLSession = .shared, completion: @escaping (Result<TransitRealtime_FeedMessage, WMATAError>) -> Void) {
         guard let request = request() else {
             completion(.failure(.init(statusCode: 1, message: "Unable to create URLRequest for endpoint \(String(describing: self))")))
             return
@@ -191,7 +165,7 @@ extension EndpointTest {
         }.resume()
     }
     
-    func publisher(with session: URLSession) -> AnyPublisher<TransitRealtime_FeedMessage, WMATAError> {
+    func publisher(with session: URLSession = .shared) -> AnyPublisher<TransitRealtime_FeedMessage, WMATAError> {
         guard let request = request() else {
             return Fail(
                 error: WMATAError(

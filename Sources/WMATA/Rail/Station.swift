@@ -9,9 +9,11 @@ import Combine
 import Foundation
 
 /// Station codes as defined by WMATA
-/// Note that a station code represents a single level within a physical station.
+///
+/// - Note: A station code represents a single level within a physical station.
+///
 /// Physical stations with multiple levels like L'Enfant Plaza require multiple station codes
-/// to represent the entire physical station. Use `together` or `allTogether` to match
+/// to represent the entire physical station. Use [`together`]((x-source-tag://together)) or [`allTogether`]((x-source-tag://allTogether)) to match
 /// station codes with their corresponding sister station codes.
 public enum Station: String, CaseIterable, Codable {
     case A01
@@ -759,6 +761,7 @@ public extension Station {
     ///     [WMATA Station Information Documentation](https://developer.wmata.com/docs/services/5476364f031f590f38092507/operations/5476364f031f5909e4fe3310)
     ///
     /// - Returns: The `Station` within the same physical station.
+    /// - Tag: together
     var together: Station? {
         switch self {
         // Fort Totten
@@ -794,6 +797,7 @@ public extension Station {
     ///     [WMATA Station Information Documentation](https://developer.wmata.com/docs/services/5476364f031f590f38092507/operations/5476364f031f5909e4fe3310)
     ///
     /// - Returns: An array containing this station and the `Station` `together`, if there is one.
+    /// - Tag: allTogether
     var allTogether: [Station] {
         if let together = self.together {
             return [self, together]
