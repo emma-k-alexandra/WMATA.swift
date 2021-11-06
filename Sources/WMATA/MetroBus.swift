@@ -12,7 +12,7 @@ import GTFS
 /// For accessing MetroBus related APIs
 public struct MetroBus: Fetcher {
     /// WMATA API key
-    public let key: String
+    public let key: APIKey
     
     /// Delegate for use with delegate calls
     public var delegate: WMATADelegate? {
@@ -35,7 +35,7 @@ public struct MetroBus: Fetcher {
     ///     - key: Your WMATA API key
     ///     - delegate: The delegate to use for all delegate calls. Optional.
     ///     - sharedContainerIdentifier: Identifier for use with app extensions. Optional.
-    public init(key: String, delegate: WMATADelegate? = nil, sharedContainerIdentifier: String? = nil) {
+    public init(key: APIKey, delegate: WMATADelegate? = nil, sharedContainerIdentifier: String? = nil) {
         self.key = key
 
         self.sharedContainerIdentifier = sharedContainerIdentifier
@@ -63,7 +63,7 @@ public extension MetroBus {
     ///     [WMATA Routes Documentation](https://developer.wmata.com/docs/services/54763629281d83086473f231/operations/5476362a281d830c946a3d6a)
     func routes() {
         request(
-            request: URLRequest(url: BusURL.routes.rawValue, key: key),
+            endpoint: API.Bus.Routes(key: key),
             session: session
         )
     }
@@ -78,7 +78,7 @@ public extension MetroBus {
     ///     - result: [RoutesResponse](x-source-tag://RoutesResponse) if successful, otherwise [WMATAError](x-source-tag://WMATAError)
     func routes(completion: @escaping (_ result: Result<RoutesResponse, WMATAError>) -> Void) {
         fetch(
-            request: URLRequest(url: BusURL.routes.rawValue, key: key),
+            endpoint: API.Bus.Routes(key: key),
             session: session,
             completion: completion
         )
@@ -96,14 +96,11 @@ public extension MetroBus {
     /// - Parameters:
     ///     - radiusAtCoordinates: Radius at latitude and longitude to search at. Optional.
     func searchStops(at radiusAtCoordinates: RadiusAtCoordinates? = nil) {
-        var queryItems = [(String, String)]()
-
-        if let radiusAtCoordinates = radiusAtCoordinates {
-            queryItems.append(contentsOf: radiusAtCoordinates.queryItems)
-        }
-
         request(
-            request: URLRequest(url: BusURL.stops.rawValue, key: key, queryItems: queryItems),
+            endpoint: API.Bus.StopsSearch(
+                key: key,
+                radiusAtCoordinates: radiusAtCoordinates
+            ),
             session: session
         )
     }
@@ -118,14 +115,11 @@ public extension MetroBus {
     ///     - completion: A completion handler
     ///     - result: [StopsSearchResponse](x-source-tag://StopsSearchResponse) if successful, otherwise [WMATAError](x-source-tag://WMATAError)
     func searchStops(at radiusAtCoordinates: RadiusAtCoordinates? = nil, completion: @escaping (_ result: Result<StopsSearchResponse, WMATAError>) -> Void) {
-        var queryItems = [(String, String)]()
-
-        if let radiusAtCoordinates = radiusAtCoordinates {
-            queryItems.append(contentsOf: radiusAtCoordinates.queryItems)
-        }
-
         fetch(
-            request: URLRequest(url: BusURL.stops.rawValue, key: key, queryItems: queryItems),
+            endpoint: API.Bus.StopsSearch(
+                key: key,
+                radiusAtCoordinates: radiusAtCoordinates
+            ),
             session: session,
             completion: completion
         )
@@ -142,7 +136,7 @@ public extension MetroBus {
     /// - Returns: A Combine Publisher for [RoutesResponse](x-source-tag://RoutesResponse)
     func routesPublisher() -> AnyPublisher<RoutesResponse, WMATAError> {
         publisher(
-            request: URLRequest(url: BusURL.routes.rawValue, key: key),
+            endpoint: API.Bus.Routes(key: key),
             session: session
         )
     }
@@ -157,14 +151,11 @@ public extension MetroBus {
     ///
     /// - Returns: A Combine Publisher for [StopsSearchResponse](x-source-tag://StopsSearchResponse)
     func searchStopsPublisher(at radiusAtCoordinates: RadiusAtCoordinates? = nil) -> AnyPublisher<StopsSearchResponse, WMATAError> {
-        var queryItems = [(String, String)]()
-
-        if let radiusAtCoordinates = radiusAtCoordinates {
-            queryItems.append(contentsOf: radiusAtCoordinates.queryItems)
-        }
-
-        return publisher(
-            request: URLRequest(url: BusURL.stops.rawValue, key: key, queryItems: queryItems),
+        publisher(
+            endpoint: API.Bus.StopsSearch(
+                key: key,
+                radiusAtCoordinates: radiusAtCoordinates
+            ),
             session: session
         )
     }
@@ -466,7 +457,7 @@ public extension MetroBus {
     ///     - result: `TransitRealtime_FeedMessage` if successful, otherwise `WMATAError`
     func alerts(completion: @escaping (_ result: Result<TransitRealtime_FeedMessage, WMATAError>) -> Void) {
         fetch(
-            request: URLRequest(url: GTFSRTBusURL.alerts.rawValue, key: key),
+            endpoint: API.Bus.Alerts(key: key),
             session: session,
             completion: completion
         )
@@ -482,10 +473,7 @@ public extension MetroBus {
     ///     [Google Alerts Documentation](https://developers.google.com/transit/gtfs-realtime/guides/service-alerts)
     func alerts() {
         request(
-            request: URLRequest(
-                url: GTFSRTBusURL.alerts.rawValue,
-                key: key
-            ),
+            endpoint: API.Bus.Alerts(key: key),
             session: session
         )
     }
@@ -500,10 +488,7 @@ public extension MetroBus {
     ///     - result: `TransitRealtime_FeedMessage` if successful, otherwise `WMATAError`
     func tripUpdates(completion: @escaping (_ result: Result<TransitRealtime_FeedMessage, WMATAError>) -> Void) {
         fetch(
-            request: URLRequest(
-                url: GTFSRTBusURL.tripUpdates.rawValue,
-                key: key
-            ),
+            endpoint: API.Bus.TripUpdates(key: key),
             session: session,
             completion: completion
         )
@@ -519,10 +504,7 @@ public extension MetroBus {
     ///     [Google Trip Updates Documentation](https://developers.google.com/transit/gtfs-realtime/guides/trip-updates)
     func tripUpdates() {
         request(
-            request: URLRequest(
-                url: GTFSRTBusURL.tripUpdates.rawValue,
-                key: key
-            ),
+            endpoint: API.Bus.TripUpdates(key: key),
             session: session
         )
     }
@@ -537,7 +519,7 @@ public extension MetroBus {
     ///     - result: `TransitRealtime_FeedMessage` if successful, otherwise `WMATAError`
     func vehiclePositions(completion: @escaping (_ result: Result<TransitRealtime_FeedMessage, WMATAError>) -> Void) {
         fetch(
-            request: URLRequest(url: GTFSRTBusURL.vehiclePositions.rawValue, key: key),
+            endpoint: API.Bus.VehiclePositions(key: key),
             session: session,
             completion: completion
         )
@@ -553,10 +535,7 @@ public extension MetroBus {
     ///     [Google Vehicle Positions Documentation](https://developers.google.com/transit/gtfs-realtime/guides/vehicle-positions)
     func vehiclePositions() {
         request(
-            request: URLRequest(
-                url: GTFSRTBusURL.vehiclePositions.rawValue,
-                key: key
-            ),
+            endpoint: API.Bus.VehiclePositions(key: key),
             session: session
         )
     }
@@ -572,10 +551,7 @@ public extension MetroBus {
     /// - Returns: A Combine Publisher for `TransitRealtime_FeedMessage`
     func alertsPublisher() -> AnyPublisher<TransitRealtime_FeedMessage, WMATAError> {
         publisher(
-            request: URLRequest(
-                url: GTFSRTBusURL.alerts.rawValue,
-                key: key
-            ),
+            endpoint: API.Bus.Alerts(key: key),
             session: session
         )
     }
@@ -588,10 +564,7 @@ public extension MetroBus {
     /// - Returns: A Combine Publisher for `TransitRealtime_FeedMessage`
     func tripUpdatesPublisher() -> AnyPublisher<TransitRealtime_FeedMessage, WMATAError> {
         publisher(
-            request: URLRequest(
-                url: GTFSRTBusURL.tripUpdates.rawValue,
-                key: key
-            ),
+            endpoint: API.Bus.TripUpdates(key: key),
             session: session
         )
     }
@@ -604,10 +577,7 @@ public extension MetroBus {
     /// - Returns: A Combine Publisher for`TransitRealtime_FeedMessage`
     func vehiclePositionsPublisher() -> AnyPublisher<TransitRealtime_FeedMessage, WMATAError> {
         publisher(
-            request: URLRequest(
-                url: GTFSRTBusURL.vehiclePositions.rawValue,
-                key: key
-            ),
+            endpoint: API.Bus.VehiclePositions(key: key),
             session: session
         )
     }

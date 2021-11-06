@@ -132,7 +132,7 @@ public extension Station {
     ///     - session: Optional. URL Session to make this request with
     ///     - completion: A completion handler
     ///     - result: [StationToStationInfos](x-source-tag://StationToStationInfos) if successful, otherwise [WMATAError](x-source-tag://WMATAError)
-    func station(to destinationStation: Station? = nil, key: String, session: URLSession = URLSession.shared, completion: @escaping (_ result: Result<StationToStationInfos, WMATAError>) -> Void) {
+    func station(to destinationStation: Station? = nil, key: APIKey, session: URLSession = URLSession.shared, completion: @escaping (_ result: Result<StationToStationInfos, WMATAError>) -> Void) {
         (self as NeedsStation).station(self, to: destinationStation, key: key, session: session, completion: completion)
     }
 
@@ -146,7 +146,7 @@ public extension Station {
     ///     - session: Optional. URL Session to make this request with
     ///     - completion: A completion handler
     ///     - result: [ElevatorAndEscalatorIncidents](x-source-tag://ElevatorAndEscalatorIncidents) if successful, otherwise [WMATAError](x-source-tag://WMATAError)
-    func elevatorAndEscalatorIncidents(key: String, session: URLSession = URLSession.shared, completion: @escaping (_ result: Result<ElevatorAndEscalatorIncidents, WMATAError>) -> Void) {
+    func elevatorAndEscalatorIncidents(key: APIKey, session: URLSession = URLSession.shared, completion: @escaping (_ result: Result<ElevatorAndEscalatorIncidents, WMATAError>) -> Void) {
         (self as NeedsStation).elevatorAndEscalatorIncidents(at: self, key: key, session: session, completion: completion)
     }
 
@@ -160,7 +160,7 @@ public extension Station {
     ///     - session: Optional. URL Session to make this request with
     ///     - completion: A completion handler
     ///     - result: [RailIncidents](x-source-tag://RailIncidents) if successful, otherwise [WMATAError](x-source-tag://WMATAError)
-    func incidents(key: String, session: URLSession = URLSession.shared, completion: @escaping (_ result: Result<RailIncidents, WMATAError>) -> Void) {
+    func incidents(key: APIKey, session: URLSession = URLSession.shared, completion: @escaping (_ result: Result<RailIncidents, WMATAError>) -> Void) {
         (self as NeedsStation).incidents(at: self, key: key, session: session, completion: completion)
     }
 
@@ -174,7 +174,7 @@ public extension Station {
     ///     - session: Optional. URL Session to make this request with
     ///     - completion: A completion handler
     ///     - result: [RailPredictions](x-source-tag://RailPredictions) if successful, otherwise [WMATAError](x-source-tag://WMATAError)
-    func nextTrains(key: String, session: URLSession = URLSession.shared, completion: @escaping (_ result: Result<RailPredictions, WMATAError>) -> Void) {
+    func nextTrains(key: APIKey, session: URLSession = URLSession.shared, completion: @escaping (_ result: Result<RailPredictions, WMATAError>) -> Void) {
         (self as NeedsStation).nextTrains(at: self, key: key, session: session, completion: completion)
     }
 
@@ -188,7 +188,7 @@ public extension Station {
     ///     - session: Optional. URL Session to make this request with
     ///     - completion: A completion handler
     ///     - result: [StationInformation](x-source-tag://StationInformation) if successful, otherwise [WMATAError](x-source-tag://WMATAError)
-    func information(key: String, session: URLSession = URLSession.shared, completion: @escaping (_ result: Result<StationInformation, WMATAError>) -> Void) {
+    func information(key: APIKey, session: URLSession = URLSession.shared, completion: @escaping (_ result: Result<StationInformation, WMATAError>) -> Void) {
         (self as NeedsStation).information(for: self, key: key, session: session, completion: completion)
     }
 
@@ -202,7 +202,7 @@ public extension Station {
     ///     - session: Optional. URL Session to make this request with
     ///     - completion: A completion handler
     ///     - result: [StationsParking](x-source-tag://StationsParking) if successful, otherwise [WMATAError](x-source-tag://WMATAError)
-    func parkingInformation(key: String, session: URLSession = URLSession.shared, completion: @escaping (_ result: Result<StationsParking, WMATAError>) -> Void) {
+    func parkingInformation(key: APIKey, session: URLSession = URLSession.shared, completion: @escaping (_ result: Result<StationsParking, WMATAError>) -> Void) {
         (self as NeedsStation).parkingInformation(for: self, key: key, session: session, completion: completion)
     }
 
@@ -217,7 +217,7 @@ public extension Station {
     ///     - session: Optional. URL Session to make this request with
     ///     - completion: A completion handler
     ///     - result: [PathBetweenStations](x-source-tag://PathBetweenStations) if successful, otherwise [WMATAError](x-source-tag://WMATAError)
-    func path(to destinationStation: Station, key: String, session: URLSession = URLSession.shared, completion: @escaping (_ result: Result<PathBetweenStations, WMATAError>) -> Void) {
+    func path(to destinationStation: Station, key: APIKey, session: URLSession = URLSession.shared, completion: @escaping (_ result: Result<PathBetweenStations, WMATAError>) -> Void) {
         (self as NeedsStation).path(from: self, to: destinationStation, key: key, session: session, completion: completion)
     }
 
@@ -231,7 +231,7 @@ public extension Station {
     ///     - session: Optional. URL Session to make this request with
     ///     - completion: A completion handler
     ///     - result: [StationTimings](x-source-tag://StationTimings) if successful, otherwise [WMATAError](x-source-tag://WMATAError)
-    func timings(key: String, session: URLSession = URLSession.shared, completion: @escaping (_ result: Result<StationTimings, WMATAError>) -> Void) {
+    func timings(key: APIKey, session: URLSession = URLSession.shared, completion: @escaping (_ result: Result<StationTimings, WMATAError>) -> Void) {
         (self as NeedsStation).timings(for: self, key: key, session: session, completion: completion)
     }
 }
@@ -248,7 +248,7 @@ public extension Station {
     ///     - session: Optional. URL Session to make this request with
     ///
     /// - Returns: A Combine Publisher for [StationToStationInfos](x-source-tag://StationToStationInfos)
-    func stationPublisher(to destinationStation: Station? = nil, key: String, session: URLSession = URLSession.shared) -> AnyPublisher<StationToStationInfos, WMATAError> {
+    func stationPublisher(to destinationStation: Station? = nil, key: APIKey, session: URLSession = URLSession.shared) -> AnyPublisher<StationToStationInfos, WMATAError> {
         (self as NeedsStation).stationPublisher(self, to: destinationStation, key: key, session: session)
     }
 
@@ -262,7 +262,7 @@ public extension Station {
     ///     - session: Optional. URL Session to make this request with
     ///
     /// - Returns: A Combine Publisher for [ElevatorAndEscalatorIncidents](x-source-tag://ElevatorAndEscalatorIncidents)
-    func elevatorAndEscalatorIncidentsPublisher(key: String, session: URLSession = URLSession.shared) -> AnyPublisher<ElevatorAndEscalatorIncidents, WMATAError> {
+    func elevatorAndEscalatorIncidentsPublisher(key: APIKey, session: URLSession = URLSession.shared) -> AnyPublisher<ElevatorAndEscalatorIncidents, WMATAError> {
         (self as NeedsStation).elevatorAndEscalatorIncidentsPublisher(at: self, key: key, session: session)
     }
 
@@ -276,7 +276,7 @@ public extension Station {
     ///     - session: Optional. URL Session to make this request with
     ///
     /// - Returns: A Combine Publisher for [RailIncidents](x-source-tag://RailIncidents)
-    func incidentsPublisher(key: String, session: URLSession = URLSession.shared) -> AnyPublisher<RailIncidents, WMATAError> {
+    func incidentsPublisher(key: APIKey, session: URLSession = URLSession.shared) -> AnyPublisher<RailIncidents, WMATAError> {
         (self as NeedsStation).incidentsPublisher(at: self, key: key, session: session)
     }
 
@@ -290,7 +290,7 @@ public extension Station {
     ///     - session: Optional. URL Session to make this request with
     ///
     /// - Returns: A Combine Publisher for [RailPredictions](x-source-tag://RailPredictions)
-    func nextTrainsPublisher(key: String, session: URLSession = URLSession.shared) -> AnyPublisher<RailPredictions, WMATAError> {
+    func nextTrainsPublisher(key: APIKey, session: URLSession = URLSession.shared) -> AnyPublisher<RailPredictions, WMATAError> {
         (self as NeedsStation).nextTrainsPublisher(at: self, key: key, session: session)
     }
 
@@ -304,7 +304,7 @@ public extension Station {
     ///     - session: Optional. URL Session to make this request with
     ///
     /// - Returns: A Combine Publisher for [StationInformation](x-source-tag://StationInformation)
-    func informationPublisher(key: String, session: URLSession = URLSession.shared) -> AnyPublisher<StationInformation, WMATAError> {
+    func informationPublisher(key: APIKey, session: URLSession = URLSession.shared) -> AnyPublisher<StationInformation, WMATAError> {
         (self as NeedsStation).informationPublisher(for: self, key: key, session: session)
     }
 
@@ -318,7 +318,7 @@ public extension Station {
     ///     - session: Optional. URL Session to make this request with
     ///
     /// - Returns: A Combine Publisher for [StationsParking](x-source-tag://StationsParking)
-    func parkingInformationPublisher(key: String, session: URLSession = URLSession.shared) -> AnyPublisher<StationsParking, WMATAError> {
+    func parkingInformationPublisher(key: APIKey, session: URLSession = URLSession.shared) -> AnyPublisher<StationsParking, WMATAError> {
         (self as NeedsStation).parkingInformationPublisher(for: self, key: key, session: session)
     }
 
@@ -333,7 +333,7 @@ public extension Station {
     ///     - session: Optional. URL Session to make this request with
     ///
     /// - Returns: A Combine Publisher for [PathBetweenStations](x-source-tag://PathBetweenStations)
-    func pathPublisher(to destinationStation: Station, key: String, session: URLSession = URLSession.shared) -> AnyPublisher<PathBetweenStations, WMATAError> {
+    func pathPublisher(to destinationStation: Station, key: APIKey, session: URLSession = URLSession.shared) -> AnyPublisher<PathBetweenStations, WMATAError> {
         (self as NeedsStation).pathPublisher(from: self, to: destinationStation, key: key, session: session)
     }
 
@@ -347,7 +347,7 @@ public extension Station {
     ///     - session: Optional. URL Session to make this request with
     ///
     /// - Returns: A Combine Publisher for [StationTimings](x-source-tag://StationTimings)
-    func timingsPublisher(key: String, session: URLSession = URLSession.shared) -> AnyPublisher<StationTimings, WMATAError> {
+    func timingsPublisher(key: APIKey, session: URLSession = URLSession.shared) -> AnyPublisher<StationTimings, WMATAError> {
         (self as NeedsStation).timingsPublisher(for: self, key: key, session: session)
     }
 }
@@ -803,9 +803,15 @@ public extension Station {
     }
 }
 
-extension Station: URLQueryItemConvertable {
-    func queryItem(name: String) -> URLQueryItem {
-        URLQueryItem(name: name, value: rawValue)
+extension Station: URLQueryItemConvertible {
+    enum URLQueryItemName: String {
+        case standard = "StationCode"
+        case to = "ToStationCode"
+        case from = "FromStationCode"
+    }
+    
+    func queryItem(name: URLQueryItemName = .standard) -> URLQueryItem {
+        URLQueryItem(name: name.rawValue, value: rawValue)
     }
 }
 

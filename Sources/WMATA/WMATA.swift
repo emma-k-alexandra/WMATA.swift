@@ -8,4 +8,4 @@
 import Foundation
 
 /// A WMATA API Key available from https://developer.wmata.com
-typealias APIKey = String
+public typealias APIKey = String

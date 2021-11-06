@@ -6,6 +6,26 @@ import XCTest
 
 let TEST_API_KEY = "9e38c3eab34c4e6c990828002828f5ed" // Get your own @ https://developer.wmata.com using this one will probably result in some weird behavior
 
+final class EndpointTests: XCTestCase {
+    func testLines() {
+        let exp = expectation(description: #function)
+        let lines = API.Rail.LinesTest(key: TEST_API_KEY)
+
+        lines.request { result in
+            switch result {
+            case let .success(response):
+                print(response)
+                exp.fulfill()
+
+            case let .failure(error):
+                print(error)
+            }
+        }
+
+        waitForExpectations(timeout: 1)
+    }
+}
+
 final class RailTests: XCTestCase {
     func testLines() {
         let exp = expectation(description: #function)

@@ -56,7 +56,7 @@ public extension Route {
     ///     - session: Optional. URL Session to make this request with
     ///     - completion: A completion handler
     ///     - result: [BusPositions](x-source-tag://BusPositions) if successful, otherwise [WMATAError](x-source-tag://WMATAError)
-    func positions(at radiusAtCoordinates: RadiusAtCoordinates? = nil, key: String, session: URLSession = URLSession.shared, completion: @escaping (_ result: Result<BusPositions, WMATAError>) -> Void) {
+    func positions(at radiusAtCoordinates: RadiusAtCoordinates? = nil, key: APIKey, session: URLSession = URLSession.shared, completion: @escaping (_ result: Result<BusPositions, WMATAError>) -> Void) {
         (self as NeedsRoute).positions(on: self, at: radiusAtCoordinates, key: key, session: session, completion: completion)
     }
 
@@ -70,7 +70,7 @@ public extension Route {
     ///     - session: Optional. URL Session to make this request with
     ///     - completion: completion handler which return `BusIncidents`
     ///     - result: [BusIncidents](x-source-tag://BusIncidents) if successful, otherwise [WMATAError](x-source-tag://WMATAError)
-    func incidents(key: String, session: URLSession = URLSession.shared, completion: @escaping (_ result: Result<BusIncidents, WMATAError>) -> Void) {
+    func incidents(key: APIKey, session: URLSession = URLSession.shared, completion: @escaping (_ result: Result<BusIncidents, WMATAError>) -> Void) {
         (self as NeedsRoute).incidents(on: self, key: key, session: session, completion: completion)
     }
 
@@ -85,7 +85,7 @@ public extension Route {
     ///     - session: Optional. URL Session to make this request with
     ///     - completion: A completion handler
     ///     - result: [PathDetails](x-source-tag://PathDetails) if successful, otherwise [WMATAError](x-source-tag://WMATAError)
-    func pathDetails(on date: WMATADate? = nil, key: String, session: URLSession = URLSession.shared, completion: @escaping (_ result: Result<PathDetails, WMATAError>) -> Void) {
+    func pathDetails(on date: WMATADate? = nil, key: APIKey, session: URLSession = URLSession.shared, completion: @escaping (_ result: Result<PathDetails, WMATAError>) -> Void) {
         (self as NeedsRoute).pathDetails(for: self, on: date, key: key, session: session, completion: completion)
     }
 
@@ -101,7 +101,7 @@ public extension Route {
     ///     - session: Optional. URL Session to make this request with
     ///     - completion: A completion handler
     ///     - result: [RouteSchedule](x-source-tag://RouteSchedule) if successful, otherwise [WMATAError](x-source-tag://WMATAError)
-    func schedule(on date: WMATADate? = nil, includingVariations: Bool? = false, key: String, session: URLSession = URLSession.shared, completion: @escaping (_ result: Result<RouteSchedule, WMATAError>) -> Void) {
+    func schedule(on date: WMATADate? = nil, includingVariations: Bool? = false, key: APIKey, session: URLSession = URLSession.shared, completion: @escaping (_ result: Result<RouteSchedule, WMATAError>) -> Void) {
         (self as NeedsRoute).schedule(for: self, on: date, includingVariations: includingVariations, key: key, session: session, completion: completion)
     }
 }
@@ -118,7 +118,7 @@ public extension Route {
     ///     - session: Optional. URL Session to make this request with
     ///
     /// - Returns: A Combine Publisher for [BusPositions](x-source-tag://BusPositions)
-    func positionsPublisher(at radiusAtCoordinates: RadiusAtCoordinates? = nil, key: String, session: URLSession = URLSession.shared) -> AnyPublisher<BusPositions, WMATAError> {
+    func positionsPublisher(at radiusAtCoordinates: RadiusAtCoordinates? = nil, key: APIKey, session: URLSession = URLSession.shared) -> AnyPublisher<BusPositions, WMATAError> {
         (self as NeedsRoute).positionsPublisher(on: self, at: radiusAtCoordinates, key: key, session: session)
     }
 
@@ -132,7 +132,7 @@ public extension Route {
     ///     - session: Optional. URL Session to make this request with
     ///
     /// - Returns: A Combine Publisher for [BusIncidents](x-source-tag://BusIncidents)
-    func incidentsPublisher(key: String, session: URLSession = URLSession.shared) -> AnyPublisher<BusIncidents, WMATAError> {
+    func incidentsPublisher(key: APIKey, session: URLSession = URLSession.shared) -> AnyPublisher<BusIncidents, WMATAError> {
         (self as NeedsRoute).incidentsPublisher(on: self, key: key, session: session)
     }
 
@@ -147,7 +147,7 @@ public extension Route {
     ///     - session: Optional. URL Session to make this request with
     ///
     /// - Returns: A Combine Publisher for [PathDetails](x-source-tag://PathDetails)
-    func pathDetailsPublisher(on date: WMATADate? = nil, key: String, session: URLSession = URLSession.shared) -> AnyPublisher<PathDetails, WMATAError> {
+    func pathDetailsPublisher(on date: WMATADate? = nil, key: APIKey, session: URLSession = URLSession.shared) -> AnyPublisher<PathDetails, WMATAError> {
         (self as NeedsRoute).pathDetailsPublisher(for: self, on: date, key: key, session: session)
     }
 
@@ -163,13 +163,18 @@ public extension Route {
     ///     - session: Optional. URL Session to make this request with
     ///
     /// - Returns: A Combine Publisher for [RouteSchedule](x-source-tag://RouteSchedule)
-    func schedulePublisher(on date: WMATADate? = nil, includingVariations: Bool? = false, key: String, session: URLSession = URLSession.shared) -> AnyPublisher<RouteSchedule, WMATAError> {
+    func schedulePublisher(on date: WMATADate? = nil, includingVariations: Bool? = false, key: APIKey, session: URLSession = URLSession.shared) -> AnyPublisher<RouteSchedule, WMATAError> {
         (self as NeedsRoute).schedulePublisher(for: self, on: date, includingVariations: includingVariations, key: key, session: session)
     }
 }
 
-extension Route: URLQueryItemConvertable {
-    func queryItem(name: String) -> URLQueryItem {
-        URLQueryItem(name: name, value: id)
+extension Route: URLQueryItemConvertible {
+    enum URLQueryItemName: String {
+        case routeID = "RouteID"
+        case route = "Route"
+    }
+    
+    func queryItem(name: URLQueryItemName = .routeID) -> URLQueryItem {
+        URLQueryItem(name: name.rawValue, value: id)
     }
 }

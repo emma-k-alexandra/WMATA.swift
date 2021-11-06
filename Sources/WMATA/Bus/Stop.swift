@@ -55,7 +55,7 @@ public extension Stop {
     ///     - session: Optional. URL Session to make this request with
     ///     - completion: A completion handler
     ///     - result: [BusPredictions](x-source-tag://BusPredictions) if successful, otherwise [WMATAError](x-source-tag://WMATAError)
-    func nextBuses(key: String, session: URLSession = URLSession.shared, completion: @escaping (_ result: Result<BusPredictions, WMATAError>) -> Void) {
+    func nextBuses(key: APIKey, session: URLSession = URLSession.shared, completion: @escaping (_ result: Result<BusPredictions, WMATAError>) -> Void) {
         (self as NeedsStop).nextBuses(for: self, key: key, session: session, completion: completion)
     }
 
@@ -70,7 +70,7 @@ public extension Stop {
     ///     - session: Optional. URL Session to make this request with
     ///     - completion: A completion handler
     ///     - result: [StopSchedule](x-source-tag://StopSchedule) if successful, otherwise [WMATAError](x-source-tag://WMATAError)
-    func schedule(at date: WMATADate? = nil, key: String, session: URLSession = URLSession.shared, completion: @escaping (_ result: Result<StopSchedule, WMATAError>) -> Void) {
+    func schedule(at date: WMATADate? = nil, key: APIKey, session: URLSession = URLSession.shared, completion: @escaping (_ result: Result<StopSchedule, WMATAError>) -> Void) {
         (self as NeedsStop).schedule(for: self, at: date, key: key, session: session, completion: completion)
     }
 }
@@ -86,7 +86,7 @@ public extension Stop {
     ///     - session: Optional. URL Session to make this request with
     ///
     /// - Returns: A Combine Publisher for [BusPredictions](x-source-tag://BusPredictions)
-    func nextBusesPublisher(key: String, session: URLSession = URLSession.shared) -> AnyPublisher<BusPredictions, WMATAError> {
+    func nextBusesPublisher(key: APIKey, session: URLSession = URLSession.shared) -> AnyPublisher<BusPredictions, WMATAError> {
         (self as NeedsStop).nextBusesPublisher(for: self, key: key, session: session)
     }
 
@@ -101,13 +101,17 @@ public extension Stop {
     ///     - session: Optional. URL Session to make this request with
     ///
     /// - Returns: A Combine Publisher for [StopSchedule](x-source-tag://StopSchedule)
-    func schedulePublisher(at date: WMATADate? = nil, key: String, session: URLSession = URLSession.shared) -> AnyPublisher<StopSchedule, WMATAError> {
+    func schedulePublisher(at date: WMATADate? = nil, key: APIKey, session: URLSession = URLSession.shared) -> AnyPublisher<StopSchedule, WMATAError> {
         (self as NeedsStop).schedulePublisher(for: self, at: date, key: key, session: session)
     }
 }
 
-extension Stop: URLQueryItemConvertable {
-    func queryItem(name: String) -> URLQueryItem {
-        URLQueryItem(name: name, value: id)
+extension Stop: URLQueryItemConvertible {
+    enum URLQueryItemName: String {
+        case standard = "StopID"
+    }
+    
+    func queryItem(name: URLQueryItemName = .standard) -> URLQueryItem {
+        URLQueryItem(name: name.rawValue, value: id)
     }
 }

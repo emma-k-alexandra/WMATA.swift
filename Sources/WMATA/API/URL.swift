@@ -18,26 +18,6 @@ extension URL {
     }
 }
 
-extension URLRequest {
-    // TODO: Remove
-    init(url: String, key: String, queryItems: [(String, String)] = []) {
-        var urlComponents = URLComponents(string: url)!
-        urlComponents.queryItems = queryItems.compactMap { URLQueryItem(name: $0, value: $1) }
-
-        var request = URLRequest(url: urlComponents.url!)
-        request.setValue(key, forHTTPHeaderField: "api_key")
-
-        self = request
-    }
-    
-    init(url: URL, key: APIKey) {
-        var request = URLRequest(url: url)
-        request.setValue(key, forHTTPHeaderField: "api_key")
-        
-        self = request
-    }
-}
-
 func generateURLSession(with delegate: WMATADelegate, sharedContainerIdentifier: String? = nil) -> URLSession {
     let config = URLSessionConfiguration.background(withIdentifier: "com.WMATA.swift.\(UUID())")
 
@@ -52,9 +32,11 @@ func generateURLSession(with delegate: WMATADelegate, sharedContainerIdentifier:
     )
 }
 
-protocol URLQueryItemConvertable {
+protocol URLQueryItemConvertible {
+    associatedtype URLQueryItemName: RawRepresentable
+    
     /// Converts the current instance into a URLQueryItem with the given name
-    func queryItem(name: String) -> URLQueryItem
+    func queryItem(name: URLQueryItemName) -> URLQueryItem
 }
 
 extension URLComponents {
@@ -64,5 +46,11 @@ extension URLComponents {
         }
         
         self = urlComponents
+    }
+}
+
+extension Array where Element == URLQueryItem? {
+    func withoutNil() -> [URLQueryItem] {
+        self.compactMap { $0 }
     }
 }

@@ -37,6 +37,16 @@ extension WMATADate: CustomStringConvertible {
     }
 }
 
+extension WMATADate: URLQueryItemConvertible {
+    enum URLQueryItemName: String {
+        case date = "Date"
+    }
+    
+    func queryItem(name: URLQueryItemName = .date) -> URLQueryItem {
+        URLQueryItem(name: name.rawValue, value: description)
+    }
+}
+
 extension Date {
     func weekdaySaturdayOrSunday() -> WeekdaySaturdayOrSunday {
         let weekday = Calendar(identifier: .gregorian).component(.weekday, from: self)

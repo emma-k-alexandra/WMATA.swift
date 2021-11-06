@@ -12,201 +12,153 @@ protocol NeedsStation: Fetcher {}
 
 extension NeedsStation {
     /// For requests w/ Delegate
-    func station(_ station: Station?, to destinationStation: Station?, key: String, session: URLSession) {
-        var queryItems = [(String, String)]()
-
-        if let station = station {
-            queryItems.append(("FromStationCode", station.rawValue))
-        }
-
-        if let destinationStation = destinationStation {
-            queryItems.append(("ToStationCode", destinationStation.rawValue))
-        }
-
+    func station(_ station: Station?, to destinationStation: Station?, key: APIKey, session: URLSession) {
         request(
-            request: URLRequest(url: RailURL.stationToStation.rawValue, key: key, queryItems: queryItems),
+            endpoint: API.Rail.StationToStation(
+                key: key,
+                station: station,
+                destinationStation: destinationStation
+            ),
             session: session
         )
     }
 
     /// For requests w/o Delegate
-    func station(_ station: Station?, to destinationStation: Station?, key: String, session: URLSession, completion: @escaping (Result<StationToStationInfos, WMATAError>) -> Void) {
-        var queryItems = [(String, String)]()
-
-        if let station = station {
-            queryItems.append(("FromStationCode", station.rawValue))
-        }
-
-        if let destinationStation = destinationStation {
-            queryItems.append(("ToStationCode", destinationStation.rawValue))
-        }
-
+    func station(_ station: Station?, to destinationStation: Station?, key: APIKey, session: URLSession, completion: @escaping (Result<StationToStationInfos, WMATAError>) -> Void) {
         fetch(
-            request: URLRequest(url: RailURL.stationToStation.rawValue, key: key, queryItems: queryItems),
-            session: session,
-            completion: completion
-        )
-    }
-
-    func elevatorAndEscalatorIncidents(at station: Station?, key: String, session: URLSession) {
-        var queryItems = [(String, String)]()
-
-        if let station = station {
-            queryItems.append(("StationCode", station.rawValue))
-        }
-
-        request(
-            request: URLRequest(url: RailURL.elevatorAndEscalatorIncidents.rawValue, key: key, queryItems: queryItems),
-            session: session
-        )
-    }
-
-    func elevatorAndEscalatorIncidents(at station: Station?, key: String, session: URLSession, completion: @escaping (Result<ElevatorAndEscalatorIncidents, WMATAError>) -> Void) {
-        var queryItems = [(String, String)]()
-
-        if let station = station {
-            queryItems.append(("StationCode", station.rawValue))
-        }
-
-        fetch(
-            request: URLRequest(url: RailURL.elevatorAndEscalatorIncidents.rawValue, key: key, queryItems: queryItems),
-            session: session,
-            completion: completion
-        )
-    }
-
-    func incidents(at station: Station?, key: String, session: URLSession) {
-        var queryItems = [(String, String)]()
-
-        if let station = station {
-            queryItems.append(("StationCode", station.rawValue))
-        }
-
-        request(
-            request: URLRequest(url: RailURL.incidents.rawValue, key: key, queryItems: queryItems),
-            session: session
-        )
-    }
-
-    func incidents(at station: Station?, key: String, session: URLSession, completion: @escaping (Result<RailIncidents, WMATAError>) -> Void) {
-        var queryItems = [(String, String)]()
-
-        if let station = station {
-            queryItems.append(("StationCode", station.rawValue))
-        }
-
-        fetch(
-            request: URLRequest(url: RailURL.incidents.rawValue, key: key, queryItems: queryItems),
-            session: session,
-            completion: completion
-        )
-    }
-
-    func nextTrains(at station: Station, key: String, session: URLSession) {
-        request(
-            request: URLRequest(url: "\(RailURL.nextTrains.rawValue)\(station)", key: key),
-            session: session
-        )
-    }
-
-    func nextTrains(at station: Station, key: String, session: URLSession, completion: @escaping (Result<RailPredictions, WMATAError>) -> Void) {
-        fetch(
-            request: URLRequest(url: "\(RailURL.nextTrains.rawValue)\(station)", key: key),
-            session: session,
-            completion: completion
-        )
-    }
-
-    func nextTrains(at stations: [Station], key: String, session: URLSession) {
-        var urlArray = [RailURL.nextTrains.rawValue]
-        urlArray.append(contentsOf: stations.map { $0.rawValue })
-
-        request(
-            request: URLRequest(url: urlArray.joined(separator: ","), key: key),
-            session: session
-        )
-    }
-
-    func nextTrains(at stations: [Station], key: String, session: URLSession, completion: @escaping (Result<RailPredictions, WMATAError>) -> Void) {
-        var urlArray = [RailURL.nextTrains.rawValue]
-        urlArray.append(contentsOf: stations.map { $0.rawValue })
-
-        fetch(
-            request: URLRequest(url: urlArray.joined(separator: ","), key: key),
-            session: session,
-            completion: completion
-        )
-    }
-
-    func information(for station: Station, key: String, session: URLSession) {
-        request(
-            request: URLRequest(url: RailURL.information.rawValue, key: key, queryItems: [("StationCode", station.rawValue)]),
-            session: session
-        )
-    }
-
-    func information(for station: Station, key: String, session: URLSession, completion: @escaping (Result<StationInformation, WMATAError>) -> Void) {
-        fetch(
-            request: URLRequest(url: RailURL.information.rawValue, key: key, queryItems: [("StationCode", station.rawValue)]),
-            session: session,
-            completion: completion
-        )
-    }
-
-    func parkingInformation(for station: Station, key: String, session: URLSession) {
-        request(
-            request: URLRequest(url: RailURL.parkingInformation.rawValue, key: key, queryItems: [("StationCode", station.rawValue)]),
-            session: session
-        )
-    }
-
-    func parkingInformation(for station: Station, key: String, session: URLSession, completion: @escaping (Result<StationsParking, WMATAError>) -> Void) {
-        fetch(
-            request: URLRequest(url: RailURL.parkingInformation.rawValue, key: key, queryItems: [("StationCode", station.rawValue)]),
-            session: session,
-            completion: completion
-        )
-    }
-
-    func path(from startingStation: Station, to destinationStation: Station, key: String, session: URLSession) {
-        request(
-            request: URLRequest(
-                url: RailURL.path.rawValue,
+            endpoint: API.Rail.StationToStation(
                 key: key,
-                queryItems: [
-                    ("FromStationCode", startingStation.rawValue),
-                    ("ToStationCode", destinationStation.rawValue),
-                ]
-            ),
-            session: session
-        )
-    }
-
-    func path(from startingStation: Station, to destinationStation: Station, key: String, session: URLSession, completion: @escaping (Result<PathBetweenStations, WMATAError>) -> Void) {
-        fetch(
-            request: URLRequest(
-                url: RailURL.path.rawValue,
-                key: key,
-                queryItems: [
-                    ("FromStationCode", startingStation.rawValue),
-                    ("ToStationCode", destinationStation.rawValue),
-                ]
+                station: station,
+                destinationStation: destinationStation
             ),
             session: session,
             completion: completion
         )
     }
 
-    func timings(for station: Station, key: String, session: URLSession) {
+    func elevatorAndEscalatorIncidents(at station: Station?, key: APIKey, session: URLSession) {
         request(
-            request: URLRequest(url: RailURL.timings.rawValue, key: key, queryItems: [("StationCode", station.rawValue)]),
+            endpoint: API.Rail.ElevatorAndEscalatorIncidents(key: key, station: station),
             session: session
         )
     }
 
-    func timings(for station: Station, key: String, session: URLSession, completion: @escaping (Result<StationTimings, WMATAError>) -> Void) {
+    func elevatorAndEscalatorIncidents(at station: Station?, key: APIKey, session: URLSession, completion: @escaping (Result<ElevatorAndEscalatorIncidents, WMATAError>) -> Void) {
         fetch(
-            request: URLRequest(url: RailURL.timings.rawValue, key: key, queryItems: [("StationCode", station.rawValue)]),
+            endpoint: API.Rail.ElevatorAndEscalatorIncidents(key: key, station: station),
+            session: session,
+            completion: completion
+        )
+    }
+
+    func incidents(at station: Station?, key: APIKey, session: URLSession) {
+        request(
+            endpoint: API.Rail.Incidents(key: key, station: station),
+            session: session
+        )
+    }
+
+    func incidents(at station: Station?, key: APIKey, session: URLSession, completion: @escaping (Result<RailIncidents, WMATAError>) -> Void) {
+        fetch(
+            endpoint: API.Rail.Incidents(key: key, station: station),
+            session: session,
+            completion: completion
+        )
+    }
+
+    func nextTrains(at station: Station, key: APIKey, session: URLSession) {
+        request(
+            endpoint: API.Rail.NextTrains(key: key, station: station),
+            session: session
+        )
+    }
+
+    func nextTrains(at station: Station, key: APIKey, session: URLSession, completion: @escaping (Result<RailPredictions, WMATAError>) -> Void) {
+        fetch(
+            endpoint: API.Rail.NextTrains(key: key, station: station),
+            session: session,
+            completion: completion
+        )
+    }
+
+    func nextTrains(at stations: [Station], key: APIKey, session: URLSession) {
+        request(
+            endpoint: API.Rail.NextTrains(key: key, stations: stations),
+            session: session
+        )
+    }
+
+    func nextTrains(at stations: [Station], key: APIKey, session: URLSession, completion: @escaping (Result<RailPredictions, WMATAError>) -> Void) {
+        fetch(
+            endpoint: API.Rail.NextTrains(key: key, stations: stations),
+            session: session,
+            completion: completion
+        )
+    }
+
+    func information(for station: Station, key: APIKey, session: URLSession) {
+        request(
+            endpoint: API.Rail.Information(key: key, station: station),
+            session: session
+        )
+    }
+
+    func information(for station: Station, key: APIKey, session: URLSession, completion: @escaping (Result<StationInformation, WMATAError>) -> Void) {
+        fetch(
+            endpoint: API.Rail.Information(key: key, station: station),
+            session: session,
+            completion: completion
+        )
+    }
+
+    func parkingInformation(for station: Station, key: APIKey, session: URLSession) {
+        request(
+            endpoint: API.Rail.ParkingInformation(key: key, station: station),
+            session: session
+        )
+    }
+
+    func parkingInformation(for station: Station, key: APIKey, session: URLSession, completion: @escaping (Result<StationsParking, WMATAError>) -> Void) {
+        fetch(
+            endpoint: API.Rail.ParkingInformation(key: key, station: station),
+            session: session,
+            completion: completion
+        )
+    }
+
+    func path(from startingStation: Station, to destinationStation: Station, key: APIKey, session: URLSession) {
+        request(
+            endpoint: API.Rail.Path(
+                key: key,
+                startingStation: startingStation,
+                destinationStation: destinationStation
+            ),
+            session: session
+        )
+    }
+
+    func path(from startingStation: Station, to destinationStation: Station, key: APIKey, session: URLSession, completion: @escaping (Result<PathBetweenStations, WMATAError>) -> Void) {
+        fetch(
+            endpoint: API.Rail.Path(
+                key: key,
+                startingStation: startingStation,
+                destinationStation: destinationStation
+            ),
+            session: session,
+            completion: completion
+        )
+    }
+
+    func timings(for station: Station, key: APIKey, session: URLSession) {
+        request(
+            endpoint: API.Rail.Timings(key: key, station: station),
+            session: session
+        )
+    }
+
+    func timings(for station: Station, key: APIKey, session: URLSession, completion: @escaping (Result<StationTimings, WMATAError>) -> Void) {
+        fetch(
+            endpoint: API.Rail.Timings(key: key, station: station),
             session: session,
             completion: completion
         )
@@ -216,92 +168,76 @@ extension NeedsStation {
 
 extension NeedsStation {
     /// For requests using Combine
-    func stationPublisher(_ station: Station?, to destinationStation: Station?, key: String, session: URLSession) -> AnyPublisher<StationToStationInfos, WMATAError> {
-        let queryItems = [
-            station?.queryItem(name: "FromStationCode"),
-            destinationStation?.queryItem(name: "ToStationCode")
-        ]
-
-        return publisher(
-            request: URLRequest(url: RailURL.stationToStation.rawValue, key: key, queryItems: queryItems),
-            session: session
-        )
-    }
-
-    func elevatorAndEscalatorIncidentsPublisher(at station: Station?, key: String, session: URLSession) -> AnyPublisher<ElevatorAndEscalatorIncidents, WMATAError> {
-        var queryItems = [(String, String)]()
-
-        if let station = station {
-            queryItems.append(("StationCode", station.rawValue))
-        }
-
-        return publisher(
-            request: URLRequest(url: RailURL.elevatorAndEscalatorIncidents.rawValue, key: key, queryItems: queryItems),
-            session: session
-        )
-    }
-
-    func incidentsPublisher(at station: Station?, key: String, session: URLSession) -> AnyPublisher<RailIncidents, WMATAError> {
-        var queryItems = [(String, String)]()
-
-        if let station = station {
-            queryItems.append(("StationCode", station.rawValue))
-        }
-
-        return publisher(
-            request: URLRequest(url: RailURL.incidents.rawValue, key: key, queryItems: queryItems),
-            session: session
-        )
-    }
-
-    func nextTrainsPublisher(at station: Station, key: String, session: URLSession) -> AnyPublisher<RailPredictions, WMATAError> {
+    func stationPublisher(_ station: Station?, to destinationStation: Station?, key: APIKey, session: URLSession) -> AnyPublisher<StationToStationInfos, WMATAError> {
         publisher(
-            request: URLRequest(url: "\(RailURL.nextTrains.rawValue)\(station)", key: key),
-            session: session
-        )
-    }
-
-    func nextTrainsPublisher(at stations: [Station], key: String, session: URLSession) -> AnyPublisher<RailPredictions, WMATAError> {
-        var urlArray = [RailURL.nextTrains.rawValue]
-        urlArray.append(contentsOf: stations.map { $0.rawValue })
-
-        return publisher(
-            request: URLRequest(url: urlArray.joined(separator: ","), key: key),
-            session: session
-        )
-    }
-
-    func informationPublisher(for station: Station, key: String, session: URLSession) -> AnyPublisher<StationInformation, WMATAError> {
-        publisher(
-            request: URLRequest(url: RailURL.information.rawValue, key: key, queryItems: [("StationCode", station.rawValue)]),
-            session: session
-        )
-    }
-
-    func parkingInformationPublisher(for station: Station, key: String, session: URLSession) -> AnyPublisher<StationsParking, WMATAError> {
-        publisher(
-            request: URLRequest(url: RailURL.parkingInformation.rawValue, key: key, queryItems: [("StationCode", station.rawValue)]),
-            session: session
-        )
-    }
-
-    func pathPublisher(from startingStation: Station, to destinationStation: Station, key: String, session: URLSession) -> AnyPublisher<PathBetweenStations, WMATAError> {
-        publisher(
-            request: URLRequest(
-                url: RailURL.path.rawValue,
+            endpoint: API.Rail.StationToStation(
                 key: key,
-                queryItems: [
-                    ("FromStationCode", startingStation.rawValue),
-                    ("ToStationCode", destinationStation.rawValue),
-                ]
+                station: station,
+                destinationStation: destinationStation
             ),
             session: session
         )
     }
 
-    func timingsPublisher(for station: Station, key: String, session: URLSession) -> AnyPublisher<StationTimings, WMATAError> {
+    func elevatorAndEscalatorIncidentsPublisher(at station: Station?, key: APIKey, session: URLSession) -> AnyPublisher<ElevatorAndEscalatorIncidents, WMATAError> {
         publisher(
-            request: URLRequest(url: RailURL.timings.rawValue, key: key, queryItems: [("StationCode", station.rawValue)]),
+            endpoint: API.Rail.ElevatorAndEscalatorIncidents(
+                key: key,
+                station: station
+            ),
+            session: session
+        )
+    }
+
+    func incidentsPublisher(at station: Station?, key: APIKey, session: URLSession) -> AnyPublisher<RailIncidents, WMATAError> {
+        publisher(
+            endpoint: API.Rail.Incidents(key: key, station: station),
+            session: session
+        )
+    }
+
+    func nextTrainsPublisher(at station: Station, key: APIKey, session: URLSession) -> AnyPublisher<RailPredictions, WMATAError> {
+        publisher(
+            endpoint: API.Rail.NextTrains(key: key, station: station),
+            session: session
+        )
+    }
+
+    func nextTrainsPublisher(at stations: [Station], key: APIKey, session: URLSession) -> AnyPublisher<RailPredictions, WMATAError> {
+        publisher(
+            endpoint: API.Rail.NextTrains(key: key, stations: stations),
+            session: session
+        )
+    }
+
+    func informationPublisher(for station: Station, key: APIKey, session: URLSession) -> AnyPublisher<StationInformation, WMATAError> {
+        publisher(
+            endpoint: API.Rail.Information(key: key, station: station),
+            session: session
+        )
+    }
+
+    func parkingInformationPublisher(for station: Station, key: APIKey, session: URLSession) -> AnyPublisher<StationsParking, WMATAError> {
+        publisher(
+            endpoint: API.Rail.ParkingInformation(key: key, station: station),
+            session: session
+        )
+    }
+
+    func pathPublisher(from startingStation: Station, to destinationStation: Station, key: APIKey, session: URLSession) -> AnyPublisher<PathBetweenStations, WMATAError> {
+        publisher(
+            endpoint: API.Rail.Path(
+                key: key,
+                startingStation: startingStation,
+                destinationStation: destinationStation
+            ),
+            session: session
+        )
+    }
+
+    func timingsPublisher(for station: Station, key: APIKey, session: URLSession) -> AnyPublisher<StationTimings, WMATAError> {
+        publisher(
+            endpoint: API.Rail.Timings(key: key, station: station),
             session: session
         )
     }
@@ -310,28 +246,16 @@ extension NeedsStation {
 protocol NeedsLine: Fetcher {}
 
 extension NeedsLine {
-    func stations(for line: Line?, key: String, session: URLSession) {
-        var queryItems = [(String, String)]()
-
-        if let line = line {
-            queryItems.append(("LineCode", line.rawValue))
-        }
-
+    func stations(for line: Line?, key: APIKey, session: URLSession) {
         request(
-            request: URLRequest(url: RailURL.stations.rawValue, key: key, queryItems: queryItems),
+            endpoint: API.Rail.Stations(key: key, line: line),
             session: session
         )
     }
 
-    func stations(for line: Line?, key: String, session: URLSession, completion: @escaping (Result<Stations, WMATAError>) -> Void) {
-        var queryItems = [(String, String)]()
-
-        if let line = line {
-            queryItems.append(("LineCode", line.rawValue))
-        }
-
+    func stations(for line: Line?, key: APIKey, session: URLSession, completion: @escaping (Result<Stations, WMATAError>) -> Void) {
         fetch(
-            request: URLRequest(url: RailURL.stations.rawValue, key: key, queryItems: queryItems),
+            endpoint: API.Rail.Stations(key: key, line: line),
             session: session,
             completion: completion
         )
@@ -340,15 +264,9 @@ extension NeedsLine {
 
 
 extension NeedsLine {
-    func stationsPublisher(for line: Line?, key: String, session: URLSession) -> AnyPublisher<Stations, WMATAError> {
-        var queryItems = [(String, String)]()
-
-        if let line = line {
-            queryItems.append(("LineCode", line.rawValue))
-        }
-
-        return publisher(
-            request: URLRequest(url: RailURL.stations.rawValue, key: key, queryItems: queryItems),
+    func stationsPublisher(for line: Line?, key: APIKey, session: URLSession) -> AnyPublisher<Stations, WMATAError> {
+        publisher(
+            endpoint: API.Rail.Stations(key: key, line: line),
             session: session
         )
     }

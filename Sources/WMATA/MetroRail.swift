@@ -12,7 +12,7 @@ import GTFS
 /// For accessing MetroRail related APIs
 public struct MetroRail: Fetcher {
     /// WMATA API Key
-    public let key: String
+    public let key: APIKey
     
     /// Delegate for use with delegate calls
     public var delegate: WMATADelegate? {
@@ -35,7 +35,7 @@ public struct MetroRail: Fetcher {
     ///     - key: Your WMATA API key
     ///     - delegate: The delegate to use for all delegate calls. Optional.
     ///     - sharedContainerIdentifier: Identifier for use with app extensions. Optional.
-    public init(key: String, delegate: WMATADelegate? = nil, sharedContainerIdentifier: String? = nil) {
+    public init(key: APIKey, delegate: WMATADelegate? = nil, sharedContainerIdentifier: String? = nil) {
         self.key = key
 
         self.sharedContainerIdentifier = sharedContainerIdentifier
@@ -63,7 +63,7 @@ public extension MetroRail {
     ///     [WMATA Lines API Documentation](https://developer.wmata.com/docs/services/5476364f031f590f38092507/operations/5476364f031f5909e4fe330c)
     func lines() {
         request(
-            request: URLRequest(url: RailURL.lines.rawValue, key: key),
+            endpoint: API.Rail.Lines(key: key),
             session: urlSession
         )
     }
@@ -78,7 +78,7 @@ public extension MetroRail {
     ///     - result: [LinesResponse](x-source-tag://LinesResponse) if successful, otherwise [WMATAError](x-source-tag://WMATAError)
     func lines(completion: @escaping (_ result: Result<LinesResponse, WMATAError>) -> Void) {
         fetch(
-            request: Lines(key).request(),
+            endpoint: API.Rail.Lines(key: key),
             session: urlSession,
             completion: completion
         )
@@ -97,7 +97,10 @@ public extension MetroRail {
     ///     - radiusAtCoordinates: Radius at latitude and longitude to search at. Optional.
     func entrances(at radiusAtCoordinates: RadiusAtCoordinates? = nil) {
         request(
-            request: Entrances(key, radiusAtCoordinates: radiusAtCoordinates).request(),
+            endpoint: API.Rail.Entrances(
+                key: key,
+                radiusAtCoordinates: radiusAtCoordinates
+            ),
             session: urlSession
         )
     }
@@ -113,7 +116,10 @@ public extension MetroRail {
     ///     - result: [StationEntrances](x-source-tag://StationEntrances) if successful, otherwise [WMATAError](x-source-tag://WMATAError)
     func entrances(at radiusAtCoordinates: RadiusAtCoordinates? = nil, completion: @escaping (_ result: Result<StationEntrances, WMATAError>) -> Void) {
         fetch(
-            request: Entrances(key, radiusAtCoordinates: radiusAtCoordinates).request(),
+            endpoint: API.Rail.Entrances(
+                key: key,
+                radiusAtCoordinates: radiusAtCoordinates
+            ),
             session: urlSession,
             completion: completion
         )
@@ -129,7 +135,7 @@ public extension MetroRail {
     ///     [WMATA Positions Documentation](https://developer.wmata.com/docs/services/5763fa6ff91823096cac1057/operations/5763fb35f91823096cac1058)
     func positions() {
         request(
-            request: URLRequest(url: RailURL.positions.rawValue, key: key, queryItems: [("contentType", "json")]),
+            endpoint: API.Rail.Positions(key: key),
             session: urlSession
         )
     }
@@ -144,7 +150,7 @@ public extension MetroRail {
     ///     - result: [TrainPositions](x-source-tag://TrainPositions) if successful, otherwise [WMATAError](x-source-tag://WMATAError)
     func positions(completion: @escaping (_ result: Result<TrainPositions, WMATAError>) -> Void) {
         fetch(
-            request: URLRequest(url: RailURL.positions.rawValue, key: key, queryItems: [("contentType", "json")]),
+            endpoint: API.Rail.Positions(key: key),
             session: urlSession,
             completion: completion
         )
@@ -160,7 +166,7 @@ public extension MetroRail {
     ///     [WMATA Routes Documentation](https://developer.wmata.com/docs/services/5763fa6ff91823096cac1057/operations/57641afc031f59363c586dca)
     func routes() {
         request(
-            request: URLRequest(url: RailURL.routes.rawValue, key: key, queryItems: [("contentType", "json")]),
+            endpoint: API.Rail.Routes(key: key),
             session: urlSession
         )
     }
@@ -175,7 +181,7 @@ public extension MetroRail {
     ///     - result: [StandardRoutes](x-source-tag://StandardRoutes) if successful, otherwise [WMATAError](x-source-tag://WMATAError)
     func routes(completion: @escaping (_ result: Result<StandardRoutes, WMATAError>) -> Void) {
         fetch(
-            request: URLRequest(url: RailURL.routes.rawValue, key: key, queryItems: [("contentType", "json")]),
+            endpoint: API.Rail.Routes(key: key),
             session: urlSession,
             completion: completion
         )
@@ -191,7 +197,7 @@ public extension MetroRail {
     ///     [WMATA Circuits Documentation](https://developer.wmata.com/docs/services/5763fa6ff91823096cac1057/operations/57644238031f59363c586dcb)
     func circuits() {
         request(
-            request: URLRequest(url: RailURL.circuits.rawValue, key: key, queryItems: [("contentType", "json")]),
+            endpoint: API.Rail.Circuits(key: key),
             session: urlSession
         )
     }
@@ -206,7 +212,7 @@ public extension MetroRail {
     ///     - result: [TrackCircuits](x-source-tag://TrackCircuits) if successful, otherwise [WMATAError](x-source-tag://WMATAError)
     func circuits(completion: @escaping (_ result: Result<TrackCircuits, WMATAError>) -> Void) {
         fetch(
-            request: URLRequest(url: RailURL.circuits.rawValue, key: key, queryItems: [("contentType", "json")]),
+            endpoint: API.Rail.Circuits(key: key),
             session: urlSession,
             completion: completion
         )
@@ -224,7 +230,7 @@ public extension MetroRail {
     /// - Returns: A Combine Publisher for [LinesResponse](x-source-tag://LinesResponse)
     func linesPublisher() -> AnyPublisher<LinesResponse, WMATAError> {
         publisher(
-            request: Lines(key).request(),
+            endpoint: API.Rail.Lines(key: key),
             session: urlSession
         )
     }
@@ -240,7 +246,10 @@ public extension MetroRail {
     /// - Returns: A Combine Publisher for [StationEntrances](x-source-tag://StationEntrances)
     func entrancesPublisher(at radiusAtCoordinates: RadiusAtCoordinates? = nil) -> AnyPublisher<StationEntrances, WMATAError> {
         publisher(
-            request: Entrances(key, radiusAtCoordinates: radiusAtCoordinates).request(),
+            endpoint: API.Rail.Entrances(
+                key: key,
+                radiusAtCoordinates: radiusAtCoordinates
+            ),
             session: urlSession
         )
     }
@@ -253,7 +262,7 @@ public extension MetroRail {
     /// - Returns: A Combine Publisher for [TrainPositions](x-source-tag://TrainPositions)
     func positionsPublisher() -> AnyPublisher<TrainPositions, WMATAError> {
         publisher(
-            request: URLRequest(url: RailURL.positions.rawValue, key: key, queryItems: [("contentType", "json")]),
+            endpoint: API.Rail.Positions(key: key),
             session: urlSession
         )
     }
@@ -266,7 +275,7 @@ public extension MetroRail {
     /// - Returns: A Combine Publisher for [StandardRoutes](x-source-tag://StandardRoutes)
     func routesPublisher() -> AnyPublisher<StandardRoutes, WMATAError> {
         publisher(
-            request: URLRequest(url: RailURL.routes.rawValue, key: key, queryItems: [("contentType", "json")]),
+            endpoint: API.Rail.Routes(key: key),
             session: urlSession
         )
     }
@@ -279,7 +288,7 @@ public extension MetroRail {
     /// - Returns: A Combine Publisher for [TrackCircuits](x-source-tag://TrackCircuits)
     func circuitsPublisher() -> AnyPublisher<TrackCircuits, WMATAError> {
         publisher(
-            request: URLRequest(url: RailURL.circuits.rawValue, key: key, queryItems: [("contentType", "json")]),
+            endpoint: API.Rail.Circuits(key: key),
             session: urlSession
         )
     }
@@ -729,7 +738,7 @@ public extension MetroRail {
     ///     - result: `TransitRealtime_FeedMessage` if successful, otherwise [WMATAError](x-source-tag://WMATAError)
     func alerts(completion: @escaping (_ result: Result<TransitRealtime_FeedMessage, WMATAError>) -> Void) {
         fetch(
-            request: URLRequest(url: GTFSRTRailURL.alerts.rawValue, key: key),
+            endpoint: API.Rail.Alerts(key: key),
             session: urlSession,
             completion: completion
         )
@@ -745,10 +754,7 @@ public extension MetroRail {
     ///     [Google Alerts Documentation](https://developers.google.com/transit/gtfs-realtime/guides/service-alerts)
     func alerts() {
         request(
-            request: URLRequest(
-                url: GTFSRTRailURL.alerts.rawValue,
-                key: key
-            ),
+            endpoint: API.Rail.Alerts(key: key),
             session: urlSession
         )
     }
@@ -763,10 +769,7 @@ public extension MetroRail {
     ///     - result: `TransitRealtime_FeedMessage` if successful, otherwise [WMATAError](x-source-tag://WMATAError)
     func tripUpdates(completion: @escaping (_ result: Result<TransitRealtime_FeedMessage, WMATAError>) -> Void) {
         fetch(
-            request: URLRequest(
-                url: GTFSRTRailURL.tripUpdates.rawValue,
-                key: key
-            ),
+            endpoint: API.Rail.TripUpdates(key: key),
             session: urlSession,
             completion: completion
         )
@@ -782,10 +785,7 @@ public extension MetroRail {
     ///     [Google Trip Updates Documentation](https://developers.google.com/transit/gtfs-realtime/guides/trip-updates)
     func tripUpdates() {
         request(
-            request: URLRequest(
-                url: GTFSRTRailURL.tripUpdates.rawValue,
-                key: key
-            ),
+            endpoint: API.Rail.TripUpdates(key: key),
             session: urlSession
         )
     }
@@ -800,7 +800,7 @@ public extension MetroRail {
     ///     - result: `TransitRealtime_FeedMessage` if successful, otherwise [WMATAError](x-source-tag://WMATAError)
     func vehiclePositions(completion: @escaping (_ result: Result<TransitRealtime_FeedMessage, WMATAError>) -> Void) {
         fetch(
-            request: URLRequest(url: GTFSRTRailURL.vehiclePositions.rawValue, key: key),
+            endpoint: API.Rail.VehiclePositions(key: key),
             session: urlSession,
             completion: completion
         )
@@ -816,10 +816,7 @@ public extension MetroRail {
     ///     [Google Vehicle Positions Documentation]( https://developers.google.com/transit/gtfs-realtime/guides/vehicle-positions)
     func vehiclePositions() {
         request(
-            request: URLRequest(
-                url: GTFSRTRailURL.vehiclePositions.rawValue,
-                key: key
-            ),
+            endpoint: API.Rail.VehiclePositions(key: key),
             session: urlSession
         )
     }
@@ -835,7 +832,7 @@ public extension MetroRail {
     /// - Returns: A Combine Publisher for `TransitRealtime_FeedMessage`
     func alertsPublisher() -> AnyPublisher<TransitRealtime_FeedMessage, WMATAError> {
         publisher(
-            request: URLRequest(url: GTFSRTRailURL.alerts.rawValue, key: key),
+            endpoint: API.Rail.Alerts(key: key),
             session: urlSession
         )
     }
@@ -848,10 +845,7 @@ public extension MetroRail {
     /// - Returns: A Combine Publisher for `TransitRealtime_FeedMessage`
     func tripUpdatesPublisher() -> AnyPublisher<TransitRealtime_FeedMessage, WMATAError> {
         publisher(
-            request: URLRequest(
-                url: GTFSRTRailURL.tripUpdates.rawValue,
-                key: key
-            ),
+            endpoint: API.Rail.TripUpdates(key: key),
             session: urlSession
         )
     }
@@ -864,10 +858,7 @@ public extension MetroRail {
     /// - Returns: A Combine Publisher for`TransitRealtime_FeedMessage`
     func vehiclePositionsPublisher() -> AnyPublisher<TransitRealtime_FeedMessage, WMATAError> {
         publisher(
-            request: URLRequest(
-                url: GTFSRTRailURL.vehiclePositions.rawValue,
-                key: key
-            ),
+            endpoint: API.Rail.VehiclePositions(key: key),
             session: urlSession
         )
     }

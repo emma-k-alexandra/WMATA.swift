@@ -18,15 +18,13 @@ extension Deserializer {
     ///     - data: Data to deserialize
     ///
     /// - Returns: Result container the deserialized data, or an error
-    func deserialize<T>(_ data: Data) -> Result<T, WMATAError> where T: Codable {
+    func deserialize<Response>(_ data: Data) -> Result<Response, WMATAError> where Response: Codable {
         do {
-            let decodedObject = try WMATAJSONDecoder().decode(T.self, from: data)
+            let decodedObject = try WMATAJSONDecoder().decode(Response.self, from: data)
             return .success(decodedObject)
 
         } catch {
             let originalError = error
-            
-            print(error)
 
             do {
                 return .failure(try JSONDecoder().decode(WMATAError.self, from: data))

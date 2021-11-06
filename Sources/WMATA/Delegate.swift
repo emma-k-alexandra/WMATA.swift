@@ -208,131 +208,131 @@ public class WMATAURLSessionDataDelegate: NSObject, URLSessionDataDelegate, Dese
         self.wmataDelegate = wmataDelegate
     }
 
-    public func urlSession(_: URLSession, task: URLSessionTask, didCompleteWithError _: Error?) {
-        guard let delegate = wmataDelegate else {
-            assertionFailure("Called method that required a delegate without providing a delegate. Provide a delegate before calling this method.")
-            exit(1)
-        }
-
-        // This all is pretty gross, but I don't think Swift supports anything to help clean this up
-        guard let originalURL = task.originalRequest?.url?.absoluteStringWithoutQuery else {
-            assertionFailure("Request send with unknown URL")
-            exit(1)
-        }
-
-        let requestURL: String
-
-        // Unfortunately, WMATA deviates from their URL scheme in this one.
-        if originalURL.contains(RailURL.nextTrains.rawValue), let lastIndexOfSlash = originalURL.lastIndex(of: "/") {
-            requestURL = String(originalURL[...lastIndexOfSlash])
-
-        } else {
-            requestURL = originalURL
-        }
-
-        if let url = RailURL(rawValue: requestURL) {
-            switch url {
-            case .lines:
-                delegate.received(linesResponse: deserialize(data))
-
-            case .entrances:
-                delegate.received(stationEntrances: deserialize(data))
-
-            case .positions:
-                delegate.received(trainPositions: deserialize(data))
-
-            case .routes:
-                delegate.received(standardRoutes: deserialize(data))
-
-            case .circuits:
-                delegate.received(trackCircuits: deserialize(data))
-
-            case .elevatorAndEscalatorIncidents:
-                delegate.received(elevatorAndEscalatorIncidents: deserialize(data))
-
-            case .incidents:
-                delegate.received(railIncidents: deserialize(data))
-
-            case .nextTrains:
-                delegate.received(railPredictions: deserialize(data))
-
-            case .information:
-                delegate.received(stationInformation: deserialize(data))
-
-            case .parkingInformation:
-                delegate.received(stationsParking: deserialize(data))
-
-            case .path:
-                delegate.received(pathBetweenStations: deserialize(data))
-
-            case .timings:
-                delegate.received(stationTimings: deserialize(data))
-
-            case .stationToStation:
-                delegate.received(stationToStationInfos: deserialize(data))
-
-            case .stations:
-                delegate.received(stations: deserialize(data))
-            }
-
-        } else if let url = GTFSRTRailURL(rawValue: requestURL) {
-            switch url {
-            case .alerts:
-                delegate.received(alerts: deserialize(data))
-
-            case .tripUpdates:
-                delegate.received(tripUpdates: deserialize(data))
-
-            case .vehiclePositions:
-                delegate.received(vehiclePositions: deserialize(data))
-            }
-
-        } else if let url = GTFSRTBusURL(rawValue: requestURL) {
-            switch url {
-            case .alerts:
-                delegate.received(alerts: deserialize(data))
-
-            case .tripUpdates:
-                delegate.received(tripUpdates: deserialize(data))
-
-            case .vehiclePositions:
-                delegate.received(vehiclePositions: deserialize(data))
-            }
-
-        } else if let url = BusURL(rawValue: requestURL) {
-            switch url {
-            case .routes:
-                delegate.received(routesResponse: deserialize(data))
-
-            case .stops:
-                delegate.received(stopSearchResponse: deserialize(data))
-
-            case .incidents:
-                delegate.received(busIncidents: deserialize(data))
-
-            case .positions:
-                delegate.received(busPositions: deserialize(data))
-
-            case .pathDetails:
-                delegate.received(pathDetails: deserialize(data))
-
-            case .routeSchedule:
-                delegate.received(routeSchedule: deserialize(data))
-
-            case .nextBuses:
-                delegate.received(busPredictions: deserialize(data))
-
-            case .stopSchedule:
-                delegate.received(stopSchedule: deserialize(data))
-            }
-
-        } else {
-            assertionFailure("Request performed on unknown URL")
-            exit(1)
-        }
-
-        data = Data()
-    }
+//    public func urlSession(_: URLSession, task: URLSessionTask, didCompleteWithError _: Error?) {
+//        guard let delegate = wmataDelegate else {
+//            assertionFailure("Called method that required a delegate without providing a delegate. Provide a delegate before calling this method.")
+//            exit(1)
+//        }
+//
+//        // This all is pretty gross, but I don't think Swift supports anything to help clean this up
+//        guard let originalURL = task.originalRequest?.url?.absoluteStringWithoutQuery else {
+//            assertionFailure("Request send with unknown URL")
+//            exit(1)
+//        }
+//
+//        let requestURL: String
+//
+//        // Unfortunately, WMATA deviates from their URL scheme in this one.
+//        if originalURL.contains(RailURL.nextTrains.rawValue), let lastIndexOfSlash = originalURL.lastIndex(of: "/") {
+//            requestURL = String(originalURL[...lastIndexOfSlash])
+//
+//        } else {
+//            requestURL = originalURL
+//        }
+//
+//        if let url = RailURL(rawValue: requestURL) {
+//            switch url {
+//            case .lines:
+//                delegate.received(linesResponse: deserialize(data))
+//
+//            case .entrances:
+//                delegate.received(stationEntrances: deserialize(data))
+//
+//            case .positions:
+//                delegate.received(trainPositions: deserialize(data))
+//
+//            case .routes:
+//                delegate.received(standardRoutes: deserialize(data))
+//
+//            case .circuits:
+//                delegate.received(trackCircuits: deserialize(data))
+//
+//            case .elevatorAndEscalatorIncidents:
+//                delegate.received(elevatorAndEscalatorIncidents: deserialize(data))
+//
+//            case .incidents:
+//                delegate.received(railIncidents: deserialize(data))
+//
+//            case .nextTrains:
+//                delegate.received(railPredictions: deserialize(data))
+//
+//            case .information:
+//                delegate.received(stationInformation: deserialize(data))
+//
+//            case .parkingInformation:
+//                delegate.received(stationsParking: deserialize(data))
+//
+//            case .path:
+//                delegate.received(pathBetweenStations: deserialize(data))
+//
+//            case .timings:
+//                delegate.received(stationTimings: deserialize(data))
+//
+//            case .stationToStation:
+//                delegate.received(stationToStationInfos: deserialize(data))
+//
+//            case .stations:
+//                delegate.received(stations: deserialize(data))
+//            }
+//
+//        } else if let url = GTFSRTRailURL(rawValue: requestURL) {
+//            switch url {
+//            case .alerts:
+//                delegate.received(alerts: deserialize(data))
+//
+//            case .tripUpdates:
+//                delegate.received(tripUpdates: deserialize(data))
+//
+//            case .vehiclePositions:
+//                delegate.received(vehiclePositions: deserialize(data))
+//            }
+//
+//        } else if let url = GTFSRTBusURL(rawValue: requestURL) {
+//            switch url {
+//            case .alerts:
+//                delegate.received(alerts: deserialize(data))
+//
+//            case .tripUpdates:
+//                delegate.received(tripUpdates: deserialize(data))
+//
+//            case .vehiclePositions:
+//                delegate.received(vehiclePositions: deserialize(data))
+//            }
+//
+//        } else if let url = BusURL(rawValue: requestURL) {
+//            switch url {
+//            case .routes:
+//                delegate.received(routesResponse: deserialize(data))
+//
+//            case .stops:
+//                delegate.received(stopSearchResponse: deserialize(data))
+//
+//            case .incidents:
+//                delegate.received(busIncidents: deserialize(data))
+//
+//            case .positions:
+//                delegate.received(busPositions: deserialize(data))
+//
+//            case .pathDetails:
+//                delegate.received(pathDetails: deserialize(data))
+//
+//            case .routeSchedule:
+//                delegate.received(routeSchedule: deserialize(data))
+//
+//            case .nextBuses:
+//                delegate.received(busPredictions: deserialize(data))
+//
+//            case .stopSchedule:
+//                delegate.received(stopSchedule: deserialize(data))
+//            }
+//
+//        } else {
+//            assertionFailure("Request performed on unknown URL")
+//            exit(1)
+//        }
+//
+//        data = Data()
+//    }
 
     public func urlSession(_: URLSession, dataTask _: URLSessionDataTask, didReceive data: Data) {
         self.data.append(data)
