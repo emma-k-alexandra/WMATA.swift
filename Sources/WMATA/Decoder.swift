@@ -8,33 +8,6 @@
 import Foundation
 import GTFS
 
-/// Incidates the implementors can deserialize data
-protocol Deserializer {}
-
-extension Deserializer {
-    /// Default implemention for deserialize.
-    ///
-    /// - Parameters:
-    ///     - data: Data to deserialize
-    ///
-    /// - Returns: Result container the deserialized data, or an error
-    func deserialize<Response>(_ data: Data) -> Result<Response, WMATAError> where Response: Codable {
-        do {
-            let decodedObject = try WMATAJSONDecoder().decode(Response.self, from: data)
-            return .success(decodedObject)
-
-        } catch {
-            let originalError = error
-
-            do {
-                return .failure(try JSONDecoder().decode(WMATAError.self, from: data))
-            } catch {
-                return .failure(originalError.wmataError)
-            }
-        }
-    }
-}
-
 public class WMATAJSONDecoder: JSONDecoder {
     override public init() {
         super.init()
@@ -43,7 +16,7 @@ public class WMATAJSONDecoder: JSONDecoder {
     }
 }
 
-extension JSONDecoder.KeyDecodingStrategy {
+public extension JSONDecoder.KeyDecodingStrategy {
     static var convertFromWMATA: Self {
         .custom { codingPath in
             let relevantKey = codingPath.last!
@@ -60,7 +33,9 @@ extension JSONDecoder.KeyDecodingStrategy {
             }
         }
     }
-    
+}
+
+extension JSONDecoder.KeyDecodingStrategy {
     static var convertFromPascalCase: Self {
         .custom { codingPath in
             PascalCaseKey(stringValue: codingPath.last!.stringValue)
@@ -150,7 +125,7 @@ struct WMATACodingKey: CodingKey {
     }
 }
 
-fileprivate extension String {
+internal extension String {
     func lowercasedFirstLetter() -> String {
         var stringCopy = self
         
@@ -160,7 +135,7 @@ fileprivate extension String {
     }
 }
 
-fileprivate extension DateFormatter {
+internal extension DateFormatter {
     static var wmataFormat: Self {
         let formatter = Self()
         formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
@@ -168,18 +143,5 @@ fileprivate extension DateFormatter {
         formatter.timeZone = TimeZone(abbreviation: "EST")!
         
         return formatter
-    }
-}
-
-protocol GTFSDeserializer {}
-
-extension GTFSDeserializer {
-    func deserialize(_ data: Data) -> Result<TransitRealtime_FeedMessage, WMATAError> {
-        do {
-            return .success(try TransitRealtime_FeedMessage(serializedData: data))
-
-        } catch {
-            return .failure(error.wmataError)
-        }
     }
 }

@@ -7,6 +7,7 @@
 
 import Foundation
 
+// TODO: See if this is needed. Can't we just parse a normal date?
 /// Structure describing a day, month and year in a format the WMATA API will understand
 public struct WMATADate {
     /// Year of the date

@@ -8,7 +8,7 @@
 import Foundation
 
 /// For defining a location and radius from that location
-public struct RadiusAtCoordinates {
+public struct WMATALocation {
     /// Radius from location in meters
     public let radius: UInt
     
