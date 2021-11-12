@@ -7,7 +7,7 @@
 
 import Foundation
 
-extension URL {
+internal extension URL {
     var absoluteStringWithoutQuery: String? {
         if var urlcomponents = URLComponents(url: self, resolvingAgainstBaseURL: false) {
             urlcomponents.query = nil

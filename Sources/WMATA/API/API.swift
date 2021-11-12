@@ -204,7 +204,7 @@ public extension Bus {
         
         let key: APIKey
         let route: Route
-        var date: WMATADate? = nil
+        var date: Date? = nil
         
         var delegate: EndpointDelegate? = nil
         
@@ -373,7 +373,7 @@ public extension Bus {
         
         let key: APIKey
         let route: Route
-        var date: WMATADate? = nil
+        var date: Date? = nil
         var includingVariations: Bool = false
         
         var delegate: EndpointDelegate? = nil
@@ -603,7 +603,7 @@ public extension Bus {
         
         let key: APIKey
         let stop: Stop
-        var date: WMATADate? = nil
+        var date: Date? = nil
         
         var delegate: EndpointDelegate? = nil
         

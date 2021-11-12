@@ -8,7 +8,7 @@
 import Combine
 import Foundation
 
-/// A WMATA Route
+/// A WMATA Bus Route
 public struct Route {
     /// A WMATA Route ID
     public let id: String
@@ -39,16 +39,5 @@ extension Route: Codable {
 extension Route: ExpressibleByStringLiteral {
     public init(stringLiteral value: String) {
         id = value
-    }
-}
-
-extension Route: URLQueryItemConvertible {
-    enum URLQueryItemName: String {
-        case routeID = "RouteID"
-        case route = "Route"
-    }
-    
-    func queryItem(name: URLQueryItemName = .routeID) -> URLQueryItem {
-        URLQueryItem(name: name.rawValue, value: id)
     }
 }

@@ -1,5 +1,4 @@
 - [`RadiusAtCoordinates`](#RadiusAtCoordinates)
-- [`WMATADate`](#WMATADate)
 
 #  `RadiusAtCoordinates`
 
@@ -31,20 +30,3 @@ You can avoid initializing a `Coordinates` struct with a convenience initializer
 ```swift
 let location = RadiusAtCoordinates(radius: 1000, latitude: 38.8817596, longitude: -77.0166426)
 ```
-
-# `WMATADate`
-
-Some WMATA APIs ask you for a date, you can use this struct to define a Date that WMATA will understand.
-
-## Definition
-```swift
-public struct WMATADate {
-    public let year: Int
-    public let month: Int
-    public let day: Int
-}
-```
-
-## Timezone
-
-Provided dates should be in Eastern time.

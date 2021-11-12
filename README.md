@@ -16,8 +16,7 @@ WMATA.swift is a Swift interface to the [Washington Metropolitan Area Transit Au
   - [Combine][combine-docs]
   - [Background Requests][background-docs]
 - Miscellaneous
-  - [`RadiusAtCoordinates`][radius-at-coordinates]
-  - [`WMATADate`][wmata-date]
+  - [`WMATALocation`][radius-at-coordinates]
 - [Migration Guides](#migration-guides)
 - [Dependencies](#dependencies)
 - [Testing](#testing)
@@ -65,7 +64,6 @@ Todo:
 - [ ] Documentation of response structs a la [wmata][wmata-rust]
 - [ ] Figure out how to serialize tests
 - [ ] Automated builds
-- [ ] Possible support for CocoaPods/Carthage?
 
 ## License
 
@@ -81,7 +79,6 @@ WMATA.swift is released under the MIT license. [See LICENSE](https://github.com/
 [combine-docs]: https://github.com/emma-k-alexandra/WMATA.swift/blob/master/Documentation/Combine.md
 [background-docs]: https://github.com/emma-k-alexandra/WMATA.swift/blob/master/Documentation/Background.md
 [radius-at-coordinates]: https://github.com/emma-k-alexandra/WMATA.swift/blob/master/Documentation/Miscellaneous.md#RadiusAtCoordinates
-[wmata-date]: https://github.com/emma-k-alexandra/WMATA.swift/blob/master/Documentation/Miscellaneous.md#WMATADate
 [v9-migration-guide]: https://github.com/emma-k-alexandra/WMATA.swift/blob/master/Documentation/v9%20Migration%20Guide.md
 [v10-migration-guide]: https://github.com/emma-k-alexandra/WMATA.swift/blob/master/Documentation/v10%20Migration%20Guide.md
 [gtfs]: https://github.com/emma-k-alexandra/GTFS

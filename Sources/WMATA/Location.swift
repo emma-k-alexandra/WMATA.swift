@@ -32,7 +32,7 @@ public struct WMATALocation {
     ///     - latitude: Latitude of location
     ///     - longitude: Longitude of location
     public init(radius: UInt, latitude: Double, longitude: Double) {
-        self.init(radius: radius, coordinates: Coordinates(latitude: latitude, longitude: longitude))
+        self.init(radius: radius, coordinates: .init(latitude: latitude, longitude: longitude))
     }
     
     func queryItems() -> [URLQueryItem] {

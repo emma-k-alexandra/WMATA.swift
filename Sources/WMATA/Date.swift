@@ -7,38 +7,7 @@
 
 import Foundation
 
-// TODO: See if this is needed. Can't we just parse a normal date?
-/// Structure describing a day, month and year in a format the WMATA API will understand
-public struct WMATADate {
-    /// Year of the date
-    public let year: Int
-    
-    /// Month of the date
-    public let month: Int
-    
-    /// Day of the date
-    public let day: Int
-
-    /// Create a WMATA Date
-    ///
-    /// - Parameters:
-    ///     - year: Year of the date
-    ///     - month: Month of the date
-    ///     - day: Day of the date
-    public init(year: Int, month: Int, day: Int) {
-        self.year = year
-        self.month = month
-        self.day = day
-    }
-}
-
-extension WMATADate: CustomStringConvertible {
-    public var description: String {
-        String(format: "%04d-%02d-%02d", year, month, day)
-    }
-}
-
-extension WMATADate: URLQueryItemConvertible {
+extension Date: URLQueryItemConvertible {
     enum URLQueryItemName: String {
         case date = "Date"
     }
@@ -46,25 +15,19 @@ extension WMATADate: URLQueryItemConvertible {
     func queryItem(name: URLQueryItemName = .date) -> URLQueryItem {
         URLQueryItem(name: name.rawValue, value: description)
     }
-}
-
-extension Date {
-    func weekdaySaturdayOrSunday() -> WeekdaySaturdayOrSunday {
-        let weekday = Calendar(identifier: .gregorian).component(.weekday, from: self)
-        if weekday == 1 {
-            return .sunday
-
-        } else if weekday > 1, weekday < 7 {
-            return .weekday
-
-        } else {
-            return .saturday
-        }
+    
+    func queryFormat() -> String {
+        DateFormatter.wmataQueryFormat.string(from: self)
     }
 }
 
-enum WeekdaySaturdayOrSunday {
-    case weekday
-    case saturday
-    case sunday
+internal extension DateFormatter {
+    static var wmataQueryFormat: Self {
+        let formatter = Self()
+        formatter.dateFormat = "yyyy-MM-dd"
+        formatter.locale = Locale(identifier: "en_US_POSIX")
+        formatter.timeZone = TimeZone(abbreviation: "EST")!
+        
+        return formatter
+    }
 }

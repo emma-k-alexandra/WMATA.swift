@@ -81,240 +81,43 @@ public enum Station: String, CaseIterable, Codable {
     case princeGeorgesPlaza = "E08"
     case collegePark = "E09"
     case greenbelt = "E10"
-    case F01
-    case F02
-    case F03
-    case F04
-    case F05
-    case F06
-    case F07
-    case F08
-    case F09
-    case F10
-    case F11
-    case G01
-    case G02
-    case G03
-    case G04
-    case G05
-    case J02
-    case J03
-    case K01
-    case K02
-    case K03
-    case K04
-    case K05
-    case K06
-    case K07
-    case K08
-    case N01
-    case N02
-    case N03
-    case N04
-    case N06
-    case N07
-    case N10
-    case N11
-    case N12
-    case N14
-    case N15
-}
-
-public extension Station {
-    @available(*, deprecated, renamed: "metroCenterUpper")
-    static let A01 = Self.metroCenterUpper
-    
-    @available(*, deprecated, renamed: "farragutNorth")
-    static let A02 = Self.farragutNorth
-    
-    @available(*, deprecated, renamed: "dupontCircle")
-    static let A03 = Self.dupontCircle
-    
-    @available(*, deprecated, renamed: "woodleyPark")
-    static let A04 = Self.woodleyPark
-    
-    @available(*, deprecated, renamed: "clevelandPark")
-    static let A05 = Self.clevelandPark
-    
-    @available(*, deprecated, renamed: "vanNess")
-    static let A06 = Self.vanNess
-    
-    @available(*, deprecated, renamed: "tenleytown")
-    static let A07 = Self.tenleytown
-    
-    @available(*, deprecated, renamed: "friendshipHeights")
-    static let A08 = Self.friendshipHeights
-    
-    @available(*, deprecated, renamed: "bethesda")
-    static let A09 = Self.bethesda
-    
-    @available(*, deprecated, renamed: "medicalCenter")
-    static let A10 = Self.medicalCenter
-    
-    @available(*, deprecated, renamed: "grosvenor")
-    static let A11 = Self.grosvenor
-    
-    @available(*, deprecated, renamed: "whiteFlint")
-    static let A12 = Self.whiteFlint
-    
-    @available(*, deprecated, renamed: "twinbrook")
-    static let A13 = Self.twinbrook
-    
-    @available(*, deprecated, renamed: "rockville")
-    static let A14 = Self.rockville
-    
-    @available(*, deprecated, renamed: "shadyGrove")
-    static let A15 = Self.shadyGrove
-    
-    @available(*, deprecated, renamed: "galleryPlaceUpper")
-    static let B01 = Self.galleryPlaceUpper
-    
-    @available(*, deprecated, renamed: "judiciarySquare")
-    static let B02 = Self.judiciarySquare
-    
-    @available(*, deprecated, renamed: "unionStation")
-    static let B03 = Self.unionStation
-    
-    @available(*, deprecated, renamed: "rhodeIslandAve")
-    static let B04 = Self.rhodeIslandAve
-    
-    @available(*, deprecated, renamed: "brookland")
-    static let B05 = Self.brookland
-    
-    @available(*, deprecated, renamed: "fortTottenUpper")
-    static let B06 = Self.fortTottenUpper
-    
-    @available(*, deprecated, renamed: "takoma")
-    static let B07 = Self.takoma
-    
-    @available(*, deprecated, renamed: "silverSpring")
-    static let B08 = Self.silverSpring
-    
-    @available(*, deprecated, renamed: "forestGlen")
-    static let B09 = Self.forestGlen
-    
-    @available(*, deprecated, renamed: "wheaton")
-    static let B10 = Self.wheaton
-    
-    @available(*, deprecated, renamed: "glenmont")
-    static let B11 = Self.glenmont
-    
-    @available(*, deprecated, renamed: "noma")
-    static let B35 = Self.noma
-    
-    @available(*, deprecated, renamed: "metroCenterLower")
-    static let C01 = Self.metroCenterLower
-    
-    @available(*, deprecated, renamed: "mcphersonSquare")
-    static let C02 = Self.mcphersonSquare
-    
-    @available(*, deprecated, renamed: "farragutWest")
-    static let C03 = Self.farragutWest
-    
-    @available(*, deprecated, renamed: "foggyBottom")
-    static let C04 = Self.foggyBottom
-    
-    @available(*, deprecated, renamed: "rosslyn")
-    static let C05 = Self.rosslyn
-    
-    @available(*, deprecated, renamed: "arlingtonCemetery")
-    static let C06 = Self.arlingtonCemetery
-    
-    @available(*, deprecated, renamed: "pentagon")
-    static let C07 = Self.pentagon
-    
-    @available(*, deprecated, renamed: "pentagonCity")
-    static let C08 = Self.pentagonCity
-    
-    @available(*, deprecated, renamed: "crystalCity")
-    static let C09 = Self.crystalCity
-    
-    @available(*, deprecated, renamed: "ronaldReaganWashingtonNationalAirport")
-    static let C10 = Self.ronaldReaganWashingtonNationalAirport
-    
-    @available(*, deprecated, renamed: "potomacYard")
-    static let C11 = Self.potomacYard
-    
-    @available(*, deprecated, renamed: "braddockRoad")
-    static let C12 = Self.braddockRoad
-    
-    @available(*, deprecated, renamed: "kingSt")
-    static let C13 = Self.kingSt
-    
-    @available(*, deprecated, renamed: "eisenhowerAvenue")
-    static let C14 = Self.eisenhowerAvenue
-    
-    @available(*, deprecated, renamed: "huntington")
-    static let C15 = Self.huntington
-    
-    @available(*, deprecated, renamed: "federalTriangle")
-    static let D01 = Self.federalTriangle
-    
-    @available(*, deprecated, renamed: "smithsonian")
-    static let D02 = Self.smithsonian
-    
-    @available(*, deprecated, renamed: "lenfantPlazaLower")
-    static let D03 = Self.lenfantPlazaLower
-    
-    @available(*, deprecated, renamed: "federalCenterSW")
-    static let D04 = Self.federalCenterSW
-    
-    @available(*, deprecated, renamed: "capitolSouth")
-    static let D05 = Self.capitolSouth
-    
-    @available(*, deprecated, renamed: "easternMarket")
-    static let D06 = Self.easternMarket
-    
-    @available(*, deprecated, renamed: "potomacAve")
-    static let D07 = Self.potomacAve
-    
-    @available(*, deprecated, renamed: "stadium")
-    static let D08 = Self.stadium
-    
-    @available(*, deprecated, renamed: "minnesotaAve")
-    static let D09 = Self.minnesotaAve
-    
-    @available(*, deprecated, renamed: "deanwood")
-    static let D10 = Self.deanwood
-    
-    @available(*, deprecated, renamed: "cheverly")
-    static let D11 = Self.cheverly
-    
-    @available(*, deprecated, renamed: "landover")
-    static let D12 = Self.landover
-    
-    @available(*, deprecated, renamed: "newCarrollton")
-    static let D13 = Self.newCarrollton
-    
-    @available(*, deprecated, renamed: "mtVernonSq7thSt")
-    static let E01 = Self.mtVernonSq7thSt
-    
-    @available(*, deprecated, renamed: "shaw")
-    static let E02 = Self.shaw
-    
-    @available(*, deprecated, renamed: "uStreet")
-    static let E03 = Self.uStreet
-    
-    @available(*, deprecated, renamed: "columbiaHeights")
-    static let E04 = Self.columbiaHeights
-    
-    @available(*, deprecated, renamed: "georgiaAve")
-    static let E05 = Self.georgiaAve
-    
-    @available(*, deprecated, renamed: "fortTottenLower")
-    static let E06 = Self.fortTottenLower
-    
-    @available(*, deprecated, renamed: "westHyattsville")
-    static let E07 = Self.westHyattsville
-    
-    @available(*, deprecated, renamed: "princeGeorgesPlaza")
-    static let E08 = Self.princeGeorgesPlaza
-    
-    @available(*, deprecated, renamed: "collegePark")
-    static let E09 = Self.collegePark
-    
-    @available(*, deprecated, renamed: "greenbelt")
-    static let E10 = Self.greenbelt
+    case galleryPlaceLower = "F01"
+    case archives = "F02"
+    case lenfantPlazaUpper = "F03"
+    case waterfront = "F04"
+    case navyYard = "F05"
+    case anacostia = "F06"
+    case congressHeights = "F07"
+    case southernAvenue = "F08"
+    case naylorRoad = "F09"
+    case suitland = "F10"
+    case branchAve = "F11"
+    case benningRoad = "G01"
+    case capitolHeights = "G02"
+    case addisonRoad = "G03"
+    case morganBoulevard = "G04"
+    case largoTownCenter = "G05"
+    case vanDornStreet = "J02"
+    case franconia = "J03"
+    case courtHouse = "K01"
+    case clarendon = "K02"
+    case virginiaSquare = "K03"
+    case ballston = "K04"
+    case eastFallsChurch = "K05"
+    case westFallsChurch = "K06"
+    case dunnLoring = "K07"
+    case vienna = "K08"
+    case mcLean = "N01"
+    case tysonsCorner = "N02"
+    case greensboro = "N03"
+    case springHill = "N04"
+    case wiehle = "N06"
+    case restonTownCenter = "N07"
+    case herndon = "N10"
+    case innovationCenter = "N11"
+    case dullesInternationalAirport = "N12"
+    case loudounGateway = "N14"
+    case ashburn = "N15"
 }
 
 public extension Station {
@@ -516,115 +319,115 @@ public extension Station {
         case .greenbelt:
             return "Greenbelt"
 
-        case .F01:
+        case .galleryPlaceLower:
             return "Gallery Pl-Chinatown"
 
-        case .F02:
+        case .archives:
             return "Archives-Navy Memorial-Penn Quarter"
 
-        case .F03:
+        case .lenfantPlazaUpper:
             return "L'Enfant Plaza"
 
-        case .F04:
+        case .waterfront:
             return "Waterfront"
 
-        case .F05:
+        case .navyYard:
             return "Navy Yard-Ballpark"
 
-        case .F06:
+        case .anacostia:
             return "Anacostia"
 
-        case .F07:
+        case .congressHeights:
             return "Congress Heights"
 
-        case .F08:
+        case .southernAvenue:
             return "Southern Avenue"
 
-        case .F09:
+        case .naylorRoad:
             return "Naylor Road"
 
-        case .F10:
+        case .suitland:
             return "Suitland"
 
-        case .F11:
+        case .branchAve:
             return "Branch Ave"
 
-        case .G01:
+        case .benningRoad:
             return "Benning Road"
 
-        case .G02:
+        case .capitolHeights:
             return "Capitol Heights"
 
-        case .G03:
+        case .addisonRoad:
             return "Addison Road-Seat Pleasant"
 
-        case .G04:
+        case .morganBoulevard:
             return "Morgan Boulevard"
 
-        case .G05:
+        case .largoTownCenter:
             return "Largo Town Center"
 
-        case .J02:
+        case .vanDornStreet:
             return "Van Dorn Street"
 
-        case .J03:
+        case .franconia:
             return "Franconia-Springfield"
 
-        case .K01:
+        case .courtHouse:
             return "Court House"
 
-        case .K02:
+        case .clarendon:
             return "Clarendon"
 
-        case .K03:
+        case .virginiaSquare:
             return "Virginia Square-GMU"
 
-        case .K04:
+        case .ballston:
             return "Ballston-MU"
 
-        case .K05:
+        case .eastFallsChurch:
             return "East Falls Church"
 
-        case .K06:
+        case .westFallsChurch:
             return "West Falls Church-VT/UVA"
 
-        case .K07:
+        case .dunnLoring:
             return "Dunn Loring-Merrifield"
 
-        case .K08:
+        case .vienna:
             return "Vienna/Fairfax-GMU"
 
-        case .N01:
+        case .mcLean:
             return "McLean"
 
-        case .N02:
+        case .tysonsCorner:
             return "Tysons Corner"
 
-        case .N03:
+        case .greensboro:
             return "Greensboro"
 
-        case .N04:
+        case .springHill:
             return "Spring Hill"
 
-        case .N06:
+        case .wiehle:
             return "Wiehle-Reston East"
 
-        case .N07:
+        case .restonTownCenter:
             return "Reston Town Center"
 
-        case .N10:
+        case .herndon:
             return "Herndon"
 
-        case .N11:
+        case .innovationCenter:
             return "Innovation Center"
 
-        case .N12:
+        case .dullesInternationalAirport:
             return "Dulles International Airport"
 
-        case .N14:
+        case .loudounGateway:
             return "Loudoun Gateway"
 
-        case .N15:
+        case .ashburn:
             return "Ashburn"
         }
     }
@@ -632,54 +435,45 @@ public extension Station {
     /// The `Line`s this station is on
     var lines: [Line] {
         switch self {
-        case .metroCenterUpper, .metroCenterLower:
-            return [.BL, .OR, .SV, .RD]
+        case .metroCenterUpper, .galleryPlaceUpper, .fortTottenUpper, .farragutNorth, .dupontCircle, .woodleyPark, .clevelandPark, .vanNess, .tenleytown, .friendshipHeights, .bethesda, .medicalCenter, .grosvenor, .whiteFlint, .twinbrook, .rockville, .shadyGrove, .judiciarySquare, .unionStation, .rhodeIslandAve, .brookland, .takoma, .silverSpring, .forestGlen, .wheaton, .glenmont, .noma:
+            return [.red]
 
-        case .farragutNorth, .dupontCircle, .woodleyPark, .clevelandPark, .vanNess, .tenleytown, .friendshipHeights, .bethesda, .medicalCenter, .grosvenor, .whiteFlint, .twinbrook, .rockville, .shadyGrove, .judiciarySquare, .unionStation, .rhodeIslandAve, .brookland, .takoma, .silverSpring, .forestGlen, .wheaton, .glenmont, .noma:
-            return [.RD]
+        case .metroCenterLower, .lenfantPlazaLower, .mcphersonSquare, .farragutWest, .foggyBottom, .rosslyn, .federalTriangle, .smithsonian, .federalCenterSW, .capitolSouth, .easternMarket, .potomacAve, .stadium:
+            return [.blue, .orange, .silver]
 
-        case .galleryPlaceUpper, .fortTottenUpper, .fortTottenLower, .F01:
-            return [.RD, .YL, .GR]
-
-        case .mcphersonSquare, .farragutWest, .foggyBottom, .rosslyn, .federalTriangle, .smithsonian, .federalCenterSW, .capitolSouth, .easternMarket, .potomacAve, .stadium:
-            return [.BL, .OR, .SV]
-
-        case .arlingtonCemetery, .J02, .J03:
-            return [.BL]
+        case .arlingtonCemetery, .vanDornStreet, .franconia:
+            return [.blue]
 
         case .pentagon, .pentagonCity, .crystalCity, .ronaldReaganWashingtonNationalAirport, .potomacYard, .braddockRoad, .kingSt:
-            return [.BL, .YL]
+            return [.blue, .yellow]
 
         case .eisenhowerAvenue, .huntington:
-            return [.YL]
+            return [.yellow]
 
-        case .lenfantPlazaLower, .F03:
-            return [.GR, .YL, .BL, .OR, .SV]
+        case .minnesotaAve, .deanwood, .cheverly, .landover, .newCarrollton, .westFallsChurch, .dunnLoring, .vienna:
+            return [.orange]
 
-        case .minnesotaAve, .deanwood, .cheverly, .landover, .newCarrollton, .K06, .K07, .K08:
-            return [.OR]
+        case .fortTottenLower, .galleryPlaceLower, .lenfantPlazaUpper, .mtVernonSq7thSt, .shaw, .uStreet, .columbiaHeights, .georgiaAve, .westHyattsville, .princeGeorgesPlaza, .collegePark, .greenbelt, .archives:
+            return [.green, .yellow]
 
-        case .mtVernonSq7thSt, .shaw, .uStreet, .columbiaHeights, .georgiaAve, .westHyattsville, .princeGeorgesPlaza, .collegePark, .greenbelt, .F02:
-            return [.GR, .YL]
+        case .waterfront, .navyYard, .anacostia, .congressHeights, .southernAvenue, .naylorRoad, .suitland, .branchAve:
+            return [.green]
 
-        case .F04, .F05, .F06, .F07, .F08, .F09, .F10, .F11:
-            return [.GR]
+        case .benningRoad, .capitolHeights, .addisonRoad, .morganBoulevard, .largoTownCenter:
+            return [.blue, .silver]
 
-        case .G01, .G02, .G03, .G04, .G05:
-            return [.BL, .SV]
+        case .courtHouse, .clarendon, .virginiaSquare, .ballston, .eastFallsChurch:
+            return [.orange, .silver]
 
-        case .K01, .K02, .K03, .K04, .K05:
-            return [.OR, .SV]
-
-        case .N01, .N02, .N03, .N04, .N06, .N07, .N10, .N11, .N12, .N14, .N15:
-            return [.SV]
+        case .mcLean, .tysonsCorner, .greensboro, .springHill, .wiehle, .restonTownCenter, .herndon, .innovationCenter, .dullesInternationalAirport, .loudounGateway, .ashburn:
+            return [.silver]
         }
     }
 
     /// Indicates if a station is open to the public. `false` if a station is part of the Potomac Yard or Silver Line Phase 2 expansions. Otherwise `true`.
     var open: Bool {
         switch self {
-        case .N07, .N10, .N11, .N12, .N14, .N15, .potomacYard:
+        case .restonTownCenter, .herndon, .innovationCenter, .dullesInternationalAirport, .loudounGateway, .ashburn, .potomacYard:
             return false
         default:
             return true
@@ -689,33 +483,39 @@ public extension Station {
     /// The opening time for this station on the given date.
     ///
     /// - Parameters:
-    ///     - date: Date to check the opening time for. Omit for today.
+    ///     - date: Date to check the opening time for. Defaults to current day.
     ///
-    /// - Returns: The opening time
-    func openingTime(on date: Date? = nil) -> Date {
-        let day: WeekdaySaturdayOrSunday
-        let openingDate: Date
-
-        if let date = date {
-            (day, openingDate) = (date.weekdaySaturdayOrSunday(), date)
-
-        } else {
-            openingDate = Date()
-            day = openingDate.weekdaySaturdayOrSunday()
+    /// - Returns: The opening time. `nil` if the station is not `open` yet.
+    func openingTime(on date: Date = Date()) -> Date? {
+        let day = date.wmataDay()
+        
+        guard let openingTimeDateComponents = Self.openingTimes[self]?[day] else {
+            return nil
         }
+        
+        let openingDateComponents = Calendar(identifier: .gregorian).dateComponents([
+            .day,
+            .month,
+            .year,
+            .timeZone,
+            .calendar
+        ], from: date)
 
-        let openingTimeDateComponents = Station.openingTimes[self]![day]!
-        let openingDateComponents = Calendar(identifier: .gregorian).dateComponents([.day, .month, .year, .timeZone, .calendar], from: openingDate)
-
-        return DateComponents(
+        let openingTime = DateComponents(
             calendar: openingDateComponents.calendar,
-            timeZone: openingDateComponents.timeZone!,
-            year: openingDateComponents.year!,
-            month: openingDateComponents.month!,
-            day: openingDateComponents.day!,
-            hour: openingTimeDateComponents.hour!,
-            minute: openingTimeDateComponents.minute!
-        ).date!
+            timeZone: openingDateComponents.timeZone,
+            year: openingDateComponents.year,
+            month: openingDateComponents.month,
+            day: openingDateComponents.day,
+            hour: openingTimeDateComponents.hour,
+            minute: openingTimeDateComponents.minute
+        )
+            
+        guard let openingTime = openingTime.date else {
+            return nil
+        }
+        
+        return openingTime
     }
 
     /// The station located within the same physical station as this station.
@@ -734,13 +534,13 @@ public extension Station {
             return .fortTottenUpper
         // Gallery Pl-Chinatown
         case .galleryPlaceUpper:
-            return .F01
-        case .F01:
+            return .galleryPlaceLower
+        case .galleryPlaceLower:
             return .galleryPlaceUpper
         // L'Enfant Plaza
         case .lenfantPlazaLower:
-            return .F03
-        case .F03:
+            return .lenfantPlazaUpper
+        case .lenfantPlazaUpper:
             return .lenfantPlazaLower
         // Metro Center
         case .metroCenterUpper:
@@ -767,57 +567,5 @@ public extension Station {
         }
 
         return [self]
-    }
-    
-    /// The platform of a station within a physical station
-    enum Platform {
-        case upper(lower: Station)
-        case lower(upper: Station)
-        case single
-    }
-    
-    /// If the current station code is for the upper or lower platform
-    ///
-    /// - Returns: `.single` for stations with only one platform
-    var platform: Platform {
-        switch self {
-        // Gallery Pl-Chinatown
-        case .F01:
-            return .lower(upper: .galleryPlaceUpper)
-        case .galleryPlaceUpper:
-            return .upper(lower: .F01)
-        
-        // L'Enfant Plaza
-        case .lenfantPlazaLower:
-            return .lower(upper: .F03)
-        case .F03:
-            return .upper(lower: .lenfantPlazaLower)
-            
-        // Fort Totten
-        case .fortTottenUpper:
-            return .upper(lower: .fortTottenLower)
-        case .fortTottenLower:
-            return .lower(upper: .galleryPlaceUpper)
-        // Metro Center
-        case .metroCenterUpper:
-            return .upper(lower: .metroCenterLower)
-        case .metroCenterLower:
-            return .lower(upper: .metroCenterUpper)
-            
-        default:
-            return .single
-        }
-    }
-}
-
-extension Station: URLQueryItemConvertible {
-    enum URLQueryItemName: String {
-        case standard = "StationCode"
-        case to = "ToStationCode"
-        case from = "FromStationCode"
-    }
-    
-    func queryItem(name: URLQueryItemName = .standard) -> URLQueryItem {
-        URLQueryItem(name: name.rawValue, value: rawValue)
     }
 }

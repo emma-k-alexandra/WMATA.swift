@@ -14,7 +14,7 @@ final class StationTests: XCTestCase {
     }
 
     func testLines() {
-        XCTAssertEqual(Station.metroCenterUpper.lines, [.BL, .OR, .SV, .RD])
+        XCTAssertEqual(Station.metroCenterUpper.lines, [.red])
     }
 
     func testOpenTimeSaturday() {

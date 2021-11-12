@@ -7,8 +7,29 @@
 
 import Foundation
 
-extension Station {
-    internal static var openingTimes: [Station: [WeekdaySaturdayOrSunday: DateComponents]] = [
+enum WMATADay {
+    case weekday
+    case saturday
+    case sunday
+}
+
+extension Date {
+    func wmataDay() -> WMATADay {
+        let weekday = Calendar(identifier: .gregorian).component(.weekday, from: self)
+        
+        switch weekday {
+        case 1:
+            return .sunday
+        case 2...6:
+            return .weekday
+        default:
+            return .saturday
+        }
+    }
+}
+
+internal extension Station {
+    static var openingTimes: [Station: [WMATADay: DateComponents]] = [
         .metroCenterUpper: [
             .sunday: DateComponents(hour: 8, minute: 14),
             .weekday: DateComponents(hour: 5, minute: 14),
@@ -329,157 +350,157 @@ extension Station {
             .weekday: DateComponents(hour: 4, minute: 50),
             .saturday: DateComponents(hour: 6, minute: 50),
         ],
-        .F01: [
+        .galleryPlaceLower: [
             .sunday: DateComponents(hour: 8, minute: 15),
             .weekday: DateComponents(hour: 5, minute: 15),
             .saturday: DateComponents(hour: 7, minute: 15),
         ],
-        .F02: [
+        .archives: [
             .sunday: DateComponents(hour: 8, minute: 13),
             .weekday: DateComponents(hour: 5, minute: 13),
             .saturday: DateComponents(hour: 7, minute: 13),
         ],
-        .F03: [
+        .lenfantPlazaUpper: [
             .sunday: DateComponents(hour: 8, minute: 9),
             .weekday: DateComponents(hour: 5, minute: 9),
             .saturday: DateComponents(hour: 7, minute: 9),
         ],
-        .F04: [
+        .waterfront: [
             .sunday: DateComponents(hour: 8, minute: 9),
             .weekday: DateComponents(hour: 5, minute: 9),
             .saturday: DateComponents(hour: 7, minute: 9),
         ],
-        .F05: [
+        .navyYard: [
             .sunday: DateComponents(hour: 8, minute: 7),
             .weekday: DateComponents(hour: 5, minute: 7),
             .saturday: DateComponents(hour: 7, minute: 7),
         ],
-        .F06: [
+        .anacostia: [
             .sunday: DateComponents(hour: 8, minute: 4),
             .weekday: DateComponents(hour: 5, minute: 4),
             .saturday: DateComponents(hour: 7, minute: 4),
         ],
-        .F07: [
+        .congressHeights: [
             .sunday: DateComponents(hour: 8, minute: 1),
             .weekday: DateComponents(hour: 5, minute: 1),
             .saturday: DateComponents(hour: 7, minute: 1),
         ],
-        .F08: [
+        .southernAvenue: [
             .sunday: DateComponents(hour: 7, minute: 59),
             .weekday: DateComponents(hour: 4, minute: 59),
             .saturday: DateComponents(hour: 6, minute: 59),
         ],
-        .F09: [
+        .naylorRoad: [
             .sunday: DateComponents(hour: 7, minute: 56),
             .weekday: DateComponents(hour: 4, minute: 56),
             .saturday: DateComponents(hour: 6, minute: 56),
         ],
-        .F10: [
+        .suitland: [
             .sunday: DateComponents(hour: 7, minute: 53),
             .weekday: DateComponents(hour: 4, minute: 53),
             .saturday: DateComponents(hour: 6, minute: 53),
         ],
-        .F11: [
+        .branchAve: [
             .sunday: DateComponents(hour: 7, minute: 50),
             .weekday: DateComponents(hour: 4, minute: 50),
             .saturday: DateComponents(hour: 6, minute: 50),
         ],
-        .G01: [
+        .benningRoad: [
             .sunday: DateComponents(hour: 7, minute: 55),
             .weekday: DateComponents(hour: 4, minute: 55),
             .saturday: DateComponents(hour: 6, minute: 55),
         ],
-        .G02: [
+        .capitolHeights: [
             .sunday: DateComponents(hour: 7, minute: 52),
             .weekday: DateComponents(hour: 4, minute: 52),
             .saturday: DateComponents(hour: 6, minute: 52),
         ],
-        .G03: [
+        .addisonRoad: [
             .sunday: DateComponents(hour: 7, minute: 50),
             .weekday: DateComponents(hour: 4, minute: 50),
             .saturday: DateComponents(hour: 6, minute: 50),
         ],
-        .G04: [
+        .morganBoulevard: [
             .sunday: DateComponents(hour: 7, minute: 47),
             .weekday: DateComponents(hour: 4, minute: 47),
             .saturday: DateComponents(hour: 6, minute: 47),
         ],
-        .G05: [
+        .largoTownCenter: [
             .sunday: DateComponents(hour: 7, minute: 44),
             .weekday: DateComponents(hour: 4, minute: 44),
             .saturday: DateComponents(hour: 6, minute: 44),
         ],
-        .J02: [
+        .vanDornStreet: [
             .sunday: DateComponents(hour: 7, minute: 56),
             .weekday: DateComponents(hour: 4, minute: 56),
             .saturday: DateComponents(hour: 6, minute: 56),
         ],
-        .J03: [
+        .franconia: [
             .sunday: DateComponents(hour: 7, minute: 50),
             .weekday: DateComponents(hour: 4, minute: 50),
             .saturday: DateComponents(hour: 6, minute: 50),
         ],
-        .K01: [
+        .courtHouse: [
             .sunday: DateComponents(hour: 8, minute: 10),
             .weekday: DateComponents(hour: 5, minute: 10),
             .saturday: DateComponents(hour: 7, minute: 10),
         ],
-        .K02: [
+        .clarendon: [
             .sunday: DateComponents(hour: 8, minute: 8),
             .weekday: DateComponents(hour: 5, minute: 8),
             .saturday: DateComponents(hour: 7, minute: 8),
         ],
-        .K03: [
+        .virginiaSquare: [
             .sunday: DateComponents(hour: 8, minute: 7),
             .weekday: DateComponents(hour: 5, minute: 7),
             .saturday: DateComponents(hour: 7, minute: 7),
         ],
-        .K04: [
+        .ballston: [
             .sunday: DateComponents(hour: 8, minute: 9),
             .weekday: DateComponents(hour: 5, minute: 9),
             .saturday: DateComponents(hour: 7, minute: 9),
         ],
-        .K05: [
+        .eastFallsChurch: [
             .sunday: DateComponents(hour: 8, minute: 1),
             .weekday: DateComponents(hour: 5, minute: 1),
             .saturday: DateComponents(hour: 7, minute: 1),
         ],
-        .K06: [
+        .westFallsChurch: [
             .sunday: DateComponents(hour: 7, minute: 58),
             .weekday: DateComponents(hour: 4, minute: 58),
             .saturday: DateComponents(hour: 6, minute: 58),
         ],
-        .K07: [
+        .dunnLoring: [
             .sunday: DateComponents(hour: 7, minute: 54),
             .weekday: DateComponents(hour: 4, minute: 54),
             .saturday: DateComponents(hour: 6, minute: 54),
         ],
-        .K08: [
+        .vienna: [
             .sunday: DateComponents(hour: 7, minute: 50),
             .weekday: DateComponents(hour: 4, minute: 50),
             .saturday: DateComponents(hour: 6, minute: 50),
         ],
-        .N01: [
+        .mcLean: [
             .sunday: DateComponents(hour: 8, minute: 3),
             .weekday: DateComponents(hour: 5, minute: 3),
             .saturday: DateComponents(hour: 7, minute: 3),
         ],
-        .N02: [
+        .tysonsCorner: [
             .sunday: DateComponents(hour: 8, minute: 1),
             .weekday: DateComponents(hour: 5, minute: 1),
             .saturday: DateComponents(hour: 7, minute: 1),
         ],
-        .N03: [
+        .greensboro: [
             .sunday: DateComponents(hour: 7, minute: 59),
             .weekday: DateComponents(hour: 4, minute: 59),
             .saturday: DateComponents(hour: 6, minute: 59),
         ],
-        .N04: [
+        .springHill: [
             .sunday: DateComponents(hour: 7, minute: 57),
             .weekday: DateComponents(hour: 4, minute: 57),
             .saturday: DateComponents(hour: 6, minute: 57),
         ],
-        .N06: [
+        .wiehle: [
             .sunday: DateComponents(hour: 7, minute: 50),
             .weekday: DateComponents(hour: 4, minute: 50),
             .saturday: DateComponents(hour: 6, minute: 50),

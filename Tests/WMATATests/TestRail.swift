@@ -143,7 +143,7 @@ final class RailTests: XCTestCase {
         let exp = expectation(description: #function)
         let stations = Rail.Stations(
             key: TEST_API_KEY,
-            line: .BL
+            line: .blue
         )
 
         stations.request { result in
@@ -164,7 +164,7 @@ final class RailTests: XCTestCase {
 
         let stations = Rail.Stations(
             key: TEST_API_KEY,
-            line: .BL,
+            line: .blue,
             delegate: delegate
         )
 
@@ -865,7 +865,7 @@ final class RailCombineTests: CombineTests {
         let exp = expectation(description: #function)
         let stations = Rail.Stations(
             key: TEST_API_KEY,
-            line: .BL
+            line: .blue
         )
 
         let cancellable = stations
