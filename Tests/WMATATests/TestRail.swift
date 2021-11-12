@@ -207,8 +207,8 @@ final class RailTests: XCTestCase {
         let exp = expectation(description: #function)
         let stationToStation = Rail.StationToStation(
             key: TEST_API_KEY,
-            station: .A01,
-            destinationStation: .A02
+            station: .metroCenterUpper,
+            destinationStation: .farragutNorth
         )
 
         stationToStation.request { result in
@@ -229,8 +229,8 @@ final class RailTests: XCTestCase {
 
         let stationToStation = Rail.StationToStation(
             key: TEST_API_KEY,
-            station: .A01,
-            destinationStation: .A02,
+            station: .metroCenterUpper,
+            destinationStation: .farragutNorth,
             delegate: delegate
         )
 
@@ -244,7 +244,7 @@ final class RailTests: XCTestCase {
         let stationToStation = Rail.StationToStation(
             key: TEST_API_KEY,
             station: nil,
-            destinationStation: .A02
+            destinationStation: .farragutNorth
         )
 
         stationToStation.request { result in
@@ -266,7 +266,7 @@ final class RailTests: XCTestCase {
         let stationToStation = Rail.StationToStation(
             key: TEST_API_KEY,
             station: nil,
-            destinationStation: .A02,
+            destinationStation: .farragutNorth,
             delegate: delegate
         )
 
@@ -279,7 +279,7 @@ final class RailTests: XCTestCase {
         let exp = expectation(description: #function)
         let stationToStation = Rail.StationToStation(
             key: TEST_API_KEY,
-            station: .A01,
+            station: .metroCenterUpper,
             destinationStation: nil
         )
 
@@ -301,7 +301,7 @@ final class RailTests: XCTestCase {
 
         let stationToStation = Rail.StationToStation(
             key: TEST_API_KEY,
-            station: .A01,
+            station: .metroCenterUpper,
             destinationStation: nil,
             delegate: delegate
         )
@@ -409,9 +409,9 @@ final class RailTests: XCTestCase {
 
     func testCircuits() {
         let exp = expectation(description: #function)
-        let rail = MetroRail(key: TEST_API_KEY)
+        let circuits = Rail.Circuits(key: TEST_API_KEY)
 
-        rail.circuits { result in
+        circuits.request { result in
             switch result {
             case .success:
                 exp.fulfill()
@@ -427,21 +427,24 @@ final class RailTests: XCTestCase {
     func testCircuitsWithDelegate() {
         let delegate = TestDelegate(expectation: expectation(description: #function))
 
-        let rail = MetroRail(
+        let circuits = Rail.Circuits(
             key: TEST_API_KEY,
             delegate: delegate
         )
 
-        rail.circuits()
+        circuits.request()
 
         waitForExpectations(timeout: 1)
     }
 
     func testElevatorAndEscalatorIncidents() {
         let exp = expectation(description: #function)
-        let rail = MetroRail(key: TEST_API_KEY)
+        let incidents = Rail.ElevatorAndEscalatorIncidents(
+            key: TEST_API_KEY,
+            station: .metroCenterUpper
+        )
 
-        rail.elevatorAndEscalatorIncidents(at: .A01) { result in
+        incidents.request { result in
             switch result {
             case .success:
                 exp.fulfill()
@@ -457,21 +460,25 @@ final class RailTests: XCTestCase {
     func testElevatorAndEscalatorIncidentsWithDelegate() {
         let delegate = TestDelegate(expectation: expectation(description: #function))
 
-        let rail = MetroRail(
+        let incidents = Rail.ElevatorAndEscalatorIncidents(
             key: TEST_API_KEY,
+            station: .metroCenterUpper,
             delegate: delegate
         )
 
-        rail.elevatorAndEscalatorIncidents(at: .A01)
+        incidents.request()
 
         waitForExpectations(timeout: 1)
     }
 
     func testIncidents() {
         let exp = expectation(description: #function)
-        let rail = MetroRail(key: TEST_API_KEY)
+        let incidents = Rail.Incidents(
+            key: TEST_API_KEY,
+            station: .metroCenterUpper
+        )
 
-        rail.incidents(at: .A01) { result in
+        incidents.request { result in
             switch result {
             case .success:
                 exp.fulfill()
@@ -487,21 +494,25 @@ final class RailTests: XCTestCase {
     func testIncidentsWithDelegate() {
         let delegate = TestDelegate(expectation: expectation(description: #function))
 
-        let rail = MetroRail(
+        let incidents = Rail.Incidents(
             key: TEST_API_KEY,
+            station: .metroCenterUpper,
             delegate: delegate
         )
 
-        rail.incidents(at: .A01)
+        incidents.request()
 
         waitForExpectations(timeout: 1)
     }
 
     func testNextTrain() {
         let exp = expectation(description: #function)
-        let rail = MetroRail(key: TEST_API_KEY)
+        let predictions = Rail.NextTrains(
+            key: TEST_API_KEY,
+            station: .metroCenterUpper
+        )
 
-        rail.nextTrains(at: .A01) { result in
+        predictions.request { result in
             switch result {
             case .success:
                 exp.fulfill()
@@ -517,21 +528,25 @@ final class RailTests: XCTestCase {
     func testNextTrainWithDelegate() {
         let delegate = TestDelegate(expectation: expectation(description: #function))
 
-        let rail = MetroRail(
+        let predictions = Rail.NextTrains(
             key: TEST_API_KEY,
+            station: .metroCenterUpper,
             delegate: delegate
         )
 
-        rail.nextTrains(at: .A01)
+        predictions.request()
 
         waitForExpectations(timeout: 1)
     }
 
     func testNextTrains() {
         let exp = expectation(description: #function)
-        let rail = MetroRail(key: TEST_API_KEY)
+        let predictions = Rail.NextTrains(
+            key: TEST_API_KEY,
+            stations: [.metroCenterUpper, .farragutNorth]
+        )
 
-        rail.nextTrains(at: [.A01, .A02]) { result in
+        predictions.request { result in
             switch result {
             case .success:
                 exp.fulfill()
@@ -547,21 +562,25 @@ final class RailTests: XCTestCase {
     func testNextTrainsWithDelegate() {
         let delegate = TestDelegate(expectation: expectation(description: #function))
 
-        let rail = MetroRail(
+        let predictions = Rail.NextTrains(
             key: TEST_API_KEY,
+            stations: [.metroCenterUpper, .farragutNorth],
             delegate: delegate
         )
 
-        rail.nextTrains(at: [.A01, .A02])
+        predictions.request()
 
         waitForExpectations(timeout: 1)
     }
 
     func testInformation() {
         let exp = expectation(description: #function)
-        let rail = MetroRail(key: TEST_API_KEY)
+        let information = Rail.StationInformation(
+            key: TEST_API_KEY,
+            station: .metroCenterUpper
+        )
 
-        rail.information(for: .A01) { result in
+        information.request { result in
             switch result {
             case .success:
                 exp.fulfill()
@@ -577,21 +596,25 @@ final class RailTests: XCTestCase {
     func testInformationWithDelegate() {
         let delegate = TestDelegate(expectation: expectation(description: #function))
 
-        let rail = MetroRail(
+        let information = Rail.StationInformation(
             key: TEST_API_KEY,
+            station: .metroCenterUpper,
             delegate: delegate
         )
 
-        rail.information(for: .A01)
+        information.request()
 
         waitForExpectations(timeout: 1)
     }
 
     func testParkingInformation() {
         let exp = expectation(description: #function)
-        let rail = MetroRail(key: TEST_API_KEY)
+        let information = Rail.ParkingInformation(
+            key: TEST_API_KEY,
+            station: .metroCenterUpper
+        )
 
-        rail.parkingInformation(for: .A01) { result in
+        information.request { result in
             switch result {
             case .success:
                 exp.fulfill()
@@ -607,21 +630,26 @@ final class RailTests: XCTestCase {
     func testParkingInformationWithDelegate() {
         let delegate = TestDelegate(expectation: expectation(description: #function))
 
-        let rail = MetroRail(
+        let information = Rail.ParkingInformation(
             key: TEST_API_KEY,
+            station: .metroCenterUpper,
             delegate: delegate
         )
 
-        rail.parkingInformation(for: .A01)
+        information.request()
 
         waitForExpectations(timeout: 1)
     }
 
     func testPath() {
         let exp = expectation(description: #function)
-        let rail = MetroRail(key: TEST_API_KEY)
+        let path = Rail.Path(
+            key: TEST_API_KEY,
+            startingStation: .metroCenterUpper,
+            destinationStation: .farragutNorth
+        )
 
-        rail.path(from: .A01, to: .A02) { result in
+        path.request { result in
             switch result {
             case .success:
                 exp.fulfill()
@@ -637,21 +665,26 @@ final class RailTests: XCTestCase {
     func testPathWithDelegate() {
         let delegate = TestDelegate(expectation: expectation(description: #function))
 
-        let rail = MetroRail(
+        let path = Rail.Path(
             key: TEST_API_KEY,
+            startingStation: .metroCenterUpper,
+            destinationStation: .farragutNorth,
             delegate: delegate
         )
-
-        rail.path(from: .A01, to: .A02)
+        
+        path.request()
 
         waitForExpectations(timeout: 1)
     }
 
     func testTimings() {
         let exp = expectation(description: #function)
-        let rail = MetroRail(key: TEST_API_KEY)
+        let timings = Rail.Timings(
+            key: TEST_API_KEY,
+            station: .metroCenterUpper
+        )
 
-        rail.timings(for: .A01) { result in
+        timings.request { result in
             switch result {
             case .success:
                 exp.fulfill()
@@ -667,21 +700,25 @@ final class RailTests: XCTestCase {
     func testTimingsWithDelegate() {
         let delegate = TestDelegate(expectation: expectation(description: #function))
 
-        let rail = MetroRail(
+        let timings = Rail.Timings(
             key: TEST_API_KEY,
+            station: .metroCenterUpper,
             delegate: delegate
         )
 
-        rail.timings(for: .A01)
+        timings.request()
 
         waitForExpectations(timeout: 1)
     }
+}
 
+final class RailGTFSTests: XCTestCase {
     func testAlerts() {
         let exp = expectation(description: #function)
-        let rail = MetroRail(key: TEST_API_KEY)
+        let alerts = Rail.Alerts(
+            key: TEST_API_KEY)
 
-        rail.alerts { result in
+        alerts.request { result in
             switch result {
             case .success:
                 exp.fulfill()
@@ -697,21 +734,21 @@ final class RailTests: XCTestCase {
     func testAlertsWithDelegate() {
         let delegate = TestDelegate(expectation: expectation(description: #function))
 
-        let rail = MetroRail(
+        let alerts = Rail.Alerts(
             key: TEST_API_KEY,
             delegate: delegate
         )
 
-        rail.alerts()
+        alerts.request()
 
         waitForExpectations(timeout: 1)
     }
 
     func testTripUpdates() {
         let exp = expectation(description: #function)
-        let rail = MetroRail(key: TEST_API_KEY)
+        let tripUpdates = Rail.TripUpdates(key: TEST_API_KEY)
 
-        rail.tripUpdates { result in
+        tripUpdates.request { result in
             switch result {
             case .success:
                 exp.fulfill()
@@ -727,21 +764,21 @@ final class RailTests: XCTestCase {
     func testTripUpdatesWithDelegate() {
         let delegate = TestDelegate(expectation: expectation(description: #function))
 
-        let rail = MetroRail(
+        let tripUpdates = Rail.TripUpdates(
             key: TEST_API_KEY,
             delegate: delegate
         )
 
-        rail.tripUpdates()
+        tripUpdates.request()
 
         waitForExpectations(timeout: 1)
     }
 
     func testVehiclePositions() {
         let exp = expectation(description: #function)
-        let rail = MetroRail(key: TEST_API_KEY)
+        let vehiclePositions = Rail.VehiclePositions(key: TEST_API_KEY)
 
-        rail.vehiclePositions { result in
+        vehiclePositions.request { result in
             switch result {
             case .success:
                 exp.fulfill()
@@ -757,12 +794,12 @@ final class RailTests: XCTestCase {
     func testVehiclePositionsWithDelegate() {
         let delegate = TestDelegate(expectation: expectation(description: #function))
 
-        let rail = MetroRail(
+        let vehiclePositions = Rail.VehiclePositions(
             key: TEST_API_KEY,
             delegate: delegate
         )
 
-        rail.vehiclePositions()
+        vehiclePositions.request()
 
         waitForExpectations(timeout: 1)
     }
@@ -771,10 +808,10 @@ final class RailTests: XCTestCase {
 final class RailCombineTests: CombineTests {
     func testLinesPublisher() {
         let exp = expectation(description: #function)
-        let rail = MetroRail(key: TEST_API_KEY)
+        let lines = Rail.Lines(key: TEST_API_KEY)
 
-        let cancellable = rail
-            .linesPublisher()
+        let cancellable = lines
+            .publisher()
             .sink(
                 receiveCompletion: { completion in
                     switch completion {
@@ -794,10 +831,19 @@ final class RailCombineTests: CombineTests {
 
     func testEntrancesPublisher() {
         let exp = expectation(description: #function)
-        let rail = MetroRail(key: TEST_API_KEY)
+        let entrances = Rail.Entrances(
+            key: TEST_API_KEY,
+            location: .init(
+                radius: 1,
+                coordinates: .init(
+                    latitude: 1.0,
+                    longitude: 1.0
+                )
+            )
+        )
 
-        let cancellable = rail
-            .entrancesPublisher(at: WMATALocation(radius: 1, coordinates: Coordinates(latitude: 1.0, longitude: 1.0)))
+        let cancellable = entrances
+            .publisher()
             .sink(
                 receiveCompletion: { completion in
                     switch completion {
@@ -817,10 +863,13 @@ final class RailCombineTests: CombineTests {
 
     func testStationsPublisher() {
         let exp = expectation(description: #function)
-        let rail = MetroRail(key: TEST_API_KEY)
+        let stations = Rail.Stations(
+            key: TEST_API_KEY,
+            line: .BL
+        )
 
-        let cancellable = rail
-            .stationsPublisher(for: .BL)
+        let cancellable = stations
+            .publisher()
             .sink(
                 receiveCompletion: { completion in
                     switch completion {
@@ -840,10 +889,14 @@ final class RailCombineTests: CombineTests {
 
     func testStationPublisher() {
         let exp = expectation(description: #function)
-        let rail = MetroRail(key: TEST_API_KEY)
+        let stationToStation = Rail.StationToStation(
+            key: TEST_API_KEY,
+            station: .metroCenterUpper,
+            destinationStation: .farragutNorth
+        )
 
-        let cancellable = rail
-            .stationPublisher(.A01, to: .A02)
+        let cancellable = stationToStation
+            .publisher()
             .sink(
                 receiveCompletion: { completion in
                     switch completion {
@@ -863,10 +916,10 @@ final class RailCombineTests: CombineTests {
 
     func testPositionsPublisher() {
         let exp = expectation(description: #function)
-        let rail = MetroRail(key: TEST_API_KEY)
+        let positions = Rail.Positions(key: TEST_API_KEY)
 
-        let cancellable = rail
-            .positionsPublisher()
+        let cancellable = positions
+            .publisher()
             .sink(
                 receiveCompletion: { completion in
                     switch completion {
@@ -886,10 +939,10 @@ final class RailCombineTests: CombineTests {
 
     func testRoutesPublisher() {
         let exp = expectation(description: #function)
-        let rail = MetroRail(key: TEST_API_KEY)
+        let routes = Rail.Routes(key: TEST_API_KEY)
 
-        let cancellable = rail
-            .routesPublisher()
+        let cancellable = routes
+            .publisher()
             .sink(
                 receiveCompletion: { completion in
                     switch completion {
@@ -909,10 +962,10 @@ final class RailCombineTests: CombineTests {
 
     func testCircuitsPublisher() {
         let exp = expectation(description: #function)
-        let rail = MetroRail(key: TEST_API_KEY)
+        let circuits = Rail.Circuits(key: TEST_API_KEY)
 
-        let cancellable = rail
-            .circuitsPublisher()
+        let cancellable = circuits
+            .publisher()
             .sink(
                 receiveCompletion: { completion in
                     switch completion {
@@ -932,10 +985,13 @@ final class RailCombineTests: CombineTests {
 
     func testElevatorAndEscalatorIncidentsPublisher() {
         let exp = expectation(description: #function)
-        let rail = MetroRail(key: TEST_API_KEY)
+        let incidents = Rail.ElevatorAndEscalatorIncidents(
+            key: TEST_API_KEY,
+            station: .metroCenterUpper
+        )
 
-        let cancellable = rail
-            .elevatorAndEscalatorIncidentsPublisher(at: .A01)
+        let cancellable = incidents
+            .publisher()
             .sink(
                 receiveCompletion: { completion in
                     switch completion {
@@ -955,10 +1011,13 @@ final class RailCombineTests: CombineTests {
 
     func testIncidentsPublisher() {
         let exp = expectation(description: #function)
-        let rail = MetroRail(key: TEST_API_KEY)
+        let incidents = Rail.Incidents(
+            key: TEST_API_KEY,
+            station: .metroCenterUpper
+        )
 
-        let cancellable = rail
-            .incidentsPublisher(at: .A01)
+        let cancellable = incidents
+            .publisher()
             .sink(
                 receiveCompletion: { completion in
                     switch completion {
@@ -978,10 +1037,13 @@ final class RailCombineTests: CombineTests {
 
     func testNextTrainPublisher() {
         let exp = expectation(description: #function)
-        let rail = MetroRail(key: TEST_API_KEY)
+        let nextTrains = Rail.NextTrains(
+            key: TEST_API_KEY,
+            station: .metroCenterUpper
+        )
 
-        let cancellable = rail
-            .nextTrainsPublisher(at: .A01)
+        let cancellable = nextTrains
+            .publisher()
             .sink(
                 receiveCompletion: { completion in
                     switch completion {
@@ -1001,10 +1063,13 @@ final class RailCombineTests: CombineTests {
 
     func testNextTrainsPublisher() {
         let exp = expectation(description: #function)
-        let rail = MetroRail(key: TEST_API_KEY)
+        let nextTrains = Rail.NextTrains(
+            key: TEST_API_KEY,
+            stations: [.metroCenterUpper, .farragutNorth]
+        )
 
-        let cancellable = rail
-            .nextTrainsPublisher(at: [.A01, .A02])
+        let cancellable = nextTrains
+            .publisher()
             .sink(
                 receiveCompletion: { completion in
                     switch completion {
@@ -1024,10 +1089,13 @@ final class RailCombineTests: CombineTests {
 
     func testInformationPublisher() {
         let exp = expectation(description: #function)
-        let rail = MetroRail(key: TEST_API_KEY)
+        let stationInformation = Rail.StationInformation(
+            key: TEST_API_KEY,
+            station: .metroCenterUpper
+        )
 
-        let cancellable = rail
-            .informationPublisher(for: .A01)
+        let cancellable = stationInformation
+            .publisher()
             .sink(
                 receiveCompletion: { completion in
                     switch completion {
@@ -1047,10 +1115,13 @@ final class RailCombineTests: CombineTests {
 
     func testParkingInformationPublisher() {
         let exp = expectation(description: #function)
-        let rail = MetroRail(key: TEST_API_KEY)
+        let parkingInformation = Rail.ParkingInformation(
+            key: TEST_API_KEY,
+            station: .metroCenterUpper
+        )
 
-        let cancellable = rail
-            .parkingInformationPublisher(for: .A01)
+        let cancellable = parkingInformation
+            .publisher()
             .sink(
                 receiveCompletion: { completion in
                     switch completion {
@@ -1070,10 +1141,14 @@ final class RailCombineTests: CombineTests {
 
     func testPathPublisher() {
         let exp = expectation(description: #function)
-        let rail = MetroRail(key: TEST_API_KEY)
+        let path = Rail.Path(
+            key: TEST_API_KEY,
+            startingStation: .metroCenterUpper,
+            destinationStation: .farragutNorth
+        )
 
-        let cancellable = rail
-            .pathPublisher(from: .A01, to: .A02)
+        let cancellable = path
+            .publisher()
             .sink(
                 receiveCompletion: { completion in
                     switch completion {
@@ -1093,10 +1168,13 @@ final class RailCombineTests: CombineTests {
 
     func testTimingsPublisher() {
         let exp = expectation(description: #function)
-        let rail = MetroRail(key: TEST_API_KEY)
+        let timings = Rail.Timings(
+            key: TEST_API_KEY,
+            station: .metroCenterUpper
+        )
 
-        let cancellable = rail
-            .timingsPublisher(for: .A01)
+        let cancellable = timings
+            .publisher()
             .sink(
                 receiveCompletion: { completion in
                     switch completion {
@@ -1113,13 +1191,15 @@ final class RailCombineTests: CombineTests {
 
         waitForExpectations(timeout: 1)
     }
+}
 
+final class RailGTFSCombineTests: CombineTests {
     func testAlertsPublisher() {
         let exp = expectation(description: #function)
-        let rail = MetroRail(key: TEST_API_KEY)
+        let alerts = Rail.Alerts(key: TEST_API_KEY)
 
-        let cancellable = rail
-            .alertsPublisher()
+        let cancellable = alerts
+            .publisher()
             .sink(
                 receiveCompletion: { completion in
                     switch completion {
@@ -1139,10 +1219,10 @@ final class RailCombineTests: CombineTests {
 
     func testTripUpdatesPublisher() {
         let exp = expectation(description: #function)
-        let rail = MetroRail(key: TEST_API_KEY)
+        let tripUpdates = Rail.TripUpdates(key: TEST_API_KEY)
 
-        let cancellable = rail
-            .tripUpdatesPublisher()
+        let cancellable = tripUpdates
+            .publisher()
             .sink(
                 receiveCompletion: { completion in
                     switch completion {
@@ -1162,10 +1242,10 @@ final class RailCombineTests: CombineTests {
 
     func testVehiclePositionsPublisher() {
         let exp = expectation(description: #function)
-        let rail = MetroRail(key: TEST_API_KEY)
+        let vehiclePositions = Rail.VehiclePositions(key: TEST_API_KEY)
 
-        let cancellable = rail
-            .vehiclePositionsPublisher()
+        let cancellable = vehiclePositions
+            .publisher()
             .sink(
                 receiveCompletion: { completion in
                     switch completion {

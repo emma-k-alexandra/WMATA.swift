@@ -9,322 +9,322 @@ import Foundation
 
 extension Station {
     internal static var openingTimes: [Station: [WeekdaySaturdayOrSunday: DateComponents]] = [
-        .A01: [
+        .metroCenterUpper: [
             .sunday: DateComponents(hour: 8, minute: 14),
             .weekday: DateComponents(hour: 5, minute: 14),
             .saturday: DateComponents(hour: 7, minute: 14),
         ],
-        .A02: [
+        .farragutNorth: [
             .sunday: DateComponents(hour: 8, minute: 24),
             .weekday: DateComponents(hour: 5, minute: 24),
             .saturday: DateComponents(hour: 7, minute: 24),
         ],
-        .A03: [
+        .dupontCircle: [
             .sunday: DateComponents(hour: 8, minute: 23),
             .weekday: DateComponents(hour: 5, minute: 23),
             .saturday: DateComponents(hour: 7, minute: 23),
         ],
-        .A04: [
+        .woodleyPark: [
             .sunday: DateComponents(hour: 8, minute: 21),
             .weekday: DateComponents(hour: 5, minute: 21),
             .saturday: DateComponents(hour: 7, minute: 21),
         ],
-        .A05: [
+        .clevelandPark: [
             .sunday: DateComponents(hour: 8, minute: 19),
             .weekday: DateComponents(hour: 5, minute: 19),
             .saturday: DateComponents(hour: 7, minute: 19),
         ],
-        .A06: [
+        .vanNess: [
             .sunday: DateComponents(hour: 8, minute: 17),
             .weekday: DateComponents(hour: 5, minute: 17),
             .saturday: DateComponents(hour: 7, minute: 17),
         ],
-        .A07: [
+        .tenleytown: [
             .sunday: DateComponents(hour: 8, minute: 14),
             .weekday: DateComponents(hour: 5, minute: 14),
             .saturday: DateComponents(hour: 7, minute: 14),
         ],
-        .A08: [
+        .friendshipHeights: [
             .sunday: DateComponents(hour: 8, minute: 12),
             .weekday: DateComponents(hour: 5, minute: 12),
             .saturday: DateComponents(hour: 7, minute: 12),
         ],
-        .A09: [
+        .bethesda: [
             .sunday: DateComponents(hour: 8, minute: 9),
             .weekday: DateComponents(hour: 5, minute: 9),
             .saturday: DateComponents(hour: 7, minute: 9),
         ],
-        .A10: [
+        .medicalCenter: [
             .sunday: DateComponents(hour: 8, minute: 6),
             .weekday: DateComponents(hour: 5, minute: 6),
             .saturday: DateComponents(hour: 7, minute: 6),
         ],
-        .A11: [
+        .grosvenor: [
             .sunday: DateComponents(hour: 8, minute: 3),
             .weekday: DateComponents(hour: 5, minute: 3),
             .saturday: DateComponents(hour: 7, minute: 3),
         ],
-        .A12: [
+        .whiteFlint: [
             .sunday: DateComponents(hour: 8, minute: 0),
             .weekday: DateComponents(hour: 5, minute: 0),
             .saturday: DateComponents(hour: 7, minute: 0),
         ],
-        .A13: [
+        .twinbrook: [
             .sunday: DateComponents(hour: 7, minute: 57),
             .weekday: DateComponents(hour: 4, minute: 57),
             .saturday: DateComponents(hour: 6, minute: 57),
         ],
-        .A14: [
+        .rockville: [
             .sunday: DateComponents(hour: 7, minute: 54),
             .weekday: DateComponents(hour: 4, minute: 54),
             .saturday: DateComponents(hour: 6, minute: 54),
         ],
-        .A15: [
+        .shadyGrove: [
             .sunday: DateComponents(hour: 7, minute: 50),
             .weekday: DateComponents(hour: 4, minute: 50),
             .saturday: DateComponents(hour: 6, minute: 50),
         ],
-        .B01: [
+        .galleryPlaceUpper: [
             .sunday: DateComponents(hour: 8, minute: 15),
             .weekday: DateComponents(hour: 5, minute: 15),
             .saturday: DateComponents(hour: 7, minute: 15),
         ],
-        .B02: [
+        .judiciarySquare: [
             .sunday: DateComponents(hour: 8, minute: 17),
             .weekday: DateComponents(hour: 5, minute: 17),
             .saturday: DateComponents(hour: 7, minute: 17),
         ],
-        .B03: [
+        .unionStation: [
             .sunday: DateComponents(hour: 8, minute: 15),
             .weekday: DateComponents(hour: 5, minute: 15),
             .saturday: DateComponents(hour: 7, minute: 15),
         ],
-        .B04: [
+        .rhodeIslandAve: [
             .sunday: DateComponents(hour: 8, minute: 11),
             .weekday: DateComponents(hour: 5, minute: 11),
             .saturday: DateComponents(hour: 7, minute: 11),
         ],
-        .B05: [
+        .brookland: [
             .sunday: DateComponents(hour: 8, minute: 8),
             .weekday: DateComponents(hour: 5, minute: 8),
             .saturday: DateComponents(hour: 7, minute: 8),
         ],
-        .B06: [
+        .fortTottenUpper: [
             .sunday: DateComponents(hour: 8, minute: 0),
             .weekday: DateComponents(hour: 5, minute: 0),
             .saturday: DateComponents(hour: 7, minute: 0),
         ],
-        .B07: [
+        .takoma: [
             .sunday: DateComponents(hour: 8, minute: 2),
             .weekday: DateComponents(hour: 5, minute: 2),
             .saturday: DateComponents(hour: 7, minute: 2),
         ],
-        .B08: [
+        .silverSpring: [
             .sunday: DateComponents(hour: 7, minute: 59),
             .weekday: DateComponents(hour: 4, minute: 59),
             .saturday: DateComponents(hour: 6, minute: 59),
         ],
-        .B09: [
+        .forestGlen: [
             .sunday: DateComponents(hour: 7, minute: 56),
             .weekday: DateComponents(hour: 4, minute: 56),
             .saturday: DateComponents(hour: 6, minute: 56),
         ],
-        .B10: [
+        .wheaton: [
             .sunday: DateComponents(hour: 7, minute: 53),
             .weekday: DateComponents(hour: 4, minute: 53),
             .saturday: DateComponents(hour: 6, minute: 53),
         ],
-        .B11: [
+        .glenmont: [
             .sunday: DateComponents(hour: 7, minute: 50),
             .weekday: DateComponents(hour: 4, minute: 50),
             .saturday: DateComponents(hour: 6, minute: 50),
         ],
-        .B35: [
+        .noma: [
             .sunday: DateComponents(hour: 8, minute: 13),
             .weekday: DateComponents(hour: 5, minute: 13),
             .saturday: DateComponents(hour: 7, minute: 13),
         ],
-        .C01: [
+        .metroCenterLower: [
             .sunday: DateComponents(hour: 8, minute: 14),
             .weekday: DateComponents(hour: 5, minute: 14),
             .saturday: DateComponents(hour: 7, minute: 14),
         ],
-        .C02: [
+        .mcphersonSquare: [
             .sunday: DateComponents(hour: 8, minute: 16),
             .weekday: DateComponents(hour: 5, minute: 16),
             .saturday: DateComponents(hour: 7, minute: 16),
         ],
-        .C03: [
+        .farragutWest: [
             .sunday: DateComponents(hour: 8, minute: 18),
             .weekday: DateComponents(hour: 5, minute: 18),
             .saturday: DateComponents(hour: 7, minute: 18),
         ],
-        .C04: [
+        .foggyBottom: [
             .sunday: DateComponents(hour: 8, minute: 16),
             .weekday: DateComponents(hour: 5, minute: 16),
             .saturday: DateComponents(hour: 7, minute: 16),
         ],
-        .C05: [
+        .rosslyn: [
             .sunday: DateComponents(hour: 8, minute: 17),
             .weekday: DateComponents(hour: 5, minute: 17),
             .saturday: DateComponents(hour: 7, minute: 17),
         ],
-        .C06: [
+        .arlingtonCemetery: [
             .sunday: DateComponents(hour: 8, minute: 17),
             .weekday: DateComponents(hour: 5, minute: 17),
             .saturday: DateComponents(hour: 7, minute: 17),
         ],
-        .C07: [
+        .pentagon: [
             .sunday: DateComponents(hour: 8, minute: 7),
             .weekday: DateComponents(hour: 5, minute: 7),
             .saturday: DateComponents(hour: 7, minute: 7),
         ],
-        .C08: [
+        .pentagonCity: [
             .sunday: DateComponents(hour: 8, minute: 5),
             .weekday: DateComponents(hour: 5, minute: 5),
             .saturday: DateComponents(hour: 7, minute: 5),
         ],
-        .C09: [
+        .crystalCity: [
             .sunday: DateComponents(hour: 8, minute: 3),
             .weekday: DateComponents(hour: 5, minute: 3),
             .saturday: DateComponents(hour: 7, minute: 3),
         ],
-        .C10: [
+        .ronaldReaganWashingtonNationalAirport: [
             .sunday: DateComponents(hour: 8, minute: 1),
             .weekday: DateComponents(hour: 5, minute: 1),
             .saturday: DateComponents(hour: 7, minute: 1),
         ],
-        .C12: [
+        .braddockRoad: [
             .sunday: DateComponents(hour: 7, minute: 56),
             .weekday: DateComponents(hour: 4, minute: 56),
             .saturday: DateComponents(hour: 6, minute: 56),
         ],
-        .C13: [
+        .kingSt: [
             .sunday: DateComponents(hour: 7, minute: 54),
             .weekday: DateComponents(hour: 4, minute: 54),
             .saturday: DateComponents(hour: 6, minute: 54),
         ],
-        .C14: [
+        .eisenhowerAvenue: [
             .sunday: DateComponents(hour: 7, minute: 52),
             .weekday: DateComponents(hour: 4, minute: 52),
             .saturday: DateComponents(hour: 6, minute: 52),
         ],
-        .C15: [
+        .huntington: [
             .sunday: DateComponents(hour: 8, minute: 50),
             .weekday: DateComponents(hour: 5, minute: 50),
             .saturday: DateComponents(hour: 7, minute: 50),
         ],
-        .D01: [
+        .federalTriangle: [
             .sunday: DateComponents(hour: 8, minute: 13),
             .weekday: DateComponents(hour: 5, minute: 13),
             .saturday: DateComponents(hour: 7, minute: 13),
         ],
-        .D02: [
+        .smithsonian: [
             .sunday: DateComponents(hour: 8, minute: 11),
             .weekday: DateComponents(hour: 5, minute: 11),
             .saturday: DateComponents(hour: 7, minute: 11),
         ],
-        .D03: [
+        .lenfantPlazaLower: [
             .sunday: DateComponents(hour: 8, minute: 9),
             .weekday: DateComponents(hour: 5, minute: 9),
             .saturday: DateComponents(hour: 7, minute: 9),
         ],
-        .D04: [
+        .federalCenterSW: [
             .sunday: DateComponents(hour: 8, minute: 7),
             .weekday: DateComponents(hour: 5, minute: 7),
             .saturday: DateComponents(hour: 7, minute: 7),
         ],
-        .D05: [
+        .capitolSouth: [
             .sunday: DateComponents(hour: 8, minute: 5),
             .weekday: DateComponents(hour: 5, minute: 5),
             .saturday: DateComponents(hour: 7, minute: 5),
         ],
-        .D06: [
+        .easternMarket: [
             .sunday: DateComponents(hour: 8, minute: 3),
             .weekday: DateComponents(hour: 5, minute: 3),
             .saturday: DateComponents(hour: 7, minute: 3),
         ],
-        .D07: [
+        .potomacAve: [
             .sunday: DateComponents(hour: 8, minute: 1),
             .weekday: DateComponents(hour: 5, minute: 1),
             .saturday: DateComponents(hour: 7, minute: 1),
         ],
-        .D08: [
+        .stadium: [
             .sunday: DateComponents(hour: 7, minute: 59),
             .weekday: DateComponents(hour: 4, minute: 59),
             .saturday: DateComponents(hour: 6, minute: 59),
         ],
-        .D09: [
+        .minnesotaAve: [
             .sunday: DateComponents(hour: 8, minute: 0),
             .weekday: DateComponents(hour: 5, minute: 0),
             .saturday: DateComponents(hour: 7, minute: 0),
         ],
-        .D10: [
+        .deanwood: [
             .sunday: DateComponents(hour: 7, minute: 58),
             .weekday: DateComponents(hour: 4, minute: 58),
             .saturday: DateComponents(hour: 6, minute: 58),
         ],
-        .D11: [
+        .cheverly: [
             .sunday: DateComponents(hour: 7, minute: 56),
             .weekday: DateComponents(hour: 4, minute: 56),
             .saturday: DateComponents(hour: 6, minute: 56),
         ],
-        .D12: [
+        .landover: [
             .sunday: DateComponents(hour: 7, minute: 53),
             .weekday: DateComponents(hour: 4, minute: 53),
             .saturday: DateComponents(hour: 6, minute: 53),
         ],
-        .D13: [
+        .newCarrollton: [
             .sunday: DateComponents(hour: 7, minute: 59),
             .weekday: DateComponents(hour: 4, minute: 59),
             .saturday: DateComponents(hour: 6, minute: 59),
         ],
-        .E01: [
+        .mtVernonSq7thSt: [
             .sunday: DateComponents(hour: 8, minute: 14),
             .weekday: DateComponents(hour: 5, minute: 14),
             .saturday: DateComponents(hour: 7, minute: 14),
         ],
-        .E02: [
+        .shaw: [
             .sunday: DateComponents(hour: 8, minute: 13),
             .weekday: DateComponents(hour: 5, minute: 13),
             .saturday: DateComponents(hour: 7, minute: 13),
         ],
-        .E03: [
+        .uStreet: [
             .sunday: DateComponents(hour: 8, minute: 11),
             .weekday: DateComponents(hour: 5, minute: 11),
             .saturday: DateComponents(hour: 7, minute: 11),
         ],
-        .E04: [
+        .columbiaHeights: [
             .sunday: DateComponents(hour: 8, minute: 9),
             .weekday: DateComponents(hour: 5, minute: 9),
             .saturday: DateComponents(hour: 7, minute: 9),
         ],
-        .E05: [
+        .georgiaAve: [
             .sunday: DateComponents(hour: 8, minute: 6),
             .weekday: DateComponents(hour: 5, minute: 6),
             .saturday: DateComponents(hour: 7, minute: 6),
         ],
-        .E06: [
+        .fortTottenLower: [
             .sunday: DateComponents(hour: 8, minute: 0),
             .weekday: DateComponents(hour: 5, minute: 0),
             .saturday: DateComponents(hour: 7, minute: 0),
         ],
-        .E07: [
+        .westHyattsville: [
             .sunday: DateComponents(hour: 7, minute: 59),
             .weekday: DateComponents(hour: 4, minute: 59),
             .saturday: DateComponents(hour: 6, minute: 59),
         ],
-        .E08: [
+        .princeGeorgesPlaza: [
             .sunday: DateComponents(hour: 7, minute: 56),
             .weekday: DateComponents(hour: 4, minute: 56),
             .saturday: DateComponents(hour: 6, minute: 56),
         ],
-        .E09: [
+        .collegePark: [
             .sunday: DateComponents(hour: 7, minute: 53),
             .weekday: DateComponents(hour: 4, minute: 53),
             .saturday: DateComponents(hour: 6, minute: 53),
         ],
-        .E10: [
+        .greenbelt: [
             .sunday: DateComponents(hour: 7, minute: 50),
             .weekday: DateComponents(hour: 4, minute: 50),
             .saturday: DateComponents(hour: 6, minute: 50),
