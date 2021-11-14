@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import GTFS
 
 public class WMATAJSONDecoder: JSONDecoder {
     override public init() {
@@ -21,15 +20,15 @@ public extension JSONDecoder.KeyDecodingStrategy {
         .custom { codingPath in
             let relevantKey = codingPath.last!
             
-            if relevantKey.intValue != nil {
+            guard relevantKey.intValue == nil else {
                 return relevantKey
+            }
+            
+            if let wmataKey = WMATACodingKey(stringValue: relevantKey.stringValue) {
+                return wmataKey
             } else {
-                if let wmataKey = WMATACodingKey(stringValue: relevantKey.stringValue) {
-                    return wmataKey
-                } else {
-                    let pascalCaseKey = PascalCaseKey(stringValue: relevantKey.stringValue)
-                    return pascalCaseKey
-                }
+                let pascalCaseKey = PascalCaseKey(stringValue: relevantKey.stringValue)
+                return pascalCaseKey
             }
         }
     }
@@ -145,3 +144,49 @@ internal extension DateFormatter {
         return formatter
     }
 }
+
+
+@propertyWrapper
+public struct MapToNil<Wrapped, MappedValue>: Codable
+    where
+        Wrapped: Codable & RawRepresentable,
+        Wrapped.RawValue == String,
+        MappedValue: WMATAMappedValue
+    {
+    public var wrappedValue: Wrapped?
+    
+    public init(wrappedValue: Wrapped?) {
+        self.wrappedValue = wrappedValue
+    }
+    
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        let stringValue = try container.decode(String?.self)
+        
+        guard let stringValue = stringValue, stringValue != MappedValue.value else {
+            wrappedValue = nil
+            return
+        }
+        
+        wrappedValue = Wrapped(rawValue: stringValue)
+    }
+    
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.singleValueContainer()
+        
+        try container.encode(wrappedValue)
+    }
+}
+
+public protocol WMATAMappedValue {
+    static var value: String { get }
+}
+
+public struct EmptyString: WMATAMappedValue {
+    public static let value = ""
+}
+
+public struct Dashes: WMATAMappedValue {
+    public static let value = "--"
+}
+

@@ -6,7 +6,6 @@ import XCTest
 
 let TEST_API_KEY = "9e38c3eab34c4e6c990828002828f5ed" // Get your own @ https://developer.wmata.com using this one will probably result in some weird behavior
 
-
 class CombineTests: XCTestCase {
     // Thanks to eskimo for this solution
     // https://developer.apple.com/forums/thread/121814?answerId=378975022#378975022
@@ -21,15 +20,49 @@ class CombineTests: XCTestCase {
     }
 }
 
-func waitFor<Response>(_ expectation: XCTestExpectation, for result: Result<Response, WMATAError>)
-where
-    Response: Codable
-{
-    switch result {
-    case .success:
-        expectation.fulfill()
 
-    case let .failure(error):
-        print(error)
+class TestJSONDelegate<Parent>: JSONEndpointDelegate<Parent>
+where
+    Parent: Endpoint,
+    Parent.Response: Codable
+{
+    let expectation: XCTestExpectation
+
+    init(expectation: XCTestExpectation) {
+        self.expectation = expectation
+    }
+
+    override func received(_ response: Result<Parent.Response, WMATAError>) {
+        switch response {
+        case .success:
+            expectation.fulfill()
+
+        case let .failure(error):
+            print(error)
+        }
     }
 }
+
+class TestGTFSDelegate<Parent>: GTFSEndpointDelegate<Parent>
+where
+    Parent: Endpoint,
+    Parent.Response == TransitRealtime_FeedMessage
+{
+    let expectation: XCTestExpectation
+
+    init(expectation: XCTestExpectation) {
+        self.expectation = expectation
+    }
+
+    override func received(_ response: Result<Parent.Response, WMATAError>) {
+        switch response {
+        case .success:
+            expectation.fulfill()
+
+        case let .failure(error):
+            print(error)
+        }
+    }
+}
+
+// TODO: Add test for error responses

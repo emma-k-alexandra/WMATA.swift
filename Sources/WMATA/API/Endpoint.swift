@@ -9,7 +9,7 @@ import Foundation
 import Combine
 import GTFS
 
-protocol Endpoint {
+public protocol Endpoint: WMATADecoding {
     associatedtype Response
     
     /// Endpoint URL for the Request
@@ -18,37 +18,39 @@ protocol Endpoint {
     /// WMATA API Key for this request
     var key: APIKey { get }
     
-    var delegate: EndpointDelegate? { get set }
+    var delegate: EndpointDelegate<Self>? { get set }
     
-    /// The query items to attach to the URL
     func queryItems() -> [URLQueryItem?]
     
     func request(with session: URLSession, completion: @escaping (_ result: Result<Response, WMATAError>) -> Void)
+    
+    func request()
     
     func publisher(with session: URLSession) -> AnyPublisher<Response, WMATAError>
 }
 
 extension Endpoint {
-    func queryItems() -> [URLQueryItem?] {
+    public func queryItems() -> [URLQueryItem?] {
         []
     }
+
+// TODO: Do I need this?
+//    func request(with session: URLSession = .shared, completion: @escaping (_ result: Result<Response, WMATAError>) -> Void) {
+//        request(with: session, completion: completion)
+//    }
+//
+//    func publisher(with session: URLSession = .shared) -> AnyPublisher<Response, WMATAError> {
+//        publisher(with: session)
+//    }
     
-    func request(with session: URLSession = .shared, completion: @escaping (_ result: Result<Response, WMATAError>) -> Void) {
-        request(with: session, completion: completion)
-    }
-    
-    func publisher(with session: URLSession = .shared) -> AnyPublisher<Response, WMATAError> {
-        publisher(with: session)
-    }
-    
-    func url(with queryItems: [URLQueryItem?]) -> URL? {
+    internal func url(with queryItems: [URLQueryItem?]) -> URL? {
         var components = self.url
         components.queryItems = queryItems.withoutNil()
         
         return components.url
     }
     
-    func request() -> URLRequest? {
+    internal func urlRequest() -> URLRequest? {
         guard let url = url(with: queryItems()) else {
             return nil
         }
@@ -60,39 +62,32 @@ extension Endpoint {
     }
 }
 
-// Standard API
-extension Endpoint {
-    /// Default implemention for deserialize.
-    ///
-    /// - Parameters:
-    ///     - data: Data to deserialize
-    ///
-    /// - Returns: Result container the deserialized data, or an error
-    private func decode(_ data: Data) -> Result<Response, WMATAError>
-    where
-        Response: Codable
-    {
-        do {
-            let decodedObject = try WMATAJSONDecoder().decode(Response.self, from: data)
-            return .success(decodedObject)
-
-        } catch {
-            let originalError = error
-
-            do {
-                return .failure(try JSONDecoder().decode(WMATAError.self, from: data))
-            } catch {
-                return .failure(originalError.wmataError)
-            }
+public extension Endpoint {
+    func request() {
+        guard let delegate = delegate else {
+            assertionFailure("Request sent to delegate without delegate defined on endpoint \(String(describing: self))")
+            return
         }
+        
+        guard let request = urlRequest() else {
+            delegate.received(
+                .failure(.init(
+                    statusCode: 1,
+                    message: "Unable to create URLRequest for endpoint \(String(describing: self))"
+                ))
+            )
+            return
+        }
+        
+        delegate.session.downloadTask(with: request).resume()
     }
+}
 
+// Standard API
+public extension Endpoint where Response: Codable {
     // TODO: Allow rethrows
-    func request(with session: URLSession = .shared, completion: @escaping (_ result: Result<Response, WMATAError>) -> Void)
-    where
-        Response: Codable
-    {
-        guard let request = request() else {
+    func request(with session: URLSession = .shared, completion: @escaping (_ result: Result<Response, WMATAError>) -> Void) {
+        guard let request = urlRequest() else {
             completion(.failure(.init(statusCode: 1, message: "Unable to create URLRequest for endpoint \(String(describing: self))")))
             return
         }
@@ -108,22 +103,12 @@ extension Endpoint {
                 return
             }
             
-            let decodedData: Result<Response, WMATAError> = decode(data)
-            
-            switch decodedData {
-            case let .success(response):
-                completion(.success(response))
-            case let .failure(decodeError):
-                completion(.failure(decodeError))
-            }
+            completion(decode(standard: data))
         }.resume()
     }
     
-    func publisher(with session: URLSession = .shared) -> AnyPublisher<Response, WMATAError>
-    where
-        Response: Codable
-    {
-        guard let request = request() else {
+    func publisher(with session: URLSession = .shared) -> AnyPublisher<Response, WMATAError> {
+        guard let request = urlRequest() else {
             return Fail(
                 error: WMATAError(
                     statusCode: 1,
@@ -142,24 +127,9 @@ extension Endpoint {
 }
 
 // GTFS-RT
-extension Endpoint {
-    private func decode(_ data: Data) -> Result<Response, WMATAError>
-    where
-        Response == TransitRealtime_FeedMessage
-    {
-        do {
-            return .success(try TransitRealtime_FeedMessage(serializedData: data))
-
-        } catch {
-            return .failure(error.wmataError)
-        }
-    }
-    
-    func request(with session: URLSession = .shared, completion: @escaping (Result<Response, WMATAError>) -> Void)
-    where
-        Response == TransitRealtime_FeedMessage
-    {
-        guard let request = request() else {
+public extension Endpoint where Response == TransitRealtime_FeedMessage {
+    func request(with session: URLSession = .shared, completion: @escaping (Result<Response, WMATAError>) -> Void) {
+        guard let request = urlRequest() else {
             completion(.failure(.init(statusCode: 1, message: "Unable to create URLRequest for endpoint \(String(describing: self))")))
             return
         }
@@ -175,7 +145,7 @@ extension Endpoint {
                 return
             }
             
-            let decodedData: Result<TransitRealtime_FeedMessage, WMATAError> = decode(data)
+            let decodedData: Result<TransitRealtime_FeedMessage, WMATAError> = decode(gtfs: data)
             
             switch decodedData {
             case let .success(response):
@@ -186,11 +156,8 @@ extension Endpoint {
         }.resume()
     }
     
-    func publisher(with session: URLSession = .shared) -> AnyPublisher<Response, WMATAError>
-    where
-        Response == TransitRealtime_FeedMessage
-    {
-        guard let request = request() else {
+    func publisher(with session: URLSession = .shared) -> AnyPublisher<Response, WMATAError> {
+        guard let request = urlRequest() else {
             return Fail(
                 error: WMATAError(
                     statusCode: 1,
@@ -208,14 +175,10 @@ extension Endpoint {
     }
 }
 
-internal protocol OnlyJSONEndpoint: Endpoint {}
+public protocol OnlyJSONEndpoint: Endpoint {}
 
-internal extension OnlyJSONEndpoint {
+public extension OnlyJSONEndpoint {
     func queryItems() -> [URLQueryItem?] {
         [URLQueryItem(name: "contentType", value: "json")]
     }
-}
-
-class EndpointDelegate: NSObject, URLSessionDataDelegate {
-    
 }

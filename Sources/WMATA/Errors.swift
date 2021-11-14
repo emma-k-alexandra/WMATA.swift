@@ -9,8 +9,12 @@
 /// Error type for all errors that occur with the WMATA package.
 /// - Tag: WMATAError
 public struct WMATAError: Codable, Error {
-    public let statusCode: Int
+    public var statusCode = 0
     public let message: String
+    
+    public enum CodingKeys: String, CodingKey {
+        case message = "Message"
+    }
 }
 
 extension Error {
