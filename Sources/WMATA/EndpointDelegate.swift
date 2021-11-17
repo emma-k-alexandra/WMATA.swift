@@ -16,7 +16,7 @@ public class EndpointDelegate<Parent: Endpoint>: NSObject, URLSessionDownloadDel
     var sharedContainerIdentifier: String? = nil
     
     public func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
-        print("hello")
+        preconditionFailure("You must override `.urlSession(_:downloadTask:didFinishDownloadingTo:)` in your endpoint delegate")
     }
     
     public func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
@@ -61,11 +61,7 @@ extension EndpointDelegate {
     }
 }
 
-public class JSONEndpointDelegate<Parent>: EndpointDelegate<Parent>
-where
-    Parent: Endpoint,
-    Parent.Response: Codable
-{
+public class JSONEndpointDelegate<Parent: JSONEndpoint>: EndpointDelegate<Parent> {
     public override func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
         let data = loadData(from: location)
         
@@ -78,11 +74,7 @@ where
     }
 }
 
-public class GTFSEndpointDelegate<Parent>: EndpointDelegate<Parent>
-where
-    Parent: Endpoint,
-    Parent.Response == TransitRealtime_FeedMessage
-{
+public class GTFSEndpointDelegate<Parent: GTFSEndpoint>: EndpointDelegate<Parent> {
     public override func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
         switch loadData(from: location) {
         case let .success(data):

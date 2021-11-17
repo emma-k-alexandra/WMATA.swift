@@ -35,6 +35,32 @@ final class BusTests: XCTestCase {
 
         waitForExpectations(timeout: 1)
     }
+    
+    @available(macOS 12, iOS 15, watchOS 7, tvOS 15, *)
+    func testAsyncPositions() async {
+        let positions = Bus.Positions(
+            key: TEST_API_KEY,
+            route: "10A",
+            location: .init(
+                radius: 1,
+                coordinates: .init(
+                    latitude: 1.0,
+                    longitude: 1.0
+                )
+            )
+        )
+        
+        let result = await positions.request()
+
+        switch result {
+        case .success:
+            XCTAssert(true)
+
+        case let .failure(error):
+            print(error)
+            XCTAssert(false)
+        }
+    }
 
     func testPositionsWithDelegate() {
         let delegate = TestJSONDelegate<Bus.Positions>(expectation: expectation(description: #function))
@@ -52,7 +78,7 @@ final class BusTests: XCTestCase {
             delegate: delegate
         )
         
-        positions.request()
+        positions.backgroundRequest()
 
         waitForExpectations(timeout: 1)
     }
@@ -82,7 +108,7 @@ final class BusTests: XCTestCase {
             delegate: delegate
         )
 
-        routes.request()
+        routes.backgroundRequest()
 
         waitForExpectations(timeout: 1)
     }
@@ -128,7 +154,7 @@ final class BusTests: XCTestCase {
             delegate: delegate
         )
 
-        stopsSearch.request()
+        stopsSearch.backgroundRequest()
 
         waitForExpectations(timeout: 1)
     }
@@ -162,7 +188,7 @@ final class BusTests: XCTestCase {
             delegate: delegate
         )
 
-        incidents.request()
+        incidents.backgroundRequest()
 
         waitForExpectations(timeout: 1)
     }
@@ -196,7 +222,7 @@ final class BusTests: XCTestCase {
             delegate: delegate
         )
 
-        pathDetails.request()
+        pathDetails.backgroundRequest()
 
         waitForExpectations(timeout: 1)
     }
@@ -232,7 +258,7 @@ final class BusTests: XCTestCase {
             delegate: delegate
         )
 
-        routeSchedule.request()
+        routeSchedule.backgroundRequest()
 
         waitForExpectations(timeout: 1)
     }
@@ -266,7 +292,7 @@ final class BusTests: XCTestCase {
             delegate: delegate
         )
 
-        nextBuses.request()
+        nextBuses.backgroundRequest()
 
         waitForExpectations(timeout: 1)
     }
@@ -300,11 +326,13 @@ final class BusTests: XCTestCase {
             delegate: delegate
         )
 
-        stopSchedule.request()
+        stopSchedule.backgroundRequest()
 
         waitForExpectations(timeout: 1)
     }
+}
 
+final class BusGTFSTests: XCTestCase {
     func testAlerts() {
         let exp = expectation(description: #function)
         let alerts = Bus.Alerts(key: TEST_API_KEY)
@@ -330,7 +358,7 @@ final class BusTests: XCTestCase {
             delegate: delegate
         )
 
-        alerts.request()
+        alerts.backgroundRequest()
 
         waitForExpectations(timeout: 1)
     }
@@ -360,7 +388,7 @@ final class BusTests: XCTestCase {
             delegate: delegate
         )
 
-        tripUpdates.request()
+        tripUpdates.backgroundRequest()
 
         waitForExpectations(timeout: 1)
     }
@@ -390,7 +418,7 @@ final class BusTests: XCTestCase {
             delegate: delegate
         )
 
-        vehiclePositions.request()
+        vehiclePositions.backgroundRequest()
 
         waitForExpectations(timeout: 1)
     }
@@ -616,6 +644,77 @@ final class BusCombineTests: CombineTests {
         waitForExpectations(timeout: 1)
     }
 
+    func testAlertsPublisher() {
+        let exp = expectation(description: #function)
+        let alerts = Bus.Alerts(key: TEST_API_KEY)
+
+        let cancellable = alerts
+            .publisher()
+            .sink(
+                receiveCompletion: { completion in
+                    switch completion {
+                    case .finished:
+                        exp.fulfill()
+                    case let .failure(failure):
+                        print(failure)
+                    }
+                },
+                receiveValue: { _ in }
+            )
+
+        deferCancellable(cancellable)
+
+        waitForExpectations(timeout: 1)
+    }
+
+    func testTripUpdatesPublisher() {
+        let exp = expectation(description: #function)
+        let tripUpdates = Bus.TripUpdates(key: TEST_API_KEY)
+
+        let cancellable = tripUpdates
+            .publisher()
+            .sink(
+                receiveCompletion: { completion in
+                    switch completion {
+                    case .finished:
+                        exp.fulfill()
+                    case let .failure(failure):
+                        print(failure)
+                    }
+                },
+                receiveValue: { _ in }
+            )
+
+        deferCancellable(cancellable)
+
+        waitForExpectations(timeout: 1)
+    }
+
+    func testVehiclePositionsPublisher() {
+        let exp = expectation(description: #function)
+        let vehiclePositions = Bus.VehiclePositions(key: TEST_API_KEY)
+
+        let cancellable = vehiclePositions
+            .publisher()
+            .sink(
+                receiveCompletion: { completion in
+                    switch completion {
+                    case .finished:
+                        exp.fulfill()
+                    case let .failure(failure):
+                        print(failure)
+                    }
+                },
+                receiveValue: { _ in }
+            )
+
+        deferCancellable(cancellable)
+
+        waitForExpectations(timeout: 1)
+    }
+}
+
+final class BusGTFSCombineTests: CombineTests {
     func testAlertsPublisher() {
         let exp = expectation(description: #function)
         let alerts = Bus.Alerts(key: TEST_API_KEY)

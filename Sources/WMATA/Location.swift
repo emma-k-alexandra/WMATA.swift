@@ -7,7 +7,7 @@
 
 import Foundation
 
-/// For defining a location and radius from that location
+/// For defining a location and radius from that location in meters
 public struct WMATALocation {
     /// Radius from location in meters
     public let radius: UInt
@@ -38,30 +38,30 @@ public struct WMATALocation {
     func queryItems() -> [URLQueryItem] {
         coordinates.queryItems() + [URLQueryItem(name: "Radius", value: String(radius))]
     }
-}
-
-/// Location in latlong
-public struct Coordinates {
-    /// Latitude in degrees, positive
-    public let latitude: Double
     
-    /// Longitude in degrees, negative
-    public let longitude: Double
+    /// Location in latlong
+    public struct Coordinates {
+        /// Latitude in degrees, positive
+        public let latitude: Double
+        
+        /// Longitude in degrees, negative
+        public let longitude: Double
 
-    /// Create a new location
-    ///
-    /// - Parameters:
-    ///     - latitude: Latitude of location in degrees, positive
-    ///     - longitude: Longitude of location in degrees, negative
-    public init(latitude: Double, longitude: Double) {
-        self.latitude = latitude
-        self.longitude = longitude
-    }
-    
-    func queryItems() -> [URLQueryItem] {
-        [
-            URLQueryItem(name: "Lat", value: String(latitude)),
-            URLQueryItem(name: "Lon", value: String(longitude))
-        ]
+        /// Create a new location
+        ///
+        /// - Parameters:
+        ///     - latitude: Latitude of location in degrees, positive
+        ///     - longitude: Longitude of location in degrees, negative
+        public init(latitude: Double, longitude: Double) {
+            self.latitude = latitude
+            self.longitude = longitude
+        }
+        
+        func queryItems() -> [URLQueryItem] {
+            [
+                URLQueryItem(name: "Lat", value: String(latitude)),
+                URLQueryItem(name: "Lon", value: String(longitude))
+            ]
+        }
     }
 }

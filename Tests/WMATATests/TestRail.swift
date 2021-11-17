@@ -37,7 +37,7 @@ final class RailTests: XCTestCase {
             delegate: delegate
         )
 
-        lines.request()
+        lines.backgroundRequest()
 
         waitForExpectations(timeout: 1)
     }
@@ -83,7 +83,7 @@ final class RailTests: XCTestCase {
             delegate: delegate
         )
 
-            entrances.request()
+            entrances.backgroundRequest()
 
         waitForExpectations(timeout: 1)
     }
@@ -113,7 +113,7 @@ final class RailTests: XCTestCase {
             delegate: delegate
         )
 
-        entrances.request()
+        entrances.backgroundRequest()
 
         waitForExpectations(timeout: 1)
     }
@@ -147,7 +147,7 @@ final class RailTests: XCTestCase {
             delegate: delegate
         )
 
-        stations.request()
+        stations.backgroundRequest()
 
         waitForExpectations(timeout: 1)
     }
@@ -177,7 +177,7 @@ final class RailTests: XCTestCase {
             delegate: delegate
         )
 
-        stations.request()
+        stations.backgroundRequest()
 
         waitForExpectations(timeout: 1)
     }
@@ -213,7 +213,7 @@ final class RailTests: XCTestCase {
             delegate: delegate
         )
 
-        stationToStation.request()
+        stationToStation.backgroundRequest()
 
         waitForExpectations(timeout: 1)
     }
@@ -249,7 +249,7 @@ final class RailTests: XCTestCase {
             delegate: delegate
         )
 
-        stationToStation.request()
+        stationToStation.backgroundRequest()
 
         waitForExpectations(timeout: 1)
     }
@@ -285,7 +285,7 @@ final class RailTests: XCTestCase {
             delegate: delegate
         )
 
-        stationToStation.request()
+        stationToStation.backgroundRequest()
 
         waitForExpectations(timeout: 1)
     }
@@ -321,7 +321,7 @@ final class RailTests: XCTestCase {
             delegate: delegate
         )
 
-        stationToStation.request()
+        stationToStation.backgroundRequest()
 
         waitForExpectations(timeout: 1)
     }
@@ -351,7 +351,7 @@ final class RailTests: XCTestCase {
             delegate: delegate
         )
 
-        positions.request()
+        positions.backgroundRequest()
 
         waitForExpectations(timeout: 1)
     }
@@ -381,7 +381,7 @@ final class RailTests: XCTestCase {
             delegate: delegate
         )
 
-        routes.request()
+        routes.backgroundRequest()
 
         waitForExpectations(timeout: 1)
     }
@@ -411,7 +411,7 @@ final class RailTests: XCTestCase {
             delegate: delegate
         )
 
-        circuits.request()
+        circuits.backgroundRequest()
 
         waitForExpectations(timeout: 1)
     }
@@ -445,7 +445,7 @@ final class RailTests: XCTestCase {
             delegate: delegate
         )
 
-        incidents.request()
+        incidents.backgroundRequest()
 
         waitForExpectations(timeout: 1)
     }
@@ -479,7 +479,7 @@ final class RailTests: XCTestCase {
             delegate: delegate
         )
 
-        incidents.request()
+        incidents.backgroundRequest()
 
         waitForExpectations(timeout: 1)
     }
@@ -513,7 +513,7 @@ final class RailTests: XCTestCase {
             delegate: delegate
         )
 
-        predictions.request()
+        predictions.backgroundRequest()
 
         waitForExpectations(timeout: 1)
     }
@@ -547,7 +547,7 @@ final class RailTests: XCTestCase {
             delegate: delegate
         )
 
-        predictions.request()
+        predictions.backgroundRequest()
 
         waitForExpectations(timeout: 1)
     }
@@ -581,7 +581,7 @@ final class RailTests: XCTestCase {
             delegate: delegate
         )
 
-        information.request()
+        information.backgroundRequest()
 
         waitForExpectations(timeout: 1)
     }
@@ -615,7 +615,7 @@ final class RailTests: XCTestCase {
             delegate: delegate
         )
 
-        information.request()
+        information.backgroundRequest()
 
         waitForExpectations(timeout: 1)
     }
@@ -651,7 +651,7 @@ final class RailTests: XCTestCase {
             delegate: delegate
         )
         
-        path.request()
+        path.backgroundRequest()
 
         waitForExpectations(timeout: 1)
     }
@@ -685,7 +685,7 @@ final class RailTests: XCTestCase {
             delegate: delegate
         )
 
-        timings.request()
+        timings.backgroundRequest()
 
         waitForExpectations(timeout: 1)
     }
@@ -718,7 +718,7 @@ final class RailGTFSTests: XCTestCase {
             delegate: delegate
         )
 
-        alerts.request()
+        alerts.backgroundRequest()
 
         waitForExpectations(timeout: 1)
     }
@@ -748,7 +748,7 @@ final class RailGTFSTests: XCTestCase {
             delegate: delegate
         )
 
-        tripUpdates.request()
+        tripUpdates.backgroundRequest()
 
         waitForExpectations(timeout: 1)
     }
@@ -778,7 +778,7 @@ final class RailGTFSTests: XCTestCase {
             delegate: delegate
         )
 
-        vehiclePositions.request()
+        vehiclePositions.backgroundRequest()
 
         waitForExpectations(timeout: 1)
     }

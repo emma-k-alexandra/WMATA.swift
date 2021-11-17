@@ -14,8 +14,8 @@ public protocol WMATADecoding {
     func decode<Response>(standard data: Data) -> Result<Response, WMATAError> where Response: Codable
 }
 
-extension WMATADecoding {
-    public func decode(gtfs data: Data) -> Result<TransitRealtime_FeedMessage, WMATAError> {
+public extension WMATADecoding {
+    func decode(gtfs data: Data) -> Result<TransitRealtime_FeedMessage, WMATAError> {
         do {
             return .success(
                 try TransitRealtime_FeedMessage(serializedData: data)
@@ -25,7 +25,7 @@ extension WMATADecoding {
         }
     }
     
-    public func decode<Response>(standard data: Data) -> Result<Response, WMATAError>
+    func decode<Response>(standard data: Data) -> Result<Response, WMATAError>
     where
         Response: Codable
     {

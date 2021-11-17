@@ -20,12 +20,7 @@ class CombineTests: XCTestCase {
     }
 }
 
-
-class TestJSONDelegate<Parent>: JSONEndpointDelegate<Parent>
-where
-    Parent: Endpoint,
-    Parent.Response: Codable
-{
+class TestJSONDelegate<Parent: JSONEndpoint>: JSONEndpointDelegate<Parent> {
     let expectation: XCTestExpectation
 
     init(expectation: XCTestExpectation) {
@@ -43,11 +38,7 @@ where
     }
 }
 
-class TestGTFSDelegate<Parent>: GTFSEndpointDelegate<Parent>
-where
-    Parent: Endpoint,
-    Parent.Response == TransitRealtime_FeedMessage
-{
+class TestGTFSDelegate<Parent: GTFSEndpoint>: GTFSEndpointDelegate<Parent> {
     let expectation: XCTestExpectation
 
     init(expectation: XCTestExpectation) {

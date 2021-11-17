@@ -8,7 +8,12 @@
 import Combine
 import Foundation
 
-/// A bus stop
+/// The `Stop` struct represents a MetroBus stop.
+///
+/// Values are `StopID`s rather than stop names. MetroBus stops are numerous and defining them all explicitly is not feasible. Check the ``Bus/StopsSearch`` endpoint from WMATA to get all avalable stops.
+///
+/// `StopID`s are the same as you would see on signs at a MetroBus stop.
+/// 
 public struct Stop {
     /// A WMATA Stop ID
     public let id: String
@@ -16,7 +21,7 @@ public struct Stop {
     /// Create a bus stop
     ///
     /// - Parameters:
-    ///     - id: A Stop ID
+    ///     - id: A `StopID`
     public init(id: String) {
         self.id = id
     }

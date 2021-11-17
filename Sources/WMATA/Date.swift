@@ -21,7 +21,7 @@ extension Date: URLQueryItemConvertible {
     }
 }
 
-internal extension DateFormatter {
+extension DateFormatter {
     static var wmataQueryFormat: Self {
         let formatter = Self()
         formatter.dateFormat = "yyyy-MM-dd"

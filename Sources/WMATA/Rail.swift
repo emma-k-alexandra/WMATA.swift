@@ -8,18 +8,22 @@
 import Foundation
 import GTFS
 
+/// MetroRail endpoints
+///
+/// The various endpoints defined here allow you to call MetroRail APIs. For an overview see <doc:Endpoints>
+///
+/// > Tip: You can use endpoints here like so: `Rail.Lines(...)`
 public enum Rail {}
 
 public extension Rail {
-    struct Lines: Endpoint {
+    struct Lines: JSONEndpoint {
         public let url = URLComponents(staticString: "https://api.wmata.com/Rail.svc/json/jLines")
         
         public let key: APIKey
         
-        public weak var delegate: EndpointDelegate<Self>? = nil
+        public weak var delegate: JSONEndpointDelegate<Self>? = nil
         
         /// Response from the [Lines API](https://developer.wmata.com/docs/services/5476364f031f590f38092507/operations/5476364f031f5909e4fe330c)
-        /// - Tag: LinesResponse
         public struct Response: Codable {
             /// List of lines
             public let lines: [Line]
@@ -80,26 +84,30 @@ public extension Rail {
             }
         }
     }
-
-    struct Entrances: Endpoint {
+    
+    /// Create a call to the  [Station Entrances API](https://developer.wmata.com/docs/services/5476364f031f590f38092507/operations/5476364f031f5909e4fe330f)
+    struct Entrances: JSONEndpoint {
         public let url = URLComponents(staticString: "https://api.wmata.com/Rail.svc/json/jStationEntrances")
         
         public let key: APIKey
-        var location: WMATALocation? = nil
         
-        public weak var delegate: EndpointDelegate<Self>? = nil
+        /// Optional. A ``WMATALocation`` to search for entrances within
+        public var location: WMATALocation? = nil
         
-        public func queryItems() -> [URLQueryItem?] {
+        public weak var delegate: JSONEndpointDelegate<Self>? = nil
+        
+        internal func queryItems() -> [URLQueryItem?] {
             location?.queryItems() ?? []
         }
         
         /// Response from the [Station Entrances API](https://developer.wmata.com/docs/services/5476364f031f590f38092507/operations/5476364f031f5909e4fe330f)
-        /// - Tag: StationEntrances
         public struct Response: Codable {
             /// List of station entrances
             public let entrances: [Entrance]
 
-            /// Create a station entrances response
+            /// Create a station entrances response, for debugging and testing.
+            ///
+            /// >Note: When making requests with ``Rail/Entrances``, this will be created for you.
             ///
             /// - Parameters:
             ///     - entrances: List of station entrances
@@ -108,7 +116,6 @@ public extension Rail {
             }
             
             /// Response from the [Station Entrances API](https://developer.wmata.com/docs/services/5476364f031f590f38092507/operations/5476364f031f5909e4fe330f)
-            /// - Tag: StationEntrance
             public struct Entrance: Codable {
                 /// Additional information for the entrance.
                 public let description: String
@@ -162,20 +169,23 @@ public extension Rail {
         }
     }
 
-    struct Positions: OnlyJSONEndpoint {
+    struct Positions: JSONEndpoint {
         public let url = URLComponents(staticString: "https://api.wmata.com/TrainPositions/TrainPositions")
         
         public let key: APIKey
         
-        public weak var delegate: EndpointDelegate<Self>? = nil
+        public weak var delegate: JSONEndpointDelegate<Self>? = nil
+        
+        internal func queryItems() -> [URLQueryItem?] {
+            [URLQueryItem(name: "contentType", value: "json")]
+        }
         
         /// Response from the [Live Train Positions API](https://developer.wmata.com/docs/services/5763fa6ff91823096cac1057/operations/5763fb35f91823096cac1058)
-        /// - Tag: TrainPositions
         public struct Response: Codable {
             /// List of train positions
             public let trainPositions: [Positions]
 
-            /// Create a train positions response
+            /// Create a train positions response,
             ///
             /// - Parameters:
             ///     - trainPositions: List of train positions
@@ -250,12 +260,16 @@ public extension Rail {
         }
     }
     
-    struct Routes: OnlyJSONEndpoint {
+    struct Routes: JSONEndpoint {
         public let url = URLComponents(staticString: "https://api.wmata.com/TrainPositions/StandardRoutes")
         
         public let key: APIKey
         
-        public weak var delegate: EndpointDelegate<Self>? = nil
+        public weak var delegate: JSONEndpointDelegate<Self>? = nil
+        
+        internal func queryItems() -> [URLQueryItem?] {
+            [URLQueryItem(name: "contentType", value: "json")]
+        }
         
         /// Response from the [Standard Routes API](https://developer.wmata.com/docs/services/5763fa6ff91823096cac1057/operations/57641afc031f59363c586dca)
         /// - Tag: StandardRoutes
@@ -331,12 +345,16 @@ public extension Rail {
         }
     }
     
-    struct Circuits: OnlyJSONEndpoint {
+    struct Circuits: JSONEndpoint {
         public let url = URLComponents(staticString: "https://api.wmata.com/TrainPositions/TrackCircuits")
         
         public let key: APIKey
         
-        public weak var delegate: EndpointDelegate<Self>? = nil
+        public weak var delegate: JSONEndpointDelegate<Self>? = nil
+        
+        internal func queryItems() -> [URLQueryItem?] {
+            [URLQueryItem(name: "contentType", value: "json")]
+        }
         
         /// Response from the [Track Circuits API](https://developer.wmata.com/docs/services/5763fa6ff91823096cac1057/operations/57644238031f59363c586dcb)
         /// - Tag: TrackCircuits
@@ -381,7 +399,6 @@ public extension Rail {
                 }
                 
                 /// Response from the [Track Circuits API](https://developer.wmata.com/docs/services/5763fa6ff91823096cac1057/operations/57644238031f59363c586dcb)
-                /// - Tag: TrackNeighbor
                 public struct TrackNeighbor: Codable {
                     public enum NeighborType: String, Codable {
                         case left = "Left"
@@ -411,16 +428,16 @@ public extension Rail {
         }
     }
     
-    struct StationToStation: Endpoint {
+    struct StationToStation: JSONEndpoint {
         public let url = URLComponents(staticString: "https://api.wmata.com/Rail.svc/json/jSrcStationToDstStationInfo")
         
         public let key: APIKey
         public var station: Station? = nil
         public var destinationStation: Station? = nil
         
-        public weak var delegate: EndpointDelegate<Self>? = nil
+        public weak var delegate: JSONEndpointDelegate<Self>? = nil
         
-        public func queryItems() -> [URLQueryItem?] {
+        internal func queryItems() -> [URLQueryItem?] {
             [
                 station?.queryItem(name: .from),
                 destinationStation?.queryItem(name: .to)
@@ -513,15 +530,15 @@ public extension Rail {
         }
     }
     
-    struct ElevatorAndEscalatorIncidents: Endpoint {
+    struct ElevatorAndEscalatorIncidents: JSONEndpoint {
         public let url = URLComponents(staticString: "https://api.wmata.com/Incidents.svc/json/ElevatorIncidents")
         
         public let key: APIKey
         public var station: Station? = nil
         
-        public weak var delegate: EndpointDelegate<Self>? = nil
+        public weak var delegate: JSONEndpointDelegate<Self>? = nil
         
-        public func queryItems() -> [URLQueryItem?] {
+        internal func queryItems() -> [URLQueryItem?] {
             [station?.queryItem()]
         }
         
@@ -630,15 +647,15 @@ public extension Rail {
         }
     }
     
-    struct Incidents: Endpoint {
+    struct Incidents: JSONEndpoint {
         public let url = URLComponents(staticString: "https://api.wmata.com/Incidents.svc/json/Incidents")
         
         public let key: APIKey
         public var station: Station? = nil
         
-        public weak var delegate: EndpointDelegate<Self>? = nil
+        public weak var delegate: JSONEndpointDelegate<Self>? = nil
         
-        public func queryItems() -> [URLQueryItem?] {
+        internal func queryItems() -> [URLQueryItem?] {
             [station?.queryItem()]
         }
         
@@ -730,8 +747,8 @@ public extension Rail {
         }
     }
     
-    struct NextTrains: Endpoint {
-        private let baseURL = "https://api.wmata.com/StationPrediction.svc/json/GetPrediction/"
+    struct NextTrains: JSONEndpoint {
+        internal let baseURL = "https://api.wmata.com/StationPrediction.svc/json/GetPrediction/"
         
         public var url: URLComponents {
             let url = baseURL + stations.map(\.rawValue).joined(separator: ",")
@@ -742,15 +759,15 @@ public extension Rail {
         public let key: APIKey
         public let stations: [Station]
         
-        public weak var delegate: EndpointDelegate<Self>? = nil
+        public weak var delegate: JSONEndpointDelegate<Self>? = nil
         
-        public init(key: APIKey, station: Station, delegate: EndpointDelegate<Self>? = nil) {
+        public init(key: APIKey, station: Station, delegate: JSONEndpointDelegate<Self>? = nil) {
             self.key = key
             self.stations = [station]
             self.delegate = delegate
         }
         
-        public init(key: APIKey, stations: [Station], delegate: EndpointDelegate<Self>? = nil) {
+        public init(key: APIKey, stations: [Station], delegate: JSONEndpointDelegate<Self>? = nil) {
             self.key = key
             self.stations = stations
             self.delegate = delegate
@@ -846,15 +863,15 @@ public extension Rail {
         }
     }
     
-    struct StationInformation: Endpoint {
+    struct StationInformation: JSONEndpoint {
         public let url = URLComponents(staticString: "https://api.wmata.com/Rail.svc/json/jStationInfo")
         
         public let key: APIKey
         public let station: Station
         
-        public weak var delegate: EndpointDelegate<Self>? = nil
+        public weak var delegate: JSONEndpointDelegate<Self>? = nil
         
-        public func queryItems() -> [URLQueryItem?] {
+        internal func queryItems() -> [URLQueryItem?] {
             [station.queryItem()]
         }
         
@@ -971,15 +988,15 @@ public extension Rail {
         }
     }
     
-    struct ParkingInformation: Endpoint {
+    struct ParkingInformation: JSONEndpoint {
         public let url = URLComponents(staticString: "https://api.wmata.com/Rail.svc/json/jStationParking")
         
         public let key: APIKey
         public let station: Station
         
-        public weak var delegate: EndpointDelegate<Self>? = nil
+        public weak var delegate: JSONEndpointDelegate<Self>? = nil
         
-        public func queryItems() -> [URLQueryItem?] {
+        internal func queryItems() -> [URLQueryItem?] {
             [station.queryItem()]
         }
         
@@ -1099,16 +1116,16 @@ public extension Rail {
         }
     }
     
-    struct Path: Endpoint {
+    struct Path: JSONEndpoint {
         public let url = URLComponents(staticString: "https://api.wmata.com/Rail.svc/json/jPath")
         
         public let key: APIKey
         public let startingStation: Station
         public let destinationStation: Station
         
-        public weak var delegate: EndpointDelegate<Self>? = nil
+        public weak var delegate: JSONEndpointDelegate<Self>? = nil
         
-        public func queryItems() -> [URLQueryItem?] {
+        internal func queryItems() -> [URLQueryItem?] {
             [
                 startingStation.queryItem(name: .from),
                 destinationStation.queryItem(name: .to)
@@ -1172,15 +1189,15 @@ public extension Rail {
         }
     }
     
-    struct Timings: Endpoint {
+    struct Timings: JSONEndpoint {
         public let url = URLComponents(staticString: "https://api.wmata.com/Rail.svc/json/jStationTimes")
         
         public let key: APIKey
         public let station: Station
         
-        public weak var delegate: EndpointDelegate<Self>? = nil
+        public weak var delegate: JSONEndpointDelegate<Self>? = nil
         
-        public func queryItems() -> [URLQueryItem?] {
+        internal func queryItems() -> [URLQueryItem?] {
             [station.queryItem()]
         }
         
@@ -1314,15 +1331,15 @@ public extension Rail {
         }
     }
     
-    struct Stations: Endpoint {
+    struct Stations: JSONEndpoint {
         public let url = URLComponents(staticString: "https://api.wmata.com/Rail.svc/json/jStations")
         
         public let key: APIKey
         public var line: Line? = nil
         
-        public weak var delegate: EndpointDelegate<Self>? = nil
+        public weak var delegate: JSONEndpointDelegate<Self>? = nil
         
-        public func queryItems() -> [URLQueryItem?] {
+        internal func queryItems() -> [URLQueryItem?] {
             [line?.queryItem()]
         }
         
@@ -1342,34 +1359,28 @@ public extension Rail {
         }
     }
     
-    struct Alerts: Endpoint {
-        public typealias Response = TransitRealtime_FeedMessage
-        
+    struct Alerts: GTFSEndpoint {
         public let url = URLComponents(staticString: "https://api.wmata.com/gtfs/rail-gtfsrt-alerts.pb")
         
         public let key: APIKey
         
-        public weak var delegate: EndpointDelegate<Self>? = nil
+        public weak var delegate: GTFSEndpointDelegate<Self>? = nil
     }
     
     // TODO: Can these be specialized?
-    struct TripUpdates: Endpoint {
-        public typealias Response = TransitRealtime_FeedMessage
-        
+    struct TripUpdates: GTFSEndpoint {
         public let url = URLComponents(staticString: "https://api.wmata.com/gtfs/rail-gtfsrt-tripupdates.pb")
         
         public let key: APIKey
         
-        public weak var delegate: EndpointDelegate<Self>? = nil
+        public weak var delegate: GTFSEndpointDelegate<Self>? = nil
     }
     
-    struct VehiclePositions: Endpoint {
-        public typealias Response = TransitRealtime_FeedMessage
-        
+    struct VehiclePositions: GTFSEndpoint {
         public let url = URLComponents(staticString: "https://api.wmata.com/gtfs/rail-gtfsrt-vehiclepositions.pb")
         
         public let key: APIKey
         
-        public weak var delegate: EndpointDelegate<Self>? = nil
+        public weak var delegate: GTFSEndpointDelegate<Self>? = nil
     }
 }

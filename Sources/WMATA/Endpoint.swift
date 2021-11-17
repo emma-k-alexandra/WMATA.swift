@@ -10,47 +10,44 @@ import Combine
 import GTFS
 
 public protocol Endpoint: WMATADecoding {
+    /// The response WMATA sends back when calling this endpoint
     associatedtype Response
-    
-    /// Endpoint URL for the Request
-    var url: URLComponents { get }
     
     /// WMATA API Key for this request
     var key: APIKey { get }
     
-    var delegate: EndpointDelegate<Self>? { get set }
-    
-    func queryItems() -> [URLQueryItem?]
-    
+    /// Send an HTTP request to this endpoint
     func request(with session: URLSession, completion: @escaping (_ result: Result<Response, WMATAError>) -> Void)
     
-    func request()
+    /// Send an async HTTP request to this endpoint
+    @available(macOS 12, iOS 15, watchOS 7, tvOS 15, *)
+    func request(with session: URLSession) async -> Result<Response, WMATAError>
     
+    /// Send a background HTTP request to the endpoint.
+    func backgroundRequest()
+    
+    /// Send an HTTP request to this endpoint and receive a Combine Publisher with the response
     func publisher(with session: URLSession) -> AnyPublisher<Response, WMATAError>
+    
+    /// The URL this request is sent to
+    ///
+    /// > Note: You generally will not need this in typical usage
+    var url: URLComponents { get }
 }
 
-extension Endpoint {
-    public func queryItems() -> [URLQueryItem?] {
+internal extension Endpoint {
+    func queryItems() -> [URLQueryItem?] {
         []
     }
-
-// TODO: Do I need this?
-//    func request(with session: URLSession = .shared, completion: @escaping (_ result: Result<Response, WMATAError>) -> Void) {
-//        request(with: session, completion: completion)
-//    }
-//
-//    func publisher(with session: URLSession = .shared) -> AnyPublisher<Response, WMATAError> {
-//        publisher(with: session)
-//    }
     
-    internal func url(with queryItems: [URLQueryItem?]) -> URL? {
+    func url(with queryItems: [URLQueryItem?]) -> URL? {
         var components = self.url
         components.queryItems = queryItems.withoutNil()
         
         return components.url
     }
     
-    internal func urlRequest() -> URLRequest? {
+    func urlRequest() -> URLRequest? {
         guard let url = url(with: queryItems()) else {
             return nil
         }
@@ -62,11 +59,15 @@ extension Endpoint {
     }
 }
 
-public extension Endpoint {
-    func request() {
+public protocol JSONEndpoint: Endpoint where Response: Codable {
+    /// Optional. Delegate to send background requests to
+    var delegate: JSONEndpointDelegate<Self>? { get set }
+}
+
+public extension JSONEndpoint {
+    func backgroundRequest() {
         guard let delegate = delegate else {
-            assertionFailure("Request sent to delegate without delegate defined on endpoint \(String(describing: self))")
-            return
+            preconditionFailure("Request sent to delegate without delegate defined on endpoint \(String(describing: self))")
         }
         
         guard let request = urlRequest() else {
@@ -81,21 +82,28 @@ public extension Endpoint {
         
         delegate.session.downloadTask(with: request).resume()
     }
-}
-
-// Standard API
-public extension Endpoint where Response: Codable {
+    
     // TODO: Allow rethrows
     func request(with session: URLSession = .shared, completion: @escaping (_ result: Result<Response, WMATAError>) -> Void) {
         guard let request = urlRequest() else {
-            completion(.failure(.init(statusCode: 1, message: "Unable to create URLRequest for endpoint \(String(describing: self))")))
+            completion(.failure(.init(
+                statusCode: 1,
+                message: "Unable to create URLRequest for endpoint \(String(describing: self))"
+            )))
             return
         }
         
         session.dataTask(with: request) { data, _response, error in
             guard let data = data else {
                 guard let error = error else {
-                    completion(.failure(.init(statusCode: 3, message: "Neither data or error are present in response")))
+                    completion(
+                        .failure(
+                            .init(
+                                statusCode: 3,
+                                message: "Neither data or error are present in response"
+                            )
+                        )
+                    )
                     return
                 }
                 
@@ -105,6 +113,24 @@ public extension Endpoint where Response: Codable {
             
             completion(decode(standard: data))
         }.resume()
+    }
+    
+    @available(macOS 12, iOS 15, watchOS 7, tvOS 15, *)
+    func request(with session: URLSession = .shared) async -> Result<Response, WMATAError> {
+        guard let request = urlRequest() else {
+            return .failure(.init(
+                statusCode: 1,
+                message: "Unable to create URLRequest for endpoint \(String(describing: self))"
+            ))
+        }
+        
+        do {
+            let (data, _) = try await session.data(for: request)
+            
+            return decode(standard: data)
+        } catch {
+            return .failure(error.wmataError)
+        }
     }
     
     func publisher(with session: URLSession = .shared) -> AnyPublisher<Response, WMATAError> {
@@ -126,8 +152,31 @@ public extension Endpoint where Response: Codable {
     }
 }
 
+public protocol GTFSEndpoint: Endpoint where Response == TransitRealtime_FeedMessage {
+    /// Optional. Delegate to send background requests to
+    var delegate: GTFSEndpointDelegate<Self>? { get set }
+}
+
 // GTFS-RT
-public extension Endpoint where Response == TransitRealtime_FeedMessage {
+public extension GTFSEndpoint {
+    func backgroundRequest() {
+        guard let delegate = delegate else {
+            preconditionFailure("Request sent to delegate without delegate defined on endpoint \(String(describing: self))")
+        }
+        
+        guard let request = urlRequest() else {
+            delegate.received(
+                .failure(.init(
+                    statusCode: 1,
+                    message: "Unable to create URLRequest for endpoint \(String(describing: self))"
+                ))
+            )
+            return
+        }
+        
+        delegate.session.downloadTask(with: request).resume()
+    }
+    
     func request(with session: URLSession = .shared, completion: @escaping (Result<Response, WMATAError>) -> Void) {
         guard let request = urlRequest() else {
             completion(.failure(.init(statusCode: 1, message: "Unable to create URLRequest for endpoint \(String(describing: self))")))
@@ -156,6 +205,24 @@ public extension Endpoint where Response == TransitRealtime_FeedMessage {
         }.resume()
     }
     
+    @available(macOS 12, iOS 15, watchOS 7, tvOS 15, *)
+    func request(with session: URLSession = .shared) async -> Result<Response, WMATAError> {
+        guard let request = urlRequest() else {
+            return .failure(.init(
+                statusCode: 1,
+                message: "Unable to create URLRequest for endpoint \(String(describing: self))"
+            ))
+        }
+        
+        do {
+            let (data, _) = try await session.data(for: request)
+            
+            return decode(gtfs: data)
+        } catch {
+            return .failure(error.wmataError)
+        }
+    }
+    
     func publisher(with session: URLSession = .shared) -> AnyPublisher<Response, WMATAError> {
         guard let request = urlRequest() else {
             return Fail(
@@ -172,13 +239,5 @@ public extension Endpoint where Response == TransitRealtime_FeedMessage {
             .tryMap { try TransitRealtime_FeedMessage(serializedData: $0.data) }
             .mapError { $0.wmataError }
             .eraseToAnyPublisher()
-    }
-}
-
-public protocol OnlyJSONEndpoint: Endpoint {}
-
-public extension OnlyJSONEndpoint {
-    func queryItems() -> [URLQueryItem?] {
-        [URLQueryItem(name: "contentType", value: "json")]
     }
 }

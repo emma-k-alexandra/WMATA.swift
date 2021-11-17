@@ -8,19 +8,20 @@
 import Foundation
 import GTFS
 
+/// A namespace for MetroBus endpoints
 public enum Bus {}
 
 public extension Bus {
-    struct Positions: Endpoint {
+    struct Positions: JSONEndpoint {
         public let url = URLComponents(staticString: "https://api.wmata.com/Bus.svc/json/jBusPositions")
         
         public let key: APIKey
         public var route: Route? = nil
         public var location: WMATALocation? = nil
         
-        public weak var delegate: EndpointDelegate<Self>? = nil
+        public weak var delegate: JSONEndpointDelegate<Self>? = nil
 
-        public func queryItems() -> [URLQueryItem?] {
+        internal func queryItems() -> [URLQueryItem?] {
             var queryItems = [route?.queryItem()]
             queryItems.append(contentsOf: location?.queryItems() ?? [])
             
@@ -129,15 +130,15 @@ public extension Bus {
         }
     }
     
-    struct Incidents: Endpoint {
+    struct Incidents: JSONEndpoint {
         public let url = URLComponents(staticString: "https://api.wmata.com/Incidents.svc/json/BusIncidents")
         
         public let key: APIKey
         public var route: Route? = nil
         
-        public weak var delegate: EndpointDelegate<Self>? = nil
+        public weak var delegate: JSONEndpointDelegate<Self>? = nil
         
-        public func queryItems() -> [URLQueryItem?] {
+        internal func queryItems() -> [URLQueryItem?] {
             [route?.queryItem(name: .route)]
         }
         
@@ -198,16 +199,16 @@ public extension Bus {
         }
     }
     
-    struct PathDetails: Endpoint {
+    struct PathDetails: JSONEndpoint {
         public let url = URLComponents(staticString: "https://api.wmata.com/Bus.svc/json/jRouteDetails")
         
         public let key: APIKey
         public let route: Route
         public  var date: Date? = nil
         
-        public weak var delegate: EndpointDelegate<Self>? = nil
+        public weak var delegate: JSONEndpointDelegate<Self>? = nil
         
-        public func queryItems() -> [URLQueryItem?] {
+        internal func queryItems() -> [URLQueryItem?] {
             [
                 route.queryItem(),
                 date?.queryItem()
@@ -367,7 +368,7 @@ public extension Bus {
         }
     }
     
-    struct RouteSchedule: Endpoint {
+    struct RouteSchedule: JSONEndpoint {
         public let url = URLComponents(staticString: "https://api.wmata.com/Bus.svc/json/jRouteSchedule")
         
         public let key: APIKey
@@ -375,9 +376,9 @@ public extension Bus {
         public var date: Date? = nil
         public var includingVariations: Bool = false
         
-        public weak var delegate: EndpointDelegate<Self>? = nil
+        public weak var delegate: JSONEndpointDelegate<Self>? = nil
         
-        public func queryItems() -> [URLQueryItem?] {
+        internal func queryItems() -> [URLQueryItem?] {
             [
                 route.queryItem(),
                 date?.queryItem(),
@@ -517,15 +518,15 @@ public extension Bus {
         }
     }
     
-    struct NextBuses: Endpoint {
+    struct NextBuses: JSONEndpoint {
         public let url = URLComponents(staticString: "https://api.wmata.com/NextBusService.svc/json/jPredictions")
         
         public let key: APIKey
         public let stop: Stop
         
-        public weak var delegate: EndpointDelegate<Self>? = nil
+        public weak var delegate: JSONEndpointDelegate<Self>? = nil
         
-        public func queryItems() -> [URLQueryItem?] {
+        internal func queryItems() -> [URLQueryItem?] {
             [stop.queryItem()]
         }
         
@@ -596,16 +597,16 @@ public extension Bus {
         }
     }
     
-    struct StopSchedule: Endpoint {
+    struct StopSchedule: JSONEndpoint {
         public let url = URLComponents(staticString: "https://api.wmata.com/Bus.svc/json/jStopSchedule")
         
         public let key: APIKey
         public let stop: Stop
         public var date: Date? = nil
         
-        public weak var delegate: EndpointDelegate<Self>? = nil
+        public weak var delegate: JSONEndpointDelegate<Self>? = nil
         
-        public func queryItems() -> [URLQueryItem?] {
+        internal func queryItems() -> [URLQueryItem?] {
             [
                 stop.queryItem(),
                 date?.queryItem()
@@ -736,15 +737,15 @@ public extension Bus {
         }
     }
     
-    struct StopsSearch: Endpoint {
+    struct StopsSearch: JSONEndpoint {
         public let url = URLComponents(staticString: "https://api.wmata.com/Bus.svc/json/jStops")
         
         public let key: APIKey
         public var location: WMATALocation? = nil
         
-        public weak var delegate: EndpointDelegate<Self>? = nil
+        public weak var delegate: JSONEndpointDelegate<Self>? = nil
         
-        public func queryItems() -> [URLQueryItem?] {
+        internal func queryItems() -> [URLQueryItem?] {
             location?.queryItems() ?? []
         }
         
@@ -805,15 +806,14 @@ public extension Bus {
         }
     }
     
-    struct Routes: Endpoint {
+    struct Routes: JSONEndpoint {
         public let url = URLComponents(staticString: "https://api.wmata.com/Bus.svc/json/jRoutes")
         
         public let key: APIKey
         
-        public weak var delegate: EndpointDelegate<Self>? = nil
+        public weak var delegate: JSONEndpointDelegate<Self>? = nil
         
         /// Response from the [Routes API](https://developer.wmata.com/docs/services/54763629281d83086473f231/operations/5476362a281d830c946a3d6a)
-        /// - Tag: RoutesResponse
         public struct Response: Codable {
             /// List of routes
             public let routes: [Route]
@@ -857,33 +857,27 @@ public extension Bus {
         }
     }
     
-    struct Alerts: Endpoint {
-        public typealias Response = TransitRealtime_FeedMessage
-        
+    struct Alerts: GTFSEndpoint {
         public let url = URLComponents(staticString: "https://api.wmata.com/gtfs/bus-gtfsrt-alerts.pb")
         
         public let key: APIKey
         
-        public weak var delegate: EndpointDelegate<Self>? = nil
+        public weak var delegate: GTFSEndpointDelegate<Self>? = nil
     }
     
-    struct TripUpdates: Endpoint {
-        public typealias Response = TransitRealtime_FeedMessage
-        
+    struct TripUpdates: GTFSEndpoint {
         public let url = URLComponents(staticString: "https://api.wmata.com/gtfs/bus-gtfsrt-tripupdates.pb")
         
         public let key: APIKey
         
-        public weak var delegate: EndpointDelegate<Self>? = nil
+        public weak var delegate: GTFSEndpointDelegate<Self>? = nil
     }
     
-    struct VehiclePositions: Endpoint {
-        public typealias Response = TransitRealtime_FeedMessage
-        
+    struct VehiclePositions: GTFSEndpoint {
         public let url = URLComponents(staticString: "https://api.wmata.com/gtfs/bus-gtfsrt-vehiclepositions.pb")
         
         public let key: APIKey
         
-        public weak var delegate: EndpointDelegate<Self>? = nil
+        public weak var delegate: GTFSEndpointDelegate<Self>? = nil
     }
 }

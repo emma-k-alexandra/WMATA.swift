@@ -7,5 +7,5 @@
 
 import Foundation
 
-/// A WMATA API Key available from https://developer.wmata.com
+/// A WMATA API Key available from [WMATA's developer site](https://developer.wmata.com).
 public typealias APIKey = String
