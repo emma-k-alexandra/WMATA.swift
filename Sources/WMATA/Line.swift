@@ -8,7 +8,7 @@
 import Combine
 import Foundation
 
-/// A WMATA train line
+/// A MetroRail line
 public enum Line: String, CaseIterable, Codable {
     case red = "RD"
     case blue = "BL"
@@ -62,5 +62,15 @@ public extension Line {
     /// All of the current Lines. `.YLRP` is not included.
     static var allCurrent: [Self] {
         [.red, .blue, .yellow, .orange, .green, .silver]
+    }
+}
+
+extension Line: URLQueryItemConvertible {
+    enum URLQueryItemName: String {
+        case standard = "LineCode"
+    }
+    
+    func queryItem(name: URLQueryItemName = .standard) -> URLQueryItem {
+        URLQueryItem(name: name.rawValue, value: rawValue)
     }
 }

@@ -28,7 +28,7 @@ extension Date {
     }
 }
 
-internal extension Station {
+extension Station {
     static var openingTimes: [Station: [WMATADay: DateComponents]] = [
         .metroCenterUpper: [
             .sunday: DateComponents(hour: 8, minute: 14),

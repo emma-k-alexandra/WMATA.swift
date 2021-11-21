@@ -13,9 +13,15 @@ import GTFS
 /// The various endpoints defined here allow you to call MetroRail APIs. For an overview see <doc:Endpoints>
 ///
 /// > Tip: You can use endpoints here like so: `Rail.Lines(...)`
-public enum Rail {}
+public enum Rail {
+    /// MetroRail GTFS endpoints
+    public enum GTFS {}
+}
 
 public extension Rail {
+    /// All MetroRail ``Line``s
+    ///
+    /// [WMATA Lines Documentation](https://developer.wmata.com/docs/services/5476364f031f590f38092507/operations/5476364f031f5909e4fe330c)
     struct Lines: JSONEndpoint {
         public let url = URLComponents(staticString: "https://api.wmata.com/Rail.svc/json/jLines")
         
@@ -23,12 +29,13 @@ public extension Rail {
         
         public weak var delegate: JSONEndpointDelegate<Self>? = nil
         
-        /// Response from the [Lines API](https://developer.wmata.com/docs/services/5476364f031f590f38092507/operations/5476364f031f5909e4fe330c)
         public struct Response: Codable {
-            /// List of lines
+            /// Information for all lines
             public let lines: [Line]
 
             /// Create lines response
+            ///
+            /// When making requests through an ``Endpoint``, you will not need to call this. This initializer is primarily intended for testing and debugging.
             ///
             /// - Parameters:
             ///     - lines: List of lines
@@ -36,8 +43,7 @@ public extension Rail {
                 self.lines = lines
             }
             
-            /// Response from the [Lines API](https://developer.wmata.com/docs/services/5476364f031f590f38092507/operations/5476364f031f5909e4fe330c)
-            /// - Tag: LineResponse
+            /// Information about a single ``WMATA/Line``.
             public struct Line: Codable {
                 /// The actual line
                 public let line: WMATA.Line
@@ -51,10 +57,14 @@ public extension Rail {
                 /// Station for end of the Line
                 public let endStation: Station
                 
-                /// Intermediate terminal station. During normal service, some trains on some lines might end their trip prior to the StartStationCode or EndStationCode. A good example is on the Red Line where some trains stop at A11 (Grosvenor) or B08 (Silver Spring).
+                /// Intermediate terminal station.
+                ///
+                /// During normal service, some trains on some lines might end their trip prior to the ``startStation`` or ``endStation``. A good example is on the Red Line where some trains stop at ``Station/grosvenor`` or ``Station/silverSpring``.
                 @MapToNil<Station, EmptyString> public var firstInternalDestination: Station?
                 
-                /// Intermediate terminal station. During normal service, some trains on some lines might end their trip prior to the StartStationCode or EndStationCode. A good example is on the Red Line where some trains stop at A11 (Grosvenor) or B08 (Silver Spring).
+                /// Intermediate terminal station.
+                ///
+                /// See ``firstInternalDestination``
                 @MapToNil<Station, EmptyString> public var secondInternalDestination: Station?
 
                 /// Create a line response
@@ -85,13 +95,17 @@ public extension Rail {
         }
     }
     
-    /// Create a call to the  [Station Entrances API](https://developer.wmata.com/docs/services/5476364f031f590f38092507/operations/5476364f031f5909e4fe330f)
-    struct Entrances: JSONEndpoint {
+    /// All station entrances within a ``WMATALocation``
+    ///
+    /// Omit `location` to receive all station entrances.
+    ///
+    ///  [WMATA Station Entrances Documentation](https://developer.wmata.com/docs/services/5476364f031f590f38092507/operations/5476364f031f5909e4fe330f)
+    struct StationEntrances: JSONEndpoint {
         public let url = URLComponents(staticString: "https://api.wmata.com/Rail.svc/json/jStationEntrances")
         
         public let key: APIKey
         
-        /// Optional. A ``WMATALocation`` to search for entrances within
+        /// A location to search for entrances within. Omit to receive all station entrances
         public var location: WMATALocation? = nil
         
         public weak var delegate: JSONEndpointDelegate<Self>? = nil
@@ -100,14 +114,13 @@ public extension Rail {
             location?.queryItems() ?? []
         }
         
-        /// Response from the [Station Entrances API](https://developer.wmata.com/docs/services/5476364f031f590f38092507/operations/5476364f031f5909e4fe330f)
         public struct Response: Codable {
             /// List of station entrances
             public let entrances: [Entrance]
 
             /// Create a station entrances response, for debugging and testing.
             ///
-            /// >Note: When making requests with ``Rail/Entrances``, this will be created for you.
+            /// When making requests through an ``Endpoint``, you will not need to call this. This initializer is primarily intended for testing and debugging.
             ///
             /// - Parameters:
             ///     - entrances: List of station entrances
@@ -115,18 +128,18 @@ public extension Rail {
                 self.entrances = entrances
             }
             
-            /// Response from the [Station Entrances API](https://developer.wmata.com/docs/services/5476364f031f590f38092507/operations/5476364f031f5909e4fe330f)
+            /// A station entrance
             public struct Entrance: Codable {
                 /// Additional information for the entrance.
                 public let description: String
                 
-                /// Warning: Deprecated.
+                /// > Warning: Deprecated.
                 public let id: String
                 
-                /// Latitude of entrance.
+                /// Latitude of station entrance.
                 public let latitude: Double
                 
-                /// Longitude of entrance.
+                /// Longitude of station entrance.
                 public let longitude: Double
                 
                 /// Name of entrance.
@@ -135,7 +148,9 @@ public extension Rail {
                 /// First station for this entrance
                 public let firstStation: Station
                 
-                /// Second station for this entrance. See multilevel stations like L'Enfant Plaza, Metro Center
+                /// Second station for this entrance.
+                ///
+                /// Populated for multilevel stations like L'Enfant Plaza, Metro Center, otherwise `nil`
                 @MapToNil<Station, EmptyString> public var secondStation: Station?
 
                 /// Create a station entrance response
@@ -169,7 +184,16 @@ public extension Rail {
         }
     }
 
-    struct Positions: JSONEndpoint {
+    /// Uniquely identifiable trains in service and what track circuits they currently occupy
+    ///
+    /// Refreshes every 7-10 seconds
+    ///
+    /// Information provided by this endpoint can be used with data from ``Rail/StandardRoutes`` and ``Rail/TrackCircuits``
+    ///
+    /// [Additional Details](https://developer.wmata.com/TrainPositionsFAQ)
+    ///
+    /// [WMATA Live Train Positions Documentation](https://developer.wmata.com/docs/services/5763fa6ff91823096cac1057/operations/5763fb35f91823096cac1058)
+    struct TrainPositions: JSONEndpoint {
         public let url = URLComponents(staticString: "https://api.wmata.com/TrainPositions/TrainPositions")
         
         public let key: APIKey
@@ -180,12 +204,13 @@ public extension Rail {
             [URLQueryItem(name: "contentType", value: "json")]
         }
         
-        /// Response from the [Live Train Positions API](https://developer.wmata.com/docs/services/5763fa6ff91823096cac1057/operations/5763fb35f91823096cac1058)
         public struct Response: Codable {
-            /// List of train positions
+            /// All train positions
             public let trainPositions: [Positions]
 
-            /// Create a train positions response,
+            /// Create a train positions response
+            ///
+            /// When making requests through an ``Endpoint``, you will not need to call this. This initializer is primarily intended for testing and debugging.
             ///
             /// - Parameters:
             ///     - trainPositions: List of train positions
@@ -193,16 +218,17 @@ public extension Rail {
                 self.trainPositions = trainPositions
             }
             
-            /// Response from the [Live Train Positions API](https://developer.wmata.com/docs/services/5763fa6ff91823096cac1057/operations/5763fb35f91823096cac1058)
-            /// - Tag: TrainPosition
+            /// A train position
             public struct Positions: Codable {
                 /// Uniquely identifiable internal train identifier
                 public let trainID: String
                 
-                /// Non-unique train identifier, often used by WMATA's Rail Scheduling and Operations Teams, as well as over open radio communication.
+                /// Non-unique train identifier
+                ///
+                /// Used by WMATA's Rail Scheduling and Operations Teams, as well as over open radio communication.
                 public let trainNumber: String
                 
-                /// Number of cars. Can be 0.
+                /// Number of cars. Can be `0`.
                 public let carCount: Int
                 
                 /// The direction of movement regardless of which track the train is on.
@@ -212,16 +238,41 @@ public extension Rail {
                 public let circuitID: Int
                 
                 /// Destination of train
+                ///
+                /// > Warning: Can sometimes differ from destinations from ``Rail/NextTrains``
                 public let destination: Station?
                 
                 /// Line the train is on
                 public let line: Line?
                 
-                /// Approximate "dwell time". This is not an exact value, but can be used to determine how long a train has been reported at the same track circuit.
+                /// Approximate "dwell time".
+                ///
+                /// This is not an exact value, but can be used to determine how long a train has been reported at the same track circuit.
                 public let secondsAtLocation: Int
                 
+                /// Service type of a train
+                ///
+                /// Can be used to determine if a train will have a ``Line`` or destination ``Station``
+                public enum ServiceType: String, Codable {
+                    /// This is a non-revenue train with no passengers on board.
+                    ///
+                    /// > Note: Tthis designation of NoPassengers does not necessarily correlate with PIDS "No Passengers".
+                    case noPassengers = "NoPassengers"
+                    
+                    /// This is a normal revenue service train.
+                    case normal = "Normal"
+                    
+                    /// Special revenue service train with an unspecified line and destination.
+                    ///
+                    /// This is more prevalent during scheduled track work.
+                    case special = "Special"
+                    
+                    /// Cases with unknown data or work vehicles.
+                    case unknown = "Unknown"
+                }
+                
                 /// Service Type of a train.
-                public let serviceType: String
+                public let serviceType: ServiceType
 
                 /// Create a train position response
                 ///
@@ -244,7 +295,7 @@ public extension Rail {
                     destination: Station?,
                     line: Line?,
                     secondsAtLocation: Int,
-                    serviceType: String
+                    serviceType: ServiceType
                 ) {
                     self.trainID = trainID
                     self.trainNumber = trainNumber
@@ -260,7 +311,18 @@ public extension Rail {
         }
     }
     
-    struct Routes: JSONEndpoint {
+    /// An ordered list of mostly revenue (and some lead) track circuits, arranged by line and track number.
+    ///
+    /// This data does not change frequently and should be cached for a reasonable amount of time.
+    ///
+    /// Information provided by this endpoint can be used with data from ``Rail/TrainPositions`` and ``Rail/TrackCircuits``
+    ///
+    /// > Note: This endpoint can return data for the ``Line/YLRP`` line, which is not currently used by WMATA.
+    ///
+    /// [Additional Details](https://developer.wmata.com/TrainPositionsFAQ)
+    ///
+    ///  [WMATA Standard Routes Documentation](https://developer.wmata.com/docs/services/5763fa6ff91823096cac1057/operations/57641afc031f59363c586dca)
+    struct StandardRoutes: JSONEndpoint {
         public let url = URLComponents(staticString: "https://api.wmata.com/TrainPositions/StandardRoutes")
         
         public let key: APIKey
@@ -271,28 +333,33 @@ public extension Rail {
             [URLQueryItem(name: "contentType", value: "json")]
         }
         
-        /// Response from the [Standard Routes API](https://developer.wmata.com/docs/services/5763fa6ff91823096cac1057/operations/57641afc031f59363c586dca)
-        /// - Tag: StandardRoutes
         public struct Response: Codable {
-            /// List of standard routes
-            public let standardRoutes: [Route]
+            /// All standard routes
+            public let standardRoutes: [StandardRoute]
 
             /// Create a standard routes response
             ///
+            /// When making requests through an ``Endpoint``, you will not need to call this. This initializer is primarily intended for testing and debugging.
+            ///
             /// - Parameters:
             ///     - standardRoutes: List of standard routes
-            public init(standardRoutes: [Route]) {
+            public init(standardRoutes: [StandardRoute]) {
                 self.standardRoutes = standardRoutes
             }
             
-            /// Response from the [Standard Routes API](https://developer.wmata.com/docs/services/5763fa6ff91823096cac1057/operations/57641afc031f59363c586dca)
-            /// - Tag: StandardRoute
-            public struct Route: Codable {
+            /// A MetroRail route
+            public struct StandardRoute: Codable {
                 /// Line of this route
                 public let line: Line
                 
-                /// Track number. 1 or 2.
-                public let trackNumber: Int
+                /// The number of this track
+                public enum TrackNumber: Int, Codable {
+                    case one = 1
+                    case two = 2
+                }
+                
+                /// Track number
+                public let trackNumber: TrackNumber
                 
                 /// Array containing ordered track circuit information
                 public let trackCircuits: [TrackCircuit]
@@ -305,7 +372,7 @@ public extension Rail {
                 ///     - trackCiruits: Ordered track circuit information
                 public init(
                     line: Line,
-                    trackNumber: Int,
+                    trackNumber: TrackNumber,
                     trackCircuits: [TrackCircuit]
                 ) {
                     self.line = line
@@ -313,13 +380,16 @@ public extension Rail {
                     self.trackCircuits = trackCircuits
                 }
                 
-                /// Response from the [Standard Routes API](https://developer.wmata.com/docs/services/5763fa6ff91823096cac1057/operations/57641afc031f59363c586dca)
-                /// - Tag: TrackCircuitWithStation
+                /// Circuit information
                 public struct TrackCircuit: Codable {
                     /// Order in which the circuit appears for the given line and track.
+                    ///
+                    /// Sequences go from West to East and South to North.
                     public let sequenceNumber: Int
                     
                     /// An internal system-wide uniquely identifiable circuit number.
+                    ///
+                    /// You can correlate these circuit IDs with data from ``Rail/TrackCircuits`` and ``Rail/TrainPositions``
                     public let circuitID: Int
                     
                     /// Station this circuit is at, if it is at a station
@@ -329,7 +399,7 @@ public extension Rail {
                     ///
                     /// - Parameters:
                     ///     - sequenceNumber: Order the ciruit appears in
-                    ///     - circuitId: Unique circuit id
+                    ///     - circuitId: Unique circuit ID
                     ///     - station: Station the circuit is at, if it's at one
                     public init(
                         sequenceNumber: Int,
@@ -345,7 +415,16 @@ public extension Rail {
         }
     }
     
-    struct Circuits: JSONEndpoint {
+    /// Uniquely identifiable trains in service and what track circuits they currently occupy
+    ///
+    /// Refreshes every 7-10 seconds
+    ///
+    /// Information provided by this endpoint can be used with data from ``Rail/TrainPositions`` and ``Rail/StandardRoutes``
+    ///
+    /// [Additional Details](https://developer.wmata.com/TrainPositionsFAQ)
+    ///
+    /// [WMATA Track Circuits Documentation](https://developer.wmata.com/docs/services/5763fa6ff91823096cac1057/operations/57644238031f59363c586dcb)
+    struct TrackCircuits: JSONEndpoint {
         public let url = URLComponents(staticString: "https://api.wmata.com/TrainPositions/TrackCircuits")
         
         public let key: APIKey
@@ -356,13 +435,13 @@ public extension Rail {
             [URLQueryItem(name: "contentType", value: "json")]
         }
         
-        /// Response from the [Track Circuits API](https://developer.wmata.com/docs/services/5763fa6ff91823096cac1057/operations/57644238031f59363c586dcb)
-        /// - Tag: TrackCircuits
         public struct Response: Codable {
             /// List of track ciruits
             public let trackCircuits: [TrackCircuit]
 
             /// Create a track circuits response
+            ///
+            /// When making requests through an ``Endpoint``, you will not need to call this. This initializer is primarily intended for testing and debugging.
             ///
             /// - Parameters:
             ///     - trackCircuits: List of track circuits
@@ -370,13 +449,33 @@ public extension Rail {
                 self.trackCircuits = trackCircuits
             }
             
-            /// Response from the [Track Circuits API](https://developer.wmata.com/docs/services/5763fa6ff91823096cac1057/operations/57644238031f59363c586dcb)
-            /// - Tag: TrackCircuit
+            /// A MetroRail track circuit
             public struct TrackCircuit: Codable {
-                /// Track number. 1 and 2 denote "main" lines, while 0 and 3 are connectors (between different types of tracks) and pocket tracks, respectively.
-                public let track: Int
+                /// The type of a track
+                ///
+                /// ![A neighboring track diagram](track-neighbors)
+                ///
+                /// For the JSON of this example, see the [WMATA Track Circuit Documentation](https://developer.wmata.com/docs/services/5763fa6ff91823096cac1057/operations/57644238031f59363c586dcb)
+                public enum Track: Int, Codable {
+                    /// A "main" track
+                    case main1 = 1
+                    
+                    /// A "main"
+                    case main2 = 2
+                    
+                    /// A connector between two tracks
+                    case connector = 0
+                    
+                    /// A track off the main tracks that allows for parking or short-turning
+                    case pocket = 3
+                }
+                
+                /// The type of this track
+                public let track: Track
                 
                 /// An internal system-wide uniquely identifiable circuit number.
+                ///
+                /// You can correlate these circuit IDs with data from ``Rail/TrackCircuits`` and ``Rail/TrainPositions``
                 public let circuitID: Int
                 
                 /// Array containing track circuit neighbor information. Note that some track circuits have no neighbors in one direction. All track circuits have at least one neighbor.
@@ -389,7 +488,7 @@ public extension Rail {
                 ///     - circuitId: Unique circuit id
                 ///     - neighbors: Track circuit neighbors
                 public init(
-                    track: Int,
+                    track: Track,
                     circuitID: Int,
                     neighbors: [TrackNeighbor]
                 ) {
@@ -398,17 +497,29 @@ public extension Rail {
                     self.neighbors = neighbors
                 }
                 
-                /// Response from the [Track Circuits API](https://developer.wmata.com/docs/services/5763fa6ff91823096cac1057/operations/57644238031f59363c586dcb)
+                /// A MetroRail track neighbor
+                ///
+                /// ![A neighboring track diagram](track-neighbors)
+                ///
+                /// For the JSON of this example, see the [WMATA Track Circuit Documentation](https://developer.wmata.com/docs/services/5763fa6ff91823096cac1057/operations/57644238031f59363c586dcb)
                 public struct TrackNeighbor: Codable {
+                    /// The type of a neighboring track
+                    ///
+                    /// Generally speaking, left neighbors are to the west and south, while right neighbors are to the east/north.
                     public enum NeighborType: String, Codable {
+                        /// Left neighbor, usually to the West or South
                         case left = "Left"
+                        
+                        /// Right neighbor, usually to the East or North
                         case right = "Right"
                     }
                     
-                    /// Left or Right neighbor group. Generally speaking, left neighbors are to the west and south, while right neighbors are to the east/north.
+                    /// The type of neighbor this is
                     public let neighborType: NeighborType
                     
                     /// Neighboring circuit ids.
+                    ///
+                    /// You can correlate these circuit IDs with data from ``Rail/TrackCircuits`` and ``Rail/TrainPositions``
                     public let circuitIDs: [Int]
 
                     /// Create a track neighbor response
@@ -428,11 +539,20 @@ public extension Rail {
         }
     }
     
+    /// Distance, fare information, and estimated travel time between any two stations, including those on different lines.
+    ///
+    /// Omit `station` and `destinationStation` to receive data for all trips
+    ///
+    ///[WMATA Station to Station Information Documentation](https://developer.wmata.com/docs/services/5476364f031f590f38092507/operations/5476364f031f5909e4fe3313)
     struct StationToStation: JSONEndpoint {
         public let url = URLComponents(staticString: "https://api.wmata.com/Rail.svc/json/jSrcStationToDstStationInfo")
         
         public let key: APIKey
+        
+        /// The starting station of a trip
         public var station: Station? = nil
+        
+        /// The destination station of a trip
         public var destinationStation: Station? = nil
         
         public weak var delegate: JSONEndpointDelegate<Self>? = nil
@@ -444,23 +564,22 @@ public extension Rail {
             ]
         }
         
-        /// Response from the [Station to Station Information API](https://developer.wmata.com/docs/services/5476364f031f590f38092507/operations/5476364f031f5909e4fe3313)
-        /// - Tag: StationToStationInfos
         public struct Response: Codable {
-            /// List of station to station info
-            public let stationToStationInfos: [Info]
+            /// List of trips
+            public let stationToStationInfos: [Trip]
 
-            /// Create a station to station infos response
+            /// Create a station to station info response
+            ///
+            /// When making requests through an ``Endpoint``, you will not need to call this. This initializer is primarily intended for testing and debugging.
             ///
             /// - Parameters:
             ///     - stationToStationInfos: List of station to station information
-            public init(stationToStationInfos: [Info]) {
+            public init(stationToStationInfos: [Trip]) {
                 self.stationToStationInfos = stationToStationInfos
             }
             
-            /// Response from the [Station to Station Information API](https://developer.wmata.com/docs/services/5476364f031f590f38092507/operations/5476364f031f5909e4fe3313)
-            /// - Tag: StationToStationInfo
-            public struct Info: Codable {
+            /// A trip between two stations
+            public struct Trip: Codable {
                 /// Average of distance traveled between two stations and straight-line distance (as used for WMATA fare calculations).
                 public let compositeMiles: Double
                 
@@ -470,13 +589,15 @@ public extension Rail {
                 /// Fare information
                 public let railFare: Fare
                 
-                /// Estimated travel time (schedule time) in minutes between the source and destination station. This is not correlated to minutes (Min) in Real-Time Rail Predictions.
+                /// Estimated travel time (schedule time) in minutes between the source and destination station.
+                ///
+                /// This is not correlated to minutes (Min) in Real-Time Rail Predictions.
                 public let railTime: Int
                 
                 /// Origin station
                 public let source: Station
 
-                /// Create a station to station info response
+                /// Create a Trip response
                 ///
                 /// - Parameters:
                 ///     - compositeMiles: Average distance travelled between two stations
@@ -498,19 +619,19 @@ public extension Rail {
                     self.source = source
                 }
                 
-                /// Response from the [Station to Station Information API](https://developer.wmata.com/docs/services/5476364f031f590f38092507/operations/5476364f031f5909e4fe3313)
-                /// - Tag: RailFare
+                /// Trip fare information
                 public struct Fare: Codable {
                     /// Fare during off-peak times.
                     public let offPeakTime: Double
                     
                     /// Fare during peak times (weekdays from opening to 9:30 AM and 3-7 PM, and weekends from midnight to closing).
+                    // TODO: Create `isPeakTime` function
                     public let peakTime: Double
                     
                     /// Reduced fare for senior citizens or people with disabilities.
                     public let seniorDisabled: Double
 
-                    /// Create a rail fare response
+                    /// Create a trip fare response
                     ///
                     /// - Parameters:
                     ///     - offPeakTime: Off-peak fare
@@ -530,10 +651,17 @@ public extension Rail {
         }
     }
     
+    /// Reported elevator and escalator outages at a given station
+    ///
+    /// Omit `station` to receive all incidents
+    ///
+    /// [WMATA Elevator and Escalator Incidents Documentation](https://developer.wmata.com/docs/services/54763641281d83086473f232/operations/54763641281d830c946a3d76)
     struct ElevatorAndEscalatorIncidents: JSONEndpoint {
         public let url = URLComponents(staticString: "https://api.wmata.com/Incidents.svc/json/ElevatorIncidents")
         
         public let key: APIKey
+        
+        /// Station to receive incidents for. Omit for all stations
         public var station: Station? = nil
         
         public weak var delegate: JSONEndpointDelegate<Self>? = nil
@@ -542,13 +670,13 @@ public extension Rail {
             [station?.queryItem()]
         }
         
-        /// Response from the [Elevator and Escalator Incidents API](https://developer.wmata.com/docs/services/54763641281d83086473f232/operations/54763641281d830c946a3d76)
-        /// - Tag: ElevatorAndEscalatorIncidents
         public struct Response: Codable {
             /// List of elevator and escalator incidents
             public let incidents: [Incident]
 
             /// Create an elevator and escalator incidents response
+            ///
+            /// When making requests through an ``Endpoint``, you will not need to call this. This initializer is primarily intended for testing and debugging.
             ///
             /// - Parameters:
             ///     - incidents: List of elevator and escalator incidents
@@ -556,16 +684,23 @@ public extension Rail {
                 self.incidents = incidents
             }
             
-            /// Response from the [Elevator and Escalator Incidents API](https://developer.wmata.com/docs/services/54763641281d83086473f232/operations/54763641281d830c946a3d76)
-            /// - Tag: ElevatorAndEscalatorIncident
+            /// An elevator or escalator incident
             public struct Incident: Codable {
                 /// Unique identifier for unit, by type (a single elevator and escalator may have the same UnitName, but no two elevators or two escalators will have the same UnitName).
                 public let unitName: String
                 
-                /// Type of unit. Will be ELEVATOR or ESCALATOR.
-                public let unitType: String
+                /// If an incident is for an elevator or escalator
+                public enum ElevatorOrEscalator: String, Codable {
+                    case elevator = "ELEVATOR"
+                    case escalator = "ESCALATOR"
+                }
                 
-                /// Warning: Deprecated. If listed here, the unit is inoperational or otherwise impaired.
+                /// If this incident is for an elevator or escalator
+                public let unitType: ElevatorOrEscalator
+                
+                /// If listed here, the unit is inoperational or otherwise impaired.
+                ///
+                /// >Warning: Deprecated.
                 public let unitStatus: String?
                 
                 /// Station of the incident
@@ -593,10 +728,10 @@ public extension Rail {
                 public let dateOutOfService: Date
                 
                 /// Date and time (Eastern Standard Time) outage details was last updated.
-                public let dateUpdated: String
+                public let dateUpdated: Date
                 
                 /// Estimated date and time (Eastern Standard Time) by when unit is expected to return to normal service.
-                public let estimatedReturnToService: String
+                public let estimatedReturnToService: Date
 
                 /// Create a elevator and escalator incident response
                 ///
@@ -616,7 +751,7 @@ public extension Rail {
                 ///     - estimatedReturnToService: Time unit is expected to return to normal service
                 public init(
                     unitName: String,
-                    unitType: String,
+                    unitType: ElevatorOrEscalator,
                     unitStatus: String?,
                     station: Station,
                     stationName: String,
@@ -626,8 +761,8 @@ public extension Rail {
                     symptomDescription: String,
                     displayOrder: Double,
                     dateOutOfService: Date,
-                    dateUpdated: String,
-                    estimatedReturnToService: String
+                    dateUpdated: Date,
+                    estimatedReturnToService: Date
                 ) {
                     self.unitName = unitName
                     self.unitType = unitType
@@ -647,10 +782,21 @@ public extension Rail {
         }
     }
     
+    /// Reported MetroRail incidents (significant disruptions and delays to normal service).
+    ///
+    /// The data is identical to [WMATA's Metrorail Service Status feed](http://www.metroalerts.info/rss.aspx?rs).
+    ///
+    /// Omit `station` to receive all incidents.
+    ///
+    /// Refreshed every 20-30 seconds
+    ///
+    /// [WMATA Rail Incidents Documentation](https://developer.wmata.com/docs/services/54763641281d83086473f232/operations/54763641281d830c946a3d77)
     struct Incidents: JSONEndpoint {
         public let url = URLComponents(staticString: "https://api.wmata.com/Incidents.svc/json/Incidents")
         
         public let key: APIKey
+        
+        /// Station to receive incidents for. Omit to receive all incidents.
         public var station: Station? = nil
         
         public weak var delegate: JSONEndpointDelegate<Self>? = nil
@@ -659,13 +805,13 @@ public extension Rail {
             [station?.queryItem()]
         }
         
-        /// Response from the [Rail Incidents API](https://developer.wmata.com/docs/services/54763641281d83086473f232/operations/54763641281d830c946a3d77)
-        /// - Tag: RailIncidents
         public struct Response: Codable {
             /// List of rail incidents
             public let incidents: [Incident]
 
             /// Create a rail incidents response
+            ///
+            /// When making requests through an ``Endpoint``, you will not need to call this. This initializer is primarily intended for testing and debugging.
             ///
             /// - Parameters:
             ///     - incidents: List of rail incidents
@@ -673,8 +819,7 @@ public extension Rail {
                 self.incidents = incidents
             }
             
-            /// Response from the [Rail Incidents API](https://developer.wmata.com/docs/services/54763641281d83086473f232/operations/54763641281d830c946a3d77)
-            /// - Tag: RailIncident
+            /// A MetroRail incident
             public struct Incident: Codable {
                 /// Unique identifier for an incident.
                 public let incidentID: String
@@ -700,9 +845,60 @@ public extension Rail {
                 /// Warning: Deprecated.
                 public let emergencyText: String?
                 
-                //TODO: Parse this to array of `Line`
-                /// Semi-colon and space separated list of line codes (e.g.: RD; or BL; OR; or BL; OR; RD;). =(
-                public let linesAffected: String
+                /// The lines affected by this incident.
+                ///
+                /// To get the lines, use ``lines``.
+                ///
+                /// This struct is needed due to WMATA sending this data in this awful format: Semi-colon and space separated list of line codes (e.g.: "RD;" or "BL; OR;" or "BL; OR; RD;")
+                public struct LinesAffected: Codable {
+                    
+                    /// The lines effected by an incident
+                    public let lines: [Line]
+                    
+                    /// The original format coming from WMATA
+                    private let stringOfLines: String
+                    
+                    public init(from decoder: Decoder) throws {
+                        let container = try decoder.singleValueContainer()
+                        
+                        let stringOfLines = try container.decode(String.self)
+                        
+                        self.stringOfLines = stringOfLines
+                        self.lines = Self.decode(stringOfLines)
+                    }
+                    
+                    /// Convert WMATA's awful string format to an array of lines
+                    ///
+                    /// Original format: Semi-colon and space separated list of line codes (e.g.: "RD;" or "BL; OR;" or "BL; OR; RD;") =(
+                    private static func decode(_ lines: String) -> [Line] {
+                        lines
+                            .split(separator: ";")
+                            .map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
+                            .filter { !$0.isEmpty }
+                            .compactMap { Line(rawValue: $0) }
+                    }
+                    
+                    public func encode(to encoder: Encoder) throws {
+                        var container = encoder.singleValueContainer()
+                        
+                        try container.encode(stringOfLines)
+                    }
+                    
+                    /// Create lines affected response
+                    ///
+                    /// - Parameters:
+                    ///     lines: The lines affected by an incident
+                    public init(lines: [Line]) {
+                        self.lines = lines
+                        self.stringOfLines = lines
+                            .map { $0.rawValue }
+                            .joined(separator: "; ")
+                            .trimmingCharacters(in: .whitespacesAndNewlines)
+                    }
+                }
+                
+                /// The lines affected by this incident
+                public let linesAffected: LinesAffected
                 
                 /// Date and time (Eastern Standard Time) of last update.
                 public let dateUpdated: Date
@@ -718,7 +914,7 @@ public extension Rail {
                 ///     - delaySeverity: Deprecated.
                 ///     - incidentType: Type of incident
                 ///     - emergencyText: Deprecated.
-                ///     - linesAffected: Semi-colon and space separated list of line codes. (e.g.: RD; or BL; OR; or BL; OR; RD;). =(
+                ///     - linesAffected: The lines affected by this incident
                 ///     - dateUpdated: TIme of last status update
                 public init(
                     incidentID: String,
@@ -729,7 +925,7 @@ public extension Rail {
                     delaySeverity: String?,
                     incidentType: String,
                     emergencyText: String?,
-                    linesAffected: String,
+                    linesAffected: LinesAffected,
                     dateUpdated: Date
                 ) {
                     self.incidentID = incidentID
@@ -747,39 +943,122 @@ public extension Rail {
         }
     }
     
+    /// Next train arrival information for one or more stations
+    ///
+    /// For terminal stations (e.g.: Greenbelt, Shady Grove, etc.), predictions may be displayed twice.
+    ///
+    /// Some stations have two platforms (e.g.: Gallery Place, Fort Totten, L'Enfant Plaza, and Metro Center). Use ``StationSet/galleryPlace`` and similar for these stations.
+    ///
+    /// For trains with no passengers, the `destinationName` will be `No Passenger`.
+    ///
+    /// Refreshes every 20-30 seconds
+    ///
+    /// [WMATA Next Trains Documentation](https://developer.wmata.com/docs/services/547636a6f9182302184cda78/operations/547636a6f918230da855363f)
     struct NextTrains: JSONEndpoint {
         internal let baseURL = "https://api.wmata.com/StationPrediction.svc/json/GetPrediction/"
         
         public var url: URLComponents {
-            let url = baseURL + stations.map(\.rawValue).joined(separator: ",")
+            .init(string: baseURL + stations.urlPath())!
+        }
+        
+        /// A set of multiple ``Station``s
+        ///
+        /// This struct allows you to pass many or all stations to ``Rail/NextTrains``.
+        ///
+        /// Example values:
+        /// ```swift
+        ///  .all // All stations
+        ///  [.greenbelt, .federalCenterSW] // Multiple stations
+        ///  .lenfantPlaza // Both L'Enfant Plaza platforms
+        /// ```
+        ///
+        /// Avoid using single stations like ` [.waterfront]`, ``Rail/NextTrains/init(key:station:delegate:)`` is recommended instead. However, single value sets _are_ supported if your use case requires them.
+        public struct StationSet: ExpressibleByArrayLiteral {
+            let stations: [Station]
+            let all: Bool
             
-            return URLComponents(string: url)!
+            /// Use this when you want to get the next trains at all stations in one API call
+            public static let all: StationSet = .init(all: true)
+            
+            /// Both L'Enfant Plaza platforms
+            public static let lenfantPlaza: StationSet = [.lenfantPlazaLower, .lenfantPlazaUpper]
+            
+            /// Both Metro Center platforms
+            public static let metroCenter: StationSet = [.metroCenterLower, .metroCenterUpper]
+            
+            /// Both Fort Totten platforms
+            public static let fortTotten: StationSet = [.fortTottenLower, .fortTottenUpper]
+            
+            /// Both Gallery Place platforms
+            public static let galleryPlace: StationSet = [.galleryPlaceLower, .galleryPlaceUpper]
+            
+            public init(arrayLiteral elements: Station...) {
+                stations = elements
+                all = false
+            }
+            
+            init(all: Bool) {
+                stations = []
+                self.all = all
+            }
+            
+            public typealias ArrayLiteralElement = Station
+            
+            func urlPath() -> String {
+                if all {
+                    return "All"
+                }
+                
+                return stations.map(\.rawValue).joined(separator: ",")
+            }
         }
         
         public let key: APIKey
-        public let stations: [Station]
+        
+        /// Stations to get the next arriving trains for. Can be a single station.
+        public let stations: StationSet
         
         public weak var delegate: JSONEndpointDelegate<Self>? = nil
         
-        public init(key: APIKey, station: Station, delegate: JSONEndpointDelegate<Self>? = nil) {
-            self.key = key
-            self.stations = [station]
-            self.delegate = delegate
-        }
-        
-        public init(key: APIKey, stations: [Station], delegate: JSONEndpointDelegate<Self>? = nil) {
+        /// Create a Next Trains call for multiple or all stations
+        ///
+        /// - Parameters
+        ///     - key: WMATA API Key for this request
+        ///     - stations: The stations to get the next trains for
+        ///     - delegate: Delegate to send background requests to
+        public init(
+            key: APIKey,
+            stations: StationSet,
+            delegate: JSONEndpointDelegate<Rail.NextTrains>? = nil
+        ) {
             self.key = key
             self.stations = stations
             self.delegate = delegate
         }
         
-        /// Response from the [Next Trains API](https://developer.wmata.com/docs/services/547636a6f9182302184cda78/operations/547636a6f918230da855363f)
-        /// - Tag: RailPredictions
+        /// Create a Next Trains call for a single station
+        ///
+        /// - Parameters
+        ///     - key: WMATA API Key for this request
+        ///     - station: The station to get the next trains for
+        ///     - delegate: Delegate to send background requests to
+        public init(
+            key: APIKey,
+            station: Station,
+            delegate: JSONEndpointDelegate<Rail.NextTrains>? = nil
+        ) {
+            self.key = key
+            self.stations = [station]
+            self.delegate = delegate
+        }
+        
         public struct Response: Codable {
             /// List of predictions
             public let trains: [Prediction]
 
             /// Create a rail predictions response
+            ///
+            /// When making requests through an ``Endpoint``, you will not need to call this. This initializer is primarily intended for testing and debugging.
             ///
             /// - Parameters:
             ///     - trains: List of rail predictions
@@ -787,30 +1066,45 @@ public extension Rail {
                 self.trains = trains
             }
             
-            /// Response from the [Next Trains API](https://developer.wmata.com/docs/services/547636a6f9182302184cda78/operations/547636a6f918230da855363f)
-            /// - Tag: RailPrediction
+            ///
             public struct Prediction: Codable {
+                /// The number of cars a train has
                 public enum Cars: String, Codable {
+                    /// Six cars
                     case six = "6"
+                    
+                    /// Eight cars
                     case eight = "8"
-                    case unknown = "-"
+                    
+                    public var intValue: Int {
+                        switch self {
+                        case .six:
+                            return 6
+                        case .eight:
+                            return 8
+                        }
+                    }
                 }
                 
-                // TODO: @MapToNil?
-                /// Number of cars on a train, usually 6 or 8, but might also return -.
-                public let car: Cars?
+                /// Number of cars on a train
+                @MapToNil<Cars, SingleDash> public var car: Cars?
                 
-                /// Abbreviated version of the final destination for a train. This is similar to what is displayed on the signs at stations.
+                /// Abbreviated version of the final destination for a train.
+                ///
+                /// This is similar to what is displayed on the signs at stations.
                 public let destinationShortName: String
                 
                 /// Destination station
                 public let destination: Station?
                 
-                // TODO: Map to enum to support "No Passengers"
-                /// When DestinationCode is populated, this is the full name of the destination station, as shown on the WMATA website.
+                /// When `destinationCode` is populated, this is the full name of the destination station, as shown on the WMATA website.
+                ///
+                /// For trains with no passengers, will be `No Passenger`.
                 public let destinationName: String
                 
-                /// Denotes the track this train is on, but does not necessarily equate to Track 1 or Track 2. With the exception of terminal stations, predictions at the same station with different Group values refer to trains on different tracks.
+                /// Denotes the track this train is on, but does not necessarily equate to Track 1 or Track 2.
+                ///
+                /// With the exception of terminal stations, predictions at the same station with different Group values refer to trains on different tracks.
                 public let group: String
                 
                 /// Line of the train
@@ -822,9 +1116,69 @@ public extension Rail {
                 /// Full name of the station where the train is arriving.
                 public let locationName: String
                 
-                //TODO: Move to enum
-                /// Minutes until arrival. Can be a numeric value, ARR (arriving), BRD (boarding), ---, or empty.
-                public let minutes: String
+                /// The time until arrival. Matches signs within a MetroRail station
+                ///
+                /// Sometimes a ``number(_:)`` a number, can also be ``arriving``, ``boarding`` or ``unknown``.
+                public enum Minutes: Codable {
+                    /// Time to arrival in minutes
+                    case minutes(Int)
+                    
+                    /// The train is currently arriving at a station
+                    case arriving
+                    
+                    /// The train is currently boarding passengers at a station
+                    case boarding
+                    
+                    /// The arrival time is unknown.
+                    ///
+                    /// Typically, the train is delayed or is at a terminal station.
+                    case unknown
+                    
+                    public init(from decoder: Decoder) throws {
+                        let container = try decoder.singleValueContainer()
+                        
+                        let arrivalTime = try container.decode(String.self)
+                        
+                        switch arrivalTime {
+                        case "", "---":
+                            self = .unknown
+                        case "ARR":
+                            self = .arriving
+                        case "BRD":
+                            self = .boarding
+                        default:
+                            guard let minutes = Int(arrivalTime) else {
+                                throw DecodingError.valueNotFound(
+                                    Int.self,
+                                    .init(
+                                        codingPath: decoder.codingPath,
+                                        debugDescription: "Attempted to decode arrival time in minutes, but was unable to convert \(arrivalTime) to Int"
+                                    )
+                                )
+                            }
+                            
+                            self = .minutes(minutes)
+                        }
+                    }
+                    
+                    public func encode(to encoder: Encoder) throws {
+                        var container = encoder.singleValueContainer()
+                        
+                        switch self {
+                        case let .minutes(minutes):
+                            try container.encode(String(minutes))
+                        case .arriving:
+                            try container.encode("ARR")
+                        case .boarding:
+                            try container.encode("BRD")
+                        case .unknown:
+                            try container.encode("")
+                        }
+                    }
+                }
+                
+                /// Time until arrival, not neccesarily in minutes
+                public let minutes: Minutes
 
                 /// Create a rail prediction response
                 ///
@@ -847,7 +1201,7 @@ public extension Rail {
                     line: Line,
                     location: Station,
                     locationName: String,
-                    minutes: String
+                    minutes: Minutes
                 ) {
                     self.car = car
                     self.destinationShortName = destinationShortName
@@ -912,6 +1266,8 @@ public extension Rail {
             @MapToNil<Station, EmptyString> public var secondStationTogether: Station?
 
             /// Create a station information response
+            ///
+            /// When making requests through an ``Endpoint``, you will not need to call this. This initializer is primarily intended for testing and debugging.
             ///
             /// - Parameters:
             ///     - address: Address information
@@ -1007,6 +1363,8 @@ public extension Rail {
             public let stationsParking: [Parking]
 
             /// Create stations parking response
+            ///
+            /// When making requests through an ``Endpoint``, you will not need to call this. This initializer is primarily intended for testing and debugging.
             ///
             /// - Parameters:
             ///     - stationsParking: List of parking information
@@ -1116,7 +1474,7 @@ public extension Rail {
         }
     }
     
-    struct Path: JSONEndpoint {
+    struct PathBetweenStations: JSONEndpoint {
         public let url = URLComponents(staticString: "https://api.wmata.com/Rail.svc/json/jPath")
         
         public let key: APIKey
@@ -1139,6 +1497,8 @@ public extension Rail {
             public let path: [Path]
 
             /// Create a path between stations response
+            ///
+            /// When making requests through an ``Endpoint``, you will not need to call this. This initializer is primarily intended for testing and debugging.
             ///
             /// - Parameters:
             ///     - path: List of path information
@@ -1189,7 +1549,7 @@ public extension Rail {
         }
     }
     
-    struct Timings: JSONEndpoint {
+    struct StationTimings: JSONEndpoint {
         public let url = URLComponents(staticString: "https://api.wmata.com/Rail.svc/json/jStationTimes")
         
         public let key: APIKey
@@ -1351,6 +1711,8 @@ public extension Rail {
 
             /// Create a stations response
             ///
+            /// When making requests through an ``Endpoint``, you will not need to call this. This initializer is primarily intended for testing and debugging.
+            ///
             /// - Parameters:
             ///     - stations: List of station information
             public init(stations: [StationInformation.Response]) {
@@ -1358,7 +1720,9 @@ public extension Rail {
             }
         }
     }
-    
+}
+
+public extension Rail.GTFS {
     struct Alerts: GTFSEndpoint {
         public let url = URLComponents(staticString: "https://api.wmata.com/gtfs/rail-gtfsrt-alerts.pb")
         
@@ -1367,7 +1731,6 @@ public extension Rail {
         public weak var delegate: GTFSEndpointDelegate<Self>? = nil
     }
     
-    // TODO: Can these be specialized?
     struct TripUpdates: GTFSEndpoint {
         public let url = URLComponents(staticString: "https://api.wmata.com/gtfs/rail-gtfsrt-tripupdates.pb")
         

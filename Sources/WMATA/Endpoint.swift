@@ -60,7 +60,7 @@ internal extension Endpoint {
 }
 
 public protocol JSONEndpoint: Endpoint where Response: Codable {
-    /// Optional. Delegate to send background requests to
+    /// Delegate to send background requests to
     var delegate: JSONEndpointDelegate<Self>? { get set }
 }
 
@@ -153,7 +153,7 @@ public extension JSONEndpoint {
 }
 
 public protocol GTFSEndpoint: Endpoint where Response == TransitRealtime_FeedMessage {
-    /// Optional. Delegate to send background requests to
+    /// Delegate to send background requests to
     var delegate: GTFSEndpointDelegate<Self>? { get set }
 }
 

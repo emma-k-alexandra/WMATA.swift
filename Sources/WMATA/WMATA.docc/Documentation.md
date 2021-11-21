@@ -15,18 +15,21 @@ WMATA supports both the Standard and GTFS APIs for both MetroRail and MetroBus. 
 - <doc:GettingStarted>
 - <doc:Endpoints>
 - <doc:Responses>
+- <doc:GTFSStandardAPI>
 
 ### MetroRail
 
 - ``Station``
 - ``Line``
 - ``Rail``
+- ``Rail/GTFS``
 
 ### MetroBus
 
 - ``Stop``
 - ``Route``
 - ``Bus``
+- ``Bus/GTFS``
 
 ### Supporting structures
 

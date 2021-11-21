@@ -1,43 +1,15 @@
 //
-//  Routes.swift
+//  Route.swift
 //
 //
 //  Created by Emma K Alexandra on 10/6/19.
 //
 
-import Combine
 import Foundation
 
-/// A WMATA Bus Route
-public struct Route {
-    /// A WMATA Route ID
-    public let id: String
-
-    /// Create a Route ID
-    ///
-    /// - Parameters:
-    ///     - id: A Route ID
-    public init(id: String) {
-        self.id = id
-    }
-}
-
-extension Route: Codable {
-    public init(from decoder: Decoder) throws {
-        let value = try decoder.singleValueContainer()
-        
-        self.id = try value.decode(String.self)
-    }
-    
-    public func encode(to encoder: Encoder) throws {
-        var container = encoder.singleValueContainer()
-        
-        try container.encode(id)
-    }
-}
-
-extension Route: ExpressibleByStringLiteral {
-    public init(stringLiteral value: String) {
-        id = value
-    }
-}
+/// A MetroBus route
+///
+/// MetroBus routes are the numbers visible at the top left of the front of any MetroBus. Values are route IDs rather than route names.
+///
+/// ![A MetroBus displaying the route E4](metrobus-e4-route)
+public typealias Route = String

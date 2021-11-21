@@ -190,3 +190,6 @@ public struct Dashes: WMATAMappedValue {
     public static let value = "--"
 }
 
+public struct SingleDash: WMATAMappedValue {
+    public static let value = "-"
+}

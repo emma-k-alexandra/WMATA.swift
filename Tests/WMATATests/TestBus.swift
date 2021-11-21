@@ -335,7 +335,7 @@ final class BusTests: XCTestCase {
 final class BusGTFSTests: XCTestCase {
     func testAlerts() {
         let exp = expectation(description: #function)
-        let alerts = Bus.Alerts(key: TEST_API_KEY)
+        let alerts = Bus.GTFS.Alerts(key: TEST_API_KEY)
 
         alerts.request { result in
             switch result {
@@ -351,9 +351,9 @@ final class BusGTFSTests: XCTestCase {
     }
 
     func testAlertsWithDelegate() {
-        let delegate = TestGTFSDelegate<Bus.Alerts>(expectation: expectation(description: #function))
+        let delegate = TestGTFSDelegate<Bus.GTFS.Alerts>(expectation: expectation(description: #function))
         
-        let alerts = Bus.Alerts(
+        let alerts = Bus.GTFS.Alerts(
             key: TEST_API_KEY,
             delegate: delegate
         )
@@ -365,7 +365,7 @@ final class BusGTFSTests: XCTestCase {
 
     func testTripUpdates() {
         let exp = expectation(description: #function)
-        let tripUpdates = Bus.TripUpdates(key: TEST_API_KEY)
+        let tripUpdates = Bus.GTFS.TripUpdates(key: TEST_API_KEY)
 
         tripUpdates.request { result in
             switch result {
@@ -381,9 +381,9 @@ final class BusGTFSTests: XCTestCase {
     }
 
     func testTripUpdatesWithDelegate() {
-        let delegate = TestGTFSDelegate<Bus.TripUpdates>(expectation: expectation(description: #function))
+        let delegate = TestGTFSDelegate<Bus.GTFS.TripUpdates>(expectation: expectation(description: #function))
         
-        let tripUpdates = Bus.TripUpdates(
+        let tripUpdates = Bus.GTFS.TripUpdates(
             key: TEST_API_KEY,
             delegate: delegate
         )
@@ -395,7 +395,7 @@ final class BusGTFSTests: XCTestCase {
 
     func testVehiclePositions() {
         let exp = expectation(description: #function)
-        let vehiclePositions = Bus.VehiclePositions(key: TEST_API_KEY)
+        let vehiclePositions = Bus.GTFS.VehiclePositions(key: TEST_API_KEY)
 
         vehiclePositions.request { result in
             switch result {
@@ -411,9 +411,9 @@ final class BusGTFSTests: XCTestCase {
     }
 
     func testVehiclePositionsWithDelegate() {
-        let delegate = TestGTFSDelegate<Bus.VehiclePositions>(expectation: expectation(description: #function))
+        let delegate = TestGTFSDelegate<Bus.GTFS.VehiclePositions>(expectation: expectation(description: #function))
         
-        let vehiclePositions = Bus.VehiclePositions(
+        let vehiclePositions = Bus.GTFS.VehiclePositions(
             key: TEST_API_KEY,
             delegate: delegate
         )
@@ -646,7 +646,7 @@ final class BusCombineTests: CombineTests {
 
     func testAlertsPublisher() {
         let exp = expectation(description: #function)
-        let alerts = Bus.Alerts(key: TEST_API_KEY)
+        let alerts = Bus.GTFS.Alerts(key: TEST_API_KEY)
 
         let cancellable = alerts
             .publisher()
@@ -669,7 +669,7 @@ final class BusCombineTests: CombineTests {
 
     func testTripUpdatesPublisher() {
         let exp = expectation(description: #function)
-        let tripUpdates = Bus.TripUpdates(key: TEST_API_KEY)
+        let tripUpdates = Bus.GTFS.TripUpdates(key: TEST_API_KEY)
 
         let cancellable = tripUpdates
             .publisher()
@@ -692,7 +692,7 @@ final class BusCombineTests: CombineTests {
 
     func testVehiclePositionsPublisher() {
         let exp = expectation(description: #function)
-        let vehiclePositions = Bus.VehiclePositions(key: TEST_API_KEY)
+        let vehiclePositions = Bus.GTFS.VehiclePositions(key: TEST_API_KEY)
 
         let cancellable = vehiclePositions
             .publisher()
@@ -717,7 +717,7 @@ final class BusCombineTests: CombineTests {
 final class BusGTFSCombineTests: CombineTests {
     func testAlertsPublisher() {
         let exp = expectation(description: #function)
-        let alerts = Bus.Alerts(key: TEST_API_KEY)
+        let alerts = Bus.GTFS.Alerts(key: TEST_API_KEY)
 
         let cancellable = alerts
             .publisher()
@@ -740,7 +740,7 @@ final class BusGTFSCombineTests: CombineTests {
 
     func testTripUpdatesPublisher() {
         let exp = expectation(description: #function)
-        let tripUpdates = Bus.TripUpdates(key: TEST_API_KEY)
+        let tripUpdates = Bus.GTFS.TripUpdates(key: TEST_API_KEY)
 
         let cancellable = tripUpdates
             .publisher()
@@ -763,7 +763,7 @@ final class BusGTFSCombineTests: CombineTests {
 
     func testVehiclePositionsPublisher() {
         let exp = expectation(description: #function)
-        let vehiclePositions = Bus.VehiclePositions(key: TEST_API_KEY)
+        let vehiclePositions = Bus.GTFS.VehiclePositions(key: TEST_API_KEY)
 
         let cancellable = vehiclePositions
             .publisher()

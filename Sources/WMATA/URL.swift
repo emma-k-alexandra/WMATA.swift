@@ -40,6 +40,18 @@ protocol URLQueryItemConvertible {
     func queryItem(name: URLQueryItemName) -> URLQueryItem
 }
 
+extension String: URLQueryItemConvertible {
+    enum URLQueryItemName: String {
+        case stopID = "StopID"
+        case routeID = "RouteID"
+        case route = "Route"
+    }
+    
+    func queryItem(name: URLQueryItemName) -> URLQueryItem {
+        URLQueryItem(name: name.rawValue, value: self)
+    }
+}
+
 extension URLComponents {
     init(staticString string: StaticString) {
         guard let urlComponents = URLComponents(string: "\(string)") else {

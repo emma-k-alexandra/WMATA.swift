@@ -8,32 +8,57 @@
 import Foundation
 import GTFS
 
-/// A namespace for MetroBus endpoints
-public enum Bus {}
+/// MetroBus endpoints
+///
+/// The various endpoints defined here allow you to call MetroBus APIs. For an overview see <doc:Endpoints>
+///
+/// > Tip: You can use endpoints here like so: `Bus.Routes(...)`
+public enum Bus {
+    /// MetroBus GTFS endpoints
+    public enum GTFS {}
+}
 
 public extension Bus {
+    /// Locations of MetroBuses
+    ///
+    /// Omit both `route` and `location` to receive positions for all buses.
+    ///
+    /// Refreshes every 7-10 seconds.
+    ///
+    /// [WMATA Bus Positions Documentation](https://developer.wmata.com/docs/services/54763629281d83086473f231/operations/5476362a281d830c946a3d68)
     struct Positions: JSONEndpoint {
         public let url = URLComponents(staticString: "https://api.wmata.com/Bus.svc/json/jBusPositions")
         
         public let key: APIKey
+        
+        /// Search only for buses along a ``Route``.
+        ///
+        /// Omit to receive buses along all routes.
+        ///
+        /// > Note: Must be a base `Route` within a various. Use `10A` instead of `10Av1`
         public var route: Route? = nil
+        
+        /// Search for buses within an area.
+        ///
+        /// Omit to receive buses at any location.
         public var location: WMATALocation? = nil
         
         public weak var delegate: JSONEndpointDelegate<Self>? = nil
 
         internal func queryItems() -> [URLQueryItem?] {
-            var queryItems = [route?.queryItem()]
+            var queryItems = [route?.queryItem(name: .routeID)]
             queryItems.append(contentsOf: location?.queryItems() ?? [])
             
             return queryItems
         }
         
-        /// Response from the [Bus Position API](https://developer.wmata.com/docs/services/54763629281d83086473f231/operations/5476362a281d830c946a3d68)
         public struct Response: Codable {
             /// List of bus positions
             public let busPositions: [Position]
 
             /// Create a bus position response
+            ///
+            /// When making requests through an ``Endpoint``, you will not need to call this. This initializer is primarily intended for testing and debugging.
             ///
             /// - Parameters:
             ///     - busPositions: List of bus positions
@@ -130,10 +155,23 @@ public extension Bus {
         }
     }
     
+    /// Reported delays or incidents for MetroBuses
+    ///
+    /// Omit `route` to receive incidents for all buses.
+    ///
+    /// Refreshes every 20-30 seconds.
+    ///
+    ///[WMATA Bus Incidents Documentation](https://developer.wmata.com/docs/services/54763641281d83086473f232/operations/54763641281d830c946a3d75)
     struct Incidents: JSONEndpoint {
         public let url = URLComponents(staticString: "https://api.wmata.com/Incidents.svc/json/BusIncidents")
         
         public let key: APIKey
+        
+        /// Search only for incidents along a ``Route``.
+        ///
+        /// Omit to receive incidents along all routes.
+        ///
+        /// > Note: Must be a base `Route` with no variations. Use `10A` instead of `10Av1`
         public var route: Route? = nil
         
         public weak var delegate: JSONEndpointDelegate<Self>? = nil
@@ -142,13 +180,13 @@ public extension Bus {
             [route?.queryItem(name: .route)]
         }
         
-        /// Response from the [Bus Incidents API](https://developer.wmata.com/docs/services/54763641281d83086473f232/operations/54763641281d830c946a3d75)
-        /// - Tag: BusIncidents
         public struct Response: Codable {
             /// List of incidents
             public let busIncidents: [Incident]
 
             /// Create a bus incidents response
+            ///
+            /// When making requests through an ``Endpoint``, you will not need to call this. This initializer is primarily intended for testing and debugging.
             ///
             /// - Parameters:
             ///     - incidents: List of incidents
@@ -156,8 +194,7 @@ public extension Bus {
                 self.busIncidents = busIncidents
             }
             
-            /// Response from the [Bus Incidents API](https://developer.wmata.com/docs/services/54763641281d83086473f232/operations/54763641281d830c946a3d75)
-            /// - Tag: BusIncident
+            /// A MetroBus incident
             public struct Incident: Codable {
                 /// Date and time (Eastern Standard Time) of last update.
                 public let dateUpdated: Date
@@ -175,6 +212,8 @@ public extension Bus {
                 public let routesAffected: [Route]
 
                 /// Create a bus incident response
+                ///
+                /// When making requests through an ``Endpoint``, you will not need to call this. This initializer is primarily intended for testing and debugging.
                 ///
                 /// - Parameters:
                 ///     - dateUpdated: Time of last status update
@@ -199,24 +238,28 @@ public extension Bus {
         }
     }
     
+    /// The ``Stop``s  a ``Route`` serves, in order on a given date.
+    ///
+    /// Omit `date` to receive information for the current date.
+    ///
+    /// [WMATA Path Details Documentation](https://developer.wmata.com/docs/services/54763629281d83086473f231/operations/5476362a281d830c946a3d69)
     struct PathDetails: JSONEndpoint {
         public let url = URLComponents(staticString: "https://api.wmata.com/Bus.svc/json/jRouteDetails")
         
         public let key: APIKey
+        
+        /// Bus route. Allows for variants like `10Av1`
         public let route: Route
-        public  var date: Date? = nil
+        
+        /// Date to receive route information for. Omit for the current date.
+        public var date: Date? = nil
         
         public weak var delegate: JSONEndpointDelegate<Self>? = nil
         
         internal func queryItems() -> [URLQueryItem?] {
-            [
-                route.queryItem(),
-                date?.queryItem()
-            ]
+            [ route.queryItem(name: .routeID), date?.queryItem() ]
         }
         
-        /// Response from the [Path Details API](https://developer.wmata.com/docs/services/54763629281d83086473f231/operations/5476362a281d830c946a3d69)
-        /// - Tag: PathDetails
         public struct Response: Codable {
             
             /// Bus route
@@ -228,14 +271,16 @@ public extension Bus {
             /// Structures describing path/stop information.
             /// Most routes will return content in both Direction0 and Direction1 elements, though a few will return NULL for Direction0 or for Direction1.
             /// 0 or 1 are binary properties. There is no specific mapping to direction, but a different value for the same route signifies that the route is in an opposite direction.
-            public let directionZero: Direction
+            public let directionZero: Direction?
             
             /// Structures describing path/stop information.
             /// Most routes will return content in both Direction0 and Direction1 elements, though a few will return NULL for Direction0 or for Direction1.
             /// 0 or 1 are binary properties. There is no specific mapping to direction, but a different value for the same route signifies that the route is in an opposite direction.
-            public let directionOne: Direction
+            public let directionOne: Direction?
 
             /// Create path details
+            ///
+            /// When making requests through an ``Endpoint``, you will not need to call this. This initializer is primarily intended for testing and debugging.
             ///
             /// - Parameters:
             ///     - route: Bus route
@@ -254,17 +299,18 @@ public extension Bus {
                 self.directionOne = directionOne
             }
             
-            /// Structures describing path/stop information. From the [Path Details API](https://developer.wmata.com/docs/services/54763629281d83086473f231/operations/5476362a281d830c946a3d69)
-            /// - Tag: PathDirection
+            /// Structure describing path/stop information.
             public struct Direction: Codable {
                 
                 /// Descriptive text of where the bus is headed. This is similar, but not necessarily identical, to what is displayed on the bus.
                 public let tripHeadsign: String
                 
                 /// General direction of the route variant (NORTH, SOUTH, EAST, WEST, LOOP, etc.).
+                /// All possible values are not given by WMATA, unfortunately
                 public let directionText: String
                 
-                /// Warning: Deprecated. Use the DirectionText element to denote the general direction of the route variant.
+                /// Use the DirectionText element to denote the general direction of the route variant.
+                /// > Warning: Deprecated.
                 public let directionNumber: String
                 
                 /// Array containing shape point information.
@@ -296,8 +342,7 @@ public extension Bus {
                 }
             }
             
-            /// Shape point information. From the [Path Details API](https://developer.wmata.com/docs/services/54763629281d83086473f231/operations/5476362a281d830c946a3d69)
-            /// - Tag: PathStop
+            /// A latitude and longitude of a stop
             public struct Point: Codable {
                 /// Latitude of stop.
                 public let latitude: Double
@@ -325,11 +370,11 @@ public extension Bus {
                 }
             }
             
-            /// Stop information. From the [Path Details API](https://developer.wmata.com/docs/services/54763629281d83086473f231/operations/5476362a281d830c946a3d69)
-            /// - Tag: StopResponse
+            /// Stop information
             public struct Stop: Codable {
-                /// 7-digit regional ID which can be used in various bus-related methods.
-                public let stop: WMATA.Stop
+                /// The ``WMATA/Stop``
+                /// > Warning: A `stop` of `0` incidates an unknown stop.
+                public let stop: WMATA.Stop?
                 
                 /// Stop name. May be slightly different from what is spoken or displayed in the bus.
                 public let name: String
@@ -346,7 +391,7 @@ public extension Bus {
                 /// Create a Stop response
                 ///
                 /// - Parameters:
-                ///     - stop: Stop ID of the stop
+                ///     - stop: A bus stop
                 ///     - name: Name of stop
                 ///     - latitude: latitude of stop
                 ///     - longitude: longitude of stop
@@ -368,25 +413,40 @@ public extension Bus {
         }
     }
     
+    /// Schedules for a given ``Route`` for a given date.
+    ///
+    /// Omit `date` to receive the route schedule for the current date.
+    ///
+    /// [WMATA Route Schedule Documentation](https://developer.wmata.com/docs/services/54763629281d83086473f231/operations/5476362a281d830c946a3d6b)
     struct RouteSchedule: JSONEndpoint {
         public let url = URLComponents(staticString: "https://api.wmata.com/Bus.svc/json/jRouteSchedule")
         
         public let key: APIKey
+        
+        /// A route to get the schedule for
         public let route: Route
+        
+        /// The date to get the schedule for. Omit for current date.
         public var date: Date? = nil
+        
+        /// Whether or not to include variations if a base route is specified in `route`. Defaults to `false`.
+        ///
+        /// For example, if `B30` is specified and `includingVariations` is set to `true`, data for all variations of `B30` such as `B30v1`, `B30v2`, etc. will be returned.
         public var includingVariations: Bool = false
         
         public weak var delegate: JSONEndpointDelegate<Self>? = nil
         
         internal func queryItems() -> [URLQueryItem?] {
             [
-                route.queryItem(),
+                route.queryItem(name: .routeID),
                 date?.queryItem(),
-                URLQueryItem(name: "includingVariations", value: String(includingVariations))
+                URLQueryItem(
+                    name: "includingVariations",
+                    value: String(includingVariations)
+                )
             ]
         }
         
-        /// Response from the [Schedule API](https://developer.wmata.com/docs/services/54763629281d83086473f231/operations/5476362a281d830c946a3d6b)
         public struct Response: Codable {
             /// Descriptive name for the route.
             public let name: String
@@ -396,16 +456,18 @@ public extension Bus {
             /// Most routes will return content in both Direction0 and Direction1 elements, though a few (especially ones which run in a loop, such as the U8) will return content only for Direction0 and NULL content for Direction1.
             ///
             /// 0 or 1 are binary properties. There is no specific mapping to direction, but a different value for the same route signifies that the route is in an opposite direction.
-            public let directionZero: [RouteInfo]
+            public let directionZero: [RouteInfo]?
             
             /// Arrays containing trip information.
             ///
             /// Most routes will return content in both Direction0 and Direction1 elements, though a few (especially ones which run in a loop, such as the U8) will return content only for Direction0 and NULL content for Direction1.
             ///
             /// 0 or 1 are binary properties. There is no specific mapping to direction, but a different value for the same route signifies that the route is in an opposite direction.
-            public let directionOne: [RouteInfo]
+            public let directionOne: [RouteInfo]?
 
             /// Create a route schedule response
+            ///
+            /// When making requests through an ``Endpoint``, you will not need to call this. This initializer is primarily intended for testing and debugging.
             ///
             /// - Parameters:
             ///     - name: Name of route
@@ -421,13 +483,13 @@ public extension Bus {
                 self.directionOne = directionOne
             }
             
-            /// Response from the [Schedule API](https://developer.wmata.com/docs/services/54763629281d83086473f231/operations/5476362a281d830c946a3d6b)
-            /// - Tag: RouteInfo
+            /// Information about a ``Route``
             public struct RouteInfo: Codable {
                 /// Bus route variant. This can be used in several other bus methods which accept variants.
                 public let route: Route
                 
-                /// Warning: Deprecated. Use the TripDirectionText element to denote the general direction of the trip.
+                /// Use the TripDirectionText element to denote the general direction of the trip.
+                /// > Warning: Deprecated.
                 public let directionNumber: String
                 
                 /// General direction of the trip (NORTH, SOUTH, EAST, WEST, LOOP, etc.).
@@ -451,8 +513,8 @@ public extension Bus {
                 /// Create a route info response
                 ///
                 /// - Parameters:
-                ///     - route: Route ID
-                ///     - directionNumber: Deprecated. Direction of route
+                ///     - route: A bus route
+                ///     - directionNumber: Direction of route. Deprecated.
                 ///     - tripDirectionText: General direction of trip
                 ///     - tripHeadsign: Destination of route
                 ///     - startTime: Start time of trip
@@ -479,11 +541,11 @@ public extension Bus {
                     self.tripID = tripID
                 }
                 
-                /// Response from the [Schedule API](https://developer.wmata.com/docs/services/54763629281d83086473f231/operations/5476362a281d830c946a3d6b)
-                /// - Tag: StopInfo
+                /// Information about a ``Stop``
                 public struct StopInfo: Codable {
-                    /// 7-digit regional ID which can be used in various bus-related methods. If unavailable, the StopID will be 0 or NULL.
-                    public let stop: Stop
+                    /// A MetroBus stop
+                    /// > Warning: A `stop` of `0` incidates an unknown stop.
+                    public let stop: Stop?
                     
                     /// Stop name. May be slightly different from what is spoken or displayed in the bus.
                     public let stopName: String
@@ -497,7 +559,7 @@ public extension Bus {
                     /// Create a stop info response
                     ///
                     /// - Parameters:
-                    ///     - stop: Stop ID
+                    ///     - stop: A MetroBus stop
                     ///     - stopName: Name of stop
                     ///     - stopSequence: Order of the stop in sequence
                     ///     - time: Scheduled departure time from this stop
@@ -513,25 +575,27 @@ public extension Bus {
                         self.time = time
                     }
                 }
-                
             }
         }
     }
     
+    /// Next bus arrival times at a ``Stop``
+    ///
+    ///  [WMATA Next Buses Documentation](https://developer.wmata.com/docs/services/5476365e031f590f38092508/operations/5476365e031f5909e4fe331d)
     struct NextBuses: JSONEndpoint {
         public let url = URLComponents(staticString: "https://api.wmata.com/NextBusService.svc/json/jPredictions")
         
         public let key: APIKey
+        
+        // A MetroBus stop
         public let stop: Stop
         
         public weak var delegate: JSONEndpointDelegate<Self>? = nil
         
         internal func queryItems() -> [URLQueryItem?] {
-            [stop.queryItem()]
+            [stop.queryItem(name: .stopID)]
         }
         
-        /// Response from the [Next Buses API](https://developer.wmata.com/docs/services/5476365e031f590f38092508/operations/5476365e031f5909e4fe331d)
-        /// - Tag: BusPredictions
         public struct Response: Codable {
             /// List of predictions
             public let predictions: [Prediction]
@@ -541,6 +605,8 @@ public extension Bus {
             
             /// Create a new response
             ///
+            /// When making requests through an ``Endpoint``, you will not need to call this. This initializer is primarily intended for testing and debugging.
+            ///
             /// - Parameters:
             ///     - predictions: A list of predictions
             public init(predictions: [Prediction], stopName: String) {
@@ -548,10 +614,11 @@ public extension Bus {
                 self.stopName = stopName
             }
             
-            /// Response from the [Next Buses API](https://developer.wmata.com/docs/services/5476365e031f590f38092508/operations/5476365e031f5909e4fe331d)
-            /// - Tag: BusPrediction
+            /// An arrival time prediction for a MetroBus
             public struct Prediction: Codable {
-                /// Denotes a binary direction (0 or 1) of the bus. There is no specific mapping to direction, but a different value for the same route signifies that the buses are traveling in opposite directions. Use the DirectionText element to show the actual destination of the bus.
+                /// Denotes a binary direction (0 or 1) of the bus.
+                ///
+                /// There is no specific mapping to direction, but a different value for the same route signifies that the buses are traveling in opposite directions. Use the ``directionText`` element to show the actual destination of the bus.
                 public let directionNumber: String
                 
                 /// Customer-friendly description of direction and destination for a bus.
@@ -560,13 +627,15 @@ public extension Bus {
                 /// Minutes until bus arrival at this stop.
                 public let minutes: Int
                 
-                /// Route ID of the bus. Base route name as shown on the bus. This can be used in other bus-related methods. Note that all variants will be shown as their base route names (i.e.: 10Av1 and 10Av2 will be shown as 10A).
+                /// Base route name as shown on the bus.
+                ///
+                /// This can be used in other bus-related methods. Note that all variants will be shown as their base route names (i.e.: 10Av1 and 10Av2 will be shown as 10A).
                 public let route: Route
                 
-                /// Trip identifier. This can be correlated with the data in our bus schedule information as well as bus positions.
+                /// Trip identifier. This can be correlated with the data in ``Bus/StopSchedule``, ``Bus/RouteSchedule`` as well as ``Bus/Positions``.
                 public let tripID: String
                 
-                /// Bus identifier. This can be correlated with results returned from bus positions.
+                /// Bus identifier. This can be correlated with results from ``Bus/Positions``
                 public let vehicleID: String
 
                 /// Create a prediction
@@ -575,7 +644,7 @@ public extension Bus {
                 ///     - directionNumber: Direction of the bus
                 ///     - directionText: Customer friend description of direction and destination of bus
                 ///     - minutes: Time until arrival at this stop
-                ///     - route: Route ID of the bus
+                ///     - route: Route of the bus
                 ///     - tripID: Trip ID of this bus
                 ///     - vehicleID: Unique vehicle identifier
                 public init(
@@ -597,24 +666,31 @@ public extension Bus {
         }
     }
     
+    /// Buses scheduled at a ``Stop`` for a given date.
+    ///
+    /// Omit `date` to receive the schedule for the current date.
+    ///
+    /// [WMATA Schedule at Stop Documentation](https://developer.wmata.com/docs/services/54763629281d83086473f231/operations/5476362a281d830c946a3d6c)
     struct StopSchedule: JSONEndpoint {
         public let url = URLComponents(staticString: "https://api.wmata.com/Bus.svc/json/jStopSchedule")
         
         public let key: APIKey
+        
+        // A MetroBus stop
         public let stop: Stop
+        
+        // Date to receive this stop's schedule for. Omit for current date.
         public var date: Date? = nil
         
         public weak var delegate: JSONEndpointDelegate<Self>? = nil
         
         internal func queryItems() -> [URLQueryItem?] {
             [
-                stop.queryItem(),
+                stop.queryItem(name: .stopID),
                 date?.queryItem()
             ]
         }
         
-        /// Response from the [Schedule at Stop API](https://developer.wmata.com/docs/services/54763629281d83086473f231/operations/5476362a281d830c946a3d6c)
-        /// - Tag: StopSchedule
         public struct Response: Codable {
             /// Arrivals at this stop
             public let scheduleArrivals: [Arrival]
@@ -623,6 +699,8 @@ public extension Bus {
             public let stop: StopSchedule
 
             /// Create a stop schedule
+            ///
+            /// When making requests through an ``Endpoint``, you will not need to call this. This initializer is primarily intended for testing and debugging.
             ///
             /// - Parameters:
             ///     - arrivals: Arrivals at this stop
@@ -635,13 +713,14 @@ public extension Bus {
                 self.stop = stop
             }
             
-            /// Response from the [Schedule at Stop API](https://developer.wmata.com/docs/services/54763629281d83086473f231/operations/5476362a281d830c946a3d6c)
-            /// - Tag: BusArrival
+            /// Bus arrival information
             public struct Arrival: Codable {
                 /// Date and time (Eastern Standard Time) when the bus is scheduled to stop at this location.
                 public let scheduleTime: Date
                 
-                /// Denotes a binary direction (0 or 1) of the bus. There is no specific mapping to direction, but a different value for the same route signifies that the buses are traveling in opposite directions. Use the tripDirectionText element to show the actual destination of the bus.
+                /// Denotes a binary direction (0 or 1) of the bus.
+                ///
+                /// There is no specific mapping to direction, but a different value for the same route signifies that the buses are traveling in opposite directions. Use the ``tripDirectionText`` element to show the actual destination of the bus.
                 public let directionNumber: String
                 
                 /// Scheduled start date and time (Eastern Standard Time) for this trip.
@@ -650,7 +729,11 @@ public extension Bus {
                 /// Scheduled end date and time (Eastern Standard Time) for this trip.
                 public let endTime: Date
                 
-                /// Bus route variant identifier (pattern). This variant can be used in several other bus methods which accept variants. Note that customers will never see anything other than the base route name, so variants 10A, 10Av1, 10Av2, etc. will be displayed as 10A on the bus.
+                /// Bus route with variants.
+                ///
+                /// This variant can be used in several other bus endpoints which accept variants.
+                ///
+                /// > Note: Customers will never see anything other than the base route name, so variants 10A, 10Av1, 10Av2, etc. will be displayed as 10A on the bus.
                 public let route: Route
                 
                 /// General direction of the trip (e.g.: NORTH, SOUTH, EAST, WEST).
@@ -659,17 +742,19 @@ public extension Bus {
                 /// Destination of the bus.
                 public let tripHeadsign: String
                 
-                /// Trip identifier. This can be correlated with the data in our bus schedule information as well as bus positions.
+                /// Trip identifier.
+                ///
+                /// This can be correlated with the data in our ``Bus/RouteSchedule``, ``Bus/StopSchedule`` information as well as ``Bus/Positions``.
                 public let tripID: String
 
                 /// Create a bus arrival
                 ///
                 /// - Parameters:
                 ///     - scheduleTime: Time the bus is schedule to arrive at this stop
-                ///     - directionNumber: 0 to 1, as a String
+                ///     - directionNumber: `"0"` or `"1"`
                 ///     - startTime: Start time of this trip
                 ///     - endTime: End time of this trip
-                ///     - route: Route variant
+                ///     - route: MetroBus route. Can include variants.
                 ///     - tripDirectionText: General direction of bus
                 ///     - tripHeadsign: Destination of bus
                 ///     - tripID: Trip Identifier
@@ -694,13 +779,15 @@ public extension Bus {
                 }
             }
             
-            /// Response from the [Stop Search API](https://developer.wmata.com/docs/services/54763629281d83086473f231/operations/5476362a281d830c946a3d6d)
-            /// - Tag: StopScheduleResponse
+            /// A stop schedule
             public struct StopSchedule: Codable {
-                /// 7-digit regional ID which can be used in various bus-related methods. If unavailable, the StopID will be 0 or NULL.
+                /// 7-digit regional ID which can be used in various bus-related methods.
+                /// > Warning: A `stop` of `0` incidates an unknown stop.
                 public let stop: Stop?
                 
-                /// Stop name. May be slightly different from what is spoken or displayed in the bus.
+                /// Stop name.
+                ///
+                /// May be slightly different from what is spoken or displayed in the bus.
                 public let name: String
                 
                 /// Latitude of stop.
@@ -709,7 +796,9 @@ public extension Bus {
                 /// Longitude of stop.
                 public let longitude: Double
                 
-                /// Array of route variants which provide service at this stop. Note that these are not date-specific; any route variant which stops at this stop on any day will be listed.
+                /// Route variants which provide service at this stop.
+                ///
+                /// > Note:  These are not date-specific; any route variant which stops at this stop on any day will be listed.
                 public let routes: [Route]
 
                 /// Create a stop schedule response
@@ -737,10 +826,17 @@ public extension Bus {
         }
     }
     
+    /// MetroBus ``Stop``s within a ``WMATALocation``.
+    ///
+    /// Omit `location` to retrieve a list of all ``Stop``s.
+    ///
+    /// [WMATA Stop Search Documentation](https://developer.wmata.com/docs/services/54763629281d83086473f231/operations/5476362a281d830c946a3d6d)
     struct StopsSearch: JSONEndpoint {
         public let url = URLComponents(staticString: "https://api.wmata.com/Bus.svc/json/jStops")
         
         public let key: APIKey
+        
+        /// A location to search within. Omit to receive all stops.
         public var location: WMATALocation? = nil
         
         public weak var delegate: JSONEndpointDelegate<Self>? = nil
@@ -748,14 +844,14 @@ public extension Bus {
         internal func queryItems() -> [URLQueryItem?] {
             location?.queryItems() ?? []
         }
-        
-        /// Response from the [Stop Search API](https://developer.wmata.com/docs/services/54763629281d83086473f231/operations/5476362a281d830c946a3d6d)
-        /// - Tag: StopsSearchResponse
+
         public struct Response: Codable {
             /// List of stop schedules
             public let stops: [StopSchedule]
             
             /// Create a stop search response
+            ///
+            /// When making requests through an ``Endpoint``, you will not need to call this. This initializer is primarily intended for testing and debugging.
             ///
             /// - Parameters:
             ///     - stops: Stop schedules
@@ -763,13 +859,15 @@ public extension Bus {
                 self.stops = stops
             }
             
-            /// Response from the [Stop Search API](https://developer.wmata.com/docs/services/54763629281d83086473f231/operations/5476362a281d830c946a3d6d)
-            /// - Tag: StopScheduleResponse
+            /// A stop schedule
             public struct StopSchedule: Codable {
-                /// 7-digit regional ID which can be used in various bus-related methods. If unavailable, the StopID will be 0 or NULL.
+                /// A MetroBus stop
+                /// > Warning: A `stop` of `0` incidates an unknown stop.
                 public let stop: Stop?
                 
-                /// Stop name. May be slightly different from what is spoken or displayed in the bus.
+                /// Stop name.
+                ///
+                /// May be slightly different from what is spoken or displayed in the bus.
                 public let name: String
                 
                 /// Latitude of stop.
@@ -778,13 +876,15 @@ public extension Bus {
                 /// Longitude of stop.
                 public let longitude: Double
                 
-                /// Array of route variants which provide service at this stop. Note that these are not date-specific; any route variant which stops at this stop on any day will be listed.
+                /// All route variants which provide service at this stop.
+                ///
+                /// > Note: These are not date-specific; any route variant which stops at this stop on any day will be listed.
                 public let routes: [Route]
 
                 /// Create a stop schedule response
                 ///
                 /// - Parameters:
-                ///     - stop: Stop ID
+                ///     - stop: A MetroBus stop
                 ///     - name: Stop name
                 ///     - latitude: Latitude of stop
                 ///     - longitude: Longitude of stop
@@ -806,6 +906,9 @@ public extension Bus {
         }
     }
     
+    /// All MetroBus ``Route`` variants
+    ///
+    /// For example, the `10A` and `10Av1` are the same route, but may stop at slightly different locations.
     struct Routes: JSONEndpoint {
         public let url = URLComponents(staticString: "https://api.wmata.com/Bus.svc/json/jRoutes")
         
@@ -813,36 +916,40 @@ public extension Bus {
         
         public weak var delegate: JSONEndpointDelegate<Self>? = nil
         
-        /// Response from the [Routes API](https://developer.wmata.com/docs/services/54763629281d83086473f231/operations/5476362a281d830c946a3d6a)
         public struct Response: Codable {
-            /// List of routes
+            /// All routes
             public let routes: [Route]
 
             /// Create a routes response
             ///
+            /// When making requests through an ``Endpoint``, you will not need to call this. This initializer is primarily intended for testing and debugging.
+            ///
             /// - Parameters:
-            ///     - routes: List of routes
+            ///     - routes: All routes
             public init(routes: [Route]) {
                 self.routes = routes
             }
             
-            /// Response from the [Routes API](https://developer.wmata.com/docs/services/54763629281d83086473f231/operations/5476362a281d830c946a3d6a)
-            /// - Tag: RouteResponse
+            /// A MetroBus route.
+            ///
+            /// Different than ``WMATA/Route``
             public struct Route: Codable {
-                /// Unique identifier for a given route variant. Can be used in various other bus-related methods.
+                /// A MetroBus route
                 public let route: WMATA.Route
                 
                 /// Descriptive name of the route variant.
                 public let name: String
                 
-                /// Denotes the route variant’s grouping – lines are a combination of routes which lie in the same corridor and which have significant portions of their paths along the same roadways.
+                /// Denotes the route variant’s grouping
+                ///
+                /// Lines are a combination of routes which lie in the same corridor and which have significant portions of their paths along the same roadways.
                 public let lineDescription: String
 
                 /// Create a route response
                 ///
                 /// - Parameters:
-                ///     - route: Route identifier
-                ///     - name: Name of the route variant
+                ///     - route: A MetroBus route
+                ///     - name: Name of the route variant, i.e. `10A`, `10Av1`
                 ///     - lineDescription: Route variant's grouping
                 public init(
                     route: WMATA.Route,
@@ -856,7 +963,15 @@ public extension Bus {
             }
         }
     }
+}
+
+public extension Bus.GTFS {
     
+    /// GTFS 1.0 Service Alerts feed for MetroBus
+    ///
+    /// Service alerts represent higher level problems with buses, routes or all of MetroBus
+    ///
+    /// [GTFS Alerts Documentation](https://gtfs.org/reference/realtime/v1/#message-alert)
     struct Alerts: GTFSEndpoint {
         public let url = URLComponents(staticString: "https://api.wmata.com/gtfs/bus-gtfsrt-alerts.pb")
         
@@ -865,6 +980,11 @@ public extension Bus {
         public weak var delegate: GTFSEndpointDelegate<Self>? = nil
     }
     
+    /// GTFS 1.0 Trip Updates feed for MetroBus
+    ///
+    /// Trip updates represent fluctuations in the timetable
+    ///
+    /// [GTFS Trip Updates Documentation](https://gtfs.org/reference/realtime/v1/#message-tripupdate)
     struct TripUpdates: GTFSEndpoint {
         public let url = URLComponents(staticString: "https://api.wmata.com/gtfs/bus-gtfsrt-tripupdates.pb")
         
@@ -873,6 +993,11 @@ public extension Bus {
         public weak var delegate: GTFSEndpointDelegate<Self>? = nil
     }
     
+    /// GTFS 1.0 Vehicle Positions feed for MetroBus
+    ///
+    /// Locations of MetroBuses
+    ///
+    /// [GTFS Trip Updates Documentation](https://gtfs.org/reference/realtime/v1/#message-vehicleposition)
     struct VehiclePositions: GTFSEndpoint {
         public let url = URLComponents(staticString: "https://api.wmata.com/gtfs/bus-gtfsrt-vehiclepositions.pb")
         

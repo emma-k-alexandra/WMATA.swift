@@ -1,4 +1,4 @@
-# Advanced Decoding
+# Decoding Yourself
 
 Decode responses from the WMATA API yourself
 

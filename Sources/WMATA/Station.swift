@@ -8,14 +8,15 @@
 import Combine
 import Foundation
 
-/// Station codes as defined by WMATA
+/// A MetroRail station
 ///
-/// - Note: A station code represents a single level within a physical station.
+/// A station with in enum represents a single level within a physical station. Stations in this enum are named after the first name given by WMATA, with no shortenings. So, Archives-Navy Memorial-Penn Quarter is represented as ``archives``.
 ///
-/// Physical stations with multiple levels like L'Enfant Plaza require multiple station codes
-/// to represent the entire physical station. Use [`together`]((x-source-tag://together)) or [`allTogether`]((x-source-tag://allTogether)) to match
-/// station codes with their corresponding sister station codes.
+/// Physical stations with multiple levels like L'Enfant Plaza require multiple station codes. For example, `lenfantPlazaUpper` is a single level within the L'Enfant Plaza station, along with `lenfantPlazaLower`. All stations follow this `...Upper` and `...Lower` naming convention. You can also use ``together`` or ``allTogether`` to get all relevant stations.
+///
+/// ![A train passes at the Pentagon City MetroRail station](metrorail-station)
 public enum Station: String, CaseIterable, Codable {
+    /// Red line tracks for Metro Center
     case metroCenterUpper = "A01"
     case farragutNorth = "A02"
     case dupontCircle = "A03"
@@ -31,11 +32,13 @@ public enum Station: String, CaseIterable, Codable {
     case twinbrook = "A13"
     case rockville = "A14"
     case shadyGrove = "A15"
+    /// Red line tracks for Gallery Place
     case galleryPlaceUpper = "B01"
     case judiciarySquare = "B02"
     case unionStation = "B03"
     case rhodeIslandAve = "B04"
     case brookland = "B05"
+    /// Red line tracks for Fort Totten
     case fortTottenUpper = "B06"
     case takoma = "B07"
     case silverSpring = "B08"
@@ -43,6 +46,7 @@ public enum Station: String, CaseIterable, Codable {
     case wheaton = "B10"
     case glenmont = "B11"
     case noma = "B35"
+    /// Blue, Orange and Silver line tracks for Metro Center
     case metroCenterLower = "C01"
     case mcphersonSquare = "C02"
     case farragutWest = "C03"
@@ -60,6 +64,7 @@ public enum Station: String, CaseIterable, Codable {
     case huntington = "C15"
     case federalTriangle = "D01"
     case smithsonian = "D02"
+    /// Blue, Orange and Silver line tracks for L'Enfant Plaza
     case lenfantPlazaLower = "D03"
     case federalCenterSW = "D04"
     case capitolSouth = "D05"
@@ -76,13 +81,16 @@ public enum Station: String, CaseIterable, Codable {
     case uStreet = "E03"
     case columbiaHeights = "E04"
     case georgiaAve = "E05"
+    /// Green and Yellow line tracks for Fort Totten
     case fortTottenLower = "E06"
     case westHyattsville = "E07"
     case princeGeorgesPlaza = "E08"
     case collegePark = "E09"
     case greenbelt = "E10"
+    /// Green and Yellow line tracks for Gallery Place
     case galleryPlaceLower = "F01"
     case archives = "F02"
+    /// Green and Yellow line tracks for L'Enfant Plaza
     case lenfantPlazaUpper = "F03"
     case waterfront = "F04"
     case navyYard = "F05"
@@ -122,6 +130,8 @@ public enum Station: String, CaseIterable, Codable {
 
 public extension Station {
     /// A human readable and presentable station name
+    ///
+    /// This is the official station name given by WMATA.
     var name: String {
         switch self {
         case .metroCenterUpper:
@@ -432,7 +442,7 @@ public extension Station {
         }
     }
 
-    /// The `Line`s this station is on
+    /// The ``Line``s this station is on
     var lines: [Line] {
         switch self {
         case .metroCenterUpper, .galleryPlaceUpper, .fortTottenUpper, .farragutNorth, .dupontCircle, .woodleyPark, .clevelandPark, .vanNess, .tenleytown, .friendshipHeights, .bethesda, .medicalCenter, .grosvenor, .whiteFlint, .twinbrook, .rockville, .shadyGrove, .judiciarySquare, .unionStation, .rhodeIslandAve, .brookland, .takoma, .silverSpring, .forestGlen, .wheaton, .glenmont, .noma:
@@ -470,7 +480,9 @@ public extension Station {
         }
     }
 
-    /// Indicates if a station is open to the public. `false` if a station is part of the Potomac Yard or Silver Line Phase 2 expansions. Otherwise `true`.
+    /// Indicates if a station is open to the public.
+    ///
+    /// - Returns: `false` if a station is part of the Potomac Yard or Silver Line Phase 2 expansions. Otherwise `true`.
     var open: Bool {
         switch self {
         case .restonTownCenter, .herndon, .innovationCenter, .dullesInternationalAirport, .loudounGateway, .ashburn, .potomacYard:
@@ -479,13 +491,20 @@ public extension Station {
             return true
         }
     }
+    
+    /// All stations that are currently open to the public.
+    ///
+    /// Potomac Yard and Silver Line Phase 2 expansion stations are excluded.
+    static var allOpen: [Self] {
+        [.metroCenterUpper, .farragutNorth, .dupontCircle, .woodleyPark, .clevelandPark, .vanNess, .tenleytown, .friendshipHeights, .bethesda, .medicalCenter, .grosvenor, .whiteFlint, .twinbrook, .rockville, .shadyGrove, .galleryPlaceUpper, .judiciarySquare, .unionStation, .rhodeIslandAve, .brookland, .fortTottenUpper, .takoma, .silverSpring, .forestGlen, .wheaton, .glenmont, .noma, .metroCenterLower, .mcphersonSquare, .farragutWest, .foggyBottom, .rosslyn, .arlingtonCemetery, .pentagon, .pentagonCity, .crystalCity, .ronaldReaganWashingtonNationalAirport, .braddockRoad, .kingSt, .eisenhowerAvenue, .huntington, .federalTriangle, .smithsonian, .lenfantPlazaLower, .federalCenterSW, .capitolSouth, .easternMarket, .potomacAve, .stadium, .minnesotaAve, .deanwood, .cheverly, .landover, .newCarrollton, .mtVernonSq7thSt, .shaw, .uStreet, .columbiaHeights, .georgiaAve, .fortTottenLower, .westHyattsville, .princeGeorgesPlaza, .collegePark, .greenbelt, .galleryPlaceLower, .archives, .lenfantPlazaUpper, .waterfront, .navyYard, .anacostia, .congressHeights, .southernAvenue, .naylorRoad, .suitland, .branchAve, .benningRoad, .capitolHeights, .addisonRoad, .morganBoulevard, .largoTownCenter, .vanDornStreet, .franconia, .courtHouse, .clarendon, .virginiaSquare, .ballston, .eastFallsChurch, .westFallsChurch, .dunnLoring, .vienna, .mcLean, .tysonsCorner, .greensboro, .springHill, .wiehle]
+    }
 
     /// The opening time for this station on the given date.
     ///
     /// - Parameters:
     ///     - date: Date to check the opening time for. Defaults to current day.
     ///
-    /// - Returns: The opening time. `nil` if the station is not `open` yet.
+    /// - Returns: The opening time. `nil` if the station is not ``open`` yet.
     func openingTime(on date: Date = Date()) -> Date? {
         let day = date.wmataDay()
         
@@ -520,52 +539,61 @@ public extension Station {
 
     /// The station located within the same physical station as this station.
     ///
-    /// - Note:
-    ///     [WMATA Station Information Documentation](https://developer.wmata.com/docs/services/5476364f031f590f38092507/operations/5476364f031f5909e4fe3310)
+    /// See ``Station`` for more details.
     ///
-    /// - Returns: The `Station` within the same physical station.
-    /// - Tag: together
-    var together: Station? {
+    /// - Returns: The ``Station`` within the same physical station, if there is one. Otherwise, `nil`.
+    var together: Self? {
         switch self {
-        // Fort Totten
         case .fortTottenUpper:
             return .fortTottenLower
+            
         case .fortTottenLower:
             return .fortTottenUpper
-        // Gallery Pl-Chinatown
+            
         case .galleryPlaceUpper:
             return .galleryPlaceLower
         case .galleryPlaceLower:
             return .galleryPlaceUpper
-        // L'Enfant Plaza
+            
         case .lenfantPlazaLower:
             return .lenfantPlazaUpper
+            
         case .lenfantPlazaUpper:
             return .lenfantPlazaLower
-        // Metro Center
+            
         case .metroCenterUpper:
             return .metroCenterLower
+            
         case .metroCenterLower:
             return .metroCenterUpper
+            
         default:
             return nil
         }
     }
 
     /// Combines this station and other stations within the same physical station.
-    /// This is effectively the result of joining the `StationTogether1`
-    /// and `StationTogether2` values from the WMATA API.
     ///
-    /// - Note:
-    ///     [WMATA Station Information Documentation](https://developer.wmata.com/docs/services/5476364f031f590f38092507/operations/5476364f031f5909e4fe3310)
+    /// See ``Station`` for more details.
     ///
-    /// - Returns: An array containing this station and the `Station` `together`, if there is one.
-    /// - Tag: allTogether
-    var allTogether: [Station] {
+    /// - Returns: This station and the ``together``, if there is one. Otherwise, just this station.
+    var allTogether: [Self] {
         if let together = self.together {
             return [self, together]
         }
 
         return [self]
+    }
+}
+
+extension Station: URLQueryItemConvertible {
+    enum URLQueryItemName: String {
+        case standard = "StationCode"
+        case to = "ToStationCode"
+        case from = "FromStationCode"
+    }
+    
+    func queryItem(name: URLQueryItemName = .standard) -> URLQueryItem {
+        URLQueryItem(name: name.rawValue, value: rawValue)
     }
 }

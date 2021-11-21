@@ -44,7 +44,7 @@ final class RailTests: XCTestCase {
 
     func testEntrances() {
         let exp = expectation(description: #function)
-        let entrances = Rail.Entrances(
+        let entrances = Rail.StationEntrances(
             key: TEST_API_KEY,
             location: .init(
                 radius: 1,
@@ -69,9 +69,9 @@ final class RailTests: XCTestCase {
     }
 
     func testEntrancesWithDelegate() {
-        let delegate = TestJSONDelegate<Rail.Entrances>(expectation: expectation(description: #function))
+        let delegate = TestJSONDelegate<Rail.StationEntrances>(expectation: expectation(description: #function))
 
-        let entrances = Rail.Entrances(
+        let entrances = Rail.StationEntrances(
             key: TEST_API_KEY,
             location: .init(
                 radius: 1,
@@ -90,7 +90,7 @@ final class RailTests: XCTestCase {
 
     func testAllEntrances() {
         let exp = expectation(description: #function)
-        let entrances = Rail.Entrances(key: TEST_API_KEY)
+        let entrances = Rail.StationEntrances(key: TEST_API_KEY)
 
         entrances.request { result in
             switch result {
@@ -106,9 +106,9 @@ final class RailTests: XCTestCase {
     }
 
     func testAllEntrancesWithDelegate() {
-        let delegate = TestJSONDelegate<Rail.Entrances>(expectation: expectation(description: #function))
+        let delegate = TestJSONDelegate<Rail.StationEntrances>(expectation: expectation(description: #function))
 
-        let entrances = Rail.Entrances(
+        let entrances = Rail.StationEntrances(
             key: TEST_API_KEY,
             delegate: delegate
         )
@@ -328,7 +328,7 @@ final class RailTests: XCTestCase {
 
     func testPositions() {
         let exp = expectation(description: #function)
-        let positions = Rail.Positions(key: TEST_API_KEY)
+        let positions = Rail.TrainPositions(key: TEST_API_KEY)
 
         positions.request { result in
             switch result {
@@ -344,9 +344,9 @@ final class RailTests: XCTestCase {
     }
 
     func testPositionsWithDelegate() {
-        let delegate = TestJSONDelegate<Rail.Positions>(expectation: expectation(description: #function))
+        let delegate = TestJSONDelegate<Rail.TrainPositions>(expectation: expectation(description: #function))
 
-        let positions = Rail.Positions(
+        let positions = Rail.TrainPositions(
             key: TEST_API_KEY,
             delegate: delegate
         )
@@ -358,7 +358,7 @@ final class RailTests: XCTestCase {
 
     func testRoutes() {
         let exp = expectation(description: #function)
-        let routes = Rail.Routes(key: TEST_API_KEY)
+        let routes = Rail.StandardRoutes(key: TEST_API_KEY)
 
         routes.request { result in
             switch result {
@@ -374,9 +374,9 @@ final class RailTests: XCTestCase {
     }
 
     func testRoutesWithDelegate() {
-        let delegate = TestJSONDelegate<Rail.Routes>(expectation: expectation(description: #function))
+        let delegate = TestJSONDelegate<Rail.StandardRoutes>(expectation: expectation(description: #function))
 
-        let routes = Rail.Routes(
+        let routes = Rail.StandardRoutes(
             key: TEST_API_KEY,
             delegate: delegate
         )
@@ -388,7 +388,7 @@ final class RailTests: XCTestCase {
 
     func testCircuits() {
         let exp = expectation(description: #function)
-        let circuits = Rail.Circuits(key: TEST_API_KEY)
+        let circuits = Rail.TrackCircuits(key: TEST_API_KEY)
 
         circuits.request { result in
             switch result {
@@ -404,9 +404,9 @@ final class RailTests: XCTestCase {
     }
 
     func testCircuitsWithDelegate() {
-        let delegate = TestJSONDelegate<Rail.Circuits>(expectation: expectation(description: #function))
+        let delegate = TestJSONDelegate<Rail.TrackCircuits>(expectation: expectation(description: #function))
 
-        let circuits = Rail.Circuits(
+        let circuits = Rail.TrackCircuits(
             key: TEST_API_KEY,
             delegate: delegate
         )
@@ -551,6 +551,40 @@ final class RailTests: XCTestCase {
 
         waitForExpectations(timeout: 1)
     }
+    
+    func testNextTrainsAll() {
+        let exp = expectation(description: #function)
+        let predictions = Rail.NextTrains(
+            key: TEST_API_KEY,
+            stations: .all
+        )
+
+        predictions.request { result in
+            switch result {
+            case .success:
+                exp.fulfill()
+
+            case let .failure(error):
+                print(error)
+            }
+        }
+
+        waitForExpectations(timeout: 1)
+    }
+
+    func testNextTrainsAllWithDelegate() {
+        let delegate = TestJSONDelegate<Rail.NextTrains>(expectation: expectation(description: #function))
+
+        let predictions = Rail.NextTrains(
+            key: TEST_API_KEY,
+            stations: .all,
+            delegate: delegate
+        )
+
+        predictions.backgroundRequest()
+
+        waitForExpectations(timeout: 1)
+    }
 
     func testInformation() {
         let exp = expectation(description: #function)
@@ -622,7 +656,7 @@ final class RailTests: XCTestCase {
 
     func testPath() {
         let exp = expectation(description: #function)
-        let path = Rail.Path(
+        let path = Rail.PathBetweenStations(
             key: TEST_API_KEY,
             startingStation: .metroCenterUpper,
             destinationStation: .farragutNorth
@@ -642,9 +676,9 @@ final class RailTests: XCTestCase {
     }
 
     func testPathWithDelegate() {
-        let delegate = TestJSONDelegate<Rail.Path>(expectation: expectation(description: #function))
+        let delegate = TestJSONDelegate<Rail.PathBetweenStations>(expectation: expectation(description: #function))
 
-        let path = Rail.Path(
+        let path = Rail.PathBetweenStations(
             key: TEST_API_KEY,
             startingStation: .metroCenterUpper,
             destinationStation: .farragutNorth,
@@ -658,7 +692,7 @@ final class RailTests: XCTestCase {
 
     func testTimings() {
         let exp = expectation(description: #function)
-        let timings = Rail.Timings(
+        let timings = Rail.StationTimings(
             key: TEST_API_KEY,
             station: .metroCenterUpper
         )
@@ -677,9 +711,9 @@ final class RailTests: XCTestCase {
     }
 
     func testTimingsWithDelegate() {
-        let delegate = TestJSONDelegate<Rail.Timings>(expectation: expectation(description: #function))
+        let delegate = TestJSONDelegate<Rail.StationTimings>(expectation: expectation(description: #function))
 
-        let timings = Rail.Timings(
+        let timings = Rail.StationTimings(
             key: TEST_API_KEY,
             station: .metroCenterUpper,
             delegate: delegate
@@ -694,7 +728,7 @@ final class RailTests: XCTestCase {
 final class RailGTFSTests: XCTestCase {
     func testAlerts() {
         let exp = expectation(description: #function)
-        let alerts = Rail.Alerts(
+        let alerts = Rail.GTFS.Alerts(
             key: TEST_API_KEY)
 
         alerts.request { result in
@@ -711,9 +745,9 @@ final class RailGTFSTests: XCTestCase {
     }
 
     func testAlertsWithDelegate() {
-        let delegate = TestGTFSDelegate<Rail.Alerts>(expectation: expectation(description: #function))
+        let delegate = TestGTFSDelegate<Rail.GTFS.Alerts>(expectation: expectation(description: #function))
 
-        let alerts = Rail.Alerts(
+        let alerts = Rail.GTFS.Alerts(
             key: TEST_API_KEY,
             delegate: delegate
         )
@@ -725,7 +759,7 @@ final class RailGTFSTests: XCTestCase {
 
     func testTripUpdates() {
         let exp = expectation(description: #function)
-        let tripUpdates = Rail.TripUpdates(key: TEST_API_KEY)
+        let tripUpdates = Rail.GTFS.TripUpdates(key: TEST_API_KEY)
 
         tripUpdates.request { result in
             switch result {
@@ -741,9 +775,9 @@ final class RailGTFSTests: XCTestCase {
     }
 
     func testTripUpdatesWithDelegate() {
-        let delegate = TestGTFSDelegate<Rail.TripUpdates>(expectation: expectation(description: #function))
+        let delegate = TestGTFSDelegate<Rail.GTFS.TripUpdates>(expectation: expectation(description: #function))
 
-        let tripUpdates = Rail.TripUpdates(
+        let tripUpdates = Rail.GTFS.TripUpdates(
             key: TEST_API_KEY,
             delegate: delegate
         )
@@ -755,7 +789,7 @@ final class RailGTFSTests: XCTestCase {
 
     func testVehiclePositions() {
         let exp = expectation(description: #function)
-        let vehiclePositions = Rail.VehiclePositions(key: TEST_API_KEY)
+        let vehiclePositions = Rail.GTFS.VehiclePositions(key: TEST_API_KEY)
 
         vehiclePositions.request { result in
             switch result {
@@ -771,9 +805,9 @@ final class RailGTFSTests: XCTestCase {
     }
 
     func testVehiclePositionsWithDelegate() {
-        let delegate = TestGTFSDelegate<Rail.VehiclePositions>(expectation: expectation(description: #function))
+        let delegate = TestGTFSDelegate<Rail.GTFS.VehiclePositions>(expectation: expectation(description: #function))
 
-        let vehiclePositions = Rail.VehiclePositions(
+        let vehiclePositions = Rail.GTFS.VehiclePositions(
             key: TEST_API_KEY,
             delegate: delegate
         )
@@ -810,7 +844,7 @@ final class RailCombineTests: CombineTests {
 
     func testEntrancesPublisher() {
         let exp = expectation(description: #function)
-        let entrances = Rail.Entrances(
+        let entrances = Rail.StationEntrances(
             key: TEST_API_KEY,
             location: .init(
                 radius: 1,
@@ -895,7 +929,7 @@ final class RailCombineTests: CombineTests {
 
     func testPositionsPublisher() {
         let exp = expectation(description: #function)
-        let positions = Rail.Positions(key: TEST_API_KEY)
+        let positions = Rail.TrainPositions(key: TEST_API_KEY)
 
         let cancellable = positions
             .publisher()
@@ -918,7 +952,7 @@ final class RailCombineTests: CombineTests {
 
     func testRoutesPublisher() {
         let exp = expectation(description: #function)
-        let routes = Rail.Routes(key: TEST_API_KEY)
+        let routes = Rail.StandardRoutes(key: TEST_API_KEY)
 
         let cancellable = routes
             .publisher()
@@ -941,7 +975,7 @@ final class RailCombineTests: CombineTests {
 
     func testCircuitsPublisher() {
         let exp = expectation(description: #function)
-        let circuits = Rail.Circuits(key: TEST_API_KEY)
+        let circuits = Rail.TrackCircuits(key: TEST_API_KEY)
 
         let cancellable = circuits
             .publisher()
@@ -1120,7 +1154,7 @@ final class RailCombineTests: CombineTests {
 
     func testPathPublisher() {
         let exp = expectation(description: #function)
-        let path = Rail.Path(
+        let path = Rail.PathBetweenStations(
             key: TEST_API_KEY,
             startingStation: .metroCenterUpper,
             destinationStation: .farragutNorth
@@ -1147,7 +1181,7 @@ final class RailCombineTests: CombineTests {
 
     func testTimingsPublisher() {
         let exp = expectation(description: #function)
-        let timings = Rail.Timings(
+        let timings = Rail.StationTimings(
             key: TEST_API_KEY,
             station: .metroCenterUpper
         )
@@ -1175,7 +1209,7 @@ final class RailCombineTests: CombineTests {
 final class RailGTFSCombineTests: CombineTests {
     func testAlertsPublisher() {
         let exp = expectation(description: #function)
-        let alerts = Rail.Alerts(key: TEST_API_KEY)
+        let alerts = Rail.GTFS.Alerts(key: TEST_API_KEY)
 
         let cancellable = alerts
             .publisher()
@@ -1198,7 +1232,7 @@ final class RailGTFSCombineTests: CombineTests {
 
     func testTripUpdatesPublisher() {
         let exp = expectation(description: #function)
-        let tripUpdates = Rail.TripUpdates(key: TEST_API_KEY)
+        let tripUpdates = Rail.GTFS.TripUpdates(key: TEST_API_KEY)
 
         let cancellable = tripUpdates
             .publisher()
@@ -1221,7 +1255,7 @@ final class RailGTFSCombineTests: CombineTests {
 
     func testVehiclePositionsPublisher() {
         let exp = expectation(description: #function)
-        let vehiclePositions = Rail.VehiclePositions(key: TEST_API_KEY)
+        let vehiclePositions = Rail.GTFS.VehiclePositions(key: TEST_API_KEY)
 
         let cancellable = vehiclePositions
             .publisher()
