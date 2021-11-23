@@ -9,15 +9,30 @@ import Combine
 import Foundation
 
 /// A MetroRail line
+///
+/// Represents the various, colorful rail lines within the MetroRail system.
+/// ![MetroRail system map](metrorail-map)
 public enum Line: String, CaseIterable, Codable {
+    /// Red Line
     case red = "RD"
+    
+    /// Blue Line
     case blue = "BL"
+    
+    /// Yellow Line
     case yellow = "YL"
+    
+    /// Orange Line
     case orange = "OR"
+    
+    /// Green Line
     case green = "GR"
+    
+    /// Silver Line
     case silver = "SV"
     
-    /// Yellow Line Rush Plus (not current).
+    /// Yellow Line Rush Plus (not currently used)
+    ///
     /// This line is only used in the `Standard Routes` endpoint, and is not in normal service.
     case yellowLineRushPlus = "YLRP"
 }
@@ -49,7 +64,9 @@ public extension Line {
         }
     }
     
-    /// If this line is current. `.YLRP` is not current. True for all other Lines.
+    /// If this line is currently used. ``YLRP`` is not current.
+    ///
+    /// True for all other lines.
     var current: Bool {
         switch self {
         case .red, .blue, .yellow, .orange, .green, .silver:
@@ -59,7 +76,7 @@ public extension Line {
         }
     }
     
-    /// All of the current Lines. `.YLRP` is not included.
+    /// All of the current Lines. ``YLRP`` is not included.
     static var allCurrent: [Self] {
         [.red, .blue, .yellow, .orange, .green, .silver]
     }

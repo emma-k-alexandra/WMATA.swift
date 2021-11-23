@@ -42,7 +42,7 @@ extension JSONDecoder.KeyDecodingStrategy {
     }
 }
 
-struct PascalCaseKey: CodingKey {
+struct PascalCaseKey: CodingKey, Equatable, Hashable {
     var stringValue: String
     
     init(stringValue: String) {
@@ -64,7 +64,7 @@ struct PascalCaseKey: CodingKey {
 /// or expansions of keys that WMATA has shortened in their API
 /// in order to follow Swift's [API Design Guidelines](https://swift.org/documentation/api-design-guidelines/)
 /// Example: DirectionNum, DirectionOne
-struct WMATACodingKey: CodingKey {
+struct WMATACodingKey: CodingKey, Equatable, Hashable {
     private static let WMATA_CODING_KEYS = [
         "RouteID": "route",
         "StopID": "stop",
@@ -147,10 +147,9 @@ internal extension DateFormatter {
 
 
 @propertyWrapper
-public struct MapToNil<Wrapped, MappedValue>: Codable
+public struct MapToNil<Wrapped, MappedValue>: Codable, Equatable, Hashable
     where
-        Wrapped: Codable & RawRepresentable,
-        Wrapped.RawValue == String,
+        Wrapped: Codable & Equatable & Hashable,
         MappedValue: WMATAMappedValue
     {
     public var wrappedValue: Wrapped?
@@ -168,7 +167,7 @@ public struct MapToNil<Wrapped, MappedValue>: Codable
             return
         }
         
-        wrappedValue = Wrapped(rawValue: stringValue)
+        wrappedValue = try container.decode(Wrapped.self)
     }
     
     public func encode(to encoder: Encoder) throws {
@@ -178,18 +177,22 @@ public struct MapToNil<Wrapped, MappedValue>: Codable
     }
 }
 
-public protocol WMATAMappedValue {
+public protocol WMATAMappedValue: Hashable {
     static var value: String { get }
 }
 
-public struct EmptyString: WMATAMappedValue {
+public struct EmptyString: WMATAMappedValue, Equatable, Hashable {
     public static let value = ""
 }
 
-public struct Dashes: WMATAMappedValue {
+public struct Dashes: WMATAMappedValue, Equatable, Hashable {
     public static let value = "--"
 }
 
-public struct SingleDash: WMATAMappedValue {
+public struct SingleDash: WMATAMappedValue, Equatable, Hashable {
     public static let value = "-"
+}
+
+public struct SingleZero: WMATAMappedValue, Equatable, Hashable {
+    public static let value = "0"
 }

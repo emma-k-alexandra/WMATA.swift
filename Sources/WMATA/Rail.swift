@@ -29,7 +29,7 @@ public extension Rail {
         
         public weak var delegate: JSONEndpointDelegate<Self>? = nil
         
-        public struct Response: Codable {
+        public struct Response: Codable, Equatable, Hashable {
             /// Information for all lines
             public let lines: [Line]
 
@@ -44,7 +44,7 @@ public extension Rail {
             }
             
             /// Information about a single ``WMATA/Line``.
-            public struct Line: Codable {
+            public struct Line: Codable, Equatable, Hashable {
                 /// The actual line
                 public let line: WMATA.Line
                 
@@ -114,7 +114,7 @@ public extension Rail {
             location?.queryItems() ?? []
         }
         
-        public struct Response: Codable {
+        public struct Response: Codable, Equatable, Hashable {
             /// List of station entrances
             public let entrances: [Entrance]
 
@@ -129,7 +129,7 @@ public extension Rail {
             }
             
             /// A station entrance
-            public struct Entrance: Codable {
+            public struct Entrance: Codable, Equatable, Hashable {
                 /// Additional information for the entrance.
                 public let description: String
                 
@@ -204,7 +204,7 @@ public extension Rail {
             [URLQueryItem(name: "contentType", value: "json")]
         }
         
-        public struct Response: Codable {
+        public struct Response: Codable, Equatable, Hashable {
             /// All train positions
             public let trainPositions: [Positions]
 
@@ -219,7 +219,7 @@ public extension Rail {
             }
             
             /// A train position
-            public struct Positions: Codable {
+            public struct Positions: Codable, Equatable, Hashable {
                 /// Uniquely identifiable internal train identifier
                 public let trainID: String
                 
@@ -333,7 +333,7 @@ public extension Rail {
             [URLQueryItem(name: "contentType", value: "json")]
         }
         
-        public struct Response: Codable {
+        public struct Response: Codable, Equatable, Hashable {
             /// All standard routes
             public let standardRoutes: [StandardRoute]
 
@@ -348,7 +348,7 @@ public extension Rail {
             }
             
             /// A MetroRail route
-            public struct StandardRoute: Codable {
+            public struct StandardRoute: Codable, Equatable, Hashable {
                 /// Line of this route
                 public let line: Line
                 
@@ -381,7 +381,7 @@ public extension Rail {
                 }
                 
                 /// Circuit information
-                public struct TrackCircuit: Codable {
+                public struct TrackCircuit: Codable, Equatable, Hashable {
                     /// Order in which the circuit appears for the given line and track.
                     ///
                     /// Sequences go from West to East and South to North.
@@ -435,7 +435,7 @@ public extension Rail {
             [URLQueryItem(name: "contentType", value: "json")]
         }
         
-        public struct Response: Codable {
+        public struct Response: Codable, Equatable, Hashable {
             /// List of track ciruits
             public let trackCircuits: [TrackCircuit]
 
@@ -450,7 +450,7 @@ public extension Rail {
             }
             
             /// A MetroRail track circuit
-            public struct TrackCircuit: Codable {
+            public struct TrackCircuit: Codable, Equatable, Hashable {
                 /// The type of a track
                 ///
                 /// ![A neighboring track diagram](track-neighbors)
@@ -502,7 +502,7 @@ public extension Rail {
                 /// ![A neighboring track diagram](track-neighbors)
                 ///
                 /// For the JSON of this example, see the [WMATA Track Circuit Documentation](https://developer.wmata.com/docs/services/5763fa6ff91823096cac1057/operations/57644238031f59363c586dcb)
-                public struct TrackNeighbor: Codable {
+                public struct TrackNeighbor: Codable, Equatable, Hashable {
                     /// The type of a neighboring track
                     ///
                     /// Generally speaking, left neighbors are to the west and south, while right neighbors are to the east/north.
@@ -564,7 +564,7 @@ public extension Rail {
             ]
         }
         
-        public struct Response: Codable {
+        public struct Response: Codable, Equatable, Hashable {
             /// List of trips
             public let stationToStationInfos: [Trip]
 
@@ -579,7 +579,7 @@ public extension Rail {
             }
             
             /// A trip between two stations
-            public struct Trip: Codable {
+            public struct Trip: Codable, Equatable, Hashable {
                 /// Average of distance traveled between two stations and straight-line distance (as used for WMATA fare calculations).
                 public let compositeMiles: Double
                 
@@ -620,7 +620,7 @@ public extension Rail {
                 }
                 
                 /// Trip fare information
-                public struct Fare: Codable {
+                public struct Fare: Codable, Equatable, Hashable {
                     /// Fare during off-peak times.
                     public let offPeakTime: Double
                     
@@ -670,8 +670,8 @@ public extension Rail {
             [station?.queryItem()]
         }
         
-        public struct Response: Codable {
-            /// List of elevator and escalator incidents
+        public struct Response: Codable, Equatable, Hashable {
+            /// All elevator and escalator incidents
             public let incidents: [Incident]
 
             /// Create an elevator and escalator incidents response
@@ -685,7 +685,7 @@ public extension Rail {
             }
             
             /// An elevator or escalator incident
-            public struct Incident: Codable {
+            public struct Incident: Codable, Equatable, Hashable {
                 /// Unique identifier for unit, by type (a single elevator and escalator may have the same UnitName, but no two elevators or two escalators will have the same UnitName).
                 public let unitName: String
                 
@@ -805,7 +805,7 @@ public extension Rail {
             [station?.queryItem()]
         }
         
-        public struct Response: Codable {
+        public struct Response: Codable, Equatable, Hashable {
             /// List of rail incidents
             public let incidents: [Incident]
 
@@ -820,7 +820,7 @@ public extension Rail {
             }
             
             /// A MetroRail incident
-            public struct Incident: Codable {
+            public struct Incident: Codable, Equatable, Hashable {
                 /// Unique identifier for an incident.
                 public let incidentID: String
                 
@@ -850,7 +850,7 @@ public extension Rail {
                 /// To get the lines, use ``lines``.
                 ///
                 /// This struct is needed due to WMATA sending this data in this awful format: Semi-colon and space separated list of line codes (e.g.: "RD;" or "BL; OR;" or "BL; OR; RD;")
-                public struct LinesAffected: Codable {
+                public struct LinesAffected: Codable, Equatable, Hashable {
                     
                     /// The lines effected by an incident
                     public let lines: [Line]
@@ -973,7 +973,7 @@ public extension Rail {
         /// ```
         ///
         /// Avoid using single stations like ` [.waterfront]`, ``Rail/NextTrains/init(key:station:delegate:)`` is recommended instead. However, single value sets _are_ supported if your use case requires them.
-        public struct StationSet: ExpressibleByArrayLiteral {
+        public struct StationSet: ExpressibleByArrayLiteral, Equatable, Hashable {
             let stations: [Station]
             let all: Bool
             
@@ -1052,7 +1052,7 @@ public extension Rail {
             self.delegate = delegate
         }
         
-        public struct Response: Codable {
+        public struct Response: Codable, Equatable, Hashable {
             /// List of predictions
             public let trains: [Prediction]
 
@@ -1067,7 +1067,7 @@ public extension Rail {
             }
             
             ///
-            public struct Prediction: Codable {
+            public struct Prediction: Codable, Equatable, Hashable {
                 /// The number of cars a train has
                 public enum Cars: String, Codable {
                     /// Six cars
@@ -1118,8 +1118,8 @@ public extension Rail {
                 
                 /// The time until arrival. Matches signs within a MetroRail station
                 ///
-                /// Sometimes a ``number(_:)`` a number, can also be ``arriving``, ``boarding`` or ``unknown``.
-                public enum Minutes: Codable {
+                /// Sometimes a number in ``minutes(_:)``, can also be ``arriving``, ``boarding`` or ``unknown``.
+                public enum Minutes: Codable, Equatable, Hashable {
                     /// Time to arrival in minutes
                     case minutes(Int)
                     
@@ -1217,10 +1217,15 @@ public extension Rail {
         }
     }
     
+    /// Station location and address information
+    ///
+    /// [WMATA Station Information Documentation](https://developer.wmata.com/docs/services/5476364f031f590f38092507/operations/5476364f031f5909e4fe3310)
     struct StationInformation: JSONEndpoint {
         public let url = URLComponents(staticString: "https://api.wmata.com/Rail.svc/json/jStationInfo")
         
         public let key: APIKey
+        
+        /// Station to get information about
         public let station: Station
         
         public weak var delegate: JSONEndpointDelegate<Self>? = nil
@@ -1229,13 +1234,11 @@ public extension Rail {
             [station.queryItem()]
         }
         
-        /// Response from the [Station Information API](https://developer.wmata.com/docs/services/5476364f031f590f38092507/operations/5476364f031f5909e4fe3310),
-        /// - Tag: StationInformation
-        public struct Response: Codable {
-            /// Address information.
+        public struct Response: Codable, Equatable, Hashable {
+            /// The station's address
             public let address: Address
             
-            /// Station code
+            /// The given station
             public let station: Station
             
             /// Latitude of this station.
@@ -1244,16 +1247,16 @@ public extension Rail {
             /// Longitude of this station.
             public let longitude: Double
             
-            /// First line of this station
+            /// First line served by this station
             public let firstLine: Line
             
-            /// Second line of this station
+            /// Second line served by this station
             public let secondLine: Line?
             
-            /// Third line of this station
+            /// Third line served by this station
             public let thirdLine: Line?
             
-            /// Fourth line of this station. Unused.
+            /// Fourth line served by this station. Unused.
             public let fourthLine: Line?
             
             /// Name of this station
@@ -1307,9 +1310,8 @@ public extension Rail {
                 self.secondStationTogether = secondStationTogether
             }
             
-            /// Response from the [Station Information API](https://developer.wmata.com/docs/services/5476364f031f590f38092507/operations/5476364f031f5909e4fe3310)
-            /// - Tag: StationAddress
-            public struct Address: Codable {
+            /// Address of a station
+            public struct Address: Codable, Equatable, Hashable {
                 /// City of this station.
                 public let city: String
                 
@@ -1344,22 +1346,27 @@ public extension Rail {
         }
     }
     
+    /// Parking information for a station
+    ///
+    /// Omit `station` to receive parking information for all stations.
+    ///
+    /// [WMATA Parking Information Documentation](https://developer.wmata.com/docs/services/5476364f031f590f38092507/operations/5476364f031f5909e4fe330d)
     struct ParkingInformation: JSONEndpoint {
         public let url = URLComponents(staticString: "https://api.wmata.com/Rail.svc/json/jStationParking")
         
         public let key: APIKey
-        public let station: Station
+        
+        /// Station to receive parking information for
+        public var station: Station? = nil
         
         public weak var delegate: JSONEndpointDelegate<Self>? = nil
         
         internal func queryItems() -> [URLQueryItem?] {
-            [station.queryItem()]
+            [station?.queryItem()]
         }
         
-        /// Response from the [Parking Information API](https://developer.wmata.com/docs/services/5476364f031f590f38092507/operations/5476364f031f5909e4fe330d)
-        /// - Tag: StationsParking
-        public struct Response: Codable {
-            /// List of parking information
+        public struct Response: Codable, Equatable, Hashable {
+            /// All parking information. Will contain zero elements if a station has no parking.
             public let stationsParking: [Parking]
 
             /// Create stations parking response
@@ -1372,14 +1379,13 @@ public extension Rail {
                 self.stationsParking = stationsParking
             }
             
-            /// Response from the [Parking Information API](https://developer.wmata.com/docs/services/5476364f031f590f38092507/operations/5476364f031f5909e4fe330d)
-            /// - Tag: StationParking
-            public struct Parking: Codable {
+            /// Parking information for a station
+            public struct Parking: Codable, Equatable, Hashable {
                 /// Station this parking info is for
                 public let station: Station
                 
-                /// When not empty, provides additional parking resources such as nearby lots.
-                public let notes: String
+                /// Additional parking resources such as nearby lots.
+                public let notes: String?
                 
                 /// All-day parking options.
                 public let allDayParking: AllDay
@@ -1396,7 +1402,7 @@ public extension Rail {
                 ///     - shortTermParking: Short term parking options
                 public init(
                     station: Station,
-                    notes: String,
+                    notes: String?,
                     allDayParking: AllDay,
                     shortTermParking: ShortTerm
                 ) {
@@ -1406,9 +1412,8 @@ public extension Rail {
                     self.shortTermParking = shortTermParking
                 }
                 
-                /// Response from the [Parking Information API](https://developer.wmata.com/docs/services/5476364f031f590f38092507/operations/5476364f031f5909e4fe330d)
-                /// - Tag: AllDayParking
-                public struct AllDay: Codable {
+                /// All day parking options
+                public struct AllDay: Codable, Equatable, Hashable {
                     /// Number of all-day parking spots available at a station.
                     public let totalCount: Int
                     
@@ -1447,14 +1452,13 @@ public extension Rail {
                     }
                 }
                 
-                /// Response from the [Parking Information API](https://developer.wmata.com/docs/services/5476364f031f590f38092507/operations/5476364f031f5909e4fe330d)
-                /// - Tag: ShortTermParking
-                public struct ShortTerm: Codable {
+                /// Short term parking options
+                public struct ShortTerm: Codable, Equatable, Hashable {
                     /// Number of short-term parking spots available at a station (parking meters).
                     public let totalCount: Int
                     
                     /// Misc. information relating to short-term parking.
-                    public let notes: String
+                    public let notes: String?
 
                     /// Create a short term parking response
                     ///
@@ -1474,11 +1478,20 @@ public extension Rail {
         }
     }
     
+    /// Ordered stations and distances between two stations on the same line
+    ///
+    /// If you need to find paths between stations of different lines use ``Rail/StationToStation``
+    ///
+    /// [WMATA Path Between Stations Documentation](https://developer.wmata.com/docs/services/5476364f031f590f38092507/operations/5476364f031f5909e4fe330e)
     struct PathBetweenStations: JSONEndpoint {
         public let url = URLComponents(staticString: "https://api.wmata.com/Rail.svc/json/jPath")
         
         public let key: APIKey
+        
+        /// Origin station of a trip
         public let startingStation: Station
+        
+        /// Destination station of a trip
         public let destinationStation: Station
         
         public weak var delegate: JSONEndpointDelegate<Self>? = nil
@@ -1490,9 +1503,7 @@ public extension Rail {
             ]
         }
         
-        /// Response from the [Path Between Stations API](https://developer.wmata.com/docs/services/5476364f031f590f38092507/operations/5476364f031f5909e4fe330e)
-        /// - Tag: PathBetweenStations
-        public struct Response: Codable {
+        public struct Response: Codable, Equatable, Hashable {
             /// List of path information
             public let path: [Path]
 
@@ -1506,9 +1517,8 @@ public extension Rail {
                 self.path = path
             }
             
-            /// Response from the [Path Between Stations API](https://developer.wmata.com/docs/services/5476364f031f590f38092507/operations/5476364f031f5909e4fe330e)
-            /// - Tag: Path
-            public struct Path: Codable {
+            /// A station along a path between two stations
+            public struct Path: Codable, Equatable, Hashable {
                 /// Distance in feet to the previous station in the list.
                 public let distanceToPreviousStation: Int
                 
@@ -1549,21 +1559,26 @@ public extension Rail {
         }
     }
     
+    /// Opening and scheduled first/last train times for a station
+    ///
+    /// Omit `station` to receive timings for all stations
+    ///
+    /// [WMATA Station Timings Documentation](https://developer.wmata.com/docs/services/5476364f031f590f38092507/operations/5476364f031f5909e4fe3312)
     struct StationTimings: JSONEndpoint {
         public let url = URLComponents(staticString: "https://api.wmata.com/Rail.svc/json/jStationTimes")
         
         public let key: APIKey
-        public let station: Station
+        
+        /// A station to receive timings for. Omit to receive data for all stations.
+        public var station: Station? = nil
         
         public weak var delegate: JSONEndpointDelegate<Self>? = nil
         
         internal func queryItems() -> [URLQueryItem?] {
-            [station.queryItem()]
+            [station?.queryItem()]
         }
-        
-        /// Response from the [Station Timings API](https://developer.wmata.com/docs/services/5476364f031f590f38092507/operations/5476364f031f5909e4fe3312)
-        /// - Tag: StationTimings
-        public struct Response: Codable {
+
+        public struct Response: Codable, Equatable, Hashable {
             /// List of station times
             public let stationTimes: [Timing]
 
@@ -1575,10 +1590,9 @@ public extension Rail {
                 self.stationTimes = stationTimes
             }
             
-            /// Response from the [Station Timings API](https://developer.wmata.com/docs/services/5476364f031f590f38092507/operations/5476364f031f5909e4fe3312)
-            /// - Tag: StationTime
-            public struct Timing: Codable {
-                /// Station code
+            /// Timing information for a station
+            public struct Timing: Codable, Equatable, Hashable {
+                /// The station this information is for
                 public let station: Station
                 
                 /// Full name of the station.
@@ -1639,11 +1653,69 @@ public extension Rail {
                     self.sunday = sunday
                 }
                 
-                /// Response from the [Station Timings API](https://developer.wmata.com/docs/services/5476364f031f590f38092507/operations/5476364f031f5909e4fe3312)
-                /// - Tag: StationFirstLastTrains
-                public struct Day: Codable {
+                /// Station timings for a single day
+                public struct Day: Codable, Equatable, Hashable {
+                    /// Hours and minutes of a time
+                    ///
+                    /// The WMATA API sends times in the format `"HH:mm"`. This isn't every useful. Here, ``hours`` and ``minutes`` are provided as `Int` for easy date building through `DateComponents` and the like.
+                    public struct WMATATime: Codable, Equatable, Hashable {
+                        /// Hours of a time
+                        public let hours: Int
+                        
+                        /// Minutes of a time
+                        public let minutes: Int
+                        
+                        /// The original WMATA formatted time
+                        ///
+                        /// Format: `"HH:mm"`
+                        public let stringValue: String
+                        
+                        public init(from decoder: Decoder) throws {
+                            let container = try decoder.singleValueContainer()
+                            
+                            stringValue = try container.decode(String.self)
+                            
+                            let splitValue = stringValue.split(separator: ":").map { Int($0) }
+                            
+                            guard let hours = splitValue[0] else {
+                                throw DecodingError.valueNotFound(
+                                    Int.self, .init(
+                                        codingPath: decoder.codingPath,
+                                        debugDescription: "Attempted to get hours from `Timing.Day.openingTime` but wasn't able to get hours from \(stringValue)"
+                                    )
+                                )
+                            }
+                            
+                            self.hours = hours
+                            
+                            guard let minutes = splitValue[1] else {
+                                throw DecodingError.valueNotFound(
+                                    Int.self, .init(
+                                        codingPath: decoder.codingPath,
+                                        debugDescription: "Attempted to get minutes from `Timing.Day.openingTime` but wasn't able to get minutes from \(stringValue)"
+                                    )
+                                )
+                            }
+                            
+                            self.minutes = minutes
+                        }
+                        
+                        public func encode(to encoder: Encoder) throws {
+                            var container = encoder.singleValueContainer()
+                            
+                            try container.encode(stringValue)
+                        }
+                        
+                        /// Convenience initializer for testing and debugging
+                        public init(hours: Int, minutes: Int) {
+                            self.hours = hours
+                            self.minutes = minutes
+                            self.stringValue = "\(hours):\(minutes)"
+                        }
+                    }
+                    
                     /// Station opening time. Format is HH:mm.
-                    public let openingTime: String
+                    public let openingTime: WMATATime
                     
                     /// First train information
                     public let firstTrains: [Time]
@@ -1658,7 +1730,7 @@ public extension Rail {
                     ///     - firstTrains: First train information
                     ///     - lastTrains: Last trains information
                     public init(
-                        openingTime: String,
+                        openingTime: WMATATime,
                         firstTrains: [Time],
                         lastTrains: [Time]
                     ) {
@@ -1667,11 +1739,10 @@ public extension Rail {
                         self.lastTrains = lastTrains
                     }
                     
-                    /// Response from the [Station Timings API](https://developer.wmata.com/docs/services/5476364f031f590f38092507/operations/5476364f031f5909e4fe3312)
-                    /// - Tag: TrainTime
-                    public struct Time: Codable {
-                        /// Time the train leaves the station. Format is HH:mm.
-                        public let time: String
+                    /// The time and destination of a train departure
+                    public struct Time: Codable, Equatable, Hashable {
+                        /// Time the train leaves the station.
+                        public let time: WMATATime
                         
                         /// Train's destination
                         public let destination: Station
@@ -1681,7 +1752,7 @@ public extension Rail {
                         /// - Parameters:
                         ///     - time: Time the train leaves the station
                         ///     - destination: Destination station
-                        public init(time: String, destination: Station) {
+                        public init(time: WMATATime, destination: Station) {
                             self.time = time
                             self.destination = destination
                         }
@@ -1691,10 +1762,19 @@ public extension Rail {
         }
     }
     
+    /// Station location and address information for a given ``Line``
+    ///
+    /// Omit `line` to receive all stations
+    ///
+    /// Response is identical to ``Rail/StationInformation/Response``
+    ///
+    /// [WMATA Station List Documentation](https://developer.wmata.com/docs/services/5476364f031f590f38092507/operations/5476364f031f5909e4fe3311)
     struct Stations: JSONEndpoint {
         public let url = URLComponents(staticString: "https://api.wmata.com/Rail.svc/json/jStations")
         
         public let key: APIKey
+        
+        /// Line to receive station information for. Omit to receive all stations.
         public var line: Line? = nil
         
         public weak var delegate: JSONEndpointDelegate<Self>? = nil
@@ -1703,9 +1783,7 @@ public extension Rail {
             [line?.queryItem()]
         }
         
-        /// Response from the [Station List API](https://developer.wmata.com/docs/services/5476364f031f590f38092507/operations/5476364f031f5909e4fe3311)
-        /// - Tag: Stations
-        public struct Response: Codable {
+        public struct Response: Codable, Equatable, Hashable {
             /// List of station information
             public let stations: [StationInformation.Response]
 
@@ -1723,6 +1801,12 @@ public extension Rail {
 }
 
 public extension Rail.GTFS {
+    
+    /// GTFS 1.0 Service Alerts feed for MetroRail
+    ///
+    /// Service alerts represent higher level problems with station, lines or all of MetroRail
+    ///
+    /// [GTFS Alerts Documentation](https://gtfs.org/reference/realtime/v1/#message-alert)
     struct Alerts: GTFSEndpoint {
         public let url = URLComponents(staticString: "https://api.wmata.com/gtfs/rail-gtfsrt-alerts.pb")
         
@@ -1731,6 +1815,11 @@ public extension Rail.GTFS {
         public weak var delegate: GTFSEndpointDelegate<Self>? = nil
     }
     
+    /// GTFS 1.0 Trip Updates feed for MetroRail
+    ///
+    /// Trip updates represent fluctuations in the timetable
+    ///
+    /// [GTFS Trip Updates Documentation](https://gtfs.org/reference/realtime/v1/#message-tripupdate)
     struct TripUpdates: GTFSEndpoint {
         public let url = URLComponents(staticString: "https://api.wmata.com/gtfs/rail-gtfsrt-tripupdates.pb")
         
@@ -1739,6 +1828,11 @@ public extension Rail.GTFS {
         public weak var delegate: GTFSEndpointDelegate<Self>? = nil
     }
     
+    /// GTFS 1.0 Vehicle Positions feed for MetroRail
+    ///
+    /// Locations of MetroRail trains
+    ///
+    /// [GTFS Trip Updates Documentation](https://gtfs.org/reference/realtime/v1/#message-vehicleposition)
     struct VehiclePositions: GTFSEndpoint {
         public let url = URLComponents(staticString: "https://api.wmata.com/gtfs/rail-gtfsrt-vehiclepositions.pb")
         

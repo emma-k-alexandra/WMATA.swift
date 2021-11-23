@@ -8,7 +8,7 @@
 import Foundation
 
 /// For defining a location and radius from that location in meters
-public struct WMATALocation {
+public struct WMATALocation: Equatable, Hashable {
     /// Radius from location in meters
     public let radius: UInt
     
@@ -40,7 +40,7 @@ public struct WMATALocation {
     }
     
     /// Location in latlong
-    public struct Coordinates {
+    public struct Coordinates: Equatable, Hashable {
         /// Latitude in degrees, positive
         public let latitude: Double
         

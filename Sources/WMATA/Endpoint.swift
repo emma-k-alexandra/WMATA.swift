@@ -9,7 +9,10 @@ import Foundation
 import Combine
 import GTFS
 
-public protocol Endpoint: WMATADecoding {
+/// A WMATA API endpoint
+///
+/// Used to make requests and receive responses from an API. Endpoints are available in ``Rail`` for MetroRail and ``Bus`` for MetroBus.
+public protocol Endpoint: WMATADecoding, Hashable {
     /// The response WMATA sends back when calling this endpoint
     associatedtype Response
     
@@ -33,13 +36,18 @@ public protocol Endpoint: WMATADecoding {
     ///
     /// > Note: You generally will not need this in typical usage
     var url: URLComponents { get }
+    
+    /// The URL query items to pass along with the URL for this endpoint
+    ///
+    /// > Note: You will not need this in typical usage
+    func queryItems() -> [URLQueryItem?]
 }
 
-internal extension Endpoint {
-    func queryItems() -> [URLQueryItem?] {
-        []
-    }
+extension Endpoint {
     
+   
+    
+    /// Generate a URL that includes this endpoint's URL query items
     func url(with queryItems: [URLQueryItem?]) -> URL? {
         var components = self.url
         components.queryItems = queryItems.withoutNil()
@@ -47,6 +55,7 @@ internal extension Endpoint {
         return components.url
     }
     
+    /// Generate a request that includes url, query items and API key for this endpoint.
     func urlRequest() -> URLRequest? {
         guard let url = url(with: queryItems()) else {
             return nil
@@ -59,6 +68,9 @@ internal extension Endpoint {
     }
 }
 
+/// An endpoint that returns JSON data.
+///
+/// WMATA's Standard API returns JSON.
 public protocol JSONEndpoint: Endpoint where Response: Codable {
     /// Delegate to send background requests to
     var delegate: JSONEndpointDelegate<Self>? { get set }
@@ -152,6 +164,9 @@ public extension JSONEndpoint {
     }
 }
 
+/// An endpoint that returns GTFS Protocol Buffer data.
+///
+/// WMATA's GTFS endpoints return GTFS Protocol Buffer data.
 public protocol GTFSEndpoint: Endpoint where Response == TransitRealtime_FeedMessage {
     /// Delegate to send background requests to
     var delegate: GTFSEndpointDelegate<Self>? { get set }
@@ -159,6 +174,10 @@ public protocol GTFSEndpoint: Endpoint where Response == TransitRealtime_FeedMes
 
 // GTFS-RT
 public extension GTFSEndpoint {
+    func queryItems() -> [URLQueryItem?] {
+        []
+    }
+    
     func backgroundRequest() {
         guard let delegate = delegate else {
             preconditionFailure("Request sent to delegate without delegate defined on endpoint \(String(describing: self))")
@@ -231,7 +250,6 @@ public extension GTFSEndpoint {
                     message: "Unable to create URLRequest for endpoint \(String(describing: self))"
                 )
             ).eraseToAnyPublisher()
-            
         }
             
         return session

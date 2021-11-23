@@ -297,7 +297,7 @@ final class BusTests: XCTestCase {
         waitForExpectations(timeout: 1)
     }
 
-    func testSchedule() {
+    func testStopSchedule() {
         let exp = expectation(description: #function)
         let stopSchedule = Bus.StopSchedule(
             key: TEST_API_KEY,
@@ -317,7 +317,7 @@ final class BusTests: XCTestCase {
         waitForExpectations(timeout: 1)
     }
 
-    func testScheduleWithDelegate() {
+    func testStopScheduleWithDelegate() {
         let delegate = TestJSONDelegate<Bus.StopSchedule>(expectation: expectation(description: #function))
         
         let stopSchedule = Bus.StopSchedule(

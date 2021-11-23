@@ -45,14 +45,14 @@ public extension Bus {
         
         public weak var delegate: JSONEndpointDelegate<Self>? = nil
 
-        internal func queryItems() -> [URLQueryItem?] {
+        public func queryItems() -> [URLQueryItem?] {
             var queryItems = [route?.queryItem(name: .routeID)]
             queryItems.append(contentsOf: location?.queryItems() ?? [])
             
             return queryItems
         }
         
-        public struct Response: Codable {
+        public struct Response: Codable, Equatable, Hashable {
             /// List of bus positions
             public let busPositions: [Position]
 
@@ -66,7 +66,7 @@ public extension Bus {
                 self.busPositions = busPositions
             }
             
-            public struct Position: Codable {
+            public struct Position: Codable, Equatable, Hashable {
                 /// Date and time (Eastern Standard Time) of last position update.
                 public let dateTime: Date
                 
@@ -176,11 +176,11 @@ public extension Bus {
         
         public weak var delegate: JSONEndpointDelegate<Self>? = nil
         
-        internal func queryItems() -> [URLQueryItem?] {
+        public func queryItems() -> [URLQueryItem?] {
             [route?.queryItem(name: .route)]
         }
         
-        public struct Response: Codable {
+        public struct Response: Codable, Equatable, Hashable {
             /// List of incidents
             public let busIncidents: [Incident]
 
@@ -195,7 +195,7 @@ public extension Bus {
             }
             
             /// A MetroBus incident
-            public struct Incident: Codable {
+            public struct Incident: Codable, Equatable, Hashable {
                 /// Date and time (Eastern Standard Time) of last update.
                 public let dateUpdated: Date
                 
@@ -256,21 +256,23 @@ public extension Bus {
         
         public weak var delegate: JSONEndpointDelegate<Self>? = nil
         
-        internal func queryItems() -> [URLQueryItem?] {
+        public func queryItems() -> [URLQueryItem?] {
             [ route.queryItem(name: .routeID), date?.queryItem() ]
         }
         
-        public struct Response: Codable {
+        public struct Response: Codable, Equatable, Hashable {
             
-            /// Bus route
+            /// MetroBus route
             public let route: Route
             
             /// Descriptive name for the route.
             public let name: String
             
             /// Structures describing path/stop information.
-            /// Most routes will return content in both Direction0 and Direction1 elements, though a few will return NULL for Direction0 or for Direction1.
-            /// 0 or 1 are binary properties. There is no specific mapping to direction, but a different value for the same route signifies that the route is in an opposite direction.
+            ///
+            /// Most routes will return content in both ``directionZero`` and ``directionOne`` elements, though a few will return `nil` for either.
+            ///
+            /// There is no specific mapping to direction, but a different value for the same route signifies that the route is in an opposite direction.
             public let directionZero: Direction?
             
             /// Structures describing path/stop information.
@@ -300,7 +302,7 @@ public extension Bus {
             }
             
             /// Structure describing path/stop information.
-            public struct Direction: Codable {
+            public struct Direction: Codable, Equatable, Hashable {
                 
                 /// Descriptive text of where the bus is headed. This is similar, but not necessarily identical, to what is displayed on the bus.
                 public let tripHeadsign: String
@@ -343,7 +345,7 @@ public extension Bus {
             }
             
             /// A latitude and longitude of a stop
-            public struct Point: Codable {
+            public struct Point: Codable, Equatable, Hashable {
                 /// Latitude of stop.
                 public let latitude: Double
                 
@@ -371,7 +373,7 @@ public extension Bus {
             }
             
             /// Stop information
-            public struct Stop: Codable {
+            public struct Stop: Codable, Equatable, Hashable {
                 /// The ``WMATA/Stop``
                 /// > Warning: A `stop` of `0` incidates an unknown stop.
                 public let stop: WMATA.Stop?
@@ -436,7 +438,7 @@ public extension Bus {
         
         public weak var delegate: JSONEndpointDelegate<Self>? = nil
         
-        internal func queryItems() -> [URLQueryItem?] {
+        public func queryItems() -> [URLQueryItem?] {
             [
                 route.queryItem(name: .routeID),
                 date?.queryItem(),
@@ -447,7 +449,7 @@ public extension Bus {
             ]
         }
         
-        public struct Response: Codable {
+        public struct Response: Codable, Equatable, Hashable {
             /// Descriptive name for the route.
             public let name: String
             
@@ -484,7 +486,7 @@ public extension Bus {
             }
             
             /// Information about a ``Route``
-            public struct RouteInfo: Codable {
+            public struct RouteInfo: Codable, Equatable, Hashable {
                 /// Bus route variant. This can be used in several other bus methods which accept variants.
                 public let route: Route
                 
@@ -542,7 +544,7 @@ public extension Bus {
                 }
                 
                 /// Information about a ``Stop``
-                public struct StopInfo: Codable {
+                public struct StopInfo: Codable, Equatable, Hashable {
                     /// A MetroBus stop
                     /// > Warning: A `stop` of `0` incidates an unknown stop.
                     public let stop: Stop?
@@ -592,11 +594,11 @@ public extension Bus {
         
         public weak var delegate: JSONEndpointDelegate<Self>? = nil
         
-        internal func queryItems() -> [URLQueryItem?] {
+        public func queryItems() -> [URLQueryItem?] {
             [stop.queryItem(name: .stopID)]
         }
         
-        public struct Response: Codable {
+        public struct Response: Codable, Equatable, Hashable {
             /// List of predictions
             public let predictions: [Prediction]
             
@@ -615,7 +617,7 @@ public extension Bus {
             }
             
             /// An arrival time prediction for a MetroBus
-            public struct Prediction: Codable {
+            public struct Prediction: Codable, Equatable, Hashable {
                 /// Denotes a binary direction (0 or 1) of the bus.
                 ///
                 /// There is no specific mapping to direction, but a different value for the same route signifies that the buses are traveling in opposite directions. Use the ``directionText`` element to show the actual destination of the bus.
@@ -684,14 +686,14 @@ public extension Bus {
         
         public weak var delegate: JSONEndpointDelegate<Self>? = nil
         
-        internal func queryItems() -> [URLQueryItem?] {
+        public func queryItems() -> [URLQueryItem?] {
             [
                 stop.queryItem(name: .stopID),
                 date?.queryItem()
             ]
         }
         
-        public struct Response: Codable {
+        public struct Response: Codable, Equatable, Hashable {
             /// Arrivals at this stop
             public let scheduleArrivals: [Arrival]
             
@@ -714,7 +716,7 @@ public extension Bus {
             }
             
             /// Bus arrival information
-            public struct Arrival: Codable {
+            public struct Arrival: Codable, Equatable, Hashable {
                 /// Date and time (Eastern Standard Time) when the bus is scheduled to stop at this location.
                 public let scheduleTime: Date
                 
@@ -733,7 +735,7 @@ public extension Bus {
                 ///
                 /// This variant can be used in several other bus endpoints which accept variants.
                 ///
-                /// > Note: Customers will never see anything other than the base route name, so variants 10A, 10Av1, 10Av2, etc. will be displayed as 10A on the bus.
+                /// > Note: Customers will never see anything other than the base route name, so variants `10A`, `10Av1`, `10Av2`, etc. will be displayed as `10A` on the bus.
                 public let route: Route
                 
                 /// General direction of the trip (e.g.: NORTH, SOUTH, EAST, WEST).
@@ -780,10 +782,9 @@ public extension Bus {
             }
             
             /// A stop schedule
-            public struct StopSchedule: Codable {
-                /// 7-digit regional ID which can be used in various bus-related methods.
-                /// > Warning: A `stop` of `0` incidates an unknown stop.
-                public let stop: Stop?
+            public struct StopSchedule: Codable, Equatable, Hashable {
+                /// A MetroBus stop
+                @MapToNil<Stop, SingleZero> public var stop: Stop?
                 
                 /// Stop name.
                 ///
@@ -841,11 +842,11 @@ public extension Bus {
         
         public weak var delegate: JSONEndpointDelegate<Self>? = nil
         
-        internal func queryItems() -> [URLQueryItem?] {
+        public func queryItems() -> [URLQueryItem?] {
             location?.queryItems() ?? []
         }
 
-        public struct Response: Codable {
+        public struct Response: Codable, Equatable, Hashable {
             /// List of stop schedules
             public let stops: [StopSchedule]
             
@@ -860,10 +861,9 @@ public extension Bus {
             }
             
             /// A stop schedule
-            public struct StopSchedule: Codable {
+            public struct StopSchedule: Codable, Equatable, Hashable {
                 /// A MetroBus stop
-                /// > Warning: A `stop` of `0` incidates an unknown stop.
-                public let stop: Stop?
+                @MapToNil<Stop, SingleZero> public var stop: Stop?
                 
                 /// Stop name.
                 ///
@@ -916,7 +916,7 @@ public extension Bus {
         
         public weak var delegate: JSONEndpointDelegate<Self>? = nil
         
-        public struct Response: Codable {
+        public struct Response: Codable, Equatable, Hashable {
             /// All routes
             public let routes: [Route]
 
@@ -933,7 +933,7 @@ public extension Bus {
             /// A MetroBus route.
             ///
             /// Different than ``WMATA/Route``
-            public struct Route: Codable {
+            public struct Route: Codable, Equatable, Hashable {
                 /// A MetroBus route
                 public let route: WMATA.Route
                 

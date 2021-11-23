@@ -15,7 +15,7 @@ import Foundation
 /// Physical stations with multiple levels like L'Enfant Plaza require multiple station codes. For example, `lenfantPlazaUpper` is a single level within the L'Enfant Plaza station, along with `lenfantPlazaLower`. All stations follow this `...Upper` and `...Lower` naming convention. You can also use ``together`` or ``allTogether`` to get all relevant stations.
 ///
 /// ![A train passes at the Pentagon City MetroRail station](metrorail-station)
-public enum Station: String, CaseIterable, Codable {
+public enum Station: String, CaseIterable, Codable, Equatable, Hashable {
     /// Red line tracks for Metro Center
     case metroCenterUpper = "A01"
     case farragutNorth = "A02"
