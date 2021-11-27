@@ -24,7 +24,7 @@ public class EndpointDelegate<Parent: Endpoint>: NSObject, URLSessionDownloadDel
             return
         }
         
-        received(.failure(error.wmataError))
+        received(.failure(.backgroundSessionFailure(underlyingError: error)))
     }
     
     public func urlSession(_ session: URLSession, didBecomeInvalidWithError error: Error?) {
@@ -32,7 +32,7 @@ public class EndpointDelegate<Parent: Endpoint>: NSObject, URLSessionDownloadDel
             return
         }
         
-        received(.failure(error.wmataError))
+        received(.failure(.backgroundSessionBecameInvalid(underlyingError: error)))
     }
 }
 
@@ -41,10 +41,7 @@ extension EndpointDelegate {
         do {
             return .success(try Data(contentsOf: location))
         } catch {
-            return .failure(.init(
-                statusCode: 2,
-                message: "Unable to load data from given URL \(location) after download completed. Error: \(error)"
-            ))
+            return .failure(.unableToLoadBackgroundFile(location: location))
         }
     }
     

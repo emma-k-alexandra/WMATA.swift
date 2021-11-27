@@ -29,6 +29,10 @@ public extension Rail {
         
         public weak var delegate: JSONEndpointDelegate<Self>? = nil
         
+        public func queryItems() -> [URLQueryItem?] {
+            []
+        }
+        
         public struct Response: Codable, Equatable, Hashable {
             /// Information for all lines
             public let lines: [Line]
@@ -110,7 +114,7 @@ public extension Rail {
         
         public weak var delegate: JSONEndpointDelegate<Self>? = nil
         
-        internal func queryItems() -> [URLQueryItem?] {
+        public func queryItems() -> [URLQueryItem?] {
             location?.queryItems() ?? []
         }
         
@@ -200,7 +204,7 @@ public extension Rail {
         
         public weak var delegate: JSONEndpointDelegate<Self>? = nil
         
-        internal func queryItems() -> [URLQueryItem?] {
+        public func queryItems() -> [URLQueryItem?] {
             [URLQueryItem(name: "contentType", value: "json")]
         }
         
@@ -329,7 +333,7 @@ public extension Rail {
         
         public weak var delegate: JSONEndpointDelegate<Self>? = nil
         
-        internal func queryItems() -> [URLQueryItem?] {
+        public func queryItems() -> [URLQueryItem?] {
             [URLQueryItem(name: "contentType", value: "json")]
         }
         
@@ -431,7 +435,7 @@ public extension Rail {
         
         public weak var delegate: JSONEndpointDelegate<Self>? = nil
         
-        internal func queryItems() -> [URLQueryItem?] {
+        public func queryItems() -> [URLQueryItem?] {
             [URLQueryItem(name: "contentType", value: "json")]
         }
         
@@ -557,7 +561,7 @@ public extension Rail {
         
         public weak var delegate: JSONEndpointDelegate<Self>? = nil
         
-        internal func queryItems() -> [URLQueryItem?] {
+        public func queryItems() -> [URLQueryItem?] {
             [
                 station?.queryItem(name: .from),
                 destinationStation?.queryItem(name: .to)
@@ -666,7 +670,7 @@ public extension Rail {
         
         public weak var delegate: JSONEndpointDelegate<Self>? = nil
         
-        internal func queryItems() -> [URLQueryItem?] {
+        public func queryItems() -> [URLQueryItem?] {
             [station?.queryItem()]
         }
         
@@ -801,7 +805,7 @@ public extension Rail {
         
         public weak var delegate: JSONEndpointDelegate<Self>? = nil
         
-        internal func queryItems() -> [URLQueryItem?] {
+        public func queryItems() -> [URLQueryItem?] {
             [station?.queryItem()]
         }
         
@@ -1020,6 +1024,10 @@ public extension Rail {
         
         public weak var delegate: JSONEndpointDelegate<Self>? = nil
         
+        public func queryItems() -> [URLQueryItem?] {
+            []
+        }
+        
         /// Create a Next Trains call for multiple or all stations
         ///
         /// - Parameters
@@ -1230,7 +1238,7 @@ public extension Rail {
         
         public weak var delegate: JSONEndpointDelegate<Self>? = nil
         
-        internal func queryItems() -> [URLQueryItem?] {
+        public func queryItems() -> [URLQueryItem?] {
             [station.queryItem()]
         }
         
@@ -1361,7 +1369,7 @@ public extension Rail {
         
         public weak var delegate: JSONEndpointDelegate<Self>? = nil
         
-        internal func queryItems() -> [URLQueryItem?] {
+        public func queryItems() -> [URLQueryItem?] {
             [station?.queryItem()]
         }
         
@@ -1496,7 +1504,7 @@ public extension Rail {
         
         public weak var delegate: JSONEndpointDelegate<Self>? = nil
         
-        internal func queryItems() -> [URLQueryItem?] {
+        public func queryItems() -> [URLQueryItem?] {
             [
                 startingStation.queryItem(name: .from),
                 destinationStation.queryItem(name: .to)
@@ -1574,7 +1582,7 @@ public extension Rail {
         
         public weak var delegate: JSONEndpointDelegate<Self>? = nil
         
-        internal func queryItems() -> [URLQueryItem?] {
+        public func queryItems() -> [URLQueryItem?] {
             [station?.queryItem()]
         }
 
@@ -1779,7 +1787,7 @@ public extension Rail {
         
         public weak var delegate: JSONEndpointDelegate<Self>? = nil
         
-        internal func queryItems() -> [URLQueryItem?] {
+        public func queryItems() -> [URLQueryItem?] {
             [line?.queryItem()]
         }
         

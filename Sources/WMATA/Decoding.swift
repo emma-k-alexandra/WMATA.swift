@@ -7,6 +7,7 @@
 
 import Foundation
 import GTFS
+import SwiftProtobuf
 
 public protocol WMATADecoding {
     func decode(gtfs data: Data) -> Result<TransitRealtime_FeedMessage, WMATAError>
@@ -17,11 +18,11 @@ public protocol WMATADecoding {
 public extension WMATADecoding {
     func decode(gtfs data: Data) -> Result<TransitRealtime_FeedMessage, WMATAError> {
         do {
-            return .success(
-                try TransitRealtime_FeedMessage(serializedData: data)
-            )
+            return .success(try TransitRealtime_FeedMessage(serializedData: data))
+        } catch is BinaryDecodingError {
+            return .failure(.decodingGTFSError)
         } catch {
-            return .failure(error.wmataError)
+            return .failure(.unknown(underlyingError: error))
         }
     }
     
@@ -32,14 +33,18 @@ public extension WMATADecoding {
         do {
             let decodedObject = try WMATAJSONDecoder().decode(Response.self, from: data)
             return .success(decodedObject)
-        } catch {
-            let originalError = error
-
-            do {
-                return .failure(try JSONDecoder().decode(WMATAError.self, from: data))
-            } catch {
-                return .failure(originalError.wmataError)
+        } catch let DecodingError.keyNotFound(codingKey, context) {
+            // Indicates the API returns an error message
+            let errorMessage = try? JSONDecoder().decode(WMATAError.Message.self, from: data)
+            
+            guard let errorMessage = errorMessage else {
+                return .failure(.decodingError(codingKey, context))
             }
+            
+            return .failure(.errorResponse(message: errorMessage))
+            
+        } catch {
+            return .failure(.unknown(underlyingError: error))
         }
     }
 }

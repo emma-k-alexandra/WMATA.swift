@@ -160,9 +160,15 @@ public struct MapToNil<Wrapped, MappedValue>: Codable, Equatable, Hashable
     
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        let stringValue = try container.decode(String?.self)
         
-        guard let stringValue = stringValue, stringValue != MappedValue.value else {
+        if container.decodeNil() {
+            wrappedValue = nil
+            return
+        }
+        
+        let stringValue = try container.decode(String.self)
+        
+        guard stringValue != MappedValue.value else {
             wrappedValue = nil
             return
         }

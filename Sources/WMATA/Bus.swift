@@ -906,7 +906,7 @@ public extension Bus {
         }
     }
     
-    /// All MetroBus ``Route`` variants
+    /// All MetroBus ``Route``  and variants
     ///
     /// For example, the `10A` and `10Av1` are the same route, but may stop at slightly different locations.
     struct Routes: JSONEndpoint {
@@ -915,6 +915,10 @@ public extension Bus {
         public let key: APIKey
         
         public weak var delegate: JSONEndpointDelegate<Self>? = nil
+        
+        public func queryItems() -> [URLQueryItem?] {
+            []
+        }
         
         public struct Response: Codable, Equatable, Hashable {
             /// All routes

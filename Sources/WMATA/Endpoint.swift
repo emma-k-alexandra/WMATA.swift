@@ -83,12 +83,7 @@ public extension JSONEndpoint {
         }
         
         guard let request = urlRequest() else {
-            delegate.received(
-                .failure(.init(
-                    statusCode: 1,
-                    message: "Unable to create URLRequest for endpoint \(String(describing: self))"
-                ))
-            )
+            delegate.received(.failure(.unableToCreateRequest(endpoint: String(describing: self))))
             return
         }
         
@@ -98,30 +93,22 @@ public extension JSONEndpoint {
     // TODO: Allow rethrows
     func request(with session: URLSession = .shared, completion: @escaping (_ result: Result<Response, WMATAError>) -> Void) {
         guard let request = urlRequest() else {
-            completion(.failure(.init(
-                statusCode: 1,
-                message: "Unable to create URLRequest for endpoint \(String(describing: self))"
-            )))
+            completion(.failure(.unableToCreateRequest(endpoint: String(describing: self))))
             return
         }
         
-        session.dataTask(with: request) { data, _response, error in
-            guard let data = data else {
-                guard let error = error else {
-                    completion(
-                        .failure(
-                            .init(
-                                statusCode: 3,
-                                message: "Neither data or error are present in response"
-                            )
-                        )
-                    )
-                    return
-                }
-                
-                completion(.failure(error.wmataError))
+        session.dataTask(with: request) { data, response, error in
+            if let error = error {
+                completion(.failure(.requestEnded(underlyingError: error)))
                 return
             }
+            
+            guard let data = data else {
+                completion(.failure(.requestFailed(response: response)))
+                return
+            }
+            
+            print((response as? HTTPURLResponse)?.statusCode, String(data: data, encoding: .utf8))
             
             completion(decode(standard: data))
         }.resume()
@@ -130,10 +117,7 @@ public extension JSONEndpoint {
     @available(macOS 12, iOS 15, watchOS 7, tvOS 15, *)
     func request(with session: URLSession = .shared) async -> Result<Response, WMATAError> {
         guard let request = urlRequest() else {
-            return .failure(.init(
-                statusCode: 1,
-                message: "Unable to create URLRequest for endpoint \(String(describing: self))"
-            ))
+            return .failure(.unableToCreateRequest(endpoint: String(describing: self)))
         }
         
         do {
@@ -141,25 +125,23 @@ public extension JSONEndpoint {
             
             return decode(standard: data)
         } catch {
-            return .failure(error.wmataError)
+            return .failure(.requestEnded(underlyingError: error))
         }
     }
     
     func publisher(with session: URLSession = .shared) -> AnyPublisher<Response, WMATAError> {
         guard let request = urlRequest() else {
             return Fail(
-                error: WMATAError(
-                    statusCode: 1,
-                    message: "Unable to create URLRequest for endpoint \(String(describing: self))"
-                )
+                error: .unableToCreateRequest(endpoint: String(describing: self))
             ).eraseToAnyPublisher()
         }
         
+        // TODO: Is this sending errors equivalent to other requests?
         return session
             .dataTaskPublisher(for: request)
             .map(\.data)
             .decode(type: Response.self, decoder: WMATAJSONDecoder())
-            .mapError { $0.wmataError }
+            .mapError { .requestEnded(underlyingError: $0) }
             .eraseToAnyPublisher()
     }
 }
@@ -178,18 +160,14 @@ public extension GTFSEndpoint {
         []
     }
     
+    // TODO: This should return an optional error instead of a precondition failure
     func backgroundRequest() {
         guard let delegate = delegate else {
             preconditionFailure("Request sent to delegate without delegate defined on endpoint \(String(describing: self))")
         }
         
         guard let request = urlRequest() else {
-            delegate.received(
-                .failure(.init(
-                    statusCode: 1,
-                    message: "Unable to create URLRequest for endpoint \(String(describing: self))"
-                ))
-            )
+            delegate.received(.failure(.unableToCreateRequest(endpoint: String(describing: self))))
             return
         }
         
@@ -198,18 +176,18 @@ public extension GTFSEndpoint {
     
     func request(with session: URLSession = .shared, completion: @escaping (Result<Response, WMATAError>) -> Void) {
         guard let request = urlRequest() else {
-            completion(.failure(.init(statusCode: 1, message: "Unable to create URLRequest for endpoint \(String(describing: self))")))
+            completion(.failure(.unableToCreateRequest(endpoint: String(describing: self))))
             return
         }
         
-        session.dataTask(with: request) { data, _response, error in
+        session.dataTask(with: request) { data, response, error in
             guard let data = data else {
                 guard let error = error else {
-                    completion(.failure(.init(statusCode: 3, message: "Neither data or error are present in response")))
+                    completion(.failure(.requestFailed(response: response)))
                     return
                 }
                 
-                completion(.failure(error.wmataError))
+                completion(.failure(.requestEnded(underlyingError: error)))
                 return
             }
             
@@ -227,10 +205,7 @@ public extension GTFSEndpoint {
     @available(macOS 12, iOS 15, watchOS 7, tvOS 15, *)
     func request(with session: URLSession = .shared) async -> Result<Response, WMATAError> {
         guard let request = urlRequest() else {
-            return .failure(.init(
-                statusCode: 1,
-                message: "Unable to create URLRequest for endpoint \(String(describing: self))"
-            ))
+            return .failure(.unableToCreateRequest(endpoint: String(describing: self)))
         }
         
         do {
@@ -238,24 +213,22 @@ public extension GTFSEndpoint {
             
             return decode(gtfs: data)
         } catch {
-            return .failure(error.wmataError)
+            return .failure(.requestEnded(underlyingError: error))
         }
     }
     
     func publisher(with session: URLSession = .shared) -> AnyPublisher<Response, WMATAError> {
         guard let request = urlRequest() else {
             return Fail(
-                error: WMATAError(
-                    statusCode: 1,
-                    message: "Unable to create URLRequest for endpoint \(String(describing: self))"
-                )
+                error: .unableToCreateRequest(endpoint: String(describing: self))
             ).eraseToAnyPublisher()
         }
             
         return session
             .dataTaskPublisher(for: request)
-            .tryMap { try TransitRealtime_FeedMessage(serializedData: $0.data) }
-            .mapError { $0.wmataError }
+            .map(\.data)
+            .tryMap { try TransitRealtime_FeedMessage(serializedData: $0) }
+            .mapError { .requestEnded(underlyingError: $0) }
             .eraseToAnyPublisher()
     }
 }
