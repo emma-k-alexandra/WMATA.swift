@@ -147,10 +147,10 @@ internal extension DateFormatter {
 
 
 @propertyWrapper
-public struct MapToNil<Wrapped, MappedValue>: Codable, Equatable, Hashable
+public struct MapToNil<Wrapped, MappedValues>: Codable, Equatable, Hashable
     where
         Wrapped: Codable & Equatable & Hashable,
-        MappedValue: WMATAMappedValue
+        MappedValues: WMATAMappedValues
     {
     public var wrappedValue: Wrapped?
     
@@ -168,12 +168,11 @@ public struct MapToNil<Wrapped, MappedValue>: Codable, Equatable, Hashable
         
         let stringValue = try container.decode(String.self)
         
-        guard stringValue != MappedValue.value else {
+        if MappedValues.allValues.contains(stringValue) {
             wrappedValue = nil
-            return
+        } else {
+            wrappedValue = try container.decode(Wrapped.self)
         }
-        
-        wrappedValue = try container.decode(Wrapped.self)
     }
     
     public func encode(to encoder: Encoder) throws {
@@ -183,22 +182,22 @@ public struct MapToNil<Wrapped, MappedValue>: Codable, Equatable, Hashable
     }
 }
 
-public protocol WMATAMappedValue: Hashable {
-    static var value: String { get }
+public protocol WMATAMappedValues: Hashable {
+    static var allValues: [String] { get }
 }
 
-public struct EmptyString: WMATAMappedValue, Equatable, Hashable {
-    public static let value = ""
+public struct EmptyString: WMATAMappedValues, Equatable, Hashable {
+    public static let allValues = [""]
 }
 
-public struct Dashes: WMATAMappedValue, Equatable, Hashable {
-    public static let value = "--"
+public struct DashesAndNo: WMATAMappedValues, Equatable, Hashable {
+    public static let allValues = ["--", "No"]
 }
 
-public struct SingleDash: WMATAMappedValue, Equatable, Hashable {
-    public static let value = "-"
+public struct SingleDash: WMATAMappedValues, Equatable, Hashable {
+    public static let allValues = ["-"]
 }
 
-public struct SingleZero: WMATAMappedValue, Equatable, Hashable {
-    public static let value = "0"
+public struct SingleZero: WMATAMappedValues, Equatable, Hashable {
+    public static let allValues = ["0"]
 }

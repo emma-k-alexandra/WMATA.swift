@@ -44,9 +44,6 @@ public protocol Endpoint: WMATADecoding, Hashable {
 }
 
 extension Endpoint {
-    
-   
-    
     /// Generate a URL that includes this endpoint's URL query items
     func url(with queryItems: [URLQueryItem?]) -> URL? {
         var components = self.url
@@ -90,7 +87,6 @@ public extension JSONEndpoint {
         delegate.session.downloadTask(with: request).resume()
     }
     
-    // TODO: Allow rethrows
     func request(with session: URLSession = .shared, completion: @escaping (_ result: Result<Response, WMATAError>) -> Void) {
         guard let request = urlRequest() else {
             completion(.failure(.unableToCreateRequest(endpoint: String(describing: self))))
@@ -108,9 +104,7 @@ public extension JSONEndpoint {
                 return
             }
             
-            print((response as? HTTPURLResponse)?.statusCode, String(data: data, encoding: .utf8))
-            
-            completion(decode(standard: data))
+            completion(createResult((data, response)).flatMap { decode(standard: $0) })
         }.resume()
     }
     
@@ -121,9 +115,9 @@ public extension JSONEndpoint {
         }
         
         do {
-            let (data, _) = try await session.data(for: request)
+            let response = try await session.data(for: request)
             
-            return decode(standard: data)
+            return createResult(response).flatMap { decode(standard: $0) }
         } catch {
             return .failure(.requestEnded(underlyingError: error))
         }
@@ -136,12 +130,17 @@ public extension JSONEndpoint {
             ).eraseToAnyPublisher()
         }
         
-        // TODO: Is this sending errors equivalent to other requests?
         return session
             .dataTaskPublisher(for: request)
-            .map(\.data)
+            .tryMap { try createResult($0).get() }
             .decode(type: Response.self, decoder: WMATAJSONDecoder())
-            .mapError { .requestEnded(underlyingError: $0) }
+            .mapError { error in
+                if let error = error as? WMATAError {
+                    return error
+                }
+                
+                return .requestEnded(underlyingError: error)
+            }
             .eraseToAnyPublisher()
     }
 }
@@ -160,7 +159,6 @@ public extension GTFSEndpoint {
         []
     }
     
-    // TODO: This should return an optional error instead of a precondition failure
     func backgroundRequest() {
         guard let delegate = delegate else {
             preconditionFailure("Request sent to delegate without delegate defined on endpoint \(String(describing: self))")
@@ -181,24 +179,17 @@ public extension GTFSEndpoint {
         }
         
         session.dataTask(with: request) { data, response, error in
-            guard let data = data else {
-                guard let error = error else {
-                    completion(.failure(.requestFailed(response: response)))
-                    return
-                }
-                
+            if let error = error {
                 completion(.failure(.requestEnded(underlyingError: error)))
                 return
             }
             
-            let decodedData: Result<TransitRealtime_FeedMessage, WMATAError> = decode(gtfs: data)
-            
-            switch decodedData {
-            case let .success(response):
-                completion(.success(response))
-            case let .failure(decodeError):
-                completion(.failure(decodeError))
+            guard let data = data else {
+                completion(.failure(.requestFailed(response: response)))
+                return
             }
+            
+            completion(createResult((data, response)).flatMap { decode(gtfs: $0) })
         }.resume()
     }
     
@@ -209,9 +200,9 @@ public extension GTFSEndpoint {
         }
         
         do {
-            let (data, _) = try await session.data(for: request)
+            let response = try await session.data(for: request)
             
-            return decode(gtfs: data)
+            return createResult(response).flatMap { decode(gtfs: $0) }
         } catch {
             return .failure(.requestEnded(underlyingError: error))
         }
@@ -226,9 +217,55 @@ public extension GTFSEndpoint {
             
         return session
             .dataTaskPublisher(for: request)
-            .map(\.data)
-            .tryMap { try TransitRealtime_FeedMessage(serializedData: $0) }
-            .mapError { .requestEnded(underlyingError: $0) }
+            .tryMap { try TransitRealtime_FeedMessage(serializedData: try createResult($0).get()) }
+            .mapError { error in
+                if let error = error as? WMATAError {
+                    return error
+                }
+                
+                return .requestEnded(underlyingError: error)
+            }
             .eraseToAnyPublisher()
+    }
+}
+
+/// Create Result object from response data
+func createResult(_ response: (data: Data, response: URLResponse?)) -> Result<Data, WMATAError> {
+    if let httpResponse = response.response as? HTTPURLResponse,
+       httpResponse.statusCode != 200 {
+        print("failed", response.data, httpResponse)
+        return .failure(.init(response.data, httpResponse))
+    }
+    
+    print("response", response.response, "data", String(data: response.data, encoding: .utf8))
+    
+    return .success(response.data)
+}
+
+func createResult(_ response: (data: Data, response: URLResponse)) -> Result<Data, WMATAError> {
+    createResult((response.data, .some(response.response)))
+}
+
+extension WMATAError {
+    init(_ data: Data, _ response: HTTPURLResponse) {
+        let message: String
+        
+        do {
+            message = try JSONDecoder().decode(WMATAError.Message.self, from: data).message
+        } catch {
+            self = .errorDecodingErrorMessage(underlyingError: error)
+            return
+        }
+        
+        switch response.statusCode {
+        case 429:
+            self = .rateLimitExceeded(message: message)
+        case 401:
+            self = .accessDenied(message: message)
+        case 400:
+            self = .badRequest(message: message)
+        default:
+            self = .errorResponse(message: message)
+        }
     }
 }

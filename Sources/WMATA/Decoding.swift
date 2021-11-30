@@ -19,10 +19,8 @@ public extension WMATADecoding {
     func decode(gtfs data: Data) -> Result<TransitRealtime_FeedMessage, WMATAError> {
         do {
             return .success(try TransitRealtime_FeedMessage(serializedData: data))
-        } catch is BinaryDecodingError {
-            return .failure(.decodingGTFSError)
         } catch {
-            return .failure(.unknown(underlyingError: error))
+            return .failure(.decodingGTFSError(underlyingError: error))
         }
     }
     
@@ -30,19 +28,11 @@ public extension WMATADecoding {
     where
         Response: Codable
     {
+        print("Decoding into \(Response.self)", String(data: data, encoding: .utf8))
         do {
-            let decodedObject = try WMATAJSONDecoder().decode(Response.self, from: data)
-            return .success(decodedObject)
+            return .success(try WMATAJSONDecoder().decode(Response.self, from: data))
         } catch let DecodingError.keyNotFound(codingKey, context) {
-            // Indicates the API returns an error message
-            let errorMessage = try? JSONDecoder().decode(WMATAError.Message.self, from: data)
-            
-            guard let errorMessage = errorMessage else {
-                return .failure(.decodingError(codingKey, context))
-            }
-            
-            return .failure(.errorResponse(message: errorMessage))
-            
+            return .failure(.decodingError(codingKey, context))
         } catch {
             return .failure(.unknown(underlyingError: error))
         }

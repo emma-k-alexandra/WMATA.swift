@@ -1116,7 +1116,7 @@ public extension Rail {
                 public let group: String
                 
                 /// Line of the train
-                 @MapToNil<Line, Dashes> public var line: Line?
+                 @MapToNil<Line, DashesAndNo> public var line: Line?
                 
                 /// The station the train is currently arriving at
                 public let location: Station

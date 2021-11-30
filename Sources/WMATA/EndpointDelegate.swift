@@ -10,13 +10,13 @@ import GTFS
 
 public class EndpointDelegate<Parent: Endpoint>: NSObject, URLSessionDownloadDelegate, WMATADecoding {
     func received(_ response: Result<Parent.Response, WMATAError>) {
-        assertionFailure("Default EndpointDelegate received response. Override `func received(_ response: Result<Parent.Response, WMATAError>)`")
+        preconditionFailure("Abstract EndpointDelegate received response. Override `func received(_ response: Result<Parent.Response, WMATAError>)`")
     }
     
     var sharedContainerIdentifier: String? = nil
     
     public func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
-        preconditionFailure("You must override `.urlSession(_:downloadTask:didFinishDownloadingTo:)` in your endpoint delegate")
+        preconditionFailure("You must override `.urlSession(_:downloadTask:didFinishDownloadingTo:)` if not using JSONEndpointDelegate or GTFSEndpointDelegate")
     }
     
     public func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
@@ -60,24 +60,19 @@ extension EndpointDelegate {
 
 public class JSONEndpointDelegate<Parent: JSONEndpoint>: EndpointDelegate<Parent> {
     public override func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
-        let data = loadData(from: location)
-        
-        switch data {
-        case let .success(data):
-            received(decode(standard: data))
-        case let .failure(error):
-            received(.failure(error))
-        }
+        print((downloadTask.response as! HTTPURLResponse).statusCode)
+        received(loadData(from: location)
+            .flatMap { createResult(($0, downloadTask.response)) }
+            .flatMap { decode(standard: $0) }
+        )
     }
 }
 
 public class GTFSEndpointDelegate<Parent: GTFSEndpoint>: EndpointDelegate<Parent> {
     public override func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
-        switch loadData(from: location) {
-        case let .success(data):
-            received(decode(gtfs: data))
-        case let .failure(error):
-            received(.failure(error))
-        }
+        received(loadData(from: location)
+            .flatMap { createResult(($0, downloadTask.response)) }
+            .flatMap { decode(gtfs: $0) }
+        )
     }
 }

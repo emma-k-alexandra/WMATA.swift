@@ -10,7 +10,7 @@ import Foundation
 public enum WMATAError: Error {
     
     /// You received a response from the WMATA API, but it was an error
-    case errorResponse(message: WMATAError.Message)
+    case errorResponse(message: String)
     
     /// A 400 error from the WMATA API, bad user input
     case badRequest(message: String)
@@ -61,15 +61,20 @@ public enum WMATAError: Error {
     /// There was an error while decoding the response from the WMATA GTFS API
     ///
     /// This shouldn't happen in practice. If you encounter this error, please file an issue on github
-    case decodingGTFSError
+    case decodingGTFSError(underlyingError: Error)
+    
+    /// An error occured while decoding a ``WMATAError/Message``
+    ///
+    /// If you encounter this error, please file an issue on github with logs
+    case errorDecodingErrorMessage(underlyingError: Error)
     
     /// Some error occured within WMATA.swift
     ///
     /// If you encounter this error, please file an issue on github with logs so it can be fixed
     case unknown(underlyingError: Error)
     
-    /// An error message from the WMATA Standard API
-    public struct Message: Codable, Hashable, Equatable, Error {
+    /// An error message from the WMATA  API
+    struct Message: Codable, Hashable, Equatable, Error {
         /// Status code of the response. Matches the HTTP code of the response
         let statusCode: Int?
         
@@ -79,6 +84,35 @@ public enum WMATAError: Error {
         public enum CodingKeys: String, CodingKey {
             case statusCode
             case message = "Message"
+            case alsoMessage = "message"
+        }
+        
+        init(from decoder: Decoder) throws {
+            let container = try decoder.container(keyedBy: CodingKeys.self)
+            
+            statusCode = try container.decodeIfPresent(Int.self, forKey: .statusCode)
+            
+            if let message = try container.decodeIfPresent(String.self, forKey: .message) {
+                self.message = message
+            } else if let message = try container.decodeIfPresent(String.self, forKey: .alsoMessage) {
+                self.message = message
+            } else {
+                throw DecodingError.typeMismatch(
+                    Self.self,
+                    .init(
+                        codingPath: container.codingPath,
+                        debugDescription: "Key `message` or `Message` was not found in WMATAError.Message while decoding",
+                        underlyingError: nil
+                    )
+                )
+            }
+        }
+        
+        func encode(to encoder: Encoder) throws {
+            var container = encoder.container(keyedBy: CodingKeys.self)
+            
+            try container.encode(statusCode, forKey: .statusCode)
+            try container.encode(message, forKey: .message)
         }
     }
 }
