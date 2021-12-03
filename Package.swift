@@ -21,6 +21,11 @@ let package = Package(
             url: "https://github.com/emma-k-alexandra/GTFS.git",
             .upToNextMajor(from: .init(1, 0, 1))
         ),
+        .package(
+            name: "DVR",
+            url: "https://github.com/venmo/DVR.git",
+            .upToNextMajor(from: .init(2, 0, 0))
+        ),
     ],
     targets: [
         .target(
@@ -31,7 +36,8 @@ let package = Package(
         ),
         .testTarget(
             name: "WMATATests",
-            dependencies: ["WMATA"]
+            dependencies: ["WMATA", "DVR"],
+            resources: [.process("Fixtures")]
         ),
     ]
 )
