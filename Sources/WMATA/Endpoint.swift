@@ -76,7 +76,8 @@ public protocol JSONEndpoint: Endpoint where Response: Codable {
 public extension JSONEndpoint {
     func backgroundRequest() {
         guard let delegate = delegate else {
-            preconditionFailure("Request sent to delegate without delegate defined on endpoint \(String(describing: self))")
+            assertionFailure("Request sent to delegate without delegate defined on endpoint \(String(describing: self))")
+            return
         }
         
         guard let request = urlRequest() else {
@@ -161,7 +162,8 @@ public extension GTFSEndpoint {
     
     func backgroundRequest() {
         guard let delegate = delegate else {
-            preconditionFailure("Request sent to delegate without delegate defined on endpoint \(String(describing: self))")
+            assertionFailure("Request sent to delegate without delegate defined on endpoint \(String(describing: self))")
+            return
         }
         
         guard let request = urlRequest() else {
@@ -233,15 +235,13 @@ public extension GTFSEndpoint {
 func createResult(_ response: (data: Data, response: URLResponse?)) -> Result<Data, WMATAError> {
     if let httpResponse = response.response as? HTTPURLResponse,
        httpResponse.statusCode != 200 {
-        print("failed", response.data, httpResponse)
         return .failure(.init(response.data, httpResponse))
     }
-    
-    print("response", response.response, "data", String(data: response.data, encoding: .utf8))
     
     return .success(response.data)
 }
 
+/// Convenience for async response
 func createResult(_ response: (data: Data, response: URLResponse)) -> Result<Data, WMATAError> {
     createResult((response.data, .some(response.response)))
 }

@@ -41,7 +41,7 @@ public enum WMATAError: Error {
     /// When using a delegate, was unable to load a file downloaded via background session
     ///
     /// Your file may have been cleaned up, or your request failed and you should look for other logs
-    case unableToLoadBackgroundFile(location: URL)
+    case unableToLoadBackgroundFile(location: URL, underlyingError: Error)
     
     /// Your background request completed with an error
     ///

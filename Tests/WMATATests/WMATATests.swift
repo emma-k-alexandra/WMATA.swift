@@ -31,7 +31,6 @@ class TestJSONDelegate<Parent: JSONEndpoint>: JSONEndpointDelegate<Parent> {
         switch response {
         case .success:
             expectation.fulfill()
-
         case let .failure(error):
             print(error)
         }

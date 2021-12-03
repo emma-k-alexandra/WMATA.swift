@@ -28,7 +28,6 @@ public extension WMATADecoding {
     where
         Response: Codable
     {
-        print("Decoding into \(Response.self)", String(data: data, encoding: .utf8))
         do {
             return .success(try WMATAJSONDecoder().decode(Response.self, from: data))
         } catch let DecodingError.keyNotFound(codingKey, context) {

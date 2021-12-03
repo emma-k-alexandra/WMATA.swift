@@ -55,7 +55,7 @@ extension String: URLQueryItemConvertible {
 extension URLComponents {
     init(staticString string: StaticString) {
         guard let urlComponents = URLComponents(string: "\(string)") else {
-            preconditionFailure("Given string is not a URL: \(string)")
+            fatalError("Given string is not a URL: \(string)")
         }
         
         self = urlComponents
