@@ -6,27 +6,15 @@ WMATA.swift is a Swift interface to the [Washington Metropolitan Area Transit Au
 
 - [Requirements](#requirements)
 - [Installation](#installation)
-- Usage
-  - [Introduction][intro-docs]
-  - [`MetroRail`][metro-rail-docs]
-    - [`Station`][station-docs], [`Line`][line-docs]
-  - [`MetroBus`][metro-bus-docs]
-    - [`Stop`][stop-docs], [`Route`][route-docs]
-- Advanced Usage
-  - [Combine][combine-docs]
-  - [Background Requests][background-docs]
-- Miscellaneous
-  - [`WMATALocation`][radius-at-coordinates]
-- [Migration Guides](#migration-guides)
+- [Documentation](#documentation)
 - [Dependencies](#dependencies)
-- [Testing](#testing)
 - [Contact](#contact)
 - [Contributing](#contributing)
 - [License](#license)
 
 ## Requirements
 
-- Swift 5.4
+- Swift 5.5
 
 ## Installation
 
@@ -38,19 +26,15 @@ dependencies: [
 ]
 ```
 
-## Migration Guides
+## Documentation
 
-- [v10 Migration Guide][v10-migration-guide]
-- [v9 Migration Guide][v9-migration-guide]
+[comment]: <> (TODO: figure out how to host this thing)
+Full documentation can be found 
 
 ## Dependencies
 
 - [GTFS][gtfs]
 - [swift-protobuf][swift-protobuf], for GTFS-RT feeds.
-
-## Testing
-
-Tests may fail due to rate limits on the WMATA API. Failed tests must be retried manually.
 
 ## Contact
 
@@ -60,9 +44,8 @@ Feel free to email questions and comments to [emma@emma.sh](mailto:emma@emma.sh)
 
 Todo:
 
+- [ ] Improve GTFS support with better decoding 
 - [ ] Last Train times (API doesn't provide full information here)
-- [ ] Documentation of response structs a la [wmata][wmata-rust]
-- [ ] Figure out how to serialize tests
 - [ ] Automated builds
 
 ## License

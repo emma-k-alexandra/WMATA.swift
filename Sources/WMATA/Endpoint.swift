@@ -9,7 +9,7 @@ import Foundation
 import Combine
 import GTFS
 
-/// A WMATA API endpoint
+/// Protocol defining a WMATA API endpoint.
 ///
 /// Used to make requests and receive responses from an API. Endpoints are available in ``Rail`` for MetroRail and ``Bus`` for MetroBus.
 public protocol Endpoint: WMATADecoding, Hashable {
@@ -19,17 +19,17 @@ public protocol Endpoint: WMATADecoding, Hashable {
     /// WMATA API Key for this request
     var key: APIKey { get }
     
-    /// Send an HTTP request to this endpoint
+    /// Send an HTTP request to this endpoint and receive the response via a completion handler.
     func request(with session: URLSession, completion: @escaping (_ result: Result<Response, WMATAError>) -> Void)
     
-    /// Send an async HTTP request to this endpoint
+    /// Send an async HTTP request to this endpoint. Preferred.
     @available(macOS 12, iOS 15, watchOS 7, tvOS 15, *)
     func request(with session: URLSession) async -> Result<Response, WMATAError>
     
-    /// Send a background HTTP request to the endpoint.
+    /// Send a background HTTP request to the endpoint and receive the response from an ``EndpointDelegate``.
     func backgroundRequest()
     
-    /// Send an HTTP request to this endpoint and receive a Combine Publisher with the response
+    /// Send an HTTP request to this endpoint and receive a Combine Publisher with the response.
     func publisher(with session: URLSession) -> AnyPublisher<Response, WMATAError>
     
     /// The URL this request is sent to
@@ -74,6 +74,9 @@ public protocol JSONEndpoint: Endpoint where Response: Codable {
 }
 
 public extension JSONEndpoint {
+    /// Send a request to this API and receive a response via a ``JSONEndpointDelegate`` in the background.
+    ///
+    /// > Warning: This method will `assertionFailure` if it is called and you have not defined ``JSONEndpoint/delegate``.
     func backgroundRequest() {
         guard let delegate = delegate else {
             assertionFailure("Request sent to delegate without delegate defined on endpoint \(String(describing: self))")
@@ -88,6 +91,7 @@ public extension JSONEndpoint {
         delegate.session.downloadTask(with: request).resume()
     }
     
+    /// Send a request this to this API and receive a response via a completion handler.
     func request(with session: URLSession = .shared, completion: @escaping (_ result: Result<Response, WMATAError>) -> Void) {
         guard let request = urlRequest() else {
             completion(.failure(.unableToCreateRequest(endpoint: String(describing: self))))
@@ -109,6 +113,7 @@ public extension JSONEndpoint {
         }.resume()
     }
     
+    /// Send an async request to this API. Preferred.
     @available(macOS 12, iOS 15, watchOS 7, tvOS 15, *)
     func request(with session: URLSession = .shared) async -> Result<Response, WMATAError> {
         guard let request = urlRequest() else {
@@ -124,6 +129,7 @@ public extension JSONEndpoint {
         }
     }
     
+    /// Send a request to this API and receive a response via a Combine Publisher.
     func publisher(with session: URLSession = .shared) -> AnyPublisher<Response, WMATAError> {
         guard let request = urlRequest() else {
             return Fail(
@@ -156,10 +162,15 @@ public protocol GTFSEndpoint: Endpoint where Response == TransitRealtime_FeedMes
 
 // GTFS-RT
 public extension GTFSEndpoint {
+    
+    // GTFS endpoints require no query parameters.
     func queryItems() -> [URLQueryItem?] {
         []
     }
     
+    /// Send a request to this API and receive a response via a ``GTFSEndpointDelegate`` in the background.
+    ///
+    /// > Warning: This method will `assertionFailure` if it is called and you have not defined ``GTFSEndpoint/delegate``.
     func backgroundRequest() {
         guard let delegate = delegate else {
             assertionFailure("Request sent to delegate without delegate defined on endpoint \(String(describing: self))")
@@ -174,6 +185,7 @@ public extension GTFSEndpoint {
         delegate.session.downloadTask(with: request).resume()
     }
     
+    /// Send a request this to this API and receive a response via a completion handler.
     func request(with session: URLSession = .shared, completion: @escaping (Result<Response, WMATAError>) -> Void) {
         guard let request = urlRequest() else {
             completion(.failure(.unableToCreateRequest(endpoint: String(describing: self))))
@@ -195,6 +207,7 @@ public extension GTFSEndpoint {
         }.resume()
     }
     
+    /// Send an async request to this API. Preferred.
     @available(macOS 12, iOS 15, watchOS 7, tvOS 15, *)
     func request(with session: URLSession = .shared) async -> Result<Response, WMATAError> {
         guard let request = urlRequest() else {
@@ -210,6 +223,7 @@ public extension GTFSEndpoint {
         }
     }
     
+    /// Send a request to this API and receive a response via a Combine Publisher.
     func publisher(with session: URLSession = .shared) -> AnyPublisher<Response, WMATAError> {
         guard let request = urlRequest() else {
             return Fail(

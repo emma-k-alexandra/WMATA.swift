@@ -15,8 +15,10 @@ Decode responses from the WMATA API yourself
 
 ### Decoding Details
 - ``MapToNil``
-- ``WMATAMappedValue``
+- ``WMATAMappedValues``
 
 ### Custom Values
-- ``Dashes``
+- ``DashesAndNo``
 - ``EmptyString``
+- ``SingleDash``
+- ``SingleZero``

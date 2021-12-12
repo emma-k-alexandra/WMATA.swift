@@ -1,0 +1,207 @@
+{
+  "name" : "-[TestBusDVR testSearchStops]",
+  "interactions" : [
+    {
+      "recorded_at" : 1638583978.175283,
+      "request" : {
+        "headers" : {
+          "api_key" : "9e38c3eab34c4e6c990828002828f5ed"
+        },
+        "method" : "GET",
+        "url" : "https:\/\/api.wmata.com\/Bus.svc\/json\/jStops?Lat=38.876736&Lon=-76.724502&Radius=3000"
+      },
+      "response" : {
+        "status" : 200,
+        "headers" : {
+          "Date" : "Sat, 04 Dec 2021 02:12:57 GMT",
+          "Arr-Disable-Session-Affinity" : "True",
+          "Vary" : "Accept-Encoding",
+          "X-Powered-By" : "ASP.NET",
+          "Content-Type" : "application\/json; charset=utf-8",
+          "Pragma" : "no-cache",
+          "X-AspNet-Version" : "4.0.30319",
+          "Content-Encoding" : "gzip",
+          "Cache-Control" : "no-cache",
+          "Expires" : "-1",
+          "Content-Length" : "770"
+        },
+        "url" : "https:\/\/api.wmata.com\/Bus.svc\/json\/jStops?Lat=38.876736&Lon=-76.724502&Radius=3000",
+        "body" : {
+          "Stops" : [
+            {
+              "Lon" : -76.724502000000001,
+              "Name" : "PRINCE GEORGES BLVD + BRANCH CT",
+              "Routes" : [
+                "C21"
+              ],
+              "StopID" : "3003058",
+              "Lat" : 38.876736000000001
+            },
+            {
+              "Lon" : -76.726384999999993,
+              "Name" : "PRINCE GEORGES BLVD + COMMERCE DR",
+              "Routes" : [
+                "C21"
+              ],
+              "StopID" : "3003059",
+              "Lat" : 38.8748
+            },
+            {
+              "Lon" : -76.722877999999994,
+              "Name" : "PRINCE GEORGES BLVD + TRADE ZONE AVE",
+              "Routes" : [
+                "C21"
+              ],
+              "StopID" : "3003057",
+              "Lat" : 38.879156000000002
+            },
+            {
+              "Lon" : -76.727891,
+              "Name" : "COMMERCE DR + #901",
+              "Routes" : [
+                "C21"
+              ],
+              "StopID" : "3003060",
+              "Lat" : 38.875526999999998
+            },
+            {
+              "Lon" : -76.723039,
+              "Name" : "TRADE ZONE AVE + PRINCE GEORGES BLVD",
+              "Routes" : [
+                "C21",
+                "C22"
+              ],
+              "StopID" : "3003056",
+              "Lat" : 38.88026
+            },
+            {
+              "Lon" : -76.729337000000001,
+              "Name" : "COMMERCE DR + #839",
+              "Routes" : [
+                "C21"
+              ],
+              "StopID" : "3003061",
+              "Lat" : 38.876874999999998
+            },
+            {
+              "Lon" : -76.725650000000002,
+              "Name" : "TRADE ZONE AVE + #16155",
+              "Routes" : [
+                "C21"
+              ],
+              "StopID" : "3003055",
+              "Lat" : 38.880426999999997
+            },
+            {
+              "Lon" : -76.727593999999996,
+              "Name" : "TRADE ZONE AVE + #16001",
+              "Routes" : [
+                "C21"
+              ],
+              "StopID" : "3003054",
+              "Lat" : 38.880437999999998
+            },
+            {
+              "Lon" : -76.730351999999996,
+              "Name" : "COMMERCE DR + #800",
+              "Routes" : [
+                "C21"
+              ],
+              "StopID" : "3003062",
+              "Lat" : 38.879035000000002
+            },
+            {
+              "Lon" : -76.722971000000001,
+              "Name" : "PRINCE GEORGES BLVD + NASA FEDERAL CREDIT UNION",
+              "Routes" : [
+                "C21",
+                "C22"
+              ],
+              "StopID" : "3003048",
+              "Lat" : 38.882078
+            },
+            {
+              "Lon" : -76.723793000000001,
+              "Name" : "PRINCE GEORGES BLVD + #400",
+              "Routes" : [
+                "C21"
+              ],
+              "StopID" : "3003049",
+              "Lat" : 38.883181
+            },
+            {
+              "Lon" : -76.730542,
+              "Name" : "COMMERCE DR + #515",
+              "Routes" : [
+                "C21"
+              ],
+              "StopID" : "3003053",
+              "Lat" : 38.881529999999998
+            },
+            {
+              "Lon" : -76.730542999999997,
+              "Name" : "COMMERCE DR + #476",
+              "Routes" : [
+                "C21"
+              ],
+              "StopID" : "3003052",
+              "Lat" : 38.883122
+            },
+            {
+              "Lon" : -76.729489999999998,
+              "Name" : "COMMERCE DR + COMMERCE CT",
+              "Routes" : [
+                "C21"
+              ],
+              "StopID" : "3003051",
+              "Lat" : 38.884979000000001
+            },
+            {
+              "Lon" : -76.726815000000002,
+              "Name" : "PRINCE GEORGES BLVD + COMMERCE DR",
+              "Routes" : [
+                "C21"
+              ],
+              "StopID" : "3003050",
+              "Lat" : 38.885683999999998
+            },
+            {
+              "Lon" : -76.728870999999998,
+              "Name" : "CENTRAL AVE + PENNSBURY DR",
+              "Routes" : [
+                "C21",
+                "C22"
+              ],
+              "StopID" : "3004181",
+              "Lat" : 38.900427999999998
+            },
+            {
+              "Lon" : -76.732391000000007,
+              "Name" : "HALL RD + CENTRAL AVE",
+              "Routes" : [
+                "C21",
+                "C21*1",
+                "C22",
+                "C22*1",
+                "C29*1",
+                "C29\/"
+              ],
+              "StopID" : "3003063",
+              "Lat" : 38.901046000000001
+            },
+            {
+              "Lon" : -76.733054999999993,
+              "Name" : "HALL RD + POINTER RIDGE DR",
+              "Routes" : [
+                "C21",
+                "C22"
+              ],
+              "StopID" : "3001087",
+              "Lat" : 38.901218
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

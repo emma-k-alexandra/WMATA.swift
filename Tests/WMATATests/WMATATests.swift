@@ -1,6 +1,7 @@
 import Combine
 import Foundation
 import GTFS
+import DVR
 @testable import WMATA
 import XCTest
 
@@ -53,6 +54,24 @@ class TestGTFSDelegate<Parent: GTFSEndpoint>: GTFSEndpointDelegate<Parent> {
             print(error)
         }
     }
+}
+
+class DVRTestCase: XCTestCase {
+    lazy var session = {
+        Session(
+            outputDirectory: URL(fileURLWithPath: #file)
+                .pathComponents
+                .dropLast()
+                .joined(separator: "/")
+                .appending("/Fixtures"),
+            cassetteName: name,
+            testBundle: .module
+        )
+    }()
+    
+    lazy var expectation = {
+        self.expectation(description: self.name)
+    }()
 }
 
 // TODO: Add test for error responses

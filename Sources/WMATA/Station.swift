@@ -5,7 +5,6 @@
 //  Created by Emma K Alexandra on 10/6/19.
 //
 
-import Combine
 import Foundation
 
 /// A MetroRail station
@@ -15,7 +14,7 @@ import Foundation
 /// Physical stations with multiple levels like L'Enfant Plaza require multiple station codes. For example, `lenfantPlazaUpper` is a single level within the L'Enfant Plaza station, along with `lenfantPlazaLower`. All stations follow this `...Upper` and `...Lower` naming convention. You can also use ``together`` or ``allTogether`` to get all relevant stations.
 ///
 /// ![A train passes at the Pentagon City MetroRail station](metrorail-station)
-public enum Station: String, CaseIterable, Codable, Equatable, Hashable {
+public enum Station: String, CaseIterable, Codable, Equatable, Hashable, RawRepresentable {
     /// Red line tracks for Metro Center
     case metroCenterUpper = "A01"
     case farragutNorth = "A02"
@@ -28,7 +27,7 @@ public enum Station: String, CaseIterable, Codable, Equatable, Hashable {
     case bethesda = "A09"
     case medicalCenter = "A10"
     case grosvenor = "A11"
-    case whiteFlint = "A12"
+    case northBethesda = "A12"
     case twinbrook = "A13"
     case rockville = "A14"
     case shadyGrove = "A15"
@@ -167,8 +166,8 @@ public extension Station {
         case .grosvenor:
             return "Grosvenor-Strathmore"
 
-        case .whiteFlint:
-            return "White Flint"
+        case .northBethesda:
+            return "North Bethesda"
 
         case .twinbrook:
             return "Twinbrook"
@@ -445,7 +444,7 @@ public extension Station {
     /// The ``Line``s this station is on
     var lines: [Line] {
         switch self {
-        case .metroCenterUpper, .galleryPlaceUpper, .fortTottenUpper, .farragutNorth, .dupontCircle, .woodleyPark, .clevelandPark, .vanNess, .tenleytown, .friendshipHeights, .bethesda, .medicalCenter, .grosvenor, .whiteFlint, .twinbrook, .rockville, .shadyGrove, .judiciarySquare, .unionStation, .rhodeIslandAve, .brookland, .takoma, .silverSpring, .forestGlen, .wheaton, .glenmont, .noma:
+        case .metroCenterUpper, .galleryPlaceUpper, .fortTottenUpper, .farragutNorth, .dupontCircle, .woodleyPark, .clevelandPark, .vanNess, .tenleytown, .friendshipHeights, .bethesda, .medicalCenter, .grosvenor, .northBethesda, .twinbrook, .rockville, .shadyGrove, .judiciarySquare, .unionStation, .rhodeIslandAve, .brookland, .takoma, .silverSpring, .forestGlen, .wheaton, .glenmont, .noma:
             return [.red]
 
         case .metroCenterLower, .lenfantPlazaLower, .mcphersonSquare, .farragutWest, .foggyBottom, .rosslyn, .federalTriangle, .smithsonian, .federalCenterSW, .capitolSouth, .easternMarket, .potomacAve, .stadium:
@@ -496,7 +495,7 @@ public extension Station {
     ///
     /// Potomac Yard and Silver Line Phase 2 expansion stations are excluded.
     static var allOpen: [Self] {
-        [.metroCenterUpper, .farragutNorth, .dupontCircle, .woodleyPark, .clevelandPark, .vanNess, .tenleytown, .friendshipHeights, .bethesda, .medicalCenter, .grosvenor, .whiteFlint, .twinbrook, .rockville, .shadyGrove, .galleryPlaceUpper, .judiciarySquare, .unionStation, .rhodeIslandAve, .brookland, .fortTottenUpper, .takoma, .silverSpring, .forestGlen, .wheaton, .glenmont, .noma, .metroCenterLower, .mcphersonSquare, .farragutWest, .foggyBottom, .rosslyn, .arlingtonCemetery, .pentagon, .pentagonCity, .crystalCity, .ronaldReaganWashingtonNationalAirport, .braddockRoad, .kingSt, .eisenhowerAvenue, .huntington, .federalTriangle, .smithsonian, .lenfantPlazaLower, .federalCenterSW, .capitolSouth, .easternMarket, .potomacAve, .stadium, .minnesotaAve, .deanwood, .cheverly, .landover, .newCarrollton, .mtVernonSq7thSt, .shaw, .uStreet, .columbiaHeights, .georgiaAve, .fortTottenLower, .westHyattsville, .princeGeorgesPlaza, .collegePark, .greenbelt, .galleryPlaceLower, .archives, .lenfantPlazaUpper, .waterfront, .navyYard, .anacostia, .congressHeights, .southernAvenue, .naylorRoad, .suitland, .branchAve, .benningRoad, .capitolHeights, .addisonRoad, .morganBoulevard, .largoTownCenter, .vanDornStreet, .franconia, .courtHouse, .clarendon, .virginiaSquare, .ballston, .eastFallsChurch, .westFallsChurch, .dunnLoring, .vienna, .mcLean, .tysonsCorner, .greensboro, .springHill, .wiehle]
+        [.metroCenterUpper, .farragutNorth, .dupontCircle, .woodleyPark, .clevelandPark, .vanNess, .tenleytown, .friendshipHeights, .bethesda, .medicalCenter, .grosvenor, .northBethesda, .twinbrook, .rockville, .shadyGrove, .galleryPlaceUpper, .judiciarySquare, .unionStation, .rhodeIslandAve, .brookland, .fortTottenUpper, .takoma, .silverSpring, .forestGlen, .wheaton, .glenmont, .noma, .metroCenterLower, .mcphersonSquare, .farragutWest, .foggyBottom, .rosslyn, .arlingtonCemetery, .pentagon, .pentagonCity, .crystalCity, .ronaldReaganWashingtonNationalAirport, .braddockRoad, .kingSt, .eisenhowerAvenue, .huntington, .federalTriangle, .smithsonian, .lenfantPlazaLower, .federalCenterSW, .capitolSouth, .easternMarket, .potomacAve, .stadium, .minnesotaAve, .deanwood, .cheverly, .landover, .newCarrollton, .mtVernonSq7thSt, .shaw, .uStreet, .columbiaHeights, .georgiaAve, .fortTottenLower, .westHyattsville, .princeGeorgesPlaza, .collegePark, .greenbelt, .galleryPlaceLower, .archives, .lenfantPlazaUpper, .waterfront, .navyYard, .anacostia, .congressHeights, .southernAvenue, .naylorRoad, .suitland, .branchAve, .benningRoad, .capitolHeights, .addisonRoad, .morganBoulevard, .largoTownCenter, .vanDornStreet, .franconia, .courtHouse, .clarendon, .virginiaSquare, .ballston, .eastFallsChurch, .westFallsChurch, .dunnLoring, .vienna, .mcLean, .tysonsCorner, .greensboro, .springHill, .wiehle]
     }
 
     /// The opening time for this station on the given date.

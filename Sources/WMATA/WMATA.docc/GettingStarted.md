@@ -1,6 +1,6 @@
 # Getting Started
 
-The basics of using WMATA
+The basics of using WMATA.
 
 ## Overview
 
@@ -11,3 +11,12 @@ The basics of using WMATA
 ### Getting your API key
 
 - ``APIKey``
+
+### Choosing an API
+
+- <doc:StandardGTFSAPI>
+
+### Making Requests
+
+- <doc:Endpoints>
+- <doc:Responses>

@@ -8,6 +8,28 @@ WMATA supports both the Standard and GTFS APIs for both MetroRail and MetroBus. 
 
 ![A MetroRail station with a train passing](center-platforms)
 
+## Quickstart
+
+To jump right in, get an API Key by making an account on [WMATA's Developer Website](https://developer.wmata.com). Then, pick an endpoint from ``Rail``, ``Bus``, ``Rail/GTFS`` or ``Bus/GTFS`` to call. Make your ``Endpoint`` instance and make your request.
+
+```swift
+let nextTrains = Rail.NextRails(
+    key: YOUR_API_KEY,
+    station: .waterfront
+)
+
+nextTrains.request { result in 
+    switch result {
+    case let .success(response):
+        print(response.trains)
+    case let .failure(error):
+        print(error)
+    }
+}
+```
+
+For more details, check out <doc:GettingStarted>.
+
 ## Topics
 
 ### Getting Started
@@ -15,7 +37,7 @@ WMATA supports both the Standard and GTFS APIs for both MetroRail and MetroBus. 
 - <doc:GettingStarted>
 - <doc:Endpoints>
 - <doc:Responses>
-- <doc:GTFSStandardAPI>
+- <doc:StandardGTFSAPI>
 
 ### MetroRail
 
@@ -45,5 +67,9 @@ WMATA supports both the Standard and GTFS APIs for both MetroRail and MetroBus. 
 ### Advanced
 
 - <doc:AdvancedDecoding>
+
+### Updating from Previous Versions
+
+- <doc:v11-Migration-Guide>
 
 [wmata]: https://developer.wmata.com

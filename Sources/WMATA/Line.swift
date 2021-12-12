@@ -12,7 +12,7 @@ import Foundation
 ///
 /// Represents the various, colorful rail lines within the MetroRail system.
 /// ![MetroRail system map](metrorail-map)
-public enum Line: String, CaseIterable, Codable {
+public enum Line: String, CaseIterable, Codable, Hashable, Equatable, RawRepresentable {
     /// Red Line
     case red = "RD"
     
@@ -33,7 +33,7 @@ public enum Line: String, CaseIterable, Codable {
     
     /// Yellow Line Rush Plus (not currently used)
     ///
-    /// This line is only used in the `Standard Routes` endpoint, and is not in normal service.
+    /// This line is only used in the ``Rail/StandardRoutes`` endpoint, and is not in normal service.
     case yellowLineRushPlus = "YLRP"
 }
 

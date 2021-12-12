@@ -42,8 +42,11 @@ public extension Station {
     @available(*, deprecated, renamed: "grosvenor")
     static let A11 = Self.grosvenor
     
-    @available(*, deprecated, renamed: "whiteFlint")
-    static let A12 = Self.whiteFlint
+    @available(*, deprecated, renamed: "northBethesda")
+    static let A12 = Self.northBethesda
+    
+    @available(*, deprecated, renamed: "northBethesda")
+    static let whiteFlint = Self.northBethesda
     
     @available(*, deprecated, renamed: "twinbrook")
     static let A13 = Self.twinbrook

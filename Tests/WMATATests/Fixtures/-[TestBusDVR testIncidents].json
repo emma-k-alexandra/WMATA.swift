@@ -1,0 +1,97 @@
+{
+  "name" : "-[TestBusDVR testIncidents]",
+  "interactions" : [
+    {
+      "response" : {
+        "headers" : {
+          "X-Powered-By" : "ASP.NET",
+          "Pragma" : "no-cache",
+          "Content-Type" : "application\/json; charset=utf-8",
+          "X-AspNet-Version" : "4.0.30319",
+          "Content-Length" : "859",
+          "Vary" : "Accept-Encoding",
+          "Expires" : "-1",
+          "Date" : "Sat, 11 Dec 2021 15:05:09 GMT",
+          "Cache-Control" : "no-cache",
+          "Content-Encoding" : "gzip",
+          "Arr-Disable-Session-Affinity" : "True"
+        },
+        "status" : 200,
+        "body" : {
+          "BusIncidents" : [
+            {
+              "RoutesAffected" : [
+                "Q1",
+                "Q2",
+                "Q4",
+                "Q5",
+                "Q6"
+              ],
+              "IncidentType" : "Delay",
+              "IncidentID" : "41FF2AAC-A89C-4DC5-9005-AC7192C6A3C4",
+              "Description" : "Due to a traffic incident on e\/b  Veirs Mill Rd at Atlantic Ave, buses may experience delays and possible detours.",
+              "DateUpdated" : "2021-12-10T16:47:30"
+            },
+            {
+              "RoutesAffected" : [
+                "S9"
+              ],
+              "IncidentType" : "Alert",
+              "IncidentID" : "867D5839-46F1-4190-92ED-AD638EE39519",
+              "Description" : "Due to an operational problem, buses are experiencing delays.",
+              "DateUpdated" : "2021-12-10T16:25:25"
+            },
+            {
+              "RoutesAffected" : [
+                "C26"
+              ],
+              "IncidentType" : "Delay",
+              "IncidentID" : "240EEECE-41CB-43DA-88CF-E42307D8F113",
+              "Description" : "Due to an incident at Bowie Park & Ride, buses may experience delays.",
+              "DateUpdated" : "2021-12-10T16:12:02"
+            },
+            {
+              "RoutesAffected" : [
+                "A6",
+                "A7"
+              ],
+              "IncidentType" : "Alert",
+              "IncidentID" : "4E6E672B-39C8-4425-9B69-09748DA137FC",
+              "Description" : "Due to police activity, buses to Anacostia detour on Mississippi Ave SE at Wheeler Rd, resuming regular route on Alabama Ave SE at 5th St.",
+              "DateUpdated" : "2021-12-10T15:15:23"
+            },
+            {
+              "RoutesAffected" : [
+                "A6",
+                "A7"
+              ],
+              "IncidentType" : "Alert",
+              "IncidentID" : "ABF4F3CB-ADB0-4FD3-B65F-59584F298B9A",
+              "Description" : "Due to police activity buses to Livingston Rd detour on Alabama Av SE at 5th St resuming regular route on Wheeler Rd SE at Mississippi Av.",
+              "DateUpdated" : "2021-12-10T15:12:43"
+            },
+            {
+              "RoutesAffected" : [
+                "W2",
+                "W3"
+              ],
+              "IncidentType" : "Delay",
+              "IncidentID" : "CC74474D-AE4A-4AD8-B04B-2C48156E60BC",
+              "Description" : "Due to police activity on Congress St SE at Savannah St, buses may experience delays and possible detours.",
+              "DateUpdated" : "2021-12-10T14:13:11"
+            }
+          ]
+        },
+        "url" : "https:\/\/api.wmata.com\/Incidents.svc\/json\/BusIncidents?"
+      },
+      "recorded_at" : 1639235109.338007,
+      "request" : {
+        "url" : "https:\/\/api.wmata.com\/Incidents.svc\/json\/BusIncidents?",
+        "headers" : {
+          "api_key" : "9e38c3eab34c4e6c990828002828f5ed"
+        },
+        "method" : "GET"
+      }
+    }
+  ]
+}

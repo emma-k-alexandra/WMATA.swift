@@ -85,7 +85,7 @@ extension Station {
             .weekday: DateComponents(hour: 5, minute: 3),
             .saturday: DateComponents(hour: 7, minute: 3),
         ],
-        .whiteFlint: [
+        .northBethesda: [
             .sunday: DateComponents(hour: 8, minute: 0),
             .weekday: DateComponents(hour: 5, minute: 0),
             .saturday: DateComponents(hour: 7, minute: 0),

@@ -7,19 +7,23 @@
 
 import Foundation
 
-/// For defining a location and radius from that location in meters
+/// A location and radius from that location in meters.
+///
+/// Used in several location-based endpoints like ``Rail/StationEntrances``.
 public struct WMATALocation: Equatable, Hashable {
     /// Radius from location in meters
     public let radius: UInt
     
-    /// Location in latlong
+    /// Latitude and longitude of a location.
+    ///
+    /// For the DMV area, latitude is positive and longitude is negative.
     public let coordinates: Coordinates
 
     /// Create a new location and radius
     ///
     /// - Parameters:
     ///     - radius: Radius in meters from the given coordinates
-    ///     - coordinates: Coordinates of location
+    ///     - coordinates: Latitude and longitude for a location
     public init(radius: UInt, coordinates: Coordinates) {
         self.radius = radius
         self.coordinates = coordinates
@@ -29,10 +33,13 @@ public struct WMATALocation: Equatable, Hashable {
     ///
     /// - Parameters:
     ///     - radius: Radius in meters from the given coordinates
-    ///     - latitude: Latitude of location
-    ///     - longitude: Longitude of location
+    ///     - latitude: Latitude of location in degrees, positive for the DMV.
+    ///     - longitude: Longitude of location in degrees, negative for the DMV.
     public init(radius: UInt, latitude: Double, longitude: Double) {
-        self.init(radius: radius, coordinates: .init(latitude: latitude, longitude: longitude))
+        self.init(
+            radius: radius,
+            coordinates: .init(latitude: latitude, longitude: longitude)
+        )
     }
     
     func queryItems() -> [URLQueryItem] {
@@ -41,17 +48,17 @@ public struct WMATALocation: Equatable, Hashable {
     
     /// Location in latlong
     public struct Coordinates: Equatable, Hashable {
-        /// Latitude in degrees, positive
+        /// Latitude in degrees, for the DMV this value is positive.
         public let latitude: Double
         
-        /// Longitude in degrees, negative
+        /// Longitude in degrees, For this DMV this value is negative.
         public let longitude: Double
 
         /// Create a new location
         ///
         /// - Parameters:
-        ///     - latitude: Latitude of location in degrees, positive
-        ///     - longitude: Longitude of location in degrees, negative
+        ///     - latitude: Latitude of location in degrees, positive for the DMV.
+        ///     - longitude: Longitude of location in degrees, negative for the DMV.
         public init(latitude: Double, longitude: Double) {
             self.latitude = latitude
             self.longitude = longitude

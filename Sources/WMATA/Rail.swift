@@ -665,7 +665,7 @@ public extension Rail {
         
         public let key: APIKey
         
-        /// Station to receive incidents for. Omit for all stations
+        /// Station to receive incidents for. Omit for all stations.
         public var station: Station? = nil
         
         public weak var delegate: JSONEndpointDelegate<Self>? = nil

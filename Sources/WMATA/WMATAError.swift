@@ -6,7 +6,7 @@
 //
 import Foundation
 
-/// Error type for all errors that occur with the WMATA package.
+/// All errors that occur with the WMATA package.
 public enum WMATAError: Error {
     
     /// You received a response from the WMATA API, but it was an error
@@ -74,12 +74,12 @@ public enum WMATAError: Error {
     case unknown(underlyingError: Error)
     
     /// An error message from the WMATA  API
-    struct Message: Codable, Hashable, Equatable, Error {
+    public struct Message: Codable, Hashable, Equatable, Error {
         /// Status code of the response. Matches the HTTP code of the response
-        let statusCode: Int?
+        public let statusCode: Int?
         
         /// Error message
-        let message: String
+        public let message: String
         
         public enum CodingKeys: String, CodingKey {
             case statusCode
@@ -87,7 +87,7 @@ public enum WMATAError: Error {
             case alsoMessage = "message"
         }
         
-        init(from decoder: Decoder) throws {
+        public init(from decoder: Decoder) throws {
             let container = try decoder.container(keyedBy: CodingKeys.self)
             
             statusCode = try container.decodeIfPresent(Int.self, forKey: .statusCode)
@@ -108,7 +108,7 @@ public enum WMATAError: Error {
             }
         }
         
-        func encode(to encoder: Encoder) throws {
+        public func encode(to encoder: Encoder) throws {
             var container = encoder.container(keyedBy: CodingKeys.self)
             
             try container.encode(statusCode, forKey: .statusCode)
