@@ -6,9 +6,13 @@ Majors changes were made to the package in order to vastly simplify the code bas
 
 If you have previously worked with WMATA.swift I recommend reading <doc:Endpoints> to understand the new structure of this package. Instead of using client-like structures like `MetroRail` and `MetroBus`, you now create individual calls with ``Endpoint`` structures. This removes the ability to make requests on structures like ``Stop`` and ``Line``, but greatly simplies the structure of the package.
 
-This update includes the ability to make requests using Swift's async/await concurrency features. This is now the recommended way to make foreground requests. This feature is available for iOS 13, macOS Catalina, watchOS 6 and tvOS 13 or higher. You will need Xcode 13.2 or newer to use this feature with these OSes. Otherwise, you will only be able to target iOS 14, macOS Big Sur, etc or newer.
+This update includes the ability to make requests using Swift's async/await concurrency features. This is now the recommended way to make foreground requests. This feature is available for iOS 13, macOS Catalina, watchOS 6 and tvOS 13 or higher. You will need Xcode 13.2 or newer to use this feature with these OSes. Otherwise, you will only be able to target iOS 15, Monterey, etc or newer.
 
 ## Breaking changes
+
+- This package now requires iOS 13, macOS 10.15, watchOS 7 or tvOS 13.
+
+This package maintains compatibility with current OS versions plus two previous versions. With Xcode 13.2, these minimum requirements allow for usage of Swift's new concurrency features like async/await.
 
 - `MetroRail` and `MetroBus` have been removed.
 
@@ -34,7 +38,7 @@ Error handling has been much improved in v11. Previously, it could be very diffi
 
 - Many response structures have been changed.
 
-Previously, responses were their own, independent structures. Now, they are response structures within an endpoint defined as ``Endpoint/Response``. Hopefully this will keep responses closer to the endpoint they're related to and it's easier to navigate all information related to an API.
+Previously, responses were their own, independent structures. Now, they are response structures within an endpoint defined as ``Endpoint/Response``. Hopefully this will keep responses closer to the endpoint they're related to and it's easier to navigate all information related to an API. Many structures have had new data processing added, so types may be different between previous and current responses.
 
 
 ## Deprecations
@@ -42,3 +46,7 @@ Previously, responses were their own, independent structures. Now, they are resp
 - ``Station`` and ``Line`` enums now use names like ``Station/ballston`` rather than codes.
 
 You can currently still use codes, but they are deprecated and Xcode will assist you in renaming your hardcoded station and line instances. You can get the station code by calling `rawValue` on a `Station` or `Line` instance.
+
+## Other
+
+This package no longer uses @available for Combine APIs, since the new minimum OS requirements for the package all include Combine.

@@ -23,7 +23,6 @@ public protocol Endpoint: WMATADecoding, Hashable {
     func request(with session: URLSession, completion: @escaping (_ result: Result<Response, WMATAError>) -> Void)
     
     /// Send an async HTTP request to this endpoint. Preferred.
-    @available(macOS 10.15, iOS 13, watchOS 6, tvOS 13, *)
     func request(with session: URLSession) async -> Result<Response, WMATAError>
     
     /// Send a background HTTP request to the endpoint and receive the response from an ``EndpointDelegate``.
@@ -114,14 +113,20 @@ public extension JSONEndpoint {
     }
     
     /// Send an async request to this API. Preferred.
-    @available(macOS 12, iOS 15, watchOS 7, tvOS 15, *)
     func request(with session: URLSession = .shared) async -> Result<Response, WMATAError> {
         guard let request = urlRequest() else {
             return .failure(.unableToCreateRequest(endpoint: String(describing: self)))
         }
         
         do {
-            let response = try await session.data(for: request)
+            let response: (Data, URLResponse)
+            
+            if #available(macOS 12, iOS 15, tvOS 15, watchOS 8, *) {
+                response = try await session.data(for: request)
+            } else {
+                // Fallback on earlier versions
+                response = try await session.data(from: request)
+            }
             
             return createResult(response).flatMap { decode(standard: $0) }
         } catch {
@@ -208,14 +213,20 @@ public extension GTFSEndpoint {
     }
     
     /// Send an async request to this API. Preferred.
-    @available(macOS 12, iOS 15, watchOS 7, tvOS 15, *)
     func request(with session: URLSession = .shared) async -> Result<Response, WMATAError> {
         guard let request = urlRequest() else {
             return .failure(.unableToCreateRequest(endpoint: String(describing: self)))
         }
         
         do {
-            let response = try await session.data(for: request)
+            let response: (Data, URLResponse)
+            
+            if #available(macOS 12, iOS 15, tvOS 15, watchOS 8, *) {
+                response = try await session.data(for: request)
+            } else {
+                // Fallback on earlier versions
+                response = try await session.data(from: request)
+            }
             
             return createResult(response).flatMap { decode(gtfs: $0) }
         } catch {

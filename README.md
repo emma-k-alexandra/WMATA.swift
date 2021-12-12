@@ -15,6 +15,7 @@ WMATA.swift is a Swift interface to the [Washington Metropolitan Area Transit Au
 ## Requirements
 
 - Swift 5.5
+- Xcode 13.2
 
 ## Installation
 
@@ -34,6 +35,7 @@ Full documentation is available within Xcode, or [on the web in a slightly broke
 
 - [GTFS][gtfs]
 - [swift-protobuf][swift-protobuf], for GTFS-RT feeds.
+- [DVR](https://github.com/venmo/DVR), for testing.
 
 ## Contact
 
@@ -51,19 +53,6 @@ Todo:
 
 WMATA.swift is released under the MIT license. [See LICENSE](https://github.com/emma-k-alexandra/WMATA.swift/blob/master/LICENSE) for details.
 
-[intro-docs]: https://github.com/emma-k-alexandra/WMATA.swift/blob/master/Documentation/Introduction.md
-[metro-rail-docs]: https://github.com/emma-k-alexandra/WMATA.swift/blob/master/Documentation/MetroRail.md
-[station-docs]: https://github.com/emma-k-alexandra/WMATA.swift/blob/master/Documentation/Station.md
-[line-docs]: https://github.com/emma-k-alexandra/WMATA.swift/blob/master/Documentation/Line.md
-[metro-bus-docs]: https://github.com/emma-k-alexandra/WMATA.swift/blob/master/Documentation/MetroBus.md
-[stop-docs]: https://github.com/emma-k-alexandra/WMATA.swift/blob/master/Documentation/Stop.md
-[route-docs]: https://github.com/emma-k-alexandra/WMATA.swift/blob/master/Documentation/Route.md
-[combine-docs]: https://github.com/emma-k-alexandra/WMATA.swift/blob/master/Documentation/Combine.md
-[background-docs]: https://github.com/emma-k-alexandra/WMATA.swift/blob/master/Documentation/Background.md
-[radius-at-coordinates]: https://github.com/emma-k-alexandra/WMATA.swift/blob/master/Documentation/Miscellaneous.md#RadiusAtCoordinates
-[v9-migration-guide]: https://github.com/emma-k-alexandra/WMATA.swift/blob/master/Documentation/v9%20Migration%20Guide.md
-[v10-migration-guide]: https://github.com/emma-k-alexandra/WMATA.swift/blob/master/Documentation/v10%20Migration%20Guide.md
 [gtfs]: https://github.com/emma-k-alexandra/GTFS
 [swift-protobuf]: https://github.com/apple/swift-protobuf
 [wmata]: https://developer.wmata.com
-[wmata-rust]: https://github.com/emma-k-alexandra/wmata
