@@ -1,0 +1,522 @@
+{
+  "name" : "-[TestRailDVR testStations]",
+  "interactions" : [
+    {
+      "response" : {
+        "status" : 200,
+        "body" : {
+          "Stations" : [
+            {
+              "LineCode3" : "SV",
+              "Code" : "C01",
+              "LineCode1" : "BL",
+              "Lat" : 38.898302999999999,
+              "StationTogether1" : "A01",
+              "Lon" : -77.028098999999997,
+              "LineCode4" : null,
+              "LineCode2" : "OR",
+              "Name" : "Metro Center",
+              "StationTogether2" : "",
+              "Address" : {
+                "Street" : "607 13th St. NW",
+                "Zip" : "20005",
+                "City" : "Washington",
+                "State" : "DC"
+              }
+            },
+            {
+              "LineCode3" : "SV",
+              "Code" : "C02",
+              "LineCode1" : "BL",
+              "Lat" : 38.901316000000001,
+              "StationTogether1" : "",
+              "Lon" : -77.033652000000004,
+              "LineCode4" : null,
+              "LineCode2" : "OR",
+              "Name" : "McPherson Square",
+              "StationTogether2" : "",
+              "Address" : {
+                "Street" : "1400 I St. NW",
+                "Zip" : "20005",
+                "City" : "Washington",
+                "State" : "DC"
+              }
+            },
+            {
+              "LineCode3" : "SV",
+              "Code" : "C03",
+              "LineCode1" : "BL",
+              "Lat" : 38.901311,
+              "StationTogether1" : "",
+              "Lon" : -77.039810000000003,
+              "LineCode4" : null,
+              "LineCode2" : "OR",
+              "Name" : "Farragut West",
+              "StationTogether2" : "",
+              "Address" : {
+                "Street" : "900 18th St. NW",
+                "Zip" : "20006",
+                "City" : "Washington",
+                "State" : "DC"
+              }
+            },
+            {
+              "LineCode3" : "SV",
+              "Code" : "C04",
+              "LineCode1" : "BL",
+              "Lat" : 38.900599,
+              "StationTogether1" : "",
+              "Lon" : -77.050273000000004,
+              "LineCode4" : null,
+              "LineCode2" : "OR",
+              "Name" : "Foggy Bottom-GWU",
+              "StationTogether2" : "",
+              "Address" : {
+                "Street" : "2301 I St. NW",
+                "Zip" : "20037",
+                "City" : "Washington",
+                "State" : "DC"
+              }
+            },
+            {
+              "LineCode3" : "SV",
+              "Code" : "C05",
+              "LineCode1" : "BL",
+              "Lat" : 38.896594999999998,
+              "StationTogether1" : "",
+              "Lon" : -77.071460000000002,
+              "LineCode4" : null,
+              "LineCode2" : "OR",
+              "Name" : "Rosslyn",
+              "StationTogether2" : "",
+              "Address" : {
+                "Street" : "1850 N. Moore Street",
+                "Zip" : "22209",
+                "City" : "Arlington",
+                "State" : "VA"
+              }
+            },
+            {
+              "LineCode3" : null,
+              "Code" : "C06",
+              "LineCode1" : "BL",
+              "Lat" : 38.884574000000001,
+              "StationTogether1" : "",
+              "Lon" : -77.063108,
+              "LineCode4" : null,
+              "LineCode2" : null,
+              "Name" : "Arlington Cemetery",
+              "StationTogether2" : "",
+              "Address" : {
+                "Street" : "1000 North Memorial Drive",
+                "Zip" : "22211",
+                "City" : "Arlington",
+                "State" : "VA"
+              }
+            },
+            {
+              "LineCode3" : null,
+              "Code" : "C07",
+              "LineCode1" : "BL",
+              "Lat" : 38.869349,
+              "StationTogether1" : "",
+              "Lon" : -77.054012999999998,
+              "LineCode4" : null,
+              "LineCode2" : "YL",
+              "Name" : "Pentagon",
+              "StationTogether2" : "",
+              "Address" : {
+                "Street" : "2 South Rotary Road",
+                "Zip" : "22202",
+                "City" : "Arlington",
+                "State" : "VA"
+              }
+            },
+            {
+              "LineCode3" : null,
+              "Code" : "C08",
+              "LineCode1" : "BL",
+              "Lat" : 38.863045,
+              "StationTogether1" : "",
+              "Lon" : -77.059506999999996,
+              "LineCode4" : null,
+              "LineCode2" : "YL",
+              "Name" : "Pentagon City",
+              "StationTogether2" : "",
+              "Address" : {
+                "Street" : "1250 South Hayes St.",
+                "Zip" : "22202",
+                "City" : "Arlington",
+                "State" : "VA"
+              }
+            },
+            {
+              "LineCode3" : null,
+              "Code" : "C09",
+              "LineCode1" : "BL",
+              "Lat" : 38.857790000000001,
+              "StationTogether1" : "",
+              "Lon" : -77.050589000000002,
+              "LineCode4" : null,
+              "LineCode2" : "YL",
+              "Name" : "Crystal City",
+              "StationTogether2" : "",
+              "Address" : {
+                "Street" : "1750 South Clark St.",
+                "Zip" : "22202",
+                "City" : "Arlington",
+                "State" : "VA"
+              }
+            },
+            {
+              "LineCode3" : null,
+              "Code" : "C10",
+              "LineCode1" : "BL",
+              "Lat" : 38.852984999999997,
+              "StationTogether1" : "",
+              "Lon" : -77.043805000000006,
+              "LineCode4" : null,
+              "LineCode2" : "YL",
+              "Name" : "Ronald Reagan Washington National Airport",
+              "StationTogether2" : "",
+              "Address" : {
+                "Street" : "2400 S. Smith Blvd.",
+                "Zip" : "22202",
+                "City" : "Arlington",
+                "State" : "VA"
+              }
+            },
+            {
+              "LineCode3" : null,
+              "Code" : "C12",
+              "LineCode1" : "BL",
+              "Lat" : 38.814008999999999,
+              "StationTogether1" : "",
+              "Lon" : -77.053763000000004,
+              "LineCode4" : null,
+              "LineCode2" : "YL",
+              "Name" : "Braddock Road",
+              "StationTogether2" : "",
+              "Address" : {
+                "Street" : "700 N. West St.",
+                "Zip" : "22301",
+                "City" : "Alexandria",
+                "State" : "VA"
+              }
+            },
+            {
+              "LineCode3" : null,
+              "Code" : "C13",
+              "LineCode1" : "BL",
+              "Lat" : 38.806474000000001,
+              "StationTogether1" : "",
+              "Lon" : -77.061115000000001,
+              "LineCode4" : null,
+              "LineCode2" : "YL",
+              "Name" : "King St-Old Town",
+              "StationTogether2" : "",
+              "Address" : {
+                "Street" : "1900 King Street",
+                "Zip" : "22301",
+                "City" : "Alexandria",
+                "State" : "VA"
+              }
+            },
+            {
+              "LineCode3" : "SV",
+              "Code" : "D01",
+              "LineCode1" : "BL",
+              "Lat" : 38.893757000000001,
+              "StationTogether1" : "",
+              "Lon" : -77.028217999999995,
+              "LineCode4" : null,
+              "LineCode2" : "OR",
+              "Name" : "Federal Triangle",
+              "StationTogether2" : "",
+              "Address" : {
+                "Street" : "302 12th St. NW",
+                "Zip" : "20004",
+                "City" : "Washington",
+                "State" : "DC"
+              }
+            },
+            {
+              "LineCode3" : "SV",
+              "Code" : "D02",
+              "LineCode1" : "BL",
+              "Lat" : 38.888021999999999,
+              "StationTogether1" : "",
+              "Lon" : -77.028232000000003,
+              "LineCode4" : null,
+              "LineCode2" : "OR",
+              "Name" : "Smithsonian",
+              "StationTogether2" : "",
+              "Address" : {
+                "Street" : "1200 Independence Avenue SW",
+                "Zip" : "20004",
+                "City" : "Washington",
+                "State" : "DC"
+              }
+            },
+            {
+              "LineCode3" : "SV",
+              "Code" : "D03",
+              "LineCode1" : "BL",
+              "Lat" : 38.884774999999998,
+              "StationTogether1" : "F03",
+              "Lon" : -77.021963999999997,
+              "LineCode4" : null,
+              "LineCode2" : "OR",
+              "Name" : "L'Enfant Plaza",
+              "StationTogether2" : "",
+              "Address" : {
+                "Street" : "600 Maryland Avenue SW",
+                "Zip" : "20024",
+                "City" : "Washington",
+                "State" : "DC"
+              }
+            },
+            {
+              "LineCode3" : "SV",
+              "Code" : "D04",
+              "LineCode1" : "BL",
+              "Lat" : 38.884957999999997,
+              "StationTogether1" : "",
+              "Lon" : -77.015860000000004,
+              "LineCode4" : null,
+              "LineCode2" : "OR",
+              "Name" : "Federal Center SW",
+              "StationTogether2" : "",
+              "Address" : {
+                "Street" : "401 3rd Street SW",
+                "Zip" : "20024",
+                "City" : "Washington",
+                "State" : "DC"
+              }
+            },
+            {
+              "LineCode3" : "SV",
+              "Code" : "D05",
+              "LineCode1" : "BL",
+              "Lat" : 38.884968000000001,
+              "StationTogether1" : "",
+              "Lon" : -77.005137000000005,
+              "LineCode4" : null,
+              "LineCode2" : "OR",
+              "Name" : "Capitol South",
+              "StationTogether2" : "",
+              "Address" : {
+                "Street" : "355 First Street SE",
+                "Zip" : "20003",
+                "City" : "Washington",
+                "State" : "DC"
+              }
+            },
+            {
+              "LineCode3" : "SV",
+              "Code" : "D06",
+              "LineCode1" : "BL",
+              "Lat" : 38.884124,
+              "StationTogether1" : "",
+              "Lon" : -76.995334,
+              "LineCode4" : null,
+              "LineCode2" : "OR",
+              "Name" : "Eastern Market",
+              "StationTogether2" : "",
+              "Address" : {
+                "Street" : "701 Pennsylvania Avenue SE",
+                "Zip" : "20003",
+                "City" : "Washington",
+                "State" : "DC"
+              }
+            },
+            {
+              "LineCode3" : "SV",
+              "Code" : "D07",
+              "LineCode1" : "BL",
+              "Lat" : 38.880840999999997,
+              "StationTogether1" : "",
+              "Lon" : -76.985720999999998,
+              "LineCode4" : null,
+              "LineCode2" : "OR",
+              "Name" : "Potomac Ave",
+              "StationTogether2" : "",
+              "Address" : {
+                "Street" : "700 14th Street SE",
+                "Zip" : "20003",
+                "City" : "Washington",
+                "State" : "DC"
+              }
+            },
+            {
+              "LineCode3" : "SV",
+              "Code" : "D08",
+              "LineCode1" : "BL",
+              "Lat" : 38.885939999999998,
+              "StationTogether1" : "",
+              "Lon" : -76.977485000000001,
+              "LineCode4" : null,
+              "LineCode2" : "OR",
+              "Name" : "Stadium-Armory",
+              "StationTogether2" : "",
+              "Address" : {
+                "Street" : "192 19th St. SE",
+                "Zip" : "20003",
+                "City" : "Washington",
+                "State" : "DC"
+              }
+            },
+            {
+              "LineCode3" : null,
+              "Code" : "G01",
+              "LineCode1" : "BL",
+              "Lat" : 38.890487999999998,
+              "StationTogether1" : "",
+              "Lon" : -76.938291000000007,
+              "LineCode4" : null,
+              "LineCode2" : "SV",
+              "Name" : "Benning Road",
+              "StationTogether2" : "",
+              "Address" : {
+                "Street" : "4500 Benning Road",
+                "Zip" : "20019",
+                "City" : "Washington",
+                "State" : "DC"
+              }
+            },
+            {
+              "LineCode3" : null,
+              "Code" : "G02",
+              "LineCode1" : "BL",
+              "Lat" : 38.889757000000003,
+              "StationTogether1" : "",
+              "Lon" : -76.913381999999999,
+              "LineCode4" : null,
+              "LineCode2" : "SV",
+              "Name" : "Capitol Heights",
+              "StationTogether2" : "",
+              "Address" : {
+                "Street" : "133 Central Avenue",
+                "Zip" : "20743",
+                "City" : "Capitol Heights",
+                "State" : "MD"
+              }
+            },
+            {
+              "LineCode3" : null,
+              "Code" : "G03",
+              "LineCode1" : "BL",
+              "Lat" : 38.886713,
+              "StationTogether1" : "",
+              "Lon" : -76.893591999999998,
+              "LineCode4" : null,
+              "LineCode2" : "SV",
+              "Name" : "Addison Road-Seat Pleasant",
+              "StationTogether2" : "",
+              "Address" : {
+                "Street" : "100 Addison Road S.",
+                "Zip" : "20743",
+                "City" : "Capitol Heights",
+                "State" : "MD"
+              }
+            },
+            {
+              "LineCode3" : null,
+              "Code" : "G04",
+              "LineCode1" : "BL",
+              "Lat" : 38.891300000000001,
+              "StationTogether1" : "",
+              "Lon" : -76.868200000000002,
+              "LineCode4" : null,
+              "LineCode2" : "SV",
+              "Name" : "Morgan Boulevard",
+              "StationTogether2" : "",
+              "Address" : {
+                "Street" : "300 Garrett Morgan Blvd.",
+                "Zip" : "20785",
+                "City" : "Landover",
+                "State" : "MD"
+              }
+            },
+            {
+              "LineCode3" : null,
+              "Code" : "G05",
+              "LineCode1" : "BL",
+              "Lat" : 38.900799999999997,
+              "StationTogether1" : "",
+              "Lon" : -76.844899999999996,
+              "LineCode4" : null,
+              "LineCode2" : "SV",
+              "Name" : "Largo Town Center",
+              "StationTogether2" : "",
+              "Address" : {
+                "Street" : "Largo Town Center 9000 Lottsford Road",
+                "Zip" : "20774",
+                "City" : "Largo",
+                "State" : "MD"
+              }
+            },
+            {
+              "LineCode3" : null,
+              "Code" : "J02",
+              "LineCode1" : "BL",
+              "Lat" : 38.799193000000002,
+              "StationTogether1" : "",
+              "Lon" : -77.129407,
+              "LineCode4" : null,
+              "LineCode2" : null,
+              "Name" : "Van Dorn Street",
+              "StationTogether2" : "",
+              "Address" : {
+                "Street" : "5690 Eisenhower Avenue",
+                "Zip" : "22310",
+                "City" : "Alexandria",
+                "State" : "VA"
+              }
+            },
+            {
+              "LineCode3" : null,
+              "Code" : "J03",
+              "LineCode1" : "BL",
+              "Lat" : 38.766128999999999,
+              "StationTogether1" : "",
+              "Lon" : -77.168796999999998,
+              "LineCode4" : null,
+              "LineCode2" : null,
+              "Name" : "Franconia-Springfield",
+              "StationTogether2" : "",
+              "Address" : {
+                "Street" : "6880 Frontier Drive",
+                "Zip" : "22150",
+                "City" : "Springfield",
+                "State" : "VA"
+              }
+            }
+          ]
+        },
+        "url" : "https:\/\/api.wmata.com\/Rail.svc\/json\/jStations?LineCode=BL",
+        "headers" : {
+          "Arr-Disable-Session-Affinity" : "True",
+          "Cache-Control" : "no-cache",
+          "Content-Type" : "application\/json; charset=utf-8",
+          "Date" : "Sun, 12 Dec 2021 22:49:45 GMT",
+          "X-AspNet-Version" : "4.0.30319",
+          "Content-Length" : "2039",
+          "Expires" : "-1",
+          "Content-Encoding" : "gzip",
+          "Pragma" : "no-cache",
+          "Vary" : "Accept-Encoding",
+          "X-Powered-By" : "ASP.NET"
+        }
+      },
+      "recorded_at" : 1639349385.77336,
+      "request" : {
+        "url" : "https:\/\/api.wmata.com\/Rail.svc\/json\/jStations?LineCode=BL",
+        "headers" : {
+          "api_key" : "9e38c3eab34c4e6c990828002828f5ed"
+        },
+        "method" : "GET"
+      }
+    }
+  ]
+}

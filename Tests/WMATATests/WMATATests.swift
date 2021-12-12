@@ -34,6 +34,7 @@ class TestJSONDelegate<Parent: JSONEndpoint>: JSONEndpointDelegate<Parent> {
             expectation.fulfill()
         case let .failure(error):
             print(error)
+            XCTFail()
         }
     }
 }
@@ -52,6 +53,7 @@ class TestGTFSDelegate<Parent: GTFSEndpoint>: GTFSEndpointDelegate<Parent> {
 
         case let .failure(error):
             print(error)
+            XCTFail()
         }
     }
 }

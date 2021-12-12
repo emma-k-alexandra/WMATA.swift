@@ -1,0 +1,252 @@
+{
+  "interactions" : [
+    {
+      "request" : {
+        "headers" : {
+          "api_key" : "9e38c3eab34c4e6c990828002828f5ed"
+        },
+        "url" : "https:\/\/api.wmata.com\/Rail.svc\/json\/jStationEntrances?Lat=38.876736&Lon=-76.724502&Radius=20000",
+        "method" : "GET"
+      },
+      "response" : {
+        "body" : {
+          "Entrances" : [
+            {
+              "Lon" : -76.844916999999995,
+              "Lat" : 38.899866000000003,
+              "StationCode1" : "G05",
+              "Name" : "MAIN ENTRANCE (N HARRY S TRUMAN DR & LARGO DR)",
+              "StationCode2" : "",
+              "ID" : "203",
+              "Description" : "Canopied entrance located east side of the station and is reachable by the walkway from parking lot and south parking garage."
+            },
+            {
+              "Lon" : -76.845257000000004,
+              "Lat" : 38.900146999999997,
+              "StationCode1" : "G05",
+              "Name" : "NORTH ENTRANCE (ACCESS FROM NORTH PARKING GARAGE AND BUSBAY)",
+              "StationCode2" : "",
+              "ID" : "204",
+              "Description" : "Facility entrance from west side of the station is accessible from bus bay and north side parking garage."
+            },
+            {
+              "Lon" : -76.868402000000003,
+              "Lat" : 38.893551000000002,
+              "StationCode1" : "G04",
+              "Name" : "SOUTH ENTRANCE (GARRET A MORGAN BLVD & FIELDSTONE WAY)",
+              "StationCode2" : "",
+              "ID" : "202",
+              "Description" : "Station entrance from bus bay and parking located west side of Garret A Morgan Blvd."
+            },
+            {
+              "Lon" : -76.868543000000003,
+              "Lat" : 38.893763999999997,
+              "StationCode1" : "G04",
+              "Name" : "NORTH ENTRANCE (WALKWAY FROM GARRET A MORGAN BLVD & SGT HARTMAN LN)",
+              "StationCode2" : "",
+              "ID" : "201",
+              "Description" : "Station entrance is accessible from walkway at Garret A Morgan Blvd and SGT Hartman Ln."
+            },
+            {
+              "Lon" : -76.895748999999995,
+              "Lat" : 38.886716,
+              "StationCode1" : "G03",
+              "Name" : "MAIN ENTRANCE (ADDISON RD, SOUTH OF CENTRAL AVE)",
+              "StationCode2" : "",
+              "ID" : "200",
+              "Description" : "Station entrance is reachable by the walkway from parking garage and the sidewalks from Central Ave."
+            },
+            {
+              "Lon" : -76.871785000000003,
+              "Lat" : 38.947915000000002,
+              "StationCode1" : "D13",
+              "Name" : "MAIN ENTRANCE (SW OF GARDEN CITY DR & CORPORATE DR)",
+              "StationCode2" : "",
+              "ID" : "148",
+              "Description" : "East side station entrance is accessible from bus bay and parking lot located southwest corner of Garden City Dr and Corporate Dr."
+            },
+            {
+              "Lon" : -76.872175999999996,
+              "Lat" : 38.948422999999998,
+              "StationCode1" : "D13",
+              "Name" : "NORTHWEST ELEVATOR ENTRANCE (ADJACENT TO NORTHWEST ENTRANCE)",
+              "StationCode2" : "",
+              "ID" : "146",
+              "Description" : "Entrance elevator( towards passageway to station) is adjacent to west side escalator and is accessible from IRS pedestrian bridge, parking lot and bus bay located southeast corner of Ellin Rd and Harkins Rd."
+            },
+            {
+              "Lon" : -76.872343999999998,
+              "Lat" : 38.948458000000002,
+              "StationCode1" : "D13",
+              "Name" : "NORTHWEST ENTRANCE (IRS EXIT, SE OF ELLIS RD & HARKINS RD)",
+              "StationCode2" : "",
+              "ID" : "147",
+              "Description" : "Canopied entrance  (towards passageway to station) from west side of the station is accessible from pedestrian bridge from IRS building, bus bay and parking lot located southeast corner of Ellis Rd and Harkins Rd."
+            },
+            {
+              "Lon" : -76.891188999999997,
+              "Lat" : 38.933428999999997,
+              "StationCode1" : "D12",
+              "Name" : "MAIN ENTRANCE (WEST PENNSY DR, NORTH OF LANDOVER RD)",
+              "StationCode2" : "",
+              "ID" : "145",
+              "Description" : "Station entrance is accessible by the walkway from parking lot, bus bay and kiss&ride area located west of Pennsy Dr."
+            },
+            {
+              "Lon" : -76.912991000000005,
+              "Lat" : 38.889240000000001,
+              "StationCode1" : "G02",
+              "Name" : "ELEVATOR ENTRANCE (E CAPITOL ST & SOUTHERN AVE)",
+              "StationCode2" : "",
+              "ID" : "198",
+              "Description" : "Elevator entrance from parking lot, bus bay, and the sidewalks from E Capital St."
+            },
+            {
+              "Lon" : -76.913268000000002,
+              "Lat" : 38.889225000000003,
+              "StationCode1" : "G02",
+              "Name" : "MAIN ENTRANCE (E CAPITOL ST & SOUTHERN AVE)",
+              "StationCode2" : "",
+              "ID" : "199",
+              "Description" : "Canopied escalator entrance from bus bay, located at southeast corner of Southern Ave and E Capital St NE."
+            },
+            {
+              "Lon" : -76.912441000000001,
+              "Lat" : 38.827195000000003,
+              "StationCode1" : "F11",
+              "Name" : "NORTH ENTRANCE (AUTH WAY & CAPITAL GATEWAY DR)",
+              "StationCode2" : "",
+              "ID" : "195",
+              "Description" : "Mezzanine entrance from the parking lot between north end of Auth Way and Capital Gateway Dr."
+            },
+            {
+              "Lon" : -76.916518999999994,
+              "Lat" : 38.916255,
+              "StationCode1" : "D11",
+              "Name" : "MAIN ENTRANCE (COLUMBIA PARK RD, FROM RT 50)",
+              "StationCode2" : "",
+              "ID" : "144",
+              "Description" : "Escalator entrance from bus bay, parking lot, and walkway from Columbia Park Rd."
+            },
+            {
+              "Lon" : -76.912557000000007,
+              "Lat" : 38.827078999999998,
+              "StationCode1" : "F11",
+              "Name" : "MAIN ENTRANCE (SOUTH , AUTH WAY & OLD SOPER RD)",
+              "StationCode2" : "",
+              "ID" : "194",
+              "Description" : "Mezzanine entrance from bus bays, kiss&ride, and Old Soper Rd."
+            },
+            {
+              "Lon" : -76.916765999999996,
+              "Lat" : 38.916173999999998,
+              "StationCode1" : "D11",
+              "Name" : "ELEVATOR ENTRANCE (COLUMBIA PARK RD, FROM RT 50)",
+              "StationCode2" : "",
+              "ID" : "143",
+              "Description" : "Elevator entrance from northeast corner of parking lot, next to bus bay and kiss&ride."
+            },
+            {
+              "Lon" : -76.932298000000003,
+              "Lat" : 38.844258000000004,
+              "StationCode1" : "F10",
+              "Name" : "MAIN ENTRANCE (WEST OF SILVER HILL RD & NAVY DAY DR)",
+              "StationCode2" : "",
+              "ID" : "193",
+              "Description" : "Station entrance is accessible by bus bay, pedestrian bridge from parking garage and the sidewalks from Silver Hill Road."
+            },
+            {
+              "Lon" : -76.937376,
+              "Lat" : 38.890343000000001,
+              "StationCode1" : "G01",
+              "Name" : "MAIN ENTRANCE (CENTRAL AVE NE & BENNING RD NE)",
+              "StationCode2" : "",
+              "ID" : "197",
+              "Description" : "Canopied escalator entrance at northeast corner of Central Ave and Benning Road NE."
+            },
+            {
+              "Lon" : -76.937531000000007,
+              "Lat" : 38.890546000000001,
+              "StationCode1" : "G01",
+              "Name" : "ELEVATOR ENTRANCE (CENTRAL AVE NE & BENNING RD NE)",
+              "StationCode2" : "",
+              "ID" : "196",
+              "Description" : "Elevator from northeast corner of Central Ave and Benning Road NE."
+            },
+            {
+              "Lon" : -76.934625999999994,
+              "Lat" : 38.908341,
+              "StationCode1" : "D10",
+              "Name" : "MAIN ENTRANCE (MINNESOTA AVE between NASH & 48th STs)",
+              "StationCode2" : "",
+              "ID" : "141",
+              "Description" : "Station entrance is accessible from the bus bay, kiss&ride area and parking lot located at the Minnesota Ave NE."
+            },
+            {
+              "Lon" : -76.934832999999998,
+              "Lat" : 38.908191000000002,
+              "StationCode1" : "D10",
+              "Name" : "ELEVATOR ENTRANCE (ADJACENT TO MAIN ENTRANCE)",
+              "StationCode2" : "",
+              "ID" : "140",
+              "Description" : "Elevator from bus bay, kiss&ride area and parking lot located at the Minnesota Ave NE."
+            },
+            {
+              "Lon" : -76.935179000000005,
+              "Lat" : 38.908552,
+              "StationCode1" : "D10",
+              "Name" : "WEST WALKWAY ENTRANCE (POLK & OLIVER STs)",
+              "StationCode2" : "",
+              "ID" : "142",
+              "Description" : "Walkway from the intersection of Polk St NE and Olive St NE, passageway goes under CSX rail tracks to the station."
+            },
+            {
+              "Lon" : -76.946691999999999,
+              "Lat" : 38.898806999999998,
+              "StationCode1" : "D09",
+              "Name" : "SOUTH ELEVATOR ENTRANCE (West of Minnesota Ave NE)",
+              "StationCode2" : "",
+              "ID" : "137",
+              "Description" : "Street level elevator located west of Minnesota Ave NE is accessible by the sidewalks from Minnesota Ave, bus bay and parking lot."
+            },
+            {
+              "Lon" : -76.946922000000001,
+              "Lat" : 38.898606999999998,
+              "StationCode1" : "D09",
+              "Name" : "SOUTH ENTRANCE (NW SIDE OF MINNESOTA AVE & GRANT ST)",
+              "StationCode2" : "",
+              "ID" : "138",
+              "Description" : "Station entrance is from the north end of the bus bay at Minnesota Ave. NE and Grant St. NE (Northwest side)."
+            },
+            {
+              "Lon" : -76.946822999999995,
+              "Lat" : 38.899569,
+              "StationCode1" : "D09",
+              "Name" : "NORTH TUNNEL ENTRANCE (ACCESS PEDESTRIAN BRIDGE FROM HAYES ST & I295)",
+              "StationCode2" : "",
+              "ID" : "139",
+              "Description" : "Pedestrian walkway from street level to station passageway is located at the east side of I-295 northbound  and is accessible by the pedestrian bridge originates at the west side of I-295(Kenilworth Ave NE) at Hayes St NE."
+            }
+          ]
+        },
+        "url" : "https:\/\/api.wmata.com\/Rail.svc\/json\/jStationEntrances?Lat=38.876736&Lon=-76.724502&Radius=20000",
+        "status" : 200,
+        "headers" : {
+          "Pragma" : "no-cache",
+          "Content-Encoding" : "gzip",
+          "X-AspNet-Version" : "4.0.30319",
+          "Content-Length" : "2305",
+          "Cache-Control" : "no-cache",
+          "Content-Type" : "application\/json; charset=utf-8",
+          "Arr-Disable-Session-Affinity" : "True",
+          "Date" : "Sun, 12 Dec 2021 22:46:42 GMT",
+          "Expires" : "-1",
+          "Vary" : "Accept-Encoding",
+          "X-Powered-By" : "ASP.NET"
+        }
+      },
+      "recorded_at" : 1639349202.2977419
+    }
+  ],
+  "name" : "-[TestRailDVR testEntrances]"
+}

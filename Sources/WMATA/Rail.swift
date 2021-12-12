@@ -662,7 +662,6 @@ public extension Rail {
                     public let offPeakTime: Double
                     
                     /// Fare during peak times (weekdays from opening to 9:30 AM and 3-7 PM, and weekends from midnight to closing).
-                    // TODO: Create `isPeakTime` function
                     public let peakTime: Double
                     
                     /// Reduced fare for senior citizens or people with disabilities.

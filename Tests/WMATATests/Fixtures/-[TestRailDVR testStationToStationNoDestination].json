@@ -1,0 +1,1059 @@
+{
+  "interactions" : [
+    {
+      "recorded_at" : 1639350929.6873231,
+      "response" : {
+        "body" : {
+          "StationToStationInfos" : [
+            {
+              "DestinationStation" : "A02",
+              "SourceStation" : "A01",
+              "CompositeMiles" : 0.75,
+              "RailTime" : 2,
+              "RailFare" : {
+                "OffPeakTime" : 2,
+                "PeakTime" : 2.25,
+                "SeniorDisabled" : 1.1000000000000001
+              }
+            },
+            {
+              "DestinationStation" : "A03",
+              "SourceStation" : "A01",
+              "CompositeMiles" : 1.23,
+              "RailTime" : 4,
+              "RailFare" : {
+                "OffPeakTime" : 2,
+                "PeakTime" : 2.25,
+                "SeniorDisabled" : 1.1000000000000001
+              }
+            },
+            {
+              "DestinationStation" : "A04",
+              "SourceStation" : "A01",
+              "CompositeMiles" : 2.3999999999999999,
+              "RailTime" : 6,
+              "RailFare" : {
+                "OffPeakTime" : 2,
+                "PeakTime" : 2.25,
+                "SeniorDisabled" : 1.1000000000000001
+              }
+            },
+            {
+              "DestinationStation" : "A05",
+              "SourceStation" : "A01",
+              "CompositeMiles" : 3.1000000000000001,
+              "RailTime" : 9,
+              "RailFare" : {
+                "OffPeakTime" : 2,
+                "PeakTime" : 2.2999999999999998,
+                "SeniorDisabled" : 1.1499999999999999
+              }
+            },
+            {
+              "DestinationStation" : "A06",
+              "SourceStation" : "A01",
+              "CompositeMiles" : 3.73,
+              "RailTime" : 11,
+              "RailFare" : {
+                "OffPeakTime" : 2.2000000000000002,
+                "PeakTime" : 2.5,
+                "SeniorDisabled" : 1.25
+              }
+            },
+            {
+              "DestinationStation" : "A07",
+              "SourceStation" : "A01",
+              "CompositeMiles" : 4.7000000000000002,
+              "RailTime" : 13,
+              "RailFare" : {
+                "OffPeakTime" : 2.3999999999999999,
+                "PeakTime" : 2.7999999999999998,
+                "SeniorDisabled" : 1.3999999999999999
+              }
+            },
+            {
+              "DestinationStation" : "A08",
+              "SourceStation" : "A01",
+              "CompositeMiles" : 5.46,
+              "RailTime" : 15,
+              "RailFare" : {
+                "OffPeakTime" : 2.6000000000000001,
+                "PeakTime" : 3.0499999999999998,
+                "SeniorDisabled" : 1.5
+              }
+            },
+            {
+              "DestinationStation" : "A09",
+              "SourceStation" : "A01",
+              "CompositeMiles" : 7.1399999999999997,
+              "RailTime" : 18,
+              "RailFare" : {
+                "OffPeakTime" : 3,
+                "PeakTime" : 3.5499999999999998,
+                "SeniorDisabled" : 1.75
+              }
+            },
+            {
+              "DestinationStation" : "A10",
+              "SourceStation" : "A01",
+              "CompositeMiles" : 8.1500000000000004,
+              "RailTime" : 20,
+              "RailFare" : {
+                "OffPeakTime" : 3.2000000000000002,
+                "PeakTime" : 3.8500000000000001,
+                "SeniorDisabled" : 1.8999999999999999
+              }
+            },
+            {
+              "DestinationStation" : "A11",
+              "SourceStation" : "A01",
+              "CompositeMiles" : 10.34,
+              "RailTime" : 23,
+              "RailFare" : {
+                "OffPeakTime" : 3.6499999999999999,
+                "PeakTime" : 4.5,
+                "SeniorDisabled" : 2.25
+              }
+            },
+            {
+              "DestinationStation" : "A12",
+              "SourceStation" : "A01",
+              "CompositeMiles" : 11.720000000000001,
+              "RailTime" : 26,
+              "RailFare" : {
+                "OffPeakTime" : 3.8500000000000001,
+                "PeakTime" : 4.9000000000000004,
+                "SeniorDisabled" : 2.4500000000000002
+              }
+            },
+            {
+              "DestinationStation" : "A13",
+              "SourceStation" : "A01",
+              "CompositeMiles" : 12.81,
+              "RailTime" : 29,
+              "RailFare" : {
+                "OffPeakTime" : 3.8500000000000001,
+                "PeakTime" : 5.2000000000000002,
+                "SeniorDisabled" : 2.6000000000000001
+              }
+            },
+            {
+              "DestinationStation" : "A14",
+              "SourceStation" : "A01",
+              "CompositeMiles" : 14.77,
+              "RailTime" : 32,
+              "RailFare" : {
+                "OffPeakTime" : 3.8500000000000001,
+                "PeakTime" : 5.75,
+                "SeniorDisabled" : 2.8500000000000001
+              }
+            },
+            {
+              "DestinationStation" : "A15",
+              "SourceStation" : "A01",
+              "CompositeMiles" : 17.440000000000001,
+              "RailTime" : 36,
+              "RailFare" : {
+                "OffPeakTime" : 3.8500000000000001,
+                "PeakTime" : 6,
+                "SeniorDisabled" : 3
+              }
+            },
+            {
+              "DestinationStation" : "B01",
+              "SourceStation" : "A01",
+              "CompositeMiles" : 0.28999999999999998,
+              "RailTime" : 2,
+              "RailFare" : {
+                "OffPeakTime" : 2,
+                "PeakTime" : 2.25,
+                "SeniorDisabled" : 1.1000000000000001
+              }
+            },
+            {
+              "DestinationStation" : "B02",
+              "SourceStation" : "A01",
+              "CompositeMiles" : 0.64000000000000001,
+              "RailTime" : 4,
+              "RailFare" : {
+                "OffPeakTime" : 2,
+                "PeakTime" : 2.25,
+                "SeniorDisabled" : 1.1000000000000001
+              }
+            },
+            {
+              "DestinationStation" : "B03",
+              "SourceStation" : "A01",
+              "CompositeMiles" : 1.21,
+              "RailTime" : 6,
+              "RailFare" : {
+                "OffPeakTime" : 2,
+                "PeakTime" : 2.25,
+                "SeniorDisabled" : 1.1000000000000001
+              }
+            },
+            {
+              "DestinationStation" : "B04",
+              "SourceStation" : "A01",
+              "CompositeMiles" : 2.6899999999999999,
+              "RailTime" : 10,
+              "RailFare" : {
+                "OffPeakTime" : 2,
+                "PeakTime" : 2.25,
+                "SeniorDisabled" : 1.1000000000000001
+              }
+            },
+            {
+              "DestinationStation" : "B05",
+              "SourceStation" : "A01",
+              "CompositeMiles" : 3.46,
+              "RailTime" : 12,
+              "RailFare" : {
+                "OffPeakTime" : 2.1000000000000001,
+                "PeakTime" : 2.3999999999999999,
+                "SeniorDisabled" : 1.2
+              }
+            },
+            {
+              "DestinationStation" : "B06",
+              "SourceStation" : "A01",
+              "CompositeMiles" : 4.5499999999999998,
+              "RailTime" : 15,
+              "RailFare" : {
+                "OffPeakTime" : 2.3999999999999999,
+                "PeakTime" : 2.75,
+                "SeniorDisabled" : 1.3500000000000001
+              }
+            },
+            {
+              "DestinationStation" : "B07",
+              "SourceStation" : "A01",
+              "CompositeMiles" : 6.2400000000000002,
+              "RailTime" : 18,
+              "RailFare" : {
+                "OffPeakTime" : 2.6000000000000001,
+                "PeakTime" : 3.2999999999999998,
+                "SeniorDisabled" : 1.6499999999999999
+              }
+            },
+            {
+              "DestinationStation" : "B08",
+              "SourceStation" : "A01",
+              "CompositeMiles" : 7.54,
+              "RailTime" : 21,
+              "RailFare" : {
+                "OffPeakTime" : 3.0499999999999998,
+                "PeakTime" : 3.6499999999999999,
+                "SeniorDisabled" : 1.8
+              }
+            },
+            {
+              "DestinationStation" : "B09",
+              "SourceStation" : "A01",
+              "CompositeMiles" : 9.1400000000000006,
+              "RailTime" : 24,
+              "RailFare" : {
+                "OffPeakTime" : 3.3999999999999999,
+                "PeakTime" : 4.1500000000000004,
+                "SeniorDisabled" : 2.0499999999999998
+              }
+            },
+            {
+              "DestinationStation" : "B10",
+              "SourceStation" : "A01",
+              "CompositeMiles" : 10.74,
+              "RailTime" : 27,
+              "RailFare" : {
+                "OffPeakTime" : 3.75,
+                "PeakTime" : 4.5999999999999996,
+                "SeniorDisabled" : 2.2999999999999998
+              }
+            },
+            {
+              "DestinationStation" : "B11",
+              "SourceStation" : "A01",
+              "CompositeMiles" : 12.460000000000001,
+              "RailTime" : 31,
+              "RailFare" : {
+                "OffPeakTime" : 3.8500000000000001,
+                "PeakTime" : 5.0999999999999996,
+                "SeniorDisabled" : 2.5499999999999998
+              }
+            },
+            {
+              "DestinationStation" : "B35",
+              "SourceStation" : "A01",
+              "CompositeMiles" : 1.72,
+              "RailTime" : 8,
+              "RailFare" : {
+                "OffPeakTime" : 2,
+                "PeakTime" : 2.25,
+                "SeniorDisabled" : 1.1000000000000001
+              }
+            },
+            {
+              "DestinationStation" : "C02",
+              "SourceStation" : "A01",
+              "CompositeMiles" : 0.40999999999999998,
+              "RailTime" : 1,
+              "RailFare" : {
+                "OffPeakTime" : 2,
+                "PeakTime" : 2.25,
+                "SeniorDisabled" : 1.1000000000000001
+              }
+            },
+            {
+              "DestinationStation" : "C03",
+              "SourceStation" : "A01",
+              "CompositeMiles" : 0.77000000000000002,
+              "RailTime" : 2,
+              "RailFare" : {
+                "OffPeakTime" : 2,
+                "PeakTime" : 2.25,
+                "SeniorDisabled" : 1.1000000000000001
+              }
+            },
+            {
+              "DestinationStation" : "C04",
+              "SourceStation" : "A01",
+              "CompositeMiles" : 1.28,
+              "RailTime" : 4,
+              "RailFare" : {
+                "OffPeakTime" : 2,
+                "PeakTime" : 2.25,
+                "SeniorDisabled" : 1.1000000000000001
+              }
+            },
+            {
+              "DestinationStation" : "C05",
+              "SourceStation" : "A01",
+              "CompositeMiles" : 2.5,
+              "RailTime" : 7,
+              "RailFare" : {
+                "OffPeakTime" : 2,
+                "PeakTime" : 2.25,
+                "SeniorDisabled" : 1.1000000000000001
+              }
+            },
+            {
+              "DestinationStation" : "C06",
+              "SourceStation" : "A01",
+              "CompositeMiles" : 2.8700000000000001,
+              "RailTime" : 9,
+              "RailFare" : {
+                "OffPeakTime" : 2,
+                "PeakTime" : 2.25,
+                "SeniorDisabled" : 1.1000000000000001
+              }
+            },
+            {
+              "DestinationStation" : "C07",
+              "SourceStation" : "A01",
+              "CompositeMiles" : 2.9700000000000002,
+              "RailTime" : 12,
+              "RailFare" : {
+                "OffPeakTime" : 2,
+                "PeakTime" : 2.25,
+                "SeniorDisabled" : 1.1000000000000001
+              }
+            },
+            {
+              "DestinationStation" : "C08",
+              "SourceStation" : "A01",
+              "CompositeMiles" : 3.5600000000000001,
+              "RailTime" : 13,
+              "RailFare" : {
+                "OffPeakTime" : 2.1499999999999999,
+                "PeakTime" : 2.4500000000000002,
+                "SeniorDisabled" : 1.2
+              }
+            },
+            {
+              "DestinationStation" : "C09",
+              "SourceStation" : "A01",
+              "CompositeMiles" : 3.9300000000000002,
+              "RailTime" : 15,
+              "RailFare" : {
+                "OffPeakTime" : 2.25,
+                "PeakTime" : 2.5499999999999998,
+                "SeniorDisabled" : 1.25
+              }
+            },
+            {
+              "DestinationStation" : "C10",
+              "SourceStation" : "A01",
+              "CompositeMiles" : 4.29,
+              "RailTime" : 17,
+              "RailFare" : {
+                "OffPeakTime" : 2.2999999999999998,
+                "PeakTime" : 2.6499999999999999,
+                "SeniorDisabled" : 1.3
+              }
+            },
+            {
+              "DestinationStation" : "C12",
+              "SourceStation" : "A01",
+              "CompositeMiles" : 7.2000000000000002,
+              "RailTime" : 22,
+              "RailFare" : {
+                "OffPeakTime" : 3,
+                "PeakTime" : 3.5499999999999998,
+                "SeniorDisabled" : 1.75
+              }
+            },
+            {
+              "DestinationStation" : "C13",
+              "SourceStation" : "A01",
+              "CompositeMiles" : 7.8200000000000003,
+              "RailTime" : 24,
+              "RailFare" : {
+                "OffPeakTime" : 3.1499999999999999,
+                "PeakTime" : 3.75,
+                "SeniorDisabled" : 1.8500000000000001
+              }
+            },
+            {
+              "DestinationStation" : "C14",
+              "SourceStation" : "A01",
+              "CompositeMiles" : 8.4600000000000009,
+              "RailTime" : 29,
+              "RailFare" : {
+                "OffPeakTime" : 3.25,
+                "PeakTime" : 3.9500000000000002,
+                "SeniorDisabled" : 1.95
+              }
+            },
+            {
+              "DestinationStation" : "C15",
+              "SourceStation" : "A01",
+              "CompositeMiles" : 8.9800000000000004,
+              "RailTime" : 30,
+              "RailFare" : {
+                "OffPeakTime" : 3.3999999999999999,
+                "PeakTime" : 4.0999999999999996,
+                "SeniorDisabled" : 2.0499999999999998
+              }
+            },
+            {
+              "DestinationStation" : "D01",
+              "SourceStation" : "A01",
+              "CompositeMiles" : 0.29999999999999999,
+              "RailTime" : 1,
+              "RailFare" : {
+                "OffPeakTime" : 2,
+                "PeakTime" : 2.25,
+                "SeniorDisabled" : 1.1000000000000001
+              }
+            },
+            {
+              "DestinationStation" : "D02",
+              "SourceStation" : "A01",
+              "CompositeMiles" : 0.67000000000000004,
+              "RailTime" : 3,
+              "RailFare" : {
+                "OffPeakTime" : 2,
+                "PeakTime" : 2.25,
+                "SeniorDisabled" : 1.1000000000000001
+              }
+            },
+            {
+              "DestinationStation" : "D03",
+              "SourceStation" : "A01",
+              "CompositeMiles" : 1.0700000000000001,
+              "RailTime" : 5,
+              "RailFare" : {
+                "OffPeakTime" : 2,
+                "PeakTime" : 2.25,
+                "SeniorDisabled" : 1.1000000000000001
+              }
+            },
+            {
+              "DestinationStation" : "D04",
+              "SourceStation" : "A01",
+              "CompositeMiles" : 1.3100000000000001,
+              "RailTime" : 7,
+              "RailFare" : {
+                "OffPeakTime" : 2,
+                "PeakTime" : 2.25,
+                "SeniorDisabled" : 1.1000000000000001
+              }
+            },
+            {
+              "DestinationStation" : "D05",
+              "SourceStation" : "A01",
+              "CompositeMiles" : 1.8100000000000001,
+              "RailTime" : 9,
+              "RailFare" : {
+                "OffPeakTime" : 2,
+                "PeakTime" : 2.25,
+                "SeniorDisabled" : 1.1000000000000001
+              }
+            },
+            {
+              "DestinationStation" : "D06",
+              "SourceStation" : "A01",
+              "CompositeMiles" : 2.2799999999999998,
+              "RailTime" : 11,
+              "RailFare" : {
+                "OffPeakTime" : 2,
+                "PeakTime" : 2.25,
+                "SeniorDisabled" : 1.1000000000000001
+              }
+            },
+            {
+              "DestinationStation" : "D07",
+              "SourceStation" : "A01",
+              "CompositeMiles" : 2.8900000000000001,
+              "RailTime" : 13,
+              "RailFare" : {
+                "OffPeakTime" : 2,
+                "PeakTime" : 2.25,
+                "SeniorDisabled" : 1.1000000000000001
+              }
+            },
+            {
+              "DestinationStation" : "D08",
+              "SourceStation" : "A01",
+              "CompositeMiles" : 3.3900000000000001,
+              "RailTime" : 14,
+              "RailFare" : {
+                "OffPeakTime" : 2.1000000000000001,
+                "PeakTime" : 2.3999999999999999,
+                "SeniorDisabled" : 1.2
+              }
+            },
+            {
+              "DestinationStation" : "D09",
+              "SourceStation" : "A01",
+              "CompositeMiles" : 5.21,
+              "RailTime" : 18,
+              "RailFare" : {
+                "OffPeakTime" : 2.5499999999999998,
+                "PeakTime" : 2.9500000000000002,
+                "SeniorDisabled" : 1.45
+              }
+            },
+            {
+              "DestinationStation" : "D10",
+              "SourceStation" : "A01",
+              "CompositeMiles" : 5.9800000000000004,
+              "RailTime" : 20,
+              "RailFare" : {
+                "OffPeakTime" : 2.6000000000000001,
+                "PeakTime" : 3.2000000000000002,
+                "SeniorDisabled" : 1.6000000000000001
+              }
+            },
+            {
+              "DestinationStation" : "D11",
+              "SourceStation" : "A01",
+              "CompositeMiles" : 7.1100000000000003,
+              "RailTime" : 22,
+              "RailFare" : {
+                "OffPeakTime" : 2.9500000000000002,
+                "PeakTime" : 3.5499999999999998,
+                "SeniorDisabled" : 1.75
+              }
+            },
+            {
+              "DestinationStation" : "D12",
+              "SourceStation" : "A01",
+              "CompositeMiles" : 8.8399999999999999,
+              "RailTime" : 25,
+              "RailFare" : {
+                "OffPeakTime" : 3.3500000000000001,
+                "PeakTime" : 4.0499999999999998,
+                "SeniorDisabled" : 2
+              }
+            },
+            {
+              "DestinationStation" : "D13",
+              "SourceStation" : "A01",
+              "CompositeMiles" : 10.220000000000001,
+              "RailTime" : 28,
+              "RailFare" : {
+                "OffPeakTime" : 3.6499999999999999,
+                "PeakTime" : 4.4500000000000002,
+                "SeniorDisabled" : 2.2000000000000002
+              }
+            },
+            {
+              "DestinationStation" : "E01",
+              "SourceStation" : "A01",
+              "CompositeMiles" : 0.75,
+              "RailTime" : 9,
+              "RailFare" : {
+                "OffPeakTime" : 2,
+                "PeakTime" : 2.25,
+                "SeniorDisabled" : 1.1000000000000001
+              }
+            },
+            {
+              "DestinationStation" : "E02",
+              "SourceStation" : "A01",
+              "CompositeMiles" : 1.21,
+              "RailTime" : 10,
+              "RailFare" : {
+                "OffPeakTime" : 2,
+                "PeakTime" : 2.25,
+                "SeniorDisabled" : 1.1000000000000001
+              }
+            },
+            {
+              "DestinationStation" : "E03",
+              "SourceStation" : "A01",
+              "CompositeMiles" : 1.55,
+              "RailTime" : 12,
+              "RailFare" : {
+                "OffPeakTime" : 2,
+                "PeakTime" : 2.25,
+                "SeniorDisabled" : 1.1000000000000001
+              }
+            },
+            {
+              "DestinationStation" : "E04",
+              "SourceStation" : "A01",
+              "CompositeMiles" : 2.3700000000000001,
+              "RailTime" : 14,
+              "RailFare" : {
+                "OffPeakTime" : 2,
+                "PeakTime" : 2.25,
+                "SeniorDisabled" : 1.1000000000000001
+              }
+            },
+            {
+              "DestinationStation" : "E05",
+              "SourceStation" : "A01",
+              "CompositeMiles" : 3.1499999999999999,
+              "RailTime" : 17,
+              "RailFare" : {
+                "OffPeakTime" : 2.0499999999999998,
+                "PeakTime" : 2.2999999999999998,
+                "SeniorDisabled" : 1.1499999999999999
+              }
+            },
+            {
+              "DestinationStation" : "E06",
+              "SourceStation" : "A01",
+              "CompositeMiles" : 4.5499999999999998,
+              "RailTime" : 15,
+              "RailFare" : {
+                "OffPeakTime" : 2.3999999999999999,
+                "PeakTime" : 2.75,
+                "SeniorDisabled" : 1.3500000000000001
+              }
+            },
+            {
+              "DestinationStation" : "E07",
+              "SourceStation" : "A01",
+              "CompositeMiles" : 6.0999999999999996,
+              "RailTime" : 23,
+              "RailFare" : {
+                "OffPeakTime" : 2.6000000000000001,
+                "PeakTime" : 3.25,
+                "SeniorDisabled" : 1.6000000000000001
+              }
+            },
+            {
+              "DestinationStation" : "E08",
+              "SourceStation" : "A01",
+              "CompositeMiles" : 7.2199999999999998,
+              "RailTime" : 26,
+              "RailFare" : {
+                "OffPeakTime" : 3,
+                "PeakTime" : 3.6000000000000001,
+                "SeniorDisabled" : 1.8
+              }
+            },
+            {
+              "DestinationStation" : "E09",
+              "SourceStation" : "A01",
+              "CompositeMiles" : 9.0399999999999991,
+              "RailTime" : 29,
+              "RailFare" : {
+                "OffPeakTime" : 3.3999999999999999,
+                "PeakTime" : 4.0999999999999996,
+                "SeniorDisabled" : 2.0499999999999998
+              }
+            },
+            {
+              "DestinationStation" : "E10",
+              "SourceStation" : "A01",
+              "CompositeMiles" : 11.43,
+              "RailTime" : 32,
+              "RailFare" : {
+                "OffPeakTime" : 3.8500000000000001,
+                "PeakTime" : 4.7999999999999998,
+                "SeniorDisabled" : 2.3999999999999999
+              }
+            },
+            {
+              "DestinationStation" : "F01",
+              "SourceStation" : "A01",
+              "CompositeMiles" : 0.28999999999999998,
+              "RailTime" : 2,
+              "RailFare" : {
+                "OffPeakTime" : 2,
+                "PeakTime" : 2.25,
+                "SeniorDisabled" : 1.1000000000000001
+              }
+            },
+            {
+              "DestinationStation" : "F02",
+              "SourceStation" : "A01",
+              "CompositeMiles" : 0.56000000000000005,
+              "RailTime" : 8,
+              "RailFare" : {
+                "OffPeakTime" : 2,
+                "PeakTime" : 2.25,
+                "SeniorDisabled" : 1.1000000000000001
+              }
+            },
+            {
+              "DestinationStation" : "F03",
+              "SourceStation" : "A01",
+              "CompositeMiles" : 1.0700000000000001,
+              "RailTime" : 5,
+              "RailFare" : {
+                "OffPeakTime" : 2,
+                "PeakTime" : 2.25,
+                "SeniorDisabled" : 1.1000000000000001
+              }
+            },
+            {
+              "DestinationStation" : "F04",
+              "SourceStation" : "A01",
+              "CompositeMiles" : 1.78,
+              "RailTime" : 12,
+              "RailFare" : {
+                "OffPeakTime" : 2,
+                "PeakTime" : 2.25,
+                "SeniorDisabled" : 1.1000000000000001
+              }
+            },
+            {
+              "DestinationStation" : "F05",
+              "SourceStation" : "A01",
+              "CompositeMiles" : 2.2599999999999998,
+              "RailTime" : 14,
+              "RailFare" : {
+                "OffPeakTime" : 2,
+                "PeakTime" : 2.25,
+                "SeniorDisabled" : 1.1000000000000001
+              }
+            },
+            {
+              "DestinationStation" : "F06",
+              "SourceStation" : "A01",
+              "CompositeMiles" : 3.3700000000000001,
+              "RailTime" : 16,
+              "RailFare" : {
+                "OffPeakTime" : 2.1000000000000001,
+                "PeakTime" : 2.3500000000000001,
+                "SeniorDisabled" : 1.1499999999999999
+              }
+            },
+            {
+              "DestinationStation" : "F07",
+              "SourceStation" : "A01",
+              "CompositeMiles" : 4.6399999999999997,
+              "RailTime" : 19,
+              "RailFare" : {
+                "OffPeakTime" : 2.3999999999999999,
+                "PeakTime" : 2.7999999999999998,
+                "SeniorDisabled" : 1.3999999999999999
+              }
+            },
+            {
+              "DestinationStation" : "F08",
+              "SourceStation" : "A01",
+              "CompositeMiles" : 5.4900000000000002,
+              "RailTime" : 21,
+              "RailFare" : {
+                "OffPeakTime" : 2.6000000000000001,
+                "PeakTime" : 3.0499999999999998,
+                "SeniorDisabled" : 1.5
+              }
+            },
+            {
+              "DestinationStation" : "F09",
+              "SourceStation" : "A01",
+              "CompositeMiles" : 6.21,
+              "RailTime" : 24,
+              "RailFare" : {
+                "OffPeakTime" : 2.6000000000000001,
+                "PeakTime" : 3.2999999999999998,
+                "SeniorDisabled" : 1.6499999999999999
+              }
+            },
+            {
+              "DestinationStation" : "F10",
+              "SourceStation" : "A01",
+              "CompositeMiles" : 7.5700000000000003,
+              "RailTime" : 26,
+              "RailFare" : {
+                "OffPeakTime" : 3.0499999999999998,
+                "PeakTime" : 3.7000000000000002,
+                "SeniorDisabled" : 1.8500000000000001
+              }
+            },
+            {
+              "DestinationStation" : "F11",
+              "SourceStation" : "A01",
+              "CompositeMiles" : 9.2599999999999998,
+              "RailTime" : 29,
+              "RailFare" : {
+                "OffPeakTime" : 3.3999999999999999,
+                "PeakTime" : 4.1500000000000004,
+                "SeniorDisabled" : 2.0499999999999998
+              }
+            },
+            {
+              "DestinationStation" : "G01",
+              "SourceStation" : "A01",
+              "CompositeMiles" : 5.6600000000000001,
+              "RailTime" : 17,
+              "RailFare" : {
+                "OffPeakTime" : 2.6000000000000001,
+                "PeakTime" : 3.1000000000000001,
+                "SeniorDisabled" : 1.55
+              }
+            },
+            {
+              "DestinationStation" : "G02",
+              "SourceStation" : "A01",
+              "CompositeMiles" : 7.1200000000000001,
+              "RailTime" : 20,
+              "RailFare" : {
+                "OffPeakTime" : 2.9500000000000002,
+                "PeakTime" : 3.5499999999999998,
+                "SeniorDisabled" : 1.75
+              }
+            },
+            {
+              "DestinationStation" : "G03",
+              "SourceStation" : "A01",
+              "CompositeMiles" : 8.0999999999999996,
+              "RailTime" : 23,
+              "RailFare" : {
+                "OffPeakTime" : 3.2000000000000002,
+                "PeakTime" : 3.8500000000000001,
+                "SeniorDisabled" : 1.8999999999999999
+              }
+            },
+            {
+              "DestinationStation" : "G04",
+              "SourceStation" : "A01",
+              "CompositeMiles" : 9.5600000000000005,
+              "RailTime" : 26,
+              "RailFare" : {
+                "OffPeakTime" : 3.3999999999999999,
+                "PeakTime" : 4.25,
+                "SeniorDisabled" : 2.1000000000000001
+              }
+            },
+            {
+              "DestinationStation" : "G05",
+              "SourceStation" : "A01",
+              "CompositeMiles" : 10.859999999999999,
+              "RailTime" : 29,
+              "RailFare" : {
+                "OffPeakTime" : 3.7999999999999998,
+                "PeakTime" : 4.6500000000000004,
+                "SeniorDisabled" : 2.2999999999999998
+              }
+            },
+            {
+              "DestinationStation" : "J02",
+              "SourceStation" : "A01",
+              "CompositeMiles" : 10.83,
+              "RailTime" : 29,
+              "RailFare" : {
+                "OffPeakTime" : 3.7999999999999998,
+                "PeakTime" : 4.5999999999999996,
+                "SeniorDisabled" : 2.2999999999999998
+              }
+            },
+            {
+              "DestinationStation" : "J03",
+              "SourceStation" : "A01",
+              "CompositeMiles" : 14.140000000000001,
+              "RailTime" : 35,
+              "RailFare" : {
+                "OffPeakTime" : 3.8500000000000001,
+                "PeakTime" : 5.5499999999999998,
+                "SeniorDisabled" : 2.75
+              }
+            },
+            {
+              "DestinationStation" : "K01",
+              "SourceStation" : "A01",
+              "CompositeMiles" : 3.5099999999999998,
+              "RailTime" : 10,
+              "RailFare" : {
+                "OffPeakTime" : 2.1000000000000001,
+                "PeakTime" : 2.3999999999999999,
+                "SeniorDisabled" : 1.2
+              }
+            },
+            {
+              "DestinationStation" : "K02",
+              "SourceStation" : "A01",
+              "CompositeMiles" : 4,
+              "RailTime" : 12,
+              "RailFare" : {
+                "OffPeakTime" : 2.25,
+                "PeakTime" : 2.6000000000000001,
+                "SeniorDisabled" : 1.3
+              }
+            },
+            {
+              "DestinationStation" : "K03",
+              "SourceStation" : "A01",
+              "CompositeMiles" : 4.46,
+              "RailTime" : 13,
+              "RailFare" : {
+                "OffPeakTime" : 2.3500000000000001,
+                "PeakTime" : 2.75,
+                "SeniorDisabled" : 1.3500000000000001
+              }
+            },
+            {
+              "DestinationStation" : "K04",
+              "SourceStation" : "A01",
+              "CompositeMiles" : 5.0199999999999996,
+              "RailTime" : 15,
+              "RailFare" : {
+                "OffPeakTime" : 2.5,
+                "PeakTime" : 2.8999999999999999,
+                "SeniorDisabled" : 1.45
+              }
+            },
+            {
+              "DestinationStation" : "K05",
+              "SourceStation" : "A01",
+              "CompositeMiles" : 7.4100000000000001,
+              "RailTime" : 19,
+              "RailFare" : {
+                "OffPeakTime" : 3.0499999999999998,
+                "PeakTime" : 3.6499999999999999,
+                "SeniorDisabled" : 1.8
+              }
+            },
+            {
+              "DestinationStation" : "K06",
+              "SourceStation" : "A01",
+              "CompositeMiles" : 9.2899999999999991,
+              "RailTime" : 22,
+              "RailFare" : {
+                "OffPeakTime" : 3.3999999999999999,
+                "PeakTime" : 4.2000000000000002,
+                "SeniorDisabled" : 2.1000000000000001
+              }
+            },
+            {
+              "DestinationStation" : "K07",
+              "SourceStation" : "A01",
+              "CompositeMiles" : 11.529999999999999,
+              "RailTime" : 26,
+              "RailFare" : {
+                "OffPeakTime" : 3.8500000000000001,
+                "PeakTime" : 4.7999999999999998,
+                "SeniorDisabled" : 2.3999999999999999
+              }
+            },
+            {
+              "DestinationStation" : "K08",
+              "SourceStation" : "A01",
+              "CompositeMiles" : 14.01,
+              "RailTime" : 29,
+              "RailFare" : {
+                "OffPeakTime" : 3.8500000000000001,
+                "PeakTime" : 5.5499999999999998,
+                "SeniorDisabled" : 2.75
+              }
+            },
+            {
+              "DestinationStation" : "N01",
+              "SourceStation" : "A01",
+              "CompositeMiles" : 11.24,
+              "RailTime" : 27,
+              "RailFare" : {
+                "OffPeakTime" : 3.8500000000000001,
+                "PeakTime" : 4.75,
+                "SeniorDisabled" : 2.3500000000000001
+              }
+            },
+            {
+              "DestinationStation" : "N02",
+              "SourceStation" : "A01",
+              "CompositeMiles" : 11.84,
+              "RailTime" : 29,
+              "RailFare" : {
+                "OffPeakTime" : 3.8500000000000001,
+                "PeakTime" : 4.9000000000000004,
+                "SeniorDisabled" : 2.4500000000000002
+              }
+            },
+            {
+              "DestinationStation" : "N03",
+              "SourceStation" : "A01",
+              "CompositeMiles" : 12.550000000000001,
+              "RailTime" : 31,
+              "RailFare" : {
+                "OffPeakTime" : 3.8500000000000001,
+                "PeakTime" : 5.0999999999999996,
+                "SeniorDisabled" : 2.5499999999999998
+              }
+            },
+            {
+              "DestinationStation" : "N04",
+              "SourceStation" : "A01",
+              "CompositeMiles" : 13.140000000000001,
+              "RailTime" : 33,
+              "RailFare" : {
+                "OffPeakTime" : 3.8500000000000001,
+                "PeakTime" : 5.2999999999999998,
+                "SeniorDisabled" : 2.6499999999999999
+              }
+            },
+            {
+              "DestinationStation" : "N06",
+              "SourceStation" : "A01",
+              "CompositeMiles" : 18.789999999999999,
+              "RailTime" : 41,
+              "RailFare" : {
+                "OffPeakTime" : 3.8500000000000001,
+                "PeakTime" : 6,
+                "SeniorDisabled" : 3
+              }
+            }
+          ]
+        },
+        "url" : "https:\/\/api.wmata.com\/Rail.svc\/json\/jSrcStationToDstStationInfo?FromStationCode=A01",
+        "status" : 200,
+        "headers" : {
+          "Vary" : "Accept-Encoding",
+          "Content-Type" : "application\/json; charset=utf-8",
+          "Content-Length" : "2170",
+          "X-AspNet-Version" : "4.0.30319",
+          "Arr-Disable-Session-Affinity" : "True",
+          "X-Powered-By" : "ASP.NET",
+          "Content-Encoding" : "gzip",
+          "Date" : "Sun, 12 Dec 2021 23:15:29 GMT",
+          "Cache-Control" : "no-cache",
+          "Expires" : "-1",
+          "Pragma" : "no-cache"
+        }
+      },
+      "request" : {
+        "url" : "https:\/\/api.wmata.com\/Rail.svc\/json\/jSrcStationToDstStationInfo?FromStationCode=A01",
+        "method" : "GET",
+        "headers" : {
+          "api_key" : "9e38c3eab34c4e6c990828002828f5ed"
+        }
+      }
+    }
+  ],
+  "name" : "-[TestRailDVR testStationToStationNoDestination]"
+}
