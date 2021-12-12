@@ -7,7 +7,12 @@
 
 import Foundation
 
-public class WMATAJSONDecoder: JSONDecoder {
+/// A custom JSON decoder for Standard API responses.
+///
+/// This decoder uses a custom key and date decoding strategy for handling responses from the WMATA API.
+///
+/// For usage in your own decoding see <doc:AdvancedDecoding>.
+open class WMATAJSONDecoder: JSONDecoder {
     override public init() {
         super.init()
         keyDecodingStrategy = .convertFromWMATA
@@ -16,6 +21,9 @@ public class WMATAJSONDecoder: JSONDecoder {
 }
 
 public extension JSONDecoder.KeyDecodingStrategy {
+    /// Decodes keys in responses from the WMATA Standard API.
+    ///
+    /// This strategy decodes certain keys into completely separate keys defined in endpoint responses. This includes renaming and mapping certain values to `nil`. In all cases, this stategy will decode pascal case keys into camel case keys appropriate for Swift APIs.
     static var convertFromWMATA: Self {
         .custom { codingPath in
             let relevantKey = codingPath.last!
@@ -134,7 +142,12 @@ internal extension String {
     }
 }
 
-internal extension DateFormatter {
+public extension DateFormatter {
+    /// Formats dates returned in a response from the WMATA Standard API.
+    ///
+    /// Dates from WMATA's API are _nearly_ ISO-8601, but not quite. They're missing a timezone incidator, which is non-standard. This formatter assumes EST, which is what WMATA states all of their dates are formatted in.
+    ///
+    /// > Note: If you're having issues with dates coming from the API, check to confirm the timezone is correct. This formatter assumes EST, but I've been burned by the API enough times to not trust WMATA's claim that these dates are always EST.
     static var wmataFormat: Self {
         let formatter = Self()
         formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
@@ -146,18 +159,38 @@ internal extension DateFormatter {
 }
 
 
+/// A propery wrapper for mapping certain values in Standard API responses to `nil`.
+///
+/// > Note: You will only need to use this structure when performing advanced custom decoding.
+///
+/// This wrapper is used internally to convert non-`nil` junk values in responses to `nil`. If you are defining your own custom decoding, this may come in handy. You'll need to define a ``WMATAMappedValues`` to map values to `nil`. This wrapper is `Codable` and will simply encode and decode to your `Wrapped` value when passed to an encoder or decoder.
+///
+/// You can see this proper wrapper used in ``Rail/StationInformation/Response/firstStationTogether`` where an empty string in WMATA's response is converted to `nil`.
+///
+/// ```swift
+/// @MapToNil<Station, EmptyString> public var firstStationTogether: Station?
+/// ```
+///
 @propertyWrapper
 public struct MapToNil<Wrapped, MappedValues>: Codable, Equatable, Hashable
-    where
-        Wrapped: Codable & Equatable & Hashable,
-        MappedValues: WMATAMappedValues
-    {
+where
+    Wrapped: Codable & Equatable & Hashable,
+    MappedValues: WMATAMappedValues
+{
+    /// The value you wish to
     public var wrappedValue: Wrapped?
     
+    /// Create this propery wrapper.
+    ///
+    /// Example usage:
+    ///```swift
+    /// @MapToNil<Station, EmptyString> public var firstStationTogether: Station?
+    /// ```
     public init(wrappedValue: Wrapped?) {
         self.wrappedValue = wrappedValue
     }
     
+    /// Decode the `Wrapped` value to itself or `nil`.
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         
@@ -175,6 +208,7 @@ public struct MapToNil<Wrapped, MappedValues>: Codable, Equatable, Hashable
         }
     }
     
+    /// Encode the `Wrapped` value.
     public func encode(to encoder: Encoder) throws {
         var container = encoder.singleValueContainer()
         
@@ -182,22 +216,33 @@ public struct MapToNil<Wrapped, MappedValues>: Codable, Equatable, Hashable
     }
 }
 
+/// Values to map to `nil` when using ``MapToNil``.
+///
+/// When decoding a values, values in ``allValues`` will be mapped to `nil`.
+///
+/// These values must be defined at a static level like this to allow for initialization via `Decodable`.
 public protocol WMATAMappedValues: Hashable {
+    
+    /// Values to map to `nil`.
     static var allValues: [String] { get }
 }
 
+/// Map an empty string to `nil`.
 public struct EmptyString: WMATAMappedValues, Equatable, Hashable {
     public static let allValues = [""]
 }
 
+/// Map the values `"--"` and `"No"` to `nil`.
 public struct DashesAndNo: WMATAMappedValues, Equatable, Hashable {
     public static let allValues = ["--", "No"]
 }
 
+/// Map the value `"-"` to `nil`.
 public struct SingleDash: WMATAMappedValues, Equatable, Hashable {
     public static let allValues = ["-"]
 }
 
+/// Map the value `"0"` to `nil`.
 public struct SingleZero: WMATAMappedValues, Equatable, Hashable {
     public static let allValues = ["0"]
 }

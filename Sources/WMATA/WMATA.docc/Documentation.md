@@ -28,13 +28,13 @@ nextTrains.request { result in
 }
 ```
 
-For more details, check out <doc:GettingStarted>.
+For more details, check out <doc:Endpoints>.
 
 ## Topics
 
 ### Getting Started
 
-- <doc:GettingStarted>
+- ``APIKey``
 - <doc:Endpoints>
 - <doc:Responses>
 - <doc:StandardGTFSAPI>

@@ -98,3 +98,9 @@ You can requests while your application is in the background using an ``Endpoint
 - ``Endpoint/request(with:)``
 - ``Endpoint/publisher(with:)``
 - ``Endpoint/backgroundRequest()``
+
+### Next Steps
+
+- <doc:Responses>
+- <doc:StandardGTFSAPI>
+- <doc:BackgroundRequests>

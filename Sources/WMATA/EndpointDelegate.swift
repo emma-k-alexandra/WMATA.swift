@@ -81,6 +81,7 @@ extension EndpointDelegate {
 ///
 /// To make your own delegate, sublcass this and override ``EndpointDelegate/received(_:)``.
 open class JSONEndpointDelegate<Parent: JSONEndpoint>: EndpointDelegate<Parent> {
+    /// Turns responses from the Standard API into ``Endpoint/Response`` structures or ``WMATAError``.
     open override func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
         received(loadData(from: location)
             .flatMap { createResult(($0, downloadTask.response)) }
@@ -93,6 +94,7 @@ open class JSONEndpointDelegate<Parent: JSONEndpoint>: EndpointDelegate<Parent> 
 ///
 /// To make your own delegate, sublcass this and override ``EndpointDelegate/received(_:)``.
 open class GTFSEndpointDelegate<Parent: GTFSEndpoint>: EndpointDelegate<Parent> {
+    /// Turns responses from the GTFS API into `TransitRealtime_FeedMessage` or ``WMATAError``.
     open override func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
         received(loadData(from: location)
             .flatMap { createResult(($0, downloadTask.response)) }

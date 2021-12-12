@@ -419,9 +419,9 @@ public extension Rail {
         }
     }
     
-    /// Uniquely identifiable trains in service and what track circuits they currently occupy
+    /// All track circuits including those on pocket tracks and crossovers.
     ///
-    /// Refreshes every 7-10 seconds
+    /// Each track circuit may include references to its right and left neighbors.
     ///
     /// Information provided by this endpoint can be used with data from ``Rail/TrainPositions`` and ``Rail/StandardRoutes``
     ///

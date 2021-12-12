@@ -23,7 +23,7 @@ public protocol Endpoint: WMATADecoding, Hashable {
     func request(with session: URLSession, completion: @escaping (_ result: Result<Response, WMATAError>) -> Void)
     
     /// Send an async HTTP request to this endpoint. Preferred.
-    @available(macOS 12, iOS 15, watchOS 7, tvOS 15, *)
+    @available(macOS 10.15, iOS 13, watchOS 6, tvOS 13, *)
     func request(with session: URLSession) async -> Result<Response, WMATAError>
     
     /// Send a background HTTP request to the endpoint and receive the response from an ``EndpointDelegate``.

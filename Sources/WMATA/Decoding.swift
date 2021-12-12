@@ -9,9 +9,16 @@ import Foundation
 import GTFS
 import SwiftProtobuf
 
+/// Protocol for decoding responses from WMATA's API
 public protocol WMATADecoding {
+    /// Decode response from the GTFS API.
+    ///
+    /// For creating your own decoders, see <doc:AdvancedDecoding>.
     func decode(gtfs data: Data) -> Result<TransitRealtime_FeedMessage, WMATAError>
     
+    /// Decode responses from the Standard API.
+    ///
+    /// For creating your own decoders, see <doc:AdvancedDecoding>.
     func decode<Response>(standard data: Data) -> Result<Response, WMATAError> where Response: Codable
 }
 
