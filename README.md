@@ -28,8 +28,7 @@ dependencies: [
 
 ## Documentation
 
-[comment]: <> (TODO: figure out how to host this thing)
-Full documentation can be found 
+Full documentation is available within Xcode, or [on the web in a slightly broken form](https://github.com/emma-k-alexandra/WMATA.swift/blob/main/Sources/WMATA/WMATA.docc/Documentation.md). Thanks DocC!
 
 ## Dependencies
 
