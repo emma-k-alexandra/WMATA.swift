@@ -13,6 +13,8 @@ WMATA supports both the Standard and GTFS APIs for both MetroRail and MetroBus. 
 To jump right in, get an API Key by making an account on [WMATA's Developer Website](https://developer.wmata.com). Then, pick an endpoint from ``Rail``, ``Bus``, ``Rail/GTFS`` or ``Bus/GTFS`` to call. Make your ``Endpoint`` instance and make your request.
 
 ```swift
+import WMATA
+
 let nextTrains = Rail.NextRails(
     key: YOUR_API_KEY,
     station: .waterfront

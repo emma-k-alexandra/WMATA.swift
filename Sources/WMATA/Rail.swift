@@ -23,6 +23,11 @@ public extension Rail {
     ///
     /// [WMATA Lines Documentation](https://developer.wmata.com/docs/services/5476364f031f590f38092507/operations/5476364f031f5909e4fe330c)
     struct Lines: JSONEndpoint {
+        public init(key: APIKey, delegate: JSONEndpointDelegate<Rail.Lines>? = nil) {
+            self.key = key
+            self.delegate = delegate
+        }
+        
         public let url = URLComponents(staticString: "https://api.wmata.com/Rail.svc/json/jLines")
         
         public let key: APIKey
@@ -105,6 +110,12 @@ public extension Rail {
     ///
     ///  [WMATA Station Entrances Documentation](https://developer.wmata.com/docs/services/5476364f031f590f38092507/operations/5476364f031f5909e4fe330f)
     struct StationEntrances: JSONEndpoint {
+        public init(key: APIKey, location: WMATALocation? = nil, delegate: JSONEndpointDelegate<Rail.StationEntrances>? = nil) {
+            self.key = key
+            self.location = location
+            self.delegate = delegate
+        }
+        
         public let url = URLComponents(staticString: "https://api.wmata.com/Rail.svc/json/jStationEntrances")
         
         public let key: APIKey
@@ -198,6 +209,11 @@ public extension Rail {
     ///
     /// [WMATA Live Train Positions Documentation](https://developer.wmata.com/docs/services/5763fa6ff91823096cac1057/operations/5763fb35f91823096cac1058)
     struct TrainPositions: JSONEndpoint {
+        public init(key: APIKey, delegate: JSONEndpointDelegate<Rail.TrainPositions>? = nil) {
+            self.key = key
+            self.delegate = delegate
+        }
+        
         public let url = URLComponents(staticString: "https://api.wmata.com/TrainPositions/TrainPositions")
         
         public let key: APIKey
@@ -327,6 +343,11 @@ public extension Rail {
     ///
     ///  [WMATA Standard Routes Documentation](https://developer.wmata.com/docs/services/5763fa6ff91823096cac1057/operations/57641afc031f59363c586dca)
     struct StandardRoutes: JSONEndpoint {
+        public init(key: APIKey, delegate: JSONEndpointDelegate<Rail.StandardRoutes>? = nil) {
+            self.key = key
+            self.delegate = delegate
+        }
+        
         public let url = URLComponents(staticString: "https://api.wmata.com/TrainPositions/StandardRoutes")
         
         public let key: APIKey
@@ -429,6 +450,11 @@ public extension Rail {
     ///
     /// [WMATA Track Circuits Documentation](https://developer.wmata.com/docs/services/5763fa6ff91823096cac1057/operations/57644238031f59363c586dcb)
     struct TrackCircuits: JSONEndpoint {
+        public init(key: APIKey, delegate: JSONEndpointDelegate<Rail.TrackCircuits>? = nil) {
+            self.key = key
+            self.delegate = delegate
+        }
+        
         public let url = URLComponents(staticString: "https://api.wmata.com/TrainPositions/TrackCircuits")
         
         public let key: APIKey
@@ -549,6 +575,13 @@ public extension Rail {
     ///
     ///[WMATA Station to Station Information Documentation](https://developer.wmata.com/docs/services/5476364f031f590f38092507/operations/5476364f031f5909e4fe3313)
     struct StationToStation: JSONEndpoint {
+        public init(key: APIKey, station: Station? = nil, destinationStation: Station? = nil, delegate: JSONEndpointDelegate<Rail.StationToStation>? = nil) {
+            self.key = key
+            self.station = station
+            self.destinationStation = destinationStation
+            self.delegate = delegate
+        }
+        
         public let url = URLComponents(staticString: "https://api.wmata.com/Rail.svc/json/jSrcStationToDstStationInfo")
         
         public let key: APIKey
@@ -661,6 +694,12 @@ public extension Rail {
     ///
     /// [WMATA Elevator and Escalator Incidents Documentation](https://developer.wmata.com/docs/services/54763641281d83086473f232/operations/54763641281d830c946a3d76)
     struct ElevatorAndEscalatorIncidents: JSONEndpoint {
+        public init(key: APIKey, station: Station? = nil, delegate: JSONEndpointDelegate<Rail.ElevatorAndEscalatorIncidents>? = nil) {
+            self.key = key
+            self.station = station
+            self.delegate = delegate
+        }
+        
         public let url = URLComponents(staticString: "https://api.wmata.com/Incidents.svc/json/ElevatorIncidents")
         
         public let key: APIKey
@@ -796,6 +835,12 @@ public extension Rail {
     ///
     /// [WMATA Rail Incidents Documentation](https://developer.wmata.com/docs/services/54763641281d83086473f232/operations/54763641281d830c946a3d77)
     struct Incidents: JSONEndpoint {
+        public init(key: APIKey, station: Station? = nil, delegate: JSONEndpointDelegate<Rail.Incidents>? = nil) {
+            self.key = key
+            self.station = station
+            self.delegate = delegate
+        }
+        
         public let url = URLComponents(staticString: "https://api.wmata.com/Incidents.svc/json/Incidents")
         
         public let key: APIKey
@@ -959,7 +1004,7 @@ public extension Rail {
     ///
     /// [WMATA Next Trains Documentation](https://developer.wmata.com/docs/services/547636a6f9182302184cda78/operations/547636a6f918230da855363f)
     struct NextTrains: JSONEndpoint {
-        internal let baseURL = "https://api.wmata.com/StationPrediction.svc/json/GetPrediction/"
+        let baseURL = "https://api.wmata.com/StationPrediction.svc/json/GetPrediction/"
         
         public var url: URLComponents {
             .init(string: baseURL + stations.urlPath())!
@@ -1229,6 +1274,12 @@ public extension Rail {
     ///
     /// [WMATA Station Information Documentation](https://developer.wmata.com/docs/services/5476364f031f590f38092507/operations/5476364f031f5909e4fe3310)
     struct StationInformation: JSONEndpoint {
+        public init(key: APIKey, station: Station, delegate: JSONEndpointDelegate<Rail.StationInformation>? = nil) {
+            self.key = key
+            self.station = station
+            self.delegate = delegate
+        }
+        
         public let url = URLComponents(staticString: "https://api.wmata.com/Rail.svc/json/jStationInfo")
         
         public let key: APIKey
@@ -1360,6 +1411,12 @@ public extension Rail {
     ///
     /// [WMATA Parking Information Documentation](https://developer.wmata.com/docs/services/5476364f031f590f38092507/operations/5476364f031f5909e4fe330d)
     struct ParkingInformation: JSONEndpoint {
+        public init(key: APIKey, station: Station? = nil, delegate: JSONEndpointDelegate<Rail.ParkingInformation>? = nil) {
+            self.key = key
+            self.station = station
+            self.delegate = delegate
+        }
+        
         public let url = URLComponents(staticString: "https://api.wmata.com/Rail.svc/json/jStationParking")
         
         public let key: APIKey
@@ -1492,6 +1549,13 @@ public extension Rail {
     ///
     /// [WMATA Path Between Stations Documentation](https://developer.wmata.com/docs/services/5476364f031f590f38092507/operations/5476364f031f5909e4fe330e)
     struct PathBetweenStations: JSONEndpoint {
+        public init(key: APIKey, startingStation: Station, destinationStation: Station, delegate: JSONEndpointDelegate<Rail.PathBetweenStations>? = nil) {
+            self.key = key
+            self.startingStation = startingStation
+            self.destinationStation = destinationStation
+            self.delegate = delegate
+        }
+        
         public let url = URLComponents(staticString: "https://api.wmata.com/Rail.svc/json/jPath")
         
         public let key: APIKey
@@ -1573,6 +1637,12 @@ public extension Rail {
     ///
     /// [WMATA Station Timings Documentation](https://developer.wmata.com/docs/services/5476364f031f590f38092507/operations/5476364f031f5909e4fe3312)
     struct StationTimings: JSONEndpoint {
+        public init(key: APIKey, station: Station? = nil, delegate: JSONEndpointDelegate<Rail.StationTimings>? = nil) {
+            self.key = key
+            self.station = station
+            self.delegate = delegate
+        }
+        
         public let url = URLComponents(staticString: "https://api.wmata.com/Rail.svc/json/jStationTimes")
         
         public let key: APIKey
@@ -1778,6 +1848,12 @@ public extension Rail {
     ///
     /// [WMATA Station List Documentation](https://developer.wmata.com/docs/services/5476364f031f590f38092507/operations/5476364f031f5909e4fe3311)
     struct Stations: JSONEndpoint {
+        public init(key: APIKey, line: Line? = nil, delegate: JSONEndpointDelegate<Rail.Stations>? = nil) {
+            self.key = key
+            self.line = line
+            self.delegate = delegate
+        }
+        
         public let url = URLComponents(staticString: "https://api.wmata.com/Rail.svc/json/jStations")
         
         public let key: APIKey
@@ -1816,6 +1892,11 @@ public extension Rail.GTFS {
     ///
     /// [GTFS Alerts Documentation](https://gtfs.org/reference/realtime/v1/#message-alert)
     struct Alerts: GTFSEndpoint {
+        public init(key: APIKey, delegate: GTFSEndpointDelegate<Rail.GTFS.Alerts>? = nil) {
+            self.key = key
+            self.delegate = delegate
+        }
+        
         public let url = URLComponents(staticString: "https://api.wmata.com/gtfs/rail-gtfsrt-alerts.pb")
         
         public let key: APIKey
@@ -1829,6 +1910,11 @@ public extension Rail.GTFS {
     ///
     /// [GTFS Trip Updates Documentation](https://gtfs.org/reference/realtime/v1/#message-tripupdate)
     struct TripUpdates: GTFSEndpoint {
+        public init(key: APIKey, delegate: GTFSEndpointDelegate<Rail.GTFS.TripUpdates>? = nil) {
+            self.key = key
+            self.delegate = delegate
+        }
+        
         public let url = URLComponents(staticString: "https://api.wmata.com/gtfs/rail-gtfsrt-tripupdates.pb")
         
         public let key: APIKey
@@ -1842,6 +1928,11 @@ public extension Rail.GTFS {
     ///
     /// [GTFS Trip Updates Documentation](https://gtfs.org/reference/realtime/v1/#message-vehicleposition)
     struct VehiclePositions: GTFSEndpoint {
+        public init(key: APIKey, delegate: GTFSEndpointDelegate<Rail.GTFS.VehiclePositions>? = nil) {
+            self.key = key
+            self.delegate = delegate
+        }
+        
         public let url = URLComponents(staticString: "https://api.wmata.com/gtfs/rail-gtfsrt-vehiclepositions.pb")
         
         public let key: APIKey

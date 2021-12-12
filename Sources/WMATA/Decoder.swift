@@ -132,7 +132,7 @@ struct WMATACodingKey: CodingKey, Equatable, Hashable {
     }
 }
 
-internal extension String {
+extension String {
     func lowercasedFirstLetter() -> String {
         var stringCopy = self
         

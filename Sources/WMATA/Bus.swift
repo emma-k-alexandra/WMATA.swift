@@ -27,6 +27,13 @@ public extension Bus {
     ///
     /// [WMATA Bus Positions Documentation](https://developer.wmata.com/docs/services/54763629281d83086473f231/operations/5476362a281d830c946a3d68)
     struct Positions: JSONEndpoint {
+        public init(key: APIKey, route: Route? = nil, location: WMATALocation? = nil, delegate: JSONEndpointDelegate<Bus.Positions>? = nil) {
+            self.key = key
+            self.route = route
+            self.location = location
+            self.delegate = delegate
+        }
+        
         public let url = URLComponents(staticString: "https://api.wmata.com/Bus.svc/json/jBusPositions")
         
         public let key: APIKey
@@ -163,6 +170,12 @@ public extension Bus {
     ///
     ///[WMATA Bus Incidents Documentation](https://developer.wmata.com/docs/services/54763641281d83086473f232/operations/54763641281d830c946a3d75)
     struct Incidents: JSONEndpoint {
+        public init(key: APIKey, route: Route? = nil, delegate: JSONEndpointDelegate<Bus.Incidents>? = nil) {
+            self.key = key
+            self.route = route
+            self.delegate = delegate
+        }
+        
         public let url = URLComponents(staticString: "https://api.wmata.com/Incidents.svc/json/BusIncidents")
         
         public let key: APIKey
@@ -244,6 +257,13 @@ public extension Bus {
     ///
     /// [WMATA Path Details Documentation](https://developer.wmata.com/docs/services/54763629281d83086473f231/operations/5476362a281d830c946a3d69)
     struct PathDetails: JSONEndpoint {
+        public init(key: APIKey, route: Route, date: Date? = nil, delegate: JSONEndpointDelegate<Bus.PathDetails>? = nil) {
+            self.key = key
+            self.route = route
+            self.date = date
+            self.delegate = delegate
+        }
+        
         public let url = URLComponents(staticString: "https://api.wmata.com/Bus.svc/json/jRouteDetails")
         
         public let key: APIKey
@@ -421,6 +441,14 @@ public extension Bus {
     ///
     /// [WMATA Route Schedule Documentation](https://developer.wmata.com/docs/services/54763629281d83086473f231/operations/5476362a281d830c946a3d6b)
     struct RouteSchedule: JSONEndpoint {
+        public init(key: APIKey, route: Route, date: Date? = nil, includingVariations: Bool = false, delegate: JSONEndpointDelegate<Bus.RouteSchedule>? = nil) {
+            self.key = key
+            self.route = route
+            self.date = date
+            self.includingVariations = includingVariations
+            self.delegate = delegate
+        }
+        
         public let url = URLComponents(staticString: "https://api.wmata.com/Bus.svc/json/jRouteSchedule")
         
         public let key: APIKey
@@ -585,6 +613,12 @@ public extension Bus {
     ///
     ///  [WMATA Next Buses Documentation](https://developer.wmata.com/docs/services/5476365e031f590f38092508/operations/5476365e031f5909e4fe331d)
     struct NextBuses: JSONEndpoint {
+        public init(key: APIKey, stop: Stop, delegate: JSONEndpointDelegate<Bus.NextBuses>? = nil) {
+            self.key = key
+            self.stop = stop
+            self.delegate = delegate
+        }
+        
         public let url = URLComponents(staticString: "https://api.wmata.com/NextBusService.svc/json/jPredictions")
         
         public let key: APIKey
@@ -674,6 +708,13 @@ public extension Bus {
     ///
     /// [WMATA Schedule at Stop Documentation](https://developer.wmata.com/docs/services/54763629281d83086473f231/operations/5476362a281d830c946a3d6c)
     struct StopSchedule: JSONEndpoint {
+        public init(key: APIKey, stop: Stop, date: Date? = nil, delegate: JSONEndpointDelegate<Bus.StopSchedule>? = nil) {
+            self.key = key
+            self.stop = stop
+            self.date = date
+            self.delegate = delegate
+        }
+        
         public let url = URLComponents(staticString: "https://api.wmata.com/Bus.svc/json/jStopSchedule")
         
         public let key: APIKey
@@ -833,6 +874,12 @@ public extension Bus {
     ///
     /// [WMATA Stop Search Documentation](https://developer.wmata.com/docs/services/54763629281d83086473f231/operations/5476362a281d830c946a3d6d)
     struct StopsSearch: JSONEndpoint {
+        public init(key: APIKey, location: WMATALocation? = nil, delegate: JSONEndpointDelegate<Bus.StopsSearch>? = nil) {
+            self.key = key
+            self.location = location
+            self.delegate = delegate
+        }
+        
         public let url = URLComponents(staticString: "https://api.wmata.com/Bus.svc/json/jStops")
         
         public let key: APIKey
@@ -910,6 +957,11 @@ public extension Bus {
     ///
     /// For example, the `10A` and `10Av1` are the same route, but may stop at slightly different locations.
     struct Routes: JSONEndpoint {
+        public init(key: APIKey, delegate: JSONEndpointDelegate<Bus.Routes>? = nil) {
+            self.key = key
+            self.delegate = delegate
+        }
+        
         public let url = URLComponents(staticString: "https://api.wmata.com/Bus.svc/json/jRoutes")
         
         public let key: APIKey
@@ -977,6 +1029,11 @@ public extension Bus.GTFS {
     ///
     /// [GTFS Alerts Documentation](https://gtfs.org/reference/realtime/v1/#message-alert)
     struct Alerts: GTFSEndpoint {
+        public init(key: APIKey, delegate: GTFSEndpointDelegate<Bus.GTFS.Alerts>? = nil) {
+            self.key = key
+            self.delegate = delegate
+        }
+        
         public let url = URLComponents(staticString: "https://api.wmata.com/gtfs/bus-gtfsrt-alerts.pb")
         
         public let key: APIKey
@@ -990,6 +1047,11 @@ public extension Bus.GTFS {
     ///
     /// [GTFS Trip Updates Documentation](https://gtfs.org/reference/realtime/v1/#message-tripupdate)
     struct TripUpdates: GTFSEndpoint {
+        public init(key: APIKey, delegate: GTFSEndpointDelegate<Bus.GTFS.TripUpdates>? = nil) {
+            self.key = key
+            self.delegate = delegate
+        }
+        
         public let url = URLComponents(staticString: "https://api.wmata.com/gtfs/bus-gtfsrt-tripupdates.pb")
         
         public let key: APIKey
@@ -1003,6 +1065,11 @@ public extension Bus.GTFS {
     ///
     /// [GTFS Trip Updates Documentation](https://gtfs.org/reference/realtime/v1/#message-vehicleposition)
     struct VehiclePositions: GTFSEndpoint {
+        public init(key: APIKey, delegate: GTFSEndpointDelegate<Bus.GTFS.VehiclePositions>? = nil) {
+            self.key = key
+            self.delegate = delegate
+        }
+        
         public let url = URLComponents(staticString: "https://api.wmata.com/gtfs/bus-gtfsrt-vehiclepositions.pb")
         
         public let key: APIKey
