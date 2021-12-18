@@ -18,21 +18,6 @@ extension URL {
     }
 }
 
-// TODO: Figure out delegate stuff
-//func generateURLSession(with delegate: WMATADelegate, sharedContainerIdentifier: String? = nil) -> URLSession {
-//    let config = URLSessionConfiguration.background(withIdentifier: "com.WMATA.swift.\(UUID())")
-//
-//    if sharedContainerIdentifier != nil {
-//        config.sharedContainerIdentifier = sharedContainerIdentifier
-//    }
-//
-//    return URLSession(
-//        configuration: config,
-//        delegate: WMATAURLSessionDataDelegate(wmataDelegate: delegate),
-//        delegateQueue: nil
-//    )
-//}
-
 protocol URLQueryItemConvertible {
     associatedtype URLQueryItemName: RawRepresentable
     

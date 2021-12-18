@@ -50,6 +50,7 @@ Feel free to email questions and comments to [emma@emma.sh](mailto:emma@emma.sh)
 Todo:
 
 - [ ] Improve GTFS support with better decoding 
+- [ ] Build out more DVR tests
 - [ ] Last Train times (API doesn't provide full information here)
 - [ ] Automated builds
 

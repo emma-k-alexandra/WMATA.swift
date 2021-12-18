@@ -75,6 +75,3 @@ class DVRTestCase: XCTestCase {
         self.expectation(description: self.name)
     }()
 }
-
-// TODO: Add test for error responses
-// TODO: Tests for Decoding
