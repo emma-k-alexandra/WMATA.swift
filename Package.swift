@@ -1,13 +1,13 @@
-// swift-tools-version:5.1
+// swift-tools-version:5.5
 import PackageDescription
 
 let package = Package(
     name: "WMATA",
     platforms: [
-        .macOS(.v10_14),
-        .iOS(.v12),
-        .tvOS(.v12),
-        .watchOS(.v5)
+        .macOS(.v10_15),
+        .iOS(.v13),
+        .tvOS(.v13),
+        .watchOS(.v6)
     ],
     products: [
         .library(
@@ -16,7 +16,16 @@ let package = Package(
         ),
     ],
     dependencies: [
-        .package(url: "https://github.com/emma-k-alexandra/GTFS.git", from: "1.0.0"),
+        .package(
+            name: "GTFS",
+            url: "https://github.com/emma-k-alexandra/GTFS.git",
+            .upToNextMajor(from: .init(1, 0, 1))
+        ),
+        .package(
+            name: "DVR",
+            url: "https://github.com/venmo/DVR.git",
+            .upToNextMajor(from: .init(2, 0, 0))
+        ),
     ],
     targets: [
         .target(
@@ -27,7 +36,8 @@ let package = Package(
         ),
         .testTarget(
             name: "WMATATests",
-            dependencies: ["WMATA"]
+            dependencies: ["WMATA", "DVR"],
+            resources: [.process("Fixtures")]
         ),
     ]
 )

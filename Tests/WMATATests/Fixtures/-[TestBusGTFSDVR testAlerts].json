@@ -1,0 +1,31 @@
+{
+  "interactions" : [
+    {
+      "response" : {
+        "url" : "https:\/\/api.wmata.com\/gtfs\/bus-gtfsrt-alerts.pb?",
+        "body" : "Cg0KAzEuMBAAGMH80o0GEqcCCigxXzFfQ0M3NDQ3NEQtQUU0QS00QUQ4LUIwNEItMkM0ODE1NkU2MEJDKvoBKgcKATESAlczKgcKATESAlcyUnIKcApqRHVlIHRvIHBvbGljZSBhY3Rpdml0eSBvbiBDb25ncmVzcyBTdCBTRSBhdCBTYXZhbm5haCBTdCwgYnVzZXMgbWF5IGV4cGVyaWVuY2UgZGVsYXlzIGFuZCBwb3NzaWJsZSBkZXRvdXJzLhICZW5acgpwCmpEdWUgdG8gcG9saWNlIGFjdGl2aXR5IG9uIENvbmdyZXNzIFN0IFNFIGF0IFNhdmFubmFoIFN0LCBidXNlcyBtYXkgZXhwZXJpZW5jZSBkZWxheXMgYW5kIHBvc3NpYmxlIGRldG91cnMuEgJlbhLSAgooMV8xXzQxRkYyQUFDLUE4OUMtNERDNS05MDA1LUFDNzE5MkM2QTNDNCqlAioHCgExEgJRNCoHCgExEgJRMSoHCgExEgJRNioHCgExEgJRMioHCgExEgJRNVJ6CngKckR1ZSB0byBhIHRyYWZmaWMgaW5jaWRlbnQgb24gZS9iICBWZWlycyBNaWxsIFJkIGF0IEF0bGFudGljIEF2ZSwgYnVzZXMgbWF5IGV4cGVyaWVuY2UgZGVsYXlzIGFuZCBwb3NzaWJsZSBkZXRvdXJzLhICZW5aegp4CnJEdWUgdG8gYSB0cmFmZmljIGluY2lkZW50IG9uIGUvYiAgVmVpcnMgTWlsbCBSZCBhdCBBdGxhbnRpYyBBdmUsIGJ1c2VzIG1heSBleHBlcmllbmNlIGRlbGF5cyBhbmQgcG9zc2libGUgZGV0b3Vycy4SAmVuEu0CCigxXzFfQUJGNEYzQ0ItQURCMC00RkQzLUI2NUYtNTk1ODRGMjk4QjlBKsACKgcKATESAkE3KgcKATESAkE2UpQBCpEBCooBRHVlIHRvIHBvbGljZSBhY3Rpdml0eSBidXNlcyB0byBMaXZpbmdzdG9uIFJkIGRldG91ciBvbiBBbGFiYW1hIEF2IFNFIGF0IDV0aCBTdCByZXN1bWluZyByZWd1bGFyIHJvdXRlIG9uIFdoZWVsZXIgUmQgU0UgYXQgTWlzc2lzc2lwcGkgQXYuEgJlblqUAQqRAQqKAUR1ZSB0byBwb2xpY2UgYWN0aXZpdHkgYnVzZXMgdG8gTGl2aW5nc3RvbiBSZCBkZXRvdXIgb24gQWxhYmFtYSBBdiBTRSBhdCA1dGggU3QgcmVzdW1pbmcgcmVndWxhciByb3V0ZSBvbiBXaGVlbGVyIFJkIFNFIGF0IE1pc3Npc3NpcHBpIEF2LhICZW4SxAEKKDFfMV84NjdENTgzOS00NkYxLTQxOTAtOTJFRC1BRDYzOEVFMzk1MTkqlwEqBwoBMRICUzlSRQpDCj1EdWUgdG8gYW4gb3BlcmF0aW9uYWwgcHJvYmxlbSwgYnVzZXMgYXJlIGV4cGVyaWVuY2luZyBkZWxheXMuEgJlblpFCkMKPUR1ZSB0byBhbiBvcGVyYXRpb25hbCBwcm9ibGVtLCBidXNlcyBhcmUgZXhwZXJpZW5jaW5nIGRlbGF5cy4SAmVuEu0CCigxXzFfNEU2RTY3MkItMzlDOC00NDI1LTlCNjktMDk3NDhEQTEzN0ZDKsACKgcKATESAkE3KgcKATESAkE2UpQBCpEBCooBRHVlIHRvIHBvbGljZSBhY3Rpdml0eSwgYnVzZXMgdG8gQW5hY29zdGlhIGRldG91ciBvbiBNaXNzaXNzaXBwaSBBdmUgU0UgYXQgV2hlZWxlciBSZCwgcmVzdW1pbmcgcmVndWxhciByb3V0ZSBvbiBBbGFiYW1hIEF2ZSBTRSBhdCA1dGggU3QuEgJlblqUAQqRAQqKAUR1ZSB0byBwb2xpY2UgYWN0aXZpdHksIGJ1c2VzIHRvIEFuYWNvc3RpYSBkZXRvdXIgb24gTWlzc2lzc2lwcGkgQXZlIFNFIGF0IFdoZWVsZXIgUmQsIHJlc3VtaW5nIHJlZ3VsYXIgcm91dGUgb24gQWxhYmFtYSBBdmUgU0UgYXQgNXRoIFN0LhICZW4S1QEKKDFfMV8yNDBFRUVDRS00MUNCLTQzREEtODhDRi1FNDIzMDdEOEYxMTMqqAEqCAoBMRIDQzI2Uk0KSwpFRHVlIHRvIGFuIGluY2lkZW50IGF0IEJvd2llIFBhcmsgJiBSaWRlLCBidXNlcyBtYXkgZXhwZXJpZW5jZSBkZWxheXMuEgJlblpNCksKRUR1ZSB0byBhbiBpbmNpZGVudCBhdCBCb3dpZSBQYXJrICYgUmlkZSwgYnVzZXMgbWF5IGV4cGVyaWVuY2UgZGVsYXlzLhICZW4=",
+        "headers" : {
+          "Content-Length" : "1805",
+          "Etag" : "0x8D9BCB7B03C8641",
+          "Expires" : "Sat, 11 Dec 2021 15:06:28 GMT",
+          "Cache-Control" : "public, must-revalidate, max-age=10",
+          "Content-MD5" : "3KLGuKrf\/oHXCUyIGDMfHQ==",
+          "Last-Modified" : "Sat, 11 Dec 2021 15:05:37 GMT",
+          "Request-Context" : "appId=cid-v1:2833aead-1a1f-4ffd-874e-ef3a5ceb1de8",
+          "Date" : "Sat, 11 Dec 2021 15:06:17 GMT",
+          "Content-Type" : "application\/octet-stream"
+        },
+        "status" : 200
+      },
+      "request" : {
+        "method" : "GET",
+        "url" : "https:\/\/api.wmata.com\/gtfs\/bus-gtfsrt-alerts.pb?",
+        "headers" : {
+          "api_key" : "9e38c3eab34c4e6c990828002828f5ed"
+        }
+      },
+      "recorded_at" : 1639235178.0610008
+    }
+  ],
+  "name" : "-[TestBusGTFSDVR testAlerts]"
+}

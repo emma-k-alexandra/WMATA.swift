@@ -1,0 +1,51 @@
+{
+  "name" : "-[TestRailDVR testParkingInformation]",
+  "interactions" : [
+    {
+      "recorded_at" : 1639853824.6091862,
+      "request" : {
+        "url" : "https:\/\/api.wmata.com\/Rail.svc\/json\/jStationParking?StationCode=K05",
+        "method" : "GET",
+        "headers" : {
+          "api_key" : "9e38c3eab34c4e6c990828002828f5ed"
+        }
+      },
+      "response" : {
+        "body" : {
+          "StationsParking" : [
+            {
+              "AllDayParking" : {
+                "TotalCount" : 422,
+                "NonRiderCost" : 4.9500000000000002,
+                "SaturdayRiderCost" : 0,
+                "RiderCost" : 4.9500000000000002,
+                "SaturdayNonRiderCost" : 0
+              },
+              "ShortTermParking" : {
+                "Notes" : "Parking available 8:30 AM - 3:30 PM and 7 PM - 2 AM.",
+                "TotalCount" : 33
+              },
+              "Code" : "K05",
+              "Notes" : null
+            }
+          ]
+        },
+        "status" : 200,
+        "url" : "https:\/\/api.wmata.com\/Rail.svc\/json\/jStationParking?StationCode=K05",
+        "headers" : {
+          "Arr-Disable-Session-Affinity" : "True",
+          "Pragma" : "no-cache",
+          "Expires" : "-1",
+          "X-AspNet-Version" : "4.0.30319",
+          "Cache-Control" : "no-cache",
+          "X-Powered-By" : "ASP.NET",
+          "Content-Type" : "application\/json; charset=utf-8",
+          "Content-Length" : "291",
+          "Date" : "Sat, 18 Dec 2021 18:57:04 GMT",
+          "Vary" : "Accept-Encoding",
+          "Content-Encoding" : "gzip"
+        }
+      }
+    }
+  ]
+}

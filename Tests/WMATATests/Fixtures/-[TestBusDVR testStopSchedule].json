@@ -1,0 +1,1336 @@
+{
+  "name" : "-[TestBusDVR testStopSchedule]",
+  "interactions" : [
+    {
+      "request" : {
+        "url" : "https:\/\/api.wmata.com\/Bus.svc\/json\/jStopSchedule?StopID=1001195",
+        "method" : "GET",
+        "headers" : {
+          "api_key" : "9e38c3eab34c4e6c990828002828f5ed"
+        }
+      },
+      "recorded_at" : 1638584694.2992249,
+      "response" : {
+        "url" : "https:\/\/api.wmata.com\/Bus.svc\/json\/jStopSchedule?StopID=1001195",
+        "body" : {
+          "ScheduleArrivals" : [
+            {
+              "ScheduleTime" : "2021-12-03T04:05:39",
+              "StartTime" : "2021-12-03T04:00:00",
+              "TripID" : "20405060",
+              "DirectionNum" : "0",
+              "TripDirectionText" : "NORTH",
+              "TripHeadsign" : "SILVER SPRING STATION",
+              "EndTime" : "2021-12-03T04:35:00",
+              "RouteID" : "70"
+            },
+            {
+              "ScheduleTime" : "2021-12-03T04:29:39",
+              "StartTime" : "2021-12-03T04:24:00",
+              "TripID" : "15543060",
+              "DirectionNum" : "0",
+              "TripDirectionText" : "NORTH",
+              "TripHeadsign" : "SILVER SPRING STATION",
+              "EndTime" : "2021-12-03T04:59:00",
+              "RouteID" : "70"
+            },
+            {
+              "ScheduleTime" : "2021-12-03T04:53:39",
+              "StartTime" : "2021-12-03T04:48:00",
+              "TripID" : "2103060",
+              "DirectionNum" : "0",
+              "TripDirectionText" : "NORTH",
+              "TripHeadsign" : "SILVER SPRING STATION",
+              "EndTime" : "2021-12-03T05:23:00",
+              "RouteID" : "70"
+            },
+            {
+              "ScheduleTime" : "2021-12-03T05:17:55",
+              "StartTime" : "2021-12-03T05:12:00",
+              "TripID" : "12439060",
+              "DirectionNum" : "0",
+              "TripDirectionText" : "NORTH",
+              "TripHeadsign" : "SILVER SPRING STATION",
+              "EndTime" : "2021-12-03T05:51:00",
+              "RouteID" : "70"
+            },
+            {
+              "ScheduleTime" : "2021-12-03T05:31:55",
+              "StartTime" : "2021-12-03T05:26:00",
+              "TripID" : "12658060",
+              "DirectionNum" : "0",
+              "TripDirectionText" : "NORTH",
+              "TripHeadsign" : "SILVER SPRING STATION",
+              "EndTime" : "2021-12-03T06:05:00",
+              "RouteID" : "70"
+            },
+            {
+              "ScheduleTime" : "2021-12-03T05:45:55",
+              "StartTime" : "2021-12-03T05:40:00",
+              "TripID" : "7563060",
+              "DirectionNum" : "0",
+              "TripDirectionText" : "NORTH",
+              "TripHeadsign" : "SILVER SPRING STATION",
+              "EndTime" : "2021-12-03T06:19:00",
+              "RouteID" : "70"
+            },
+            {
+              "ScheduleTime" : "2021-12-03T05:59:55",
+              "StartTime" : "2021-12-03T05:54:00",
+              "TripID" : "16233060",
+              "DirectionNum" : "0",
+              "TripDirectionText" : "NORTH",
+              "TripHeadsign" : "SILVER SPRING STATION",
+              "EndTime" : "2021-12-03T06:33:00",
+              "RouteID" : "70"
+            },
+            {
+              "ScheduleTime" : "2021-12-03T06:13:55",
+              "StartTime" : "2021-12-03T06:08:00",
+              "TripID" : "11644060",
+              "DirectionNum" : "0",
+              "TripDirectionText" : "NORTH",
+              "TripHeadsign" : "SILVER SPRING STATION",
+              "EndTime" : "2021-12-03T06:47:00",
+              "RouteID" : "70"
+            },
+            {
+              "ScheduleTime" : "2021-12-03T06:27:03",
+              "StartTime" : "2021-12-03T06:21:00",
+              "TripID" : "23864060",
+              "DirectionNum" : "0",
+              "TripDirectionText" : "NORTH",
+              "TripHeadsign" : "SILVER SPRING STATION",
+              "EndTime" : "2021-12-03T07:02:00",
+              "RouteID" : "70"
+            },
+            {
+              "ScheduleTime" : "2021-12-03T06:40:03",
+              "StartTime" : "2021-12-03T06:34:00",
+              "TripID" : "25047060",
+              "DirectionNum" : "0",
+              "TripDirectionText" : "NORTH",
+              "TripHeadsign" : "SILVER SPRING STATION",
+              "EndTime" : "2021-12-03T07:15:00",
+              "RouteID" : "70"
+            },
+            {
+              "ScheduleTime" : "2021-12-03T06:53:03",
+              "StartTime" : "2021-12-03T06:47:00",
+              "TripID" : "1193060",
+              "DirectionNum" : "0",
+              "TripDirectionText" : "NORTH",
+              "TripHeadsign" : "SILVER SPRING STATION",
+              "EndTime" : "2021-12-03T07:28:00",
+              "RouteID" : "70"
+            },
+            {
+              "ScheduleTime" : "2021-12-03T07:06:11",
+              "StartTime" : "2021-12-03T07:00:00",
+              "TripID" : "14368060",
+              "DirectionNum" : "0",
+              "TripDirectionText" : "NORTH",
+              "TripHeadsign" : "SILVER SPRING STATION",
+              "EndTime" : "2021-12-03T07:44:00",
+              "RouteID" : "70"
+            },
+            {
+              "ScheduleTime" : "2021-12-03T07:16:16",
+              "StartTime" : "2021-12-03T06:57:00",
+              "TripID" : "26547060",
+              "DirectionNum" : "0",
+              "TripDirectionText" : "NORTH",
+              "TripHeadsign" : "CONVENTION CENTER",
+              "EndTime" : "2021-12-03T07:17:00",
+              "RouteID" : "74"
+            },
+            {
+              "ScheduleTime" : "2021-12-03T07:18:11",
+              "StartTime" : "2021-12-03T07:12:00",
+              "TripID" : "21171060",
+              "DirectionNum" : "0",
+              "TripDirectionText" : "NORTH",
+              "TripHeadsign" : "SILVER SPRING STATION",
+              "EndTime" : "2021-12-03T07:56:00",
+              "RouteID" : "70"
+            },
+            {
+              "ScheduleTime" : "2021-12-03T07:30:11",
+              "StartTime" : "2021-12-03T07:24:00",
+              "TripID" : "19702060",
+              "DirectionNum" : "0",
+              "TripDirectionText" : "NORTH",
+              "TripHeadsign" : "SILVER SPRING STATION",
+              "EndTime" : "2021-12-03T08:08:00",
+              "RouteID" : "70"
+            },
+            {
+              "ScheduleTime" : "2021-12-03T07:42:27",
+              "StartTime" : "2021-12-03T07:36:00",
+              "TripID" : "2448060",
+              "DirectionNum" : "0",
+              "TripDirectionText" : "NORTH",
+              "TripHeadsign" : "SILVER SPRING STATION",
+              "EndTime" : "2021-12-03T08:24:00",
+              "RouteID" : "70"
+            },
+            {
+              "ScheduleTime" : "2021-12-03T07:53:07",
+              "StartTime" : "2021-12-03T07:30:00",
+              "TripID" : "23387060",
+              "DirectionNum" : "0",
+              "TripDirectionText" : "NORTH",
+              "TripHeadsign" : "CONVENTION CENTER",
+              "EndTime" : "2021-12-03T07:54:00",
+              "RouteID" : "74"
+            },
+            {
+              "ScheduleTime" : "2021-12-03T07:54:27",
+              "StartTime" : "2021-12-03T07:48:00",
+              "TripID" : "20877060",
+              "DirectionNum" : "0",
+              "TripDirectionText" : "NORTH",
+              "TripHeadsign" : "SILVER SPRING STATION",
+              "EndTime" : "2021-12-03T08:36:00",
+              "RouteID" : "70"
+            },
+            {
+              "ScheduleTime" : "2021-12-03T08:06:27",
+              "StartTime" : "2021-12-03T08:00:00",
+              "TripID" : "23699060",
+              "DirectionNum" : "0",
+              "TripDirectionText" : "NORTH",
+              "TripHeadsign" : "SILVER SPRING STATION",
+              "EndTime" : "2021-12-03T08:48:00",
+              "RouteID" : "70"
+            },
+            {
+              "ScheduleTime" : "2021-12-03T08:18:27",
+              "StartTime" : "2021-12-03T08:12:00",
+              "TripID" : "448060",
+              "DirectionNum" : "0",
+              "TripDirectionText" : "NORTH",
+              "TripHeadsign" : "SILVER SPRING STATION",
+              "EndTime" : "2021-12-03T09:00:00",
+              "RouteID" : "70"
+            },
+            {
+              "ScheduleTime" : "2021-12-03T08:23:07",
+              "StartTime" : "2021-12-03T08:00:00",
+              "TripID" : "5455060",
+              "DirectionNum" : "0",
+              "TripDirectionText" : "NORTH",
+              "TripHeadsign" : "CONVENTION CENTER",
+              "EndTime" : "2021-12-03T08:24:00",
+              "RouteID" : "74"
+            },
+            {
+              "ScheduleTime" : "2021-12-03T08:30:27",
+              "StartTime" : "2021-12-03T08:24:00",
+              "TripID" : "14888060",
+              "DirectionNum" : "0",
+              "TripDirectionText" : "NORTH",
+              "TripHeadsign" : "SILVER SPRING STATION",
+              "EndTime" : "2021-12-03T09:12:00",
+              "RouteID" : "70"
+            },
+            {
+              "ScheduleTime" : "2021-12-03T08:42:27",
+              "StartTime" : "2021-12-03T08:36:00",
+              "TripID" : "25350060",
+              "DirectionNum" : "0",
+              "TripDirectionText" : "NORTH",
+              "TripHeadsign" : "SILVER SPRING STATION",
+              "EndTime" : "2021-12-03T09:24:00",
+              "RouteID" : "70"
+            },
+            {
+              "ScheduleTime" : "2021-12-03T08:53:07",
+              "StartTime" : "2021-12-03T08:30:00",
+              "TripID" : "5065060",
+              "DirectionNum" : "0",
+              "TripDirectionText" : "NORTH",
+              "TripHeadsign" : "CONVENTION CENTER",
+              "EndTime" : "2021-12-03T08:54:00",
+              "RouteID" : "74"
+            },
+            {
+              "ScheduleTime" : "2021-12-03T08:56:27",
+              "StartTime" : "2021-12-03T08:48:00",
+              "TripID" : "9003060",
+              "DirectionNum" : "0",
+              "TripDirectionText" : "NORTH",
+              "TripHeadsign" : "SILVER SPRING STATION",
+              "EndTime" : "2021-12-03T09:39:00",
+              "RouteID" : "70"
+            },
+            {
+              "ScheduleTime" : "2021-12-03T09:08:27",
+              "StartTime" : "2021-12-03T09:00:00",
+              "TripID" : "23737060",
+              "DirectionNum" : "0",
+              "TripDirectionText" : "NORTH",
+              "TripHeadsign" : "SILVER SPRING STATION",
+              "EndTime" : "2021-12-03T09:51:00",
+              "RouteID" : "70"
+            },
+            {
+              "ScheduleTime" : "2021-12-03T09:20:27",
+              "StartTime" : "2021-12-03T09:12:00",
+              "TripID" : "1915060",
+              "DirectionNum" : "0",
+              "TripDirectionText" : "NORTH",
+              "TripHeadsign" : "SILVER SPRING STATION",
+              "EndTime" : "2021-12-03T10:03:00",
+              "RouteID" : "70"
+            },
+            {
+              "ScheduleTime" : "2021-12-03T09:23:07",
+              "StartTime" : "2021-12-03T09:00:00",
+              "TripID" : "22707060",
+              "DirectionNum" : "0",
+              "TripDirectionText" : "NORTH",
+              "TripHeadsign" : "CONVENTION CENTER",
+              "EndTime" : "2021-12-03T09:24:00",
+              "RouteID" : "74"
+            },
+            {
+              "ScheduleTime" : "2021-12-03T09:32:27",
+              "StartTime" : "2021-12-03T09:24:00",
+              "TripID" : "1349060",
+              "DirectionNum" : "0",
+              "TripDirectionText" : "NORTH",
+              "TripHeadsign" : "SILVER SPRING STATION",
+              "EndTime" : "2021-12-03T10:15:00",
+              "RouteID" : "70"
+            },
+            {
+              "ScheduleTime" : "2021-12-03T09:44:27",
+              "StartTime" : "2021-12-03T09:36:00",
+              "TripID" : "20458060",
+              "DirectionNum" : "0",
+              "TripDirectionText" : "NORTH",
+              "TripHeadsign" : "SILVER SPRING STATION",
+              "EndTime" : "2021-12-03T10:27:00",
+              "RouteID" : "70"
+            },
+            {
+              "ScheduleTime" : "2021-12-03T09:54:07",
+              "StartTime" : "2021-12-03T09:31:00",
+              "TripID" : "5300060",
+              "DirectionNum" : "0",
+              "TripDirectionText" : "NORTH",
+              "TripHeadsign" : "CONVENTION CENTER",
+              "EndTime" : "2021-12-03T09:55:00",
+              "RouteID" : "74"
+            },
+            {
+              "ScheduleTime" : "2021-12-03T09:56:27",
+              "StartTime" : "2021-12-03T09:48:00",
+              "TripID" : "25150060",
+              "DirectionNum" : "0",
+              "TripDirectionText" : "NORTH",
+              "TripHeadsign" : "SILVER SPRING STATION",
+              "EndTime" : "2021-12-03T10:39:00",
+              "RouteID" : "70"
+            },
+            {
+              "ScheduleTime" : "2021-12-03T10:08:27",
+              "StartTime" : "2021-12-03T10:00:00",
+              "TripID" : "8723060",
+              "DirectionNum" : "0",
+              "TripDirectionText" : "NORTH",
+              "TripHeadsign" : "SILVER SPRING STATION",
+              "EndTime" : "2021-12-03T10:51:00",
+              "RouteID" : "70"
+            },
+            {
+              "ScheduleTime" : "2021-12-03T10:20:27",
+              "StartTime" : "2021-12-03T10:12:00",
+              "TripID" : "879060",
+              "DirectionNum" : "0",
+              "TripDirectionText" : "NORTH",
+              "TripHeadsign" : "SILVER SPRING STATION",
+              "EndTime" : "2021-12-03T11:03:00",
+              "RouteID" : "70"
+            },
+            {
+              "ScheduleTime" : "2021-12-03T10:24:07",
+              "StartTime" : "2021-12-03T10:01:00",
+              "TripID" : "747060",
+              "DirectionNum" : "0",
+              "TripDirectionText" : "NORTH",
+              "TripHeadsign" : "CONVENTION CENTER",
+              "EndTime" : "2021-12-03T10:25:00",
+              "RouteID" : "74"
+            },
+            {
+              "ScheduleTime" : "2021-12-03T10:32:27",
+              "StartTime" : "2021-12-03T10:24:00",
+              "TripID" : "20931060",
+              "DirectionNum" : "0",
+              "TripDirectionText" : "NORTH",
+              "TripHeadsign" : "SILVER SPRING STATION",
+              "EndTime" : "2021-12-03T11:15:00",
+              "RouteID" : "70"
+            },
+            {
+              "ScheduleTime" : "2021-12-03T10:45:35",
+              "StartTime" : "2021-12-03T10:36:00",
+              "TripID" : "3182060",
+              "DirectionNum" : "0",
+              "TripDirectionText" : "NORTH",
+              "TripHeadsign" : "SILVER SPRING STATION",
+              "EndTime" : "2021-12-03T11:29:00",
+              "RouteID" : "70"
+            },
+            {
+              "ScheduleTime" : "2021-12-03T10:54:07",
+              "StartTime" : "2021-12-03T10:31:00",
+              "TripID" : "12419060",
+              "DirectionNum" : "0",
+              "TripDirectionText" : "NORTH",
+              "TripHeadsign" : "CONVENTION CENTER",
+              "EndTime" : "2021-12-03T10:55:00",
+              "RouteID" : "74"
+            },
+            {
+              "ScheduleTime" : "2021-12-03T10:57:35",
+              "StartTime" : "2021-12-03T10:48:00",
+              "TripID" : "23384060",
+              "DirectionNum" : "0",
+              "TripDirectionText" : "NORTH",
+              "TripHeadsign" : "SILVER SPRING STATION",
+              "EndTime" : "2021-12-03T11:41:00",
+              "RouteID" : "70"
+            },
+            {
+              "ScheduleTime" : "2021-12-03T11:09:35",
+              "StartTime" : "2021-12-03T11:00:00",
+              "TripID" : "10688060",
+              "DirectionNum" : "0",
+              "TripDirectionText" : "NORTH",
+              "TripHeadsign" : "SILVER SPRING STATION",
+              "EndTime" : "2021-12-03T11:53:00",
+              "RouteID" : "70"
+            },
+            {
+              "ScheduleTime" : "2021-12-03T11:21:35",
+              "StartTime" : "2021-12-03T11:12:00",
+              "TripID" : "20154060",
+              "DirectionNum" : "0",
+              "TripDirectionText" : "NORTH",
+              "TripHeadsign" : "SILVER SPRING STATION",
+              "EndTime" : "2021-12-03T12:05:00",
+              "RouteID" : "70"
+            },
+            {
+              "ScheduleTime" : "2021-12-03T11:21:58",
+              "StartTime" : "2021-12-03T11:01:00",
+              "TripID" : "2090060",
+              "DirectionNum" : "0",
+              "TripDirectionText" : "NORTH",
+              "TripHeadsign" : "CONVENTION CENTER",
+              "EndTime" : "2021-12-03T11:23:00",
+              "RouteID" : "74"
+            },
+            {
+              "ScheduleTime" : "2021-12-03T11:33:35",
+              "StartTime" : "2021-12-03T11:24:00",
+              "TripID" : "17434060",
+              "DirectionNum" : "0",
+              "TripDirectionText" : "NORTH",
+              "TripHeadsign" : "SILVER SPRING STATION",
+              "EndTime" : "2021-12-03T12:17:00",
+              "RouteID" : "70"
+            },
+            {
+              "ScheduleTime" : "2021-12-03T11:45:35",
+              "StartTime" : "2021-12-03T11:36:00",
+              "TripID" : "12964060",
+              "DirectionNum" : "0",
+              "TripDirectionText" : "NORTH",
+              "TripHeadsign" : "SILVER SPRING STATION",
+              "EndTime" : "2021-12-03T12:29:00",
+              "RouteID" : "70"
+            },
+            {
+              "ScheduleTime" : "2021-12-03T11:51:58",
+              "StartTime" : "2021-12-03T11:31:00",
+              "TripID" : "24096060",
+              "DirectionNum" : "0",
+              "TripDirectionText" : "NORTH",
+              "TripHeadsign" : "CONVENTION CENTER",
+              "EndTime" : "2021-12-03T11:53:00",
+              "RouteID" : "74"
+            },
+            {
+              "ScheduleTime" : "2021-12-03T11:57:35",
+              "StartTime" : "2021-12-03T11:48:00",
+              "TripID" : "23797060",
+              "DirectionNum" : "0",
+              "TripDirectionText" : "NORTH",
+              "TripHeadsign" : "SILVER SPRING STATION",
+              "EndTime" : "2021-12-03T12:41:00",
+              "RouteID" : "70"
+            },
+            {
+              "ScheduleTime" : "2021-12-03T12:09:35",
+              "StartTime" : "2021-12-03T12:00:00",
+              "TripID" : "24565060",
+              "DirectionNum" : "0",
+              "TripDirectionText" : "NORTH",
+              "TripHeadsign" : "SILVER SPRING STATION",
+              "EndTime" : "2021-12-03T12:53:00",
+              "RouteID" : "70"
+            },
+            {
+              "ScheduleTime" : "2021-12-03T12:21:35",
+              "StartTime" : "2021-12-03T12:12:00",
+              "TripID" : "1372060",
+              "DirectionNum" : "0",
+              "TripDirectionText" : "NORTH",
+              "TripHeadsign" : "SILVER SPRING STATION",
+              "EndTime" : "2021-12-03T13:05:00",
+              "RouteID" : "70"
+            },
+            {
+              "ScheduleTime" : "2021-12-03T12:22:58",
+              "StartTime" : "2021-12-03T12:02:00",
+              "TripID" : "16097060",
+              "DirectionNum" : "0",
+              "TripDirectionText" : "NORTH",
+              "TripHeadsign" : "CONVENTION CENTER",
+              "EndTime" : "2021-12-03T12:24:00",
+              "RouteID" : "74"
+            },
+            {
+              "ScheduleTime" : "2021-12-03T12:33:35",
+              "StartTime" : "2021-12-03T12:24:00",
+              "TripID" : "9964060",
+              "DirectionNum" : "0",
+              "TripDirectionText" : "NORTH",
+              "TripHeadsign" : "SILVER SPRING STATION",
+              "EndTime" : "2021-12-03T13:17:00",
+              "RouteID" : "70"
+            },
+            {
+              "ScheduleTime" : "2021-12-03T12:45:35",
+              "StartTime" : "2021-12-03T12:36:00",
+              "TripID" : "23436060",
+              "DirectionNum" : "0",
+              "TripDirectionText" : "NORTH",
+              "TripHeadsign" : "SILVER SPRING STATION",
+              "EndTime" : "2021-12-03T13:29:00",
+              "RouteID" : "70"
+            },
+            {
+              "ScheduleTime" : "2021-12-03T12:52:58",
+              "StartTime" : "2021-12-03T12:32:00",
+              "TripID" : "2805060",
+              "DirectionNum" : "0",
+              "TripDirectionText" : "NORTH",
+              "TripHeadsign" : "CONVENTION CENTER",
+              "EndTime" : "2021-12-03T12:54:00",
+              "RouteID" : "74"
+            },
+            {
+              "ScheduleTime" : "2021-12-03T12:57:35",
+              "StartTime" : "2021-12-03T12:48:00",
+              "TripID" : "20312060",
+              "DirectionNum" : "0",
+              "TripDirectionText" : "NORTH",
+              "TripHeadsign" : "SILVER SPRING STATION",
+              "EndTime" : "2021-12-03T13:41:00",
+              "RouteID" : "70"
+            },
+            {
+              "ScheduleTime" : "2021-12-03T13:09:35",
+              "StartTime" : "2021-12-03T13:00:00",
+              "TripID" : "22676060",
+              "DirectionNum" : "0",
+              "TripDirectionText" : "NORTH",
+              "TripHeadsign" : "SILVER SPRING STATION",
+              "EndTime" : "2021-12-03T13:53:00",
+              "RouteID" : "70"
+            },
+            {
+              "ScheduleTime" : "2021-12-03T13:21:35",
+              "StartTime" : "2021-12-03T13:12:00",
+              "TripID" : "961060",
+              "DirectionNum" : "0",
+              "TripDirectionText" : "NORTH",
+              "TripHeadsign" : "SILVER SPRING STATION",
+              "EndTime" : "2021-12-03T14:05:00",
+              "RouteID" : "70"
+            },
+            {
+              "ScheduleTime" : "2021-12-03T13:22:58",
+              "StartTime" : "2021-12-03T13:02:00",
+              "TripID" : "25658060",
+              "DirectionNum" : "0",
+              "TripDirectionText" : "NORTH",
+              "TripHeadsign" : "CONVENTION CENTER",
+              "EndTime" : "2021-12-03T13:24:00",
+              "RouteID" : "74"
+            },
+            {
+              "ScheduleTime" : "2021-12-03T13:33:35",
+              "StartTime" : "2021-12-03T13:24:00",
+              "TripID" : "18313060",
+              "DirectionNum" : "0",
+              "TripDirectionText" : "NORTH",
+              "TripHeadsign" : "SILVER SPRING STATION",
+              "EndTime" : "2021-12-03T14:17:00",
+              "RouteID" : "70"
+            },
+            {
+              "ScheduleTime" : "2021-12-03T13:45:35",
+              "StartTime" : "2021-12-03T13:36:00",
+              "TripID" : "17431060",
+              "DirectionNum" : "0",
+              "TripDirectionText" : "NORTH",
+              "TripHeadsign" : "SILVER SPRING STATION",
+              "EndTime" : "2021-12-03T14:29:00",
+              "RouteID" : "70"
+            },
+            {
+              "ScheduleTime" : "2021-12-03T13:52:58",
+              "StartTime" : "2021-12-03T13:32:00",
+              "TripID" : "25325060",
+              "DirectionNum" : "0",
+              "TripDirectionText" : "NORTH",
+              "TripHeadsign" : "CONVENTION CENTER",
+              "EndTime" : "2021-12-03T13:54:00",
+              "RouteID" : "74"
+            },
+            {
+              "ScheduleTime" : "2021-12-03T13:57:35",
+              "StartTime" : "2021-12-03T13:48:00",
+              "TripID" : "17310060",
+              "DirectionNum" : "0",
+              "TripDirectionText" : "NORTH",
+              "TripHeadsign" : "SILVER SPRING STATION",
+              "EndTime" : "2021-12-03T14:41:00",
+              "RouteID" : "70"
+            },
+            {
+              "ScheduleTime" : "2021-12-03T14:09:35",
+              "StartTime" : "2021-12-03T14:00:00",
+              "TripID" : "26680060",
+              "DirectionNum" : "0",
+              "TripDirectionText" : "NORTH",
+              "TripHeadsign" : "SILVER SPRING STATION",
+              "EndTime" : "2021-12-03T14:53:00",
+              "RouteID" : "70"
+            },
+            {
+              "ScheduleTime" : "2021-12-03T14:21:35",
+              "StartTime" : "2021-12-03T14:12:00",
+              "TripID" : "20629060",
+              "DirectionNum" : "0",
+              "TripDirectionText" : "NORTH",
+              "TripHeadsign" : "SILVER SPRING STATION",
+              "EndTime" : "2021-12-03T15:05:00",
+              "RouteID" : "70"
+            },
+            {
+              "ScheduleTime" : "2021-12-03T14:22:58",
+              "StartTime" : "2021-12-03T14:02:00",
+              "TripID" : "7209060",
+              "DirectionNum" : "0",
+              "TripDirectionText" : "NORTH",
+              "TripHeadsign" : "CONVENTION CENTER",
+              "EndTime" : "2021-12-03T14:24:00",
+              "RouteID" : "74"
+            },
+            {
+              "ScheduleTime" : "2021-12-03T14:33:35",
+              "StartTime" : "2021-12-03T14:24:00",
+              "TripID" : "11723060",
+              "DirectionNum" : "0",
+              "TripDirectionText" : "NORTH",
+              "TripHeadsign" : "SILVER SPRING STATION",
+              "EndTime" : "2021-12-03T15:17:00",
+              "RouteID" : "70"
+            },
+            {
+              "ScheduleTime" : "2021-12-03T14:46:43",
+              "StartTime" : "2021-12-03T14:36:00",
+              "TripID" : "2050060",
+              "DirectionNum" : "0",
+              "TripDirectionText" : "NORTH",
+              "TripHeadsign" : "SILVER SPRING STATION",
+              "EndTime" : "2021-12-03T15:35:00",
+              "RouteID" : "70"
+            },
+            {
+              "ScheduleTime" : "2021-12-03T14:55:58",
+              "StartTime" : "2021-12-03T14:35:00",
+              "TripID" : "9569060",
+              "DirectionNum" : "0",
+              "TripDirectionText" : "NORTH",
+              "TripHeadsign" : "CONVENTION CENTER",
+              "EndTime" : "2021-12-03T14:57:00",
+              "RouteID" : "74"
+            },
+            {
+              "ScheduleTime" : "2021-12-03T14:58:43",
+              "StartTime" : "2021-12-03T14:48:00",
+              "TripID" : "19465060",
+              "DirectionNum" : "0",
+              "TripDirectionText" : "NORTH",
+              "TripHeadsign" : "SILVER SPRING STATION",
+              "EndTime" : "2021-12-03T15:47:00",
+              "RouteID" : "70"
+            },
+            {
+              "ScheduleTime" : "2021-12-03T15:10:43",
+              "StartTime" : "2021-12-03T15:00:00",
+              "TripID" : "10226060",
+              "DirectionNum" : "0",
+              "TripDirectionText" : "NORTH",
+              "TripHeadsign" : "SILVER SPRING STATION",
+              "EndTime" : "2021-12-03T15:59:00",
+              "RouteID" : "70"
+            },
+            {
+              "ScheduleTime" : "2021-12-03T15:22:43",
+              "StartTime" : "2021-12-03T15:12:00",
+              "TripID" : "16162060",
+              "DirectionNum" : "0",
+              "TripDirectionText" : "NORTH",
+              "TripHeadsign" : "SILVER SPRING STATION",
+              "EndTime" : "2021-12-03T16:11:00",
+              "RouteID" : "70"
+            },
+            {
+              "ScheduleTime" : "2021-12-03T15:28:58",
+              "StartTime" : "2021-12-03T15:05:00",
+              "TripID" : "7720060",
+              "DirectionNum" : "0",
+              "TripDirectionText" : "NORTH",
+              "TripHeadsign" : "CONVENTION CENTER",
+              "EndTime" : "2021-12-03T15:30:00",
+              "RouteID" : "74"
+            },
+            {
+              "ScheduleTime" : "2021-12-03T15:34:43",
+              "StartTime" : "2021-12-03T15:24:00",
+              "TripID" : "609060",
+              "DirectionNum" : "0",
+              "TripDirectionText" : "NORTH",
+              "TripHeadsign" : "SILVER SPRING STATION",
+              "EndTime" : "2021-12-03T16:23:00",
+              "RouteID" : "70"
+            },
+            {
+              "ScheduleTime" : "2021-12-03T15:46:59",
+              "StartTime" : "2021-12-03T15:36:00",
+              "TripID" : "13384060",
+              "DirectionNum" : "0",
+              "TripDirectionText" : "NORTH",
+              "TripHeadsign" : "SILVER SPRING STATION",
+              "EndTime" : "2021-12-03T16:41:00",
+              "RouteID" : "70"
+            },
+            {
+              "ScheduleTime" : "2021-12-03T15:58:58",
+              "StartTime" : "2021-12-03T15:35:00",
+              "TripID" : "24072060",
+              "DirectionNum" : "0",
+              "TripDirectionText" : "NORTH",
+              "TripHeadsign" : "CONVENTION CENTER",
+              "EndTime" : "2021-12-03T16:00:00",
+              "RouteID" : "74"
+            },
+            {
+              "ScheduleTime" : "2021-12-03T15:58:59",
+              "StartTime" : "2021-12-03T15:48:00",
+              "TripID" : "10501060",
+              "DirectionNum" : "0",
+              "TripDirectionText" : "NORTH",
+              "TripHeadsign" : "SILVER SPRING STATION",
+              "EndTime" : "2021-12-03T16:53:00",
+              "RouteID" : "70"
+            },
+            {
+              "ScheduleTime" : "2021-12-03T16:10:59",
+              "StartTime" : "2021-12-03T16:00:00",
+              "TripID" : "17393060",
+              "DirectionNum" : "0",
+              "TripDirectionText" : "NORTH",
+              "TripHeadsign" : "SILVER SPRING STATION",
+              "EndTime" : "2021-12-03T17:05:00",
+              "RouteID" : "70"
+            },
+            {
+              "ScheduleTime" : "2021-12-03T16:22:59",
+              "StartTime" : "2021-12-03T16:12:00",
+              "TripID" : "9243060",
+              "DirectionNum" : "0",
+              "TripDirectionText" : "NORTH",
+              "TripHeadsign" : "SILVER SPRING STATION",
+              "EndTime" : "2021-12-03T17:17:00",
+              "RouteID" : "70"
+            },
+            {
+              "ScheduleTime" : "2021-12-03T16:28:58",
+              "StartTime" : "2021-12-03T16:05:00",
+              "TripID" : "3846060",
+              "DirectionNum" : "0",
+              "TripDirectionText" : "NORTH",
+              "TripHeadsign" : "CONVENTION CENTER",
+              "EndTime" : "2021-12-03T16:30:00",
+              "RouteID" : "74"
+            },
+            {
+              "ScheduleTime" : "2021-12-03T16:34:59",
+              "StartTime" : "2021-12-03T16:24:00",
+              "TripID" : "18748060",
+              "DirectionNum" : "0",
+              "TripDirectionText" : "NORTH",
+              "TripHeadsign" : "SILVER SPRING STATION",
+              "EndTime" : "2021-12-03T17:29:00",
+              "RouteID" : "70"
+            },
+            {
+              "ScheduleTime" : "2021-12-03T16:46:59",
+              "StartTime" : "2021-12-03T16:36:00",
+              "TripID" : "10249060",
+              "DirectionNum" : "0",
+              "TripDirectionText" : "NORTH",
+              "TripHeadsign" : "SILVER SPRING STATION",
+              "EndTime" : "2021-12-03T17:41:00",
+              "RouteID" : "70"
+            },
+            {
+              "ScheduleTime" : "2021-12-03T16:58:58",
+              "StartTime" : "2021-12-03T16:35:00",
+              "TripID" : "13401060",
+              "DirectionNum" : "0",
+              "TripDirectionText" : "NORTH",
+              "TripHeadsign" : "CONVENTION CENTER",
+              "EndTime" : "2021-12-03T17:00:00",
+              "RouteID" : "74"
+            },
+            {
+              "ScheduleTime" : "2021-12-03T16:58:59",
+              "StartTime" : "2021-12-03T16:48:00",
+              "TripID" : "6104060",
+              "DirectionNum" : "0",
+              "TripDirectionText" : "NORTH",
+              "TripHeadsign" : "SILVER SPRING STATION",
+              "EndTime" : "2021-12-03T17:53:00",
+              "RouteID" : "70"
+            },
+            {
+              "ScheduleTime" : "2021-12-03T17:10:59",
+              "StartTime" : "2021-12-03T17:00:00",
+              "TripID" : "12668060",
+              "DirectionNum" : "0",
+              "TripDirectionText" : "NORTH",
+              "TripHeadsign" : "SILVER SPRING STATION",
+              "EndTime" : "2021-12-03T18:05:00",
+              "RouteID" : "70"
+            },
+            {
+              "ScheduleTime" : "2021-12-03T17:22:59",
+              "StartTime" : "2021-12-03T17:12:00",
+              "TripID" : "10953060",
+              "DirectionNum" : "0",
+              "TripDirectionText" : "NORTH",
+              "TripHeadsign" : "SILVER SPRING STATION",
+              "EndTime" : "2021-12-03T18:17:00",
+              "RouteID" : "70"
+            },
+            {
+              "ScheduleTime" : "2021-12-03T17:28:58",
+              "StartTime" : "2021-12-03T17:05:00",
+              "TripID" : "10506060",
+              "DirectionNum" : "0",
+              "TripDirectionText" : "NORTH",
+              "TripHeadsign" : "CONVENTION CENTER",
+              "EndTime" : "2021-12-03T17:30:00",
+              "RouteID" : "74"
+            },
+            {
+              "ScheduleTime" : "2021-12-03T17:34:59",
+              "StartTime" : "2021-12-03T17:24:00",
+              "TripID" : "16181060",
+              "DirectionNum" : "0",
+              "TripDirectionText" : "NORTH",
+              "TripHeadsign" : "SILVER SPRING STATION",
+              "EndTime" : "2021-12-03T18:29:00",
+              "RouteID" : "70"
+            },
+            {
+              "ScheduleTime" : "2021-12-03T17:46:59",
+              "StartTime" : "2021-12-03T17:36:00",
+              "TripID" : "18898060",
+              "DirectionNum" : "0",
+              "TripDirectionText" : "NORTH",
+              "TripHeadsign" : "SILVER SPRING STATION",
+              "EndTime" : "2021-12-03T18:41:00",
+              "RouteID" : "70"
+            },
+            {
+              "ScheduleTime" : "2021-12-03T17:58:59",
+              "StartTime" : "2021-12-03T17:48:00",
+              "TripID" : "11086060",
+              "DirectionNum" : "0",
+              "TripDirectionText" : "NORTH",
+              "TripHeadsign" : "SILVER SPRING STATION",
+              "EndTime" : "2021-12-03T18:53:00",
+              "RouteID" : "70"
+            },
+            {
+              "ScheduleTime" : "2021-12-03T17:59:58",
+              "StartTime" : "2021-12-03T17:36:00",
+              "TripID" : "1414060",
+              "DirectionNum" : "0",
+              "TripDirectionText" : "NORTH",
+              "TripHeadsign" : "CONVENTION CENTER",
+              "EndTime" : "2021-12-03T18:01:00",
+              "RouteID" : "74"
+            },
+            {
+              "ScheduleTime" : "2021-12-03T18:10:59",
+              "StartTime" : "2021-12-03T18:00:00",
+              "TripID" : "4491060",
+              "DirectionNum" : "0",
+              "TripDirectionText" : "NORTH",
+              "TripHeadsign" : "SILVER SPRING STATION",
+              "EndTime" : "2021-12-03T19:05:00",
+              "RouteID" : "70"
+            },
+            {
+              "ScheduleTime" : "2021-12-03T18:22:59",
+              "StartTime" : "2021-12-03T18:12:00",
+              "TripID" : "11707060",
+              "DirectionNum" : "0",
+              "TripDirectionText" : "NORTH",
+              "TripHeadsign" : "SILVER SPRING STATION",
+              "EndTime" : "2021-12-03T19:17:00",
+              "RouteID" : "70"
+            },
+            {
+              "ScheduleTime" : "2021-12-03T18:24:07",
+              "StartTime" : "2021-12-03T18:06:00",
+              "TripID" : "9553060",
+              "DirectionNum" : "0",
+              "TripDirectionText" : "NORTH",
+              "TripHeadsign" : "CONVENTION CENTER",
+              "EndTime" : "2021-12-03T18:25:00",
+              "RouteID" : "74"
+            },
+            {
+              "ScheduleTime" : "2021-12-03T18:34:59",
+              "StartTime" : "2021-12-03T18:24:00",
+              "TripID" : "22406060",
+              "DirectionNum" : "0",
+              "TripDirectionText" : "NORTH",
+              "TripHeadsign" : "SILVER SPRING STATION",
+              "EndTime" : "2021-12-03T19:29:00",
+              "RouteID" : "70"
+            },
+            {
+              "ScheduleTime" : "2021-12-03T18:46:43",
+              "StartTime" : "2021-12-03T18:36:00",
+              "TripID" : "14163060",
+              "DirectionNum" : "0",
+              "TripDirectionText" : "NORTH",
+              "TripHeadsign" : "SILVER SPRING STATION",
+              "EndTime" : "2021-12-03T19:34:00",
+              "RouteID" : "70"
+            },
+            {
+              "ScheduleTime" : "2021-12-03T18:54:07",
+              "StartTime" : "2021-12-03T18:36:00",
+              "TripID" : "22407060",
+              "DirectionNum" : "0",
+              "TripDirectionText" : "NORTH",
+              "TripHeadsign" : "CONVENTION CENTER",
+              "EndTime" : "2021-12-03T18:55:00",
+              "RouteID" : "74"
+            },
+            {
+              "ScheduleTime" : "2021-12-03T18:58:43",
+              "StartTime" : "2021-12-03T18:48:00",
+              "TripID" : "8620060",
+              "DirectionNum" : "0",
+              "TripDirectionText" : "NORTH",
+              "TripHeadsign" : "SILVER SPRING STATION",
+              "EndTime" : "2021-12-03T19:46:00",
+              "RouteID" : "70"
+            },
+            {
+              "ScheduleTime" : "2021-12-03T19:09:27",
+              "StartTime" : "2021-12-03T19:00:00",
+              "TripID" : "10355060",
+              "DirectionNum" : "0",
+              "TripDirectionText" : "NORTH",
+              "TripHeadsign" : "SILVER SPRING STATION",
+              "EndTime" : "2021-12-03T19:50:00",
+              "RouteID" : "70"
+            },
+            {
+              "ScheduleTime" : "2021-12-03T19:19:07",
+              "StartTime" : "2021-12-03T19:01:00",
+              "TripID" : "12839060",
+              "DirectionNum" : "0",
+              "TripDirectionText" : "NORTH",
+              "TripHeadsign" : "CONVENTION CENTER",
+              "EndTime" : "2021-12-03T19:20:00",
+              "RouteID" : "74"
+            },
+            {
+              "ScheduleTime" : "2021-12-03T19:21:27",
+              "StartTime" : "2021-12-03T19:12:00",
+              "TripID" : "2634060",
+              "DirectionNum" : "0",
+              "TripDirectionText" : "NORTH",
+              "TripHeadsign" : "SILVER SPRING STATION",
+              "EndTime" : "2021-12-03T20:02:00",
+              "RouteID" : "70"
+            },
+            {
+              "ScheduleTime" : "2021-12-03T19:33:27",
+              "StartTime" : "2021-12-03T19:24:00",
+              "TripID" : "18555060",
+              "DirectionNum" : "0",
+              "TripDirectionText" : "NORTH",
+              "TripHeadsign" : "SILVER SPRING STATION",
+              "EndTime" : "2021-12-03T20:14:00",
+              "RouteID" : "70"
+            },
+            {
+              "ScheduleTime" : "2021-12-03T19:45:27",
+              "StartTime" : "2021-12-03T19:36:00",
+              "TripID" : "3347060",
+              "DirectionNum" : "0",
+              "TripDirectionText" : "NORTH",
+              "TripHeadsign" : "SILVER SPRING STATION",
+              "EndTime" : "2021-12-03T20:26:00",
+              "RouteID" : "70"
+            },
+            {
+              "ScheduleTime" : "2021-12-03T19:49:07",
+              "StartTime" : "2021-12-03T19:31:00",
+              "TripID" : "1669060",
+              "DirectionNum" : "0",
+              "TripDirectionText" : "NORTH",
+              "TripHeadsign" : "CONVENTION CENTER",
+              "EndTime" : "2021-12-03T19:50:00",
+              "RouteID" : "74"
+            },
+            {
+              "ScheduleTime" : "2021-12-03T19:57:27",
+              "StartTime" : "2021-12-03T19:48:00",
+              "TripID" : "18475060",
+              "DirectionNum" : "0",
+              "TripDirectionText" : "NORTH",
+              "TripHeadsign" : "SILVER SPRING STATION",
+              "EndTime" : "2021-12-03T20:38:00",
+              "RouteID" : "70"
+            },
+            {
+              "ScheduleTime" : "2021-12-03T20:09:27",
+              "StartTime" : "2021-12-03T20:00:00",
+              "TripID" : "13549060",
+              "DirectionNum" : "0",
+              "TripDirectionText" : "NORTH",
+              "TripHeadsign" : "SILVER SPRING STATION",
+              "EndTime" : "2021-12-03T20:50:00",
+              "RouteID" : "70"
+            },
+            {
+              "ScheduleTime" : "2021-12-03T20:19:07",
+              "StartTime" : "2021-12-03T20:01:00",
+              "TripID" : "21310060",
+              "DirectionNum" : "0",
+              "TripDirectionText" : "NORTH",
+              "TripHeadsign" : "CONVENTION CENTER",
+              "EndTime" : "2021-12-03T20:20:00",
+              "RouteID" : "74"
+            },
+            {
+              "ScheduleTime" : "2021-12-03T20:21:27",
+              "StartTime" : "2021-12-03T20:12:00",
+              "TripID" : "23120060",
+              "DirectionNum" : "0",
+              "TripDirectionText" : "NORTH",
+              "TripHeadsign" : "SILVER SPRING STATION",
+              "EndTime" : "2021-12-03T21:02:00",
+              "RouteID" : "70"
+            },
+            {
+              "ScheduleTime" : "2021-12-03T20:33:27",
+              "StartTime" : "2021-12-03T20:24:00",
+              "TripID" : "25411060",
+              "DirectionNum" : "0",
+              "TripDirectionText" : "NORTH",
+              "TripHeadsign" : "SILVER SPRING STATION",
+              "EndTime" : "2021-12-03T21:14:00",
+              "RouteID" : "70"
+            },
+            {
+              "ScheduleTime" : "2021-12-03T20:45:27",
+              "StartTime" : "2021-12-03T20:36:00",
+              "TripID" : "17970060",
+              "DirectionNum" : "0",
+              "TripDirectionText" : "NORTH",
+              "TripHeadsign" : "SILVER SPRING STATION",
+              "EndTime" : "2021-12-03T21:26:00",
+              "RouteID" : "70"
+            },
+            {
+              "ScheduleTime" : "2021-12-03T20:49:07",
+              "StartTime" : "2021-12-03T20:31:00",
+              "TripID" : "14694060",
+              "DirectionNum" : "0",
+              "TripDirectionText" : "NORTH",
+              "TripHeadsign" : "CONVENTION CENTER",
+              "EndTime" : "2021-12-03T20:50:00",
+              "RouteID" : "74"
+            },
+            {
+              "ScheduleTime" : "2021-12-03T20:57:27",
+              "StartTime" : "2021-12-03T20:48:00",
+              "TripID" : "10353060",
+              "DirectionNum" : "0",
+              "TripDirectionText" : "NORTH",
+              "TripHeadsign" : "SILVER SPRING STATION",
+              "EndTime" : "2021-12-03T21:38:00",
+              "RouteID" : "70"
+            },
+            {
+              "ScheduleTime" : "2021-12-03T21:09:27",
+              "StartTime" : "2021-12-03T21:00:00",
+              "TripID" : "20776060",
+              "DirectionNum" : "0",
+              "TripDirectionText" : "NORTH",
+              "TripHeadsign" : "SILVER SPRING STATION",
+              "EndTime" : "2021-12-03T21:50:00",
+              "RouteID" : "70"
+            },
+            {
+              "ScheduleTime" : "2021-12-03T21:19:07",
+              "StartTime" : "2021-12-03T21:01:00",
+              "TripID" : "8239060",
+              "DirectionNum" : "0",
+              "TripDirectionText" : "NORTH",
+              "TripHeadsign" : "CONVENTION CENTER",
+              "EndTime" : "2021-12-03T21:20:00",
+              "RouteID" : "74"
+            },
+            {
+              "ScheduleTime" : "2021-12-03T21:21:27",
+              "StartTime" : "2021-12-03T21:12:00",
+              "TripID" : "20780060",
+              "DirectionNum" : "0",
+              "TripDirectionText" : "NORTH",
+              "TripHeadsign" : "SILVER SPRING STATION",
+              "EndTime" : "2021-12-03T22:02:00",
+              "RouteID" : "70"
+            },
+            {
+              "ScheduleTime" : "2021-12-03T21:33:27",
+              "StartTime" : "2021-12-03T21:24:00",
+              "TripID" : "15728060",
+              "DirectionNum" : "0",
+              "TripDirectionText" : "NORTH",
+              "TripHeadsign" : "SILVER SPRING STATION",
+              "EndTime" : "2021-12-03T22:14:00",
+              "RouteID" : "70"
+            },
+            {
+              "ScheduleTime" : "2021-12-03T21:45:27",
+              "StartTime" : "2021-12-03T21:36:00",
+              "TripID" : "23444060",
+              "DirectionNum" : "0",
+              "TripDirectionText" : "NORTH",
+              "TripHeadsign" : "SILVER SPRING STATION",
+              "EndTime" : "2021-12-03T22:26:00",
+              "RouteID" : "70"
+            },
+            {
+              "ScheduleTime" : "2021-12-03T21:49:07",
+              "StartTime" : "2021-12-03T21:31:00",
+              "TripID" : "9227060",
+              "DirectionNum" : "0",
+              "TripDirectionText" : "NORTH",
+              "TripHeadsign" : "CONVENTION CENTER",
+              "EndTime" : "2021-12-03T21:50:00",
+              "RouteID" : "74"
+            },
+            {
+              "ScheduleTime" : "2021-12-03T21:57:27",
+              "StartTime" : "2021-12-03T21:48:00",
+              "TripID" : "14399060",
+              "DirectionNum" : "0",
+              "TripDirectionText" : "NORTH",
+              "TripHeadsign" : "SILVER SPRING STATION",
+              "EndTime" : "2021-12-03T22:38:00",
+              "RouteID" : "70"
+            },
+            {
+              "ScheduleTime" : "2021-12-03T22:09:27",
+              "StartTime" : "2021-12-03T22:00:00",
+              "TripID" : "13046060",
+              "DirectionNum" : "0",
+              "TripDirectionText" : "NORTH",
+              "TripHeadsign" : "SILVER SPRING STATION",
+              "EndTime" : "2021-12-03T22:50:00",
+              "RouteID" : "70"
+            },
+            {
+              "ScheduleTime" : "2021-12-03T22:19:07",
+              "StartTime" : "2021-12-03T22:01:00",
+              "TripID" : "3561060",
+              "DirectionNum" : "0",
+              "TripDirectionText" : "NORTH",
+              "TripHeadsign" : "CONVENTION CENTER",
+              "EndTime" : "2021-12-03T22:20:00",
+              "RouteID" : "74"
+            },
+            {
+              "ScheduleTime" : "2021-12-03T22:21:27",
+              "StartTime" : "2021-12-03T22:12:00",
+              "TripID" : "1421060",
+              "DirectionNum" : "0",
+              "TripDirectionText" : "NORTH",
+              "TripHeadsign" : "SILVER SPRING STATION",
+              "EndTime" : "2021-12-03T23:02:00",
+              "RouteID" : "70"
+            },
+            {
+              "ScheduleTime" : "2021-12-03T22:32:11",
+              "StartTime" : "2021-12-03T22:24:00",
+              "TripID" : "25399060",
+              "DirectionNum" : "0",
+              "TripDirectionText" : "NORTH",
+              "TripHeadsign" : "SILVER SPRING STATION",
+              "EndTime" : "2021-12-03T23:09:00",
+              "RouteID" : "70"
+            },
+            {
+              "ScheduleTime" : "2021-12-03T22:44:11",
+              "StartTime" : "2021-12-03T22:36:00",
+              "TripID" : "1876060",
+              "DirectionNum" : "0",
+              "TripDirectionText" : "NORTH",
+              "TripHeadsign" : "SILVER SPRING STATION",
+              "EndTime" : "2021-12-03T23:21:00",
+              "RouteID" : "70"
+            },
+            {
+              "ScheduleTime" : "2021-12-03T22:48:07",
+              "StartTime" : "2021-12-03T22:30:00",
+              "TripID" : "7524060",
+              "DirectionNum" : "0",
+              "TripDirectionText" : "NORTH",
+              "TripHeadsign" : "CONVENTION CENTER",
+              "EndTime" : "2021-12-03T22:49:00",
+              "RouteID" : "74"
+            },
+            {
+              "ScheduleTime" : "2021-12-03T22:56:11",
+              "StartTime" : "2021-12-03T22:48:00",
+              "TripID" : "22173060",
+              "DirectionNum" : "0",
+              "TripDirectionText" : "NORTH",
+              "TripHeadsign" : "SILVER SPRING STATION",
+              "EndTime" : "2021-12-03T23:33:00",
+              "RouteID" : "70"
+            },
+            {
+              "ScheduleTime" : "2021-12-03T23:08:11",
+              "StartTime" : "2021-12-03T23:00:00",
+              "TripID" : "10031060",
+              "DirectionNum" : "0",
+              "TripDirectionText" : "NORTH",
+              "TripHeadsign" : "SILVER SPRING STATION",
+              "EndTime" : "2021-12-03T23:45:00",
+              "RouteID" : "70"
+            },
+            {
+              "ScheduleTime" : "2021-12-03T23:20:11",
+              "StartTime" : "2021-12-03T23:12:00",
+              "TripID" : "6504060",
+              "DirectionNum" : "0",
+              "TripDirectionText" : "NORTH",
+              "TripHeadsign" : "SILVER SPRING STATION",
+              "EndTime" : "2021-12-03T23:57:00",
+              "RouteID" : "70"
+            },
+            {
+              "ScheduleTime" : "2021-12-03T23:32:11",
+              "StartTime" : "2021-12-03T23:24:00",
+              "TripID" : "14261060",
+              "DirectionNum" : "0",
+              "TripDirectionText" : "NORTH",
+              "TripHeadsign" : "SILVER SPRING STATION",
+              "EndTime" : "2021-12-04T00:09:00",
+              "RouteID" : "70"
+            },
+            {
+              "ScheduleTime" : "2021-12-03T23:44:11",
+              "StartTime" : "2021-12-03T23:36:00",
+              "TripID" : "8872060",
+              "DirectionNum" : "0",
+              "TripDirectionText" : "NORTH",
+              "TripHeadsign" : "SILVER SPRING STATION",
+              "EndTime" : "2021-12-04T00:21:00",
+              "RouteID" : "70"
+            },
+            {
+              "ScheduleTime" : "2021-12-03T23:56:11",
+              "StartTime" : "2021-12-03T23:48:00",
+              "TripID" : "13459060",
+              "DirectionNum" : "0",
+              "TripDirectionText" : "NORTH",
+              "TripHeadsign" : "SILVER SPRING STATION",
+              "EndTime" : "2021-12-04T00:33:00",
+              "RouteID" : "70"
+            },
+            {
+              "ScheduleTime" : "2021-12-04T00:08:11",
+              "StartTime" : "2021-12-04T00:00:00",
+              "TripID" : "10453060",
+              "DirectionNum" : "0",
+              "TripDirectionText" : "NORTH",
+              "TripHeadsign" : "SILVER SPRING STATION",
+              "EndTime" : "2021-12-04T00:45:00",
+              "RouteID" : "70"
+            }
+          ],
+          "Stop" : {
+            "Lon" : -77.021821000000003,
+            "Name" : "7TH ST NW + MASSACHUSETTS AVE NW",
+            "Routes" : [
+              "70",
+              "74"
+            ],
+            "StopID" : "1001195",
+            "Lat" : 38.901879000000001
+          }
+        },
+        "status" : 200,
+        "headers" : {
+          "X-Powered-By" : "ASP.NET",
+          "Pragma" : "no-cache",
+          "Content-Encoding" : "gzip",
+          "X-AspNet-Version" : "4.0.30319",
+          "Expires" : "-1",
+          "Cache-Control" : "no-cache",
+          "Vary" : "Accept-Encoding",
+          "Content-Length" : "3597",
+          "Content-Type" : "application\/json; charset=utf-8",
+          "Date" : "Sat, 04 Dec 2021 02:24:53 GMT",
+          "Arr-Disable-Session-Affinity" : "True"
+        }
+      }
+    }
+  ]
+}

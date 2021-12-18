@@ -1,0 +1,201 @@
+{
+  "interactions" : [
+    {
+      "recorded_at" : 1639352121.645462,
+      "response" : {
+        "url" : "https:\/\/api.wmata.com\/Rail.svc\/json\/jStationTimes?StationCode=F06",
+        "status" : 200,
+        "headers" : {
+          "Cache-Control" : "no-cache",
+          "Date" : "Sun, 12 Dec 2021 23:35:21 GMT",
+          "X-Powered-By" : "ASP.NET",
+          "Pragma" : "no-cache",
+          "Arr-Disable-Session-Affinity" : "True",
+          "Content-Type" : "application\/json; charset=utf-8",
+          "Expires" : "-1",
+          "Vary" : "Accept-Encoding",
+          "Content-Encoding" : "gzip",
+          "X-AspNet-Version" : "4.0.30319",
+          "Content-Length" : "355"
+        },
+        "body" : {
+          "StationTimes" : [
+            {
+              "Monday" : {
+                "OpeningTime" : "05:04",
+                "LastTrains" : [
+                  {
+                    "DestinationStation" : "E10",
+                    "Time" : "23:19"
+                  },
+                  {
+                    "DestinationStation" : "F11",
+                    "Time" : "23:51"
+                  }
+                ],
+                "FirstTrains" : [
+                  {
+                    "DestinationStation" : "E10",
+                    "Time" : "05:14"
+                  },
+                  {
+                    "DestinationStation" : "F11",
+                    "Time" : "05:37"
+                  }
+                ]
+              },
+              "Thursday" : {
+                "OpeningTime" : "05:04",
+                "LastTrains" : [
+                  {
+                    "DestinationStation" : "E10",
+                    "Time" : "23:19"
+                  },
+                  {
+                    "DestinationStation" : "F11",
+                    "Time" : "23:51"
+                  }
+                ],
+                "FirstTrains" : [
+                  {
+                    "DestinationStation" : "E10",
+                    "Time" : "05:14"
+                  },
+                  {
+                    "DestinationStation" : "F11",
+                    "Time" : "05:37"
+                  }
+                ]
+              },
+              "Code" : "F06",
+              "Friday" : {
+                "OpeningTime" : "05:04",
+                "LastTrains" : [
+                  {
+                    "DestinationStation" : "E10",
+                    "Time" : "00:49"
+                  },
+                  {
+                    "DestinationStation" : "F11",
+                    "Time" : "01:21"
+                  }
+                ],
+                "FirstTrains" : [
+                  {
+                    "DestinationStation" : "E10",
+                    "Time" : "05:14"
+                  },
+                  {
+                    "DestinationStation" : "F11",
+                    "Time" : "05:37"
+                  }
+                ]
+              },
+              "Saturday" : {
+                "OpeningTime" : "07:04",
+                "LastTrains" : [
+                  {
+                    "DestinationStation" : "E10",
+                    "Time" : "00:49"
+                  },
+                  {
+                    "DestinationStation" : "F11",
+                    "Time" : "01:21"
+                  }
+                ],
+                "FirstTrains" : [
+                  {
+                    "DestinationStation" : "E10",
+                    "Time" : "07:14"
+                  },
+                  {
+                    "DestinationStation" : "F11",
+                    "Time" : "07:37"
+                  }
+                ]
+              },
+              "Sunday" : {
+                "OpeningTime" : "08:04",
+                "LastTrains" : [
+                  {
+                    "DestinationStation" : "E10",
+                    "Time" : "22:49"
+                  },
+                  {
+                    "DestinationStation" : "F11",
+                    "Time" : "23:21"
+                  }
+                ],
+                "FirstTrains" : [
+                  {
+                    "DestinationStation" : "E10",
+                    "Time" : "08:14"
+                  },
+                  {
+                    "DestinationStation" : "F11",
+                    "Time" : "08:37"
+                  }
+                ]
+              },
+              "StationName" : "Anacostia",
+              "Tuesday" : {
+                "OpeningTime" : "05:04",
+                "LastTrains" : [
+                  {
+                    "DestinationStation" : "E10",
+                    "Time" : "23:19"
+                  },
+                  {
+                    "DestinationStation" : "F11",
+                    "Time" : "23:51"
+                  }
+                ],
+                "FirstTrains" : [
+                  {
+                    "DestinationStation" : "E10",
+                    "Time" : "05:14"
+                  },
+                  {
+                    "DestinationStation" : "F11",
+                    "Time" : "05:37"
+                  }
+                ]
+              },
+              "Wednesday" : {
+                "OpeningTime" : "05:04",
+                "LastTrains" : [
+                  {
+                    "DestinationStation" : "E10",
+                    "Time" : "23:19"
+                  },
+                  {
+                    "DestinationStation" : "F11",
+                    "Time" : "23:51"
+                  }
+                ],
+                "FirstTrains" : [
+                  {
+                    "DestinationStation" : "E10",
+                    "Time" : "05:14"
+                  },
+                  {
+                    "DestinationStation" : "F11",
+                    "Time" : "05:37"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      "request" : {
+        "headers" : {
+          "api_key" : "9e38c3eab34c4e6c990828002828f5ed"
+        },
+        "method" : "GET",
+        "url" : "https:\/\/api.wmata.com\/Rail.svc\/json\/jStationTimes?StationCode=F06"
+      }
+    }
+  ],
+  "name" : "-[TestRailDVR testStationTimings]"
+}

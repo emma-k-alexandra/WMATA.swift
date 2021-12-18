@@ -1,0 +1,51 @@
+{
+  "name" : "-[TestBusDVR testPositions]",
+  "interactions" : [
+    {
+      "response" : {
+        "headers" : {
+          "Vary" : "Content-Encoding",
+          "Content-Encoding" : "gzip",
+          "Content-Type" : "application\/json; charset=utf-8",
+          "Content-Length" : "247",
+          "X-Powered-By" : "ASP.NET",
+          "Cache-Control" : "no-cache",
+          "Pragma" : "no-cache",
+          "Expires" : "-1",
+          "X-AspNet-Version" : "4.0.30319",
+          "Date" : "Sat, 04 Dec 2021 02:14:10 GMT",
+          "Arr-Disable-Session-Affinity" : "True"
+        },
+        "status" : 200,
+        "body" : {
+          "BusPositions" : [
+            {
+              "TripStartTime" : "2021-12-03T20:15:00",
+              "Lat" : 38.901058197021477,
+              "DirectionText" : "EAST",
+              "VehicleID" : "7087",
+              "Deviation" : -4,
+              "TripID" : "7937060",
+              "DateTime" : "2021-12-03T21:13:59",
+              "TripEndTime" : "2021-12-03T21:04:00",
+              "Lon" : -76.732421875,
+              "RouteID" : "C22",
+              "DirectionNum" : 0,
+              "BlockNumber" : "LC-24",
+              "TripHeadsign" : "POINTER RIDGE"
+            }
+          ]
+        },
+        "url" : "https:\/\/api.wmata.com\/Bus.svc\/json\/jBusPositions?Lat=38.876736&Lon=-76.724502&Radius=3000"
+      },
+      "recorded_at" : 1638584051.6574211,
+      "request" : {
+        "url" : "https:\/\/api.wmata.com\/Bus.svc\/json\/jBusPositions?Lat=38.876736&Lon=-76.724502&Radius=3000",
+        "headers" : {
+          "api_key" : "9e38c3eab34c4e6c990828002828f5ed"
+        },
+        "method" : "GET"
+      }
+    }
+  ]
+}

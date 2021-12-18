@@ -18,29 +18,37 @@ extension URL {
     }
 }
 
-extension URLRequest {
-    init(url: String, key: String, queryItems: [(String, String)] = []) {
-        var urlComponents = URLComponents(string: url)!
+protocol URLQueryItemConvertible {
+    associatedtype URLQueryItemName: RawRepresentable
+    
+    /// Converts the current instance into a URLQueryItem with the given name
+    func queryItem(name: URLQueryItemName) -> URLQueryItem
+}
 
-        urlComponents.queryItems = queryItems.compactMap { URLQueryItem(name: $0, value: $1) }
-
-        var request = URLRequest(url: urlComponents.url!)
-        request.setValue(key, forHTTPHeaderField: "api_key")
-
-        self = request
+extension String: URLQueryItemConvertible {
+    enum URLQueryItemName: String {
+        case stopID = "StopID"
+        case routeID = "RouteID"
+        case route = "Route"
+    }
+    
+    func queryItem(name: URLQueryItemName) -> URLQueryItem {
+        URLQueryItem(name: name.rawValue, value: self)
     }
 }
 
-func generateURLSession(with delegate: WMATADelegate, sharedContainerIdentifier: String? = nil) -> URLSession {
-    let config = URLSessionConfiguration.background(withIdentifier: "com.WMATA.swift.\(UUID())")
-
-    if sharedContainerIdentifier != nil {
-        config.sharedContainerIdentifier = sharedContainerIdentifier
+extension URLComponents {
+    init(staticString string: StaticString) {
+        guard let urlComponents = URLComponents(string: "\(string)") else {
+            fatalError("Given string is not a URL: \(string)")
+        }
+        
+        self = urlComponents
     }
+}
 
-    return URLSession(
-        configuration: config,
-        delegate: WMATAURLSessionDataDelegate(wmataDelegate: delegate),
-        delegateQueue: nil
-    )
+extension Array where Element == URLQueryItem? {
+    func withoutNil() -> [URLQueryItem] {
+        self.compactMap { $0 }
+    }
 }

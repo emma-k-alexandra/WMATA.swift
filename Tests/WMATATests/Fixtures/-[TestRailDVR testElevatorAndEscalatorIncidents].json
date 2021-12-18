@@ -1,0 +1,66 @@
+{
+  "name" : "-[TestRailDVR testElevatorAndEscalatorIncidents]",
+  "interactions" : [
+    {
+      "recorded_at" : 1639351331.2861218,
+      "response" : {
+        "body" : {
+          "ElevatorIncidents" : [
+            {
+              "UnitType" : "ESCALATOR",
+              "SymptomCode" : null,
+              "TimeOutOfService" : "2253",
+              "StationName" : "Shady Grove",
+              "SymptomDescription" : "Modernization",
+              "UnitStatus" : null,
+              "StationCode" : "A15",
+              "LocationDescription" : "Escalator between mezzanine and platform",
+              "UnitName" : "A15X02",
+              "DateOutOfServ" : "2021-10-12T22:53:00",
+              "EstimatedReturnToService" : "2022-01-12T23:59:59",
+              "DisplayOrder" : 0,
+              "DateUpdated" : "2021-10-13T03:54:10"
+            },
+            {
+              "UnitType" : "ESCALATOR",
+              "SymptomCode" : null,
+              "TimeOutOfService" : "0404",
+              "StationName" : "Shady Grove",
+              "SymptomDescription" : "Modernization",
+              "UnitStatus" : null,
+              "StationCode" : "A15",
+              "LocationDescription" : "Escalator between mezzanine and platform",
+              "UnitName" : "A15X03",
+              "DateOutOfServ" : "2021-06-09T04:04:00",
+              "EstimatedReturnToService" : "2022-01-12T23:59:59",
+              "DisplayOrder" : 0,
+              "DateUpdated" : "2021-11-05T01:55:52"
+            }
+          ]
+        },
+        "status" : 200,
+        "url" : "https:\/\/api.wmata.com\/Incidents.svc\/json\/ElevatorIncidents?StationCode=A15",
+        "headers" : {
+          "Date" : "Sun, 12 Dec 2021 23:22:11 GMT",
+          "Pragma" : "no-cache",
+          "Content-Length" : "462",
+          "X-Powered-By" : "ASP.NET",
+          "Content-Type" : "application\/json; charset=utf-8",
+          "Arr-Disable-Session-Affinity" : "True",
+          "Content-Encoding" : "gzip",
+          "X-AspNet-Version" : "4.0.30319",
+          "Vary" : "Accept-Encoding",
+          "Expires" : "-1",
+          "Cache-Control" : "no-cache"
+        }
+      },
+      "request" : {
+        "headers" : {
+          "api_key" : "9e38c3eab34c4e6c990828002828f5ed"
+        },
+        "method" : "GET",
+        "url" : "https:\/\/api.wmata.com\/Incidents.svc\/json\/ElevatorIncidents?StationCode=A15"
+      }
+    }
+  ]
+}
