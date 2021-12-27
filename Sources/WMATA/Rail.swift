@@ -1022,8 +1022,13 @@ public extension Rail {
         ///
         /// Avoid using single stations like ` [.waterfront]`, ``Rail/NextTrains/init(key:station:delegate:)`` is recommended instead. However, single value sets _are_ supported if your use case requires them.
         public struct StationSet: ExpressibleByArrayLiteral, Equatable, Hashable {
-            let stations: [Station]
-            let all: Bool
+            /// The stations this set contains.
+            ///
+            /// This may be empty if ``all`` is `true`.
+            public let stations: [Station]
+            
+            /// If this station set contains all stations.
+            public let all: Bool
             
             /// Use this when you want to get the next trains at all stations in one API call
             public static let all: StationSet = .init(all: true)
@@ -1040,7 +1045,14 @@ public extension Rail {
             /// Both Gallery Place platforms
             public static let galleryPlace: StationSet = [.galleryPlaceLower, .galleryPlaceUpper]
             
+            /// Create a station set from an array literal of stations
             public init(arrayLiteral elements: Station...) {
+                stations = elements
+                all = false
+            }
+            
+            /// Create a station set from an array of stations
+            public init(_ elements: [Station]) {
                 stations = elements
                 all = false
             }
