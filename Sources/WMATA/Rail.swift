@@ -1166,11 +1166,13 @@ public extension Rail {
                 public let location: Station
                 
                 /// Full name of the station where the train is arriving.
-                public let locationName: String
+                ///
+                /// Can be `nil` when a train is first appearing in API. Calling the API again after the next refresh should give the train a location.
+                public let locationName: String?
                 
                 /// The time until arrival. Matches signs within a MetroRail station
                 ///
-                /// Sometimes a number in ``minutes(_:)``, can also be ``arriving``, ``boarding`` or ``unknown``.
+                /// Sometimes a number in ``minutes(_:)``, can also be ``arriving``, ``boarding``, ``delayed`` or ``unknown``.
                 public enum Minutes: Codable, Equatable, Hashable {
                     /// Time to arrival in minutes
                     case minutes(Int)
@@ -1180,6 +1182,9 @@ public extension Rail {
                     
                     /// The train is currently boarding passengers at a station
                     case boarding
+                    
+                    /// The train is delayed with no estimated arrival time
+                    case delayed
                     
                     /// The arrival time is unknown.
                     ///
@@ -1198,6 +1203,8 @@ public extension Rail {
                             self = .arriving
                         case "BRD":
                             self = .boarding
+                        case "DLY":
+                            self = .delayed
                         default:
                             guard let minutes = Int(arrivalTime) else {
                                 throw DecodingError.valueNotFound(
@@ -1223,6 +1230,8 @@ public extension Rail {
                             try container.encode("ARR")
                         case .boarding:
                             try container.encode("BRD")
+                        case .delayed:
+                            try container.encode("DLY")
                         case .unknown:
                             try container.encode("")
                         }
