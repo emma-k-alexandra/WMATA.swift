@@ -70,4 +70,18 @@ final class StationTests: XCTestCase {
         XCTAssertEqual(Station.metroCenterLower.allTogether, [Station.metroCenterLower, Station.metroCenterUpper])
         XCTAssertEqual(Station.farragutNorth.allTogether, [Station.farragutNorth])
     }
+
+    func testConnections() {
+        XCTAssertEqual([], Station.farragutNorth.connections(to: .red))
+        XCTAssertEqual([.red], Station.farragutNorth.connections(to: nil))
+        XCTAssertEqual([.yellow], Station.fortTottenLower.connections(to: .green))
+        XCTAssertEqual([.green, .yellow], Station.fortTottenLower.connections(to: nil))
+    }
+
+    func testAllConnections() {
+        XCTAssertEqual([], Station.farragutNorth.allConnections(to: .red))
+        XCTAssertEqual([.red], Station.farragutNorth.allConnections(to: nil))
+        XCTAssertEqual([.yellow, .red], Station.fortTottenLower.allConnections(to: .green))
+        XCTAssertEqual([.green, .yellow, .red], Station.fortTottenLower.allConnections(to: nil))
+    }
 }
