@@ -116,3 +116,67 @@ public enum WMATAError: Error {
         }
     }
 }
+
+extension WMATAError: CustomStringConvertible {
+    public var description: String {
+        switch self {
+        case .errorResponse(message: let message):
+            return "Received an error response from WMATA API. Error: \(message)"
+        case .badRequest(message: let message):
+            return "Received 400 error from WMATA API. You may have provided a bad input. Error: \(message)"
+        case .accessDenied(message: let message):
+            return "Received 401 error from WMATA API. This is typically caused by an invalid API key. Error: \(message)"
+        case .rateLimitExceeded(message: let message):
+            return "Received 529 error from WMATA API. You have exceeded your rate limit, typically 10 requests/second and 50,000 requests/day. Error: \(message)"
+        case .unableToCreateRequest(endpoint: let endpoint):
+            return "Unable to create request to WMATA API. Your API Key or provided inputs are likely invalid for endpoint \(endpoint)"
+        case .requestFailed(response: let response):
+            return "Request failed. Received no data or error from WMATA API. Response: \(String(describing: response))"
+        case .requestEnded(underlyingError: let underlyingError):
+            return "Request ended with an error. Error: \(underlyingError)"
+        case .unableToLoadBackgroundFile(location: let location, underlyingError: let underlyingError):
+            return """
+            Unable to load background downloaded file downloaded by delegate. Your file may have been cleaned up, or your request failed and you should look for other logs.
+            File location: \(location)
+            Error: \(underlyingError)
+            """
+        case .backgroundSessionFailure(underlyingError: let underlyingError):
+            return """
+            Your background request failed with an error.
+            Error: \(underlyingError)
+            For more information see https://developer.apple.com/documentation/foundation/urlsessiondelegate/1407776-urlsession
+            """
+        case .backgroundSessionBecameInvalid(underlyingError: let underlyingError):
+            return """
+            Your background request became invalid while running.
+            Error: \(underlyingError)
+            For more information see https://developer.apple.com/documentation/foundation/urlsessiondelegate/1407776-urlsession
+            """
+        case let .decodingError(codingKey, context):
+            return """
+            There was an error while decoding the response from the WMATA Standard API.
+            CodingKey: \(codingKey)
+            Context: \(context)
+            If you experience this error, please file an issue with logs at https://github.com/emma-k-alexandra/WMATA.swift/issues/new
+            """
+        case .decodingGTFSError(underlyingError: let underlyingError):
+            return """
+            There was an error while decoding the response from the WMATA GTFS API.
+            Error: \(underlyingError)
+            If you experience this error, please file an issue with logs at https://github.com/emma-k-alexandra/WMATA.swift/issues/new
+            """
+        case .errorDecodingErrorMessage(underlyingError: let underlyingError):
+            return """
+            Error while decoding an error message from the WMATA API.
+            Error: \(underlyingError)
+            If you experience this error, please file an issue with logs at https://github.com/emma-k-alexandra/WMATA.swift/issues/new
+            """
+        case .unknown(underlyingError: let underlyingError):
+            return """
+            An unknown error occurred.
+            Error: \(underlyingError)
+            If you experience this error, please file an issue with logs at https://github.com/emma-k-alexandra/WMATA.swift/issues/new
+            """
+        }
+    }
+}
