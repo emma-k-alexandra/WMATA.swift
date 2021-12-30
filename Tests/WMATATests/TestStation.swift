@@ -71,6 +71,19 @@ final class StationTests: XCTestCase {
         XCTAssertEqual(Station.farragutNorth.allTogether, [Station.farragutNorth])
     }
 
+    func testConnections() {
+        XCTAssertEqual([], Station.farragutNorth.connections(to: .red))
+        XCTAssertEqual([.red], Station.farragutNorth.connections(to: nil))
+        XCTAssertEqual([.yellow], Station.fortTottenLower.connections(to: .green))
+        XCTAssertEqual([.green, .yellow], Station.fortTottenLower.connections(to: nil))
+    }
+
+    func testAllConnections() {
+        XCTAssertEqual([], Station.farragutNorth.allConnections(to: .red))
+        XCTAssertEqual([.red], Station.farragutNorth.allConnections(to: nil))
+        XCTAssertEqual([.yellow, .red], Station.fortTottenLower.allConnections(to: .green))
+        XCTAssertEqual([.green, .yellow, .red], Station.fortTottenLower.allConnections(to: nil))
+
     func testOpen() {
         Station.allOpen.forEach({ XCTAssertTrue($0.open, "expected \($0) to be open") })
         Station.allCases
