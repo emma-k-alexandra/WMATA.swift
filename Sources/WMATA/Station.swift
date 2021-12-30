@@ -483,12 +483,7 @@ public extension Station {
     ///
     /// - Returns: `false` if a station is part of the Potomac Yard or Silver Line Phase 2 expansions. Otherwise `true`.
     var open: Bool {
-        switch self {
-        case .restonTownCenter, .herndon, .innovationCenter, .dullesInternationalAirport, .loudounGateway, .ashburn, .potomacYard:
-            return false
-        default:
-            return true
-        }
+        Station.allOpen.contains(self)
     }
     
     /// All stations that are currently open to the public.
