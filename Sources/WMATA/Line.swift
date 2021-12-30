@@ -68,12 +68,7 @@ public extension Line {
     ///
     /// True for all other lines.
     var current: Bool {
-        switch self {
-        case .red, .blue, .yellow, .orange, .green, .silver:
-            return true
-        case .yellowLineRushPlus:
-            return false
-        }
+        Line.allCurrent.contains(self)
     }
     
     /// All of the current Lines. ``YLRP`` is not included.
