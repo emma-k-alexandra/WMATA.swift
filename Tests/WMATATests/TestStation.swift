@@ -70,4 +70,11 @@ final class StationTests: XCTestCase {
         XCTAssertEqual(Station.metroCenterLower.allTogether, [Station.metroCenterLower, Station.metroCenterUpper])
         XCTAssertEqual(Station.farragutNorth.allTogether, [Station.farragutNorth])
     }
+
+    func testOpen() {
+        Station.allOpen.forEach({ XCTAssertTrue($0.open, "expected \($0) to be open") })
+        Station.allCases
+            .filter({ !Station.allOpen.contains($0) })
+            .forEach({ XCTAssertFalse($0.open, "expected \($0) to be closed") })
+    }
 }
