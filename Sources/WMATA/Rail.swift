@@ -995,7 +995,7 @@ public extension Rail {
     ///
     /// For terminal stations (e.g.: Greenbelt, Shady Grove, etc.), predictions may be displayed twice.
     ///
-    /// Some stations have two platforms (e.g.: Gallery Place, Fort Totten, L'Enfant Plaza, and Metro Center). Use ``StationSet/galleryPlace`` and similar for these stations.
+    /// Some stations have two platforms (e.g.: Gallery Place, Fort Totten, L'Enfant Plaza, and Metro Center). Use ``Array/galleryPlace`` and similar for these stations.
     ///
     /// For trains with no passengers, the `destinationName` will be `No Passenger`.
     ///
@@ -1006,77 +1006,21 @@ public extension Rail {
         let baseURL = "https://api.wmata.com/StationPrediction.svc/json/GetPrediction/"
         
         public var url: URLComponents {
-            .init(string: baseURL + stations.urlPath())!
-        }
-        
-        /// A set of multiple ``Station``s
-        ///
-        /// This struct allows you to pass many or all stations to ``Rail/NextTrains``.
-        ///
-        /// Example values:
-        /// ```swift
-        ///  .all // All stations
-        ///  [.greenbelt, .federalCenterSW] // Multiple stations
-        ///  .lenfantPlaza // Both L'Enfant Plaza platforms
-        /// ```
-        ///
-        /// Avoid using single stations like ` [.waterfront]`, ``Rail/NextTrains/init(key:station:delegate:)`` is recommended instead. However, single value sets _are_ supported if your use case requires them.
-        public struct StationSet: ExpressibleByArrayLiteral, Equatable, Hashable {
-            /// The stations this set contains.
-            ///
-            /// This may be empty if ``all`` is `true`.
-            public let stations: [Station]
+            let path: String
             
-            /// If this station set contains all stations.
-            public let all: Bool
-            
-            /// Use this when you want to get the next trains at all stations in one API call
-            public static let all: StationSet = .init(all: true)
-            
-            /// Both L'Enfant Plaza platforms
-            public static let lenfantPlaza: StationSet = [.lenfantPlazaLower, .lenfantPlazaUpper]
-            
-            /// Both Metro Center platforms
-            public static let metroCenter: StationSet = [.metroCenterLower, .metroCenterUpper]
-            
-            /// Both Fort Totten platforms
-            public static let fortTotten: StationSet = [.fortTottenLower, .fortTottenUpper]
-            
-            /// Both Gallery Place platforms
-            public static let galleryPlace: StationSet = [.galleryPlaceLower, .galleryPlaceUpper]
-            
-            /// Create a station set from an array literal of stations
-            public init(arrayLiteral elements: Station...) {
-                stations = elements
-                all = false
+            if let stations = stations {
+                path = stations.map(\.rawValue).joined(separator: ",")
+            } else {
+                path = "All"
             }
             
-            /// Create a station set from an array of stations
-            public init(_ elements: [Station]) {
-                stations = elements
-                all = false
-            }
-            
-            init(all: Bool) {
-                stations = []
-                self.all = all
-            }
-            
-            public typealias ArrayLiteralElement = Station
-            
-            func urlPath() -> String {
-                if all {
-                    return "All"
-                }
-                
-                return stations.map(\.rawValue).joined(separator: ",")
-            }
+            return .init(string: baseURL + path)!
         }
         
         public let key: APIKey
         
-        /// Stations to get the next arriving trains for. Can be a single station.
-        public let stations: StationSet
+        /// Stations to get the next arriving trains for. Can be a single station. Omit for all stations.
+        public var stations: [Station]? = nil
         
         public weak var delegate: JSONEndpointDelegate<Self>? = nil
         
@@ -1088,13 +1032,9 @@ public extension Rail {
         ///
         /// - Parameters
         ///     - key: WMATA API Key for this request
-        ///     - stations: The stations to get the next trains for
+        ///     - stations: The stations to get the next trains for. Omit for all stations.
         ///     - delegate: Delegate to send background requests to
-        public init(
-            key: APIKey,
-            stations: StationSet,
-            delegate: JSONEndpointDelegate<Rail.NextTrains>? = nil
-        ) {
+        public init(key: APIKey, stations: [Station]? = nil, delegate: JSONEndpointDelegate<Rail.NextTrains>? = nil) {
             self.key = key
             self.stations = stations
             self.delegate = delegate

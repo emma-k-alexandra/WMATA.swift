@@ -348,10 +348,7 @@ final class TestRailDVR: DVRTestCase {
     }
     
     func testNextTrainsAll() {
-        let nextTrains = Rail.NextTrains(
-            key: TEST_API_KEY,
-            stations: .all
-        )
+        let nextTrains = Rail.NextTrains(key: TEST_API_KEY)
     
         nextTrains.request(with: session) { [weak self] result in
             switch result {
