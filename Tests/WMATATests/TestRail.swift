@@ -554,8 +554,7 @@ final class RailTests: XCTestCase {
     func testNextTrainsAll() {
         let exp = expectation(description: name)
         let predictions = Rail.NextTrains(
-            key: TEST_API_KEY,
-            stations: .all
+            key: TEST_API_KEY
         )
 
         predictions.request { result in
@@ -576,7 +575,6 @@ final class RailTests: XCTestCase {
 
         let predictions = Rail.NextTrains(
             key: TEST_API_KEY,
-            stations: .all,
             delegate: delegate
         )
 

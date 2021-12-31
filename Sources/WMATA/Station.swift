@@ -609,3 +609,17 @@ extension Station: URLQueryItemConvertible {
         URLQueryItem(name: name.rawValue, value: rawValue)
     }
 }
+
+public extension Array where Element == Station {
+    /// Both L'Enfant Plaza platforms
+    static let lenfantPlaza: [Station] = [.lenfantPlazaLower, .lenfantPlazaUpper]
+   
+   /// Both Metro Center platforms
+    static let metroCenter: [Station]  = [.metroCenterLower, .metroCenterUpper]
+   
+   /// Both Fort Totten platforms
+    static let fortTotten: [Station]  = [.fortTottenLower, .fortTottenUpper]
+   
+   /// Both Gallery Place platforms
+    static let galleryPlace: [Station]  = [.galleryPlaceLower, .galleryPlaceUpper]
+}
