@@ -1100,6 +1100,22 @@ public extension Rail {
             self.delegate = delegate
         }
         
+        /// Create a Next Trains call for multiple stations
+        ///
+        /// - Parameters
+        ///     - key: WMATA API Key for this request
+        ///     - stations: The stations to get the next trains for
+        ///     - delegate: Delegate to send background requests to
+        public init(
+            key: APIKey,
+            stations: [Station],
+            delegate: JSONEndpointDelegate<Rail.NextTrains>? = nil
+        ) {
+            self.key = key
+            self.stations = StationSet(stations)
+            self.delegate = delegate
+        }
+        
         /// Create a Next Trains call for a single station
         ///
         /// - Parameters

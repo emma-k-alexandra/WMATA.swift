@@ -517,7 +517,7 @@ final class RailTests: XCTestCase {
         waitForExpectations(timeout: 1)
     }
 
-    func testNextTrains() {
+    func testNextTrainsStationSet() {
         let exp = expectation(description: name)
         let predictions = Rail.NextTrains(
             key: TEST_API_KEY,
@@ -537,7 +537,7 @@ final class RailTests: XCTestCase {
         waitForExpectations(timeout: 1)
     }
 
-    func testNextTrainsWithDelegate() {
+    func testNextTrainsStationSetWithDelegate() {
         let delegate = TestJSONDelegate<Rail.NextTrains>(expectation: expectation(description: name))
 
         let predictions = Rail.NextTrains(
@@ -550,7 +550,41 @@ final class RailTests: XCTestCase {
 
         waitForExpectations(timeout: 1)
     }
-    
+
+    func testNextTrainsArray() {
+        let exp = expectation(description: name)
+        let predictions = Rail.NextTrains(
+            key: TEST_API_KEY,
+            stations: Station.metroCenterUpper.allTogether
+        )
+
+        predictions.request { result in
+            switch result {
+            case .success:
+                exp.fulfill()
+
+            case let .failure(error):
+                print(error)
+            }
+        }
+
+        waitForExpectations(timeout: 1)
+    }
+
+    func testNextTrainsArrayWithDelegate() {
+        let delegate = TestJSONDelegate<Rail.NextTrains>(expectation: expectation(description: name))
+
+        let predictions = Rail.NextTrains(
+            key: TEST_API_KEY,
+            stations: Station.metroCenterUpper.allTogether,
+            delegate: delegate
+        )
+
+        predictions.backgroundRequest()
+
+        waitForExpectations(timeout: 1)
+    }
+
     func testNextTrainsAll() {
         let exp = expectation(description: name)
         let predictions = Rail.NextTrains(
