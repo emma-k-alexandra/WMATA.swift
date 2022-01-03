@@ -72,6 +72,8 @@ For more details, check out <doc:Endpoints>.
 
 ### Updating from Previous Versions
 
+- <doc:v13-Migration-Guide>
+- <doc:v12-Migration-Guide>
 - <doc:v11-Migration-Guide>
 
 [wmata]: https://developer.wmata.com
