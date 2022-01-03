@@ -337,8 +337,6 @@ public extension Rail {
     ///
     /// Information provided by this endpoint can be used with data from ``Rail/TrainPositions`` and ``Rail/TrackCircuits``
     ///
-    /// > Note: This endpoint can return data for the ``Line/YLRP`` line, which is not currently used by WMATA.
-    ///
     /// [Additional Details](https://developer.wmata.com/TrainPositionsFAQ)
     ///
     ///  [WMATA Standard Routes Documentation](https://developer.wmata.com/docs/services/5763fa6ff91823096cac1057/operations/57641afc031f59363c586dca)
@@ -995,7 +993,7 @@ public extension Rail {
     ///
     /// For terminal stations (e.g.: Greenbelt, Shady Grove, etc.), predictions may be displayed twice.
     ///
-    /// Some stations have two platforms (e.g.: Gallery Place, Fort Totten, L'Enfant Plaza, and Metro Center). Use ``Array/galleryPlace`` and similar for these stations.
+    /// Some stations have two platforms (e.g.: Gallery Place, Fort Totten, L'Enfant Plaza, and Metro Center). Use `Array.galleryPlace` and similar for these stations.
     ///
     /// For trains with no passengers, the `destinationName` will be `No Passenger`.
     ///

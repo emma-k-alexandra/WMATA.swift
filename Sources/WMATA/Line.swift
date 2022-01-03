@@ -30,11 +30,6 @@ public enum Line: String, CaseIterable, Codable, Hashable, Equatable, RawReprese
     
     /// Silver Line
     case silver = "SV"
-    
-    /// Yellow Line Rush Plus (not currently used)
-    ///
-    /// This line is only used in the ``Rail/StandardRoutes`` endpoint, and is not in normal service.
-    case yellowLineRushPlus = "YLRP"
 }
 
 public extension Line {
@@ -43,35 +38,27 @@ public extension Line {
         switch self {
         case .red:
             return "Red"
-
         case .blue:
             return "Blue"
-
         case .yellow:
             return "Yellow"
-
         case .orange:
             return "Orange"
-
         case .green:
             return "Green"
-
         case .silver:
             return "Silver"
-            
-        case .yellowLineRushPlus:
-            return "Yellow Line Rush Plus"
         }
     }
     
-    /// If this line is currently used. ``YLRP`` is not current.
-    ///
-    /// True for all other lines.
+    /// Deprecated. All Lines are current. You do not need to check for currency.
+    @available(*, deprecated, message: "All lines are now current. You may simply remove all calls to this property.")
     var current: Bool {
-        Line.allCurrent.contains(self)
+        true
     }
     
-    /// All of the current Lines. ``YLRP`` is not included.
+    /// Deprecated. Use `allCases` instead.
+    @available(*, deprecated, renamed: "allCases", message: "All lines are now current.")
     static var allCurrent: [Self] {
         [.red, .blue, .yellow, .orange, .green, .silver]
     }

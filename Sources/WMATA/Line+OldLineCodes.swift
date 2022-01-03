@@ -25,7 +25,4 @@ public extension Line {
     
     @available(*, deprecated, renamed: "silver")
     static let SV = Self.silver
-    
-    @available(*, deprecated, renamed: "yellowLineRushPlus")
-    static let YLRP = Self.yellowLineRushPlus
 }

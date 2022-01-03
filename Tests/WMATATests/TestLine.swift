@@ -9,11 +9,12 @@
 import XCTest
 
 class LineTests: XCTestCase {
-
-    func testCurrent() {
-        Line.allCurrent.forEach({ XCTAssertTrue($0.current, "expected \($0) to be current") })
-        Line.allCases
-            .filter({ !Line.allCurrent.contains($0) })
-            .forEach({ XCTAssertFalse($0.current, "expected \($0) to not be current") })
+    func testName() {
+        XCTAssertEqual(Line.red.name, "Red")
+        XCTAssertEqual(Line.blue.name, "Blue")
+        XCTAssertEqual(Line.yellow.name, "Yellow")
+        XCTAssertEqual(Line.orange.name, "Orange")
+        XCTAssertEqual(Line.green.name, "Green")
+        XCTAssertEqual(Line.silver.name, "Silver")
     }
 }
