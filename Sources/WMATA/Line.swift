@@ -8,10 +8,10 @@
 import Combine
 import Foundation
 
-/// A MetroRail line
+/// A Metrorail line
 ///
-/// Represents the various, colorful rail lines within the MetroRail system.
-/// ![MetroRail system map](metrorail-map)
+/// Represents the various, colorful rail lines within the Metrorail system.
+/// ![Metrorail system map](metrorail-map)
 public enum Line: String, CaseIterable, Codable, Hashable, Equatable, RawRepresentable {
     /// Red Line
     case red = "RD"

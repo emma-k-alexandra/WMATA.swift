@@ -8,18 +8,18 @@
 import Foundation
 import GTFS
 
-/// MetroRail endpoints
+/// Metrorail endpoints
 ///
-/// The various endpoints defined here allow you to call MetroRail APIs. For an overview see <doc:Endpoints>
+/// The various endpoints defined here allow you to call Metrorail APIs. For an overview see <doc:Endpoints>
 ///
 /// > Tip: You can use endpoints here like so: `Rail.Lines(...)`
 public enum Rail {
-    /// MetroRail GTFS endpoints
+    /// Metrorail GTFS endpoints
     public enum GTFS {}
 }
 
 public extension Rail {
-    /// All MetroRail ``Line``s
+    /// All Metrorail ``Line``s
     ///
     /// [WMATA Lines Documentation](https://developer.wmata.com/docs/services/5476364f031f590f38092507/operations/5476364f031f5909e4fe330c)
     struct Lines: JSONEndpoint {
@@ -370,7 +370,7 @@ public extension Rail {
                 self.standardRoutes = standardRoutes
             }
             
-            /// A MetroRail route
+            /// A Metrorail route
             public struct StandardRoute: Codable, Equatable, Hashable {
                 /// Line of this route
                 public let line: Line
@@ -477,7 +477,7 @@ public extension Rail {
                 self.trackCircuits = trackCircuits
             }
             
-            /// A MetroRail track circuit
+            /// A Metrorail track circuit
             public struct TrackCircuit: Codable, Equatable, Hashable {
                 /// The type of a track
                 ///
@@ -525,7 +525,7 @@ public extension Rail {
                     self.neighbors = neighbors
                 }
                 
-                /// A MetroRail track neighbor
+                /// A Metrorail track neighbor
                 ///
                 /// ![A neighboring track diagram](track-neighbors)
                 ///
@@ -822,7 +822,7 @@ public extension Rail {
         }
     }
     
-    /// Reported MetroRail incidents (significant disruptions and delays to normal service).
+    /// Reported Metrorail incidents (significant disruptions and delays to normal service).
     ///
     /// The data is identical to [WMATA's Metrorail Service Status feed](http://www.metroalerts.info/rss.aspx?rs).
     ///
@@ -865,7 +865,7 @@ public extension Rail {
                 self.incidents = incidents
             }
             
-            /// A MetroRail incident
+            /// A Metrorail incident
             public struct Incident: Codable, Equatable, Hashable {
                 /// Unique identifier for an incident.
                 public let incidentID: String
@@ -1120,7 +1120,7 @@ public extension Rail {
                 /// Can be `nil` when a train is first appearing in API. Calling the API again after the next refresh should give the train a location.
                 public let locationName: String?
                 
-                /// The time until arrival. Matches signs within a MetroRail station
+                /// The time until arrival. Matches signs within a Metrorail station
                 ///
                 /// Sometimes a number in ``minutes(_:)``, can also be ``arriving``, ``boarding``, ``delayed`` or ``unknown``.
                 public enum Minutes: Codable, Equatable, Hashable {
@@ -1844,9 +1844,9 @@ public extension Rail {
 
 public extension Rail.GTFS {
     
-    /// GTFS 1.0 Service Alerts feed for MetroRail
+    /// GTFS 1.0 Service Alerts feed for Metrorail
     ///
-    /// Service alerts represent higher level problems with station, lines or all of MetroRail
+    /// Service alerts represent higher level problems with station, lines or all of Metrorail
     ///
     /// [GTFS Alerts Documentation](https://gtfs.org/reference/realtime/v1/#message-alert)
     struct Alerts: GTFSEndpoint {
@@ -1862,7 +1862,7 @@ public extension Rail.GTFS {
         public weak var delegate: GTFSEndpointDelegate<Self>? = nil
     }
     
-    /// GTFS 1.0 Trip Updates feed for MetroRail
+    /// GTFS 1.0 Trip Updates feed for Metrorail
     ///
     /// Trip updates represent fluctuations in the timetable
     ///
@@ -1880,9 +1880,9 @@ public extension Rail.GTFS {
         public weak var delegate: GTFSEndpointDelegate<Self>? = nil
     }
     
-    /// GTFS 1.0 Vehicle Positions feed for MetroRail
+    /// GTFS 1.0 Vehicle Positions feed for Metrorail
     ///
-    /// Locations of MetroRail trains
+    /// Locations of Metrorail trains
     ///
     /// [GTFS Trip Updates Documentation](https://gtfs.org/reference/realtime/v1/#message-vehicleposition)
     struct VehiclePositions: GTFSEndpoint {

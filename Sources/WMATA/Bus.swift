@@ -8,18 +8,18 @@
 import Foundation
 import GTFS
 
-/// MetroBus endpoints
+/// Metrobus endpoints
 ///
-/// The various endpoints defined here allow you to call MetroBus APIs. For an overview see <doc:Endpoints>
+/// The various endpoints defined here allow you to call Metrobus APIs. For an overview see <doc:Endpoints>
 ///
 /// > Tip: You can use endpoints here like so: `Bus.Routes(...)`
 public enum Bus {
-    /// MetroBus GTFS endpoints
+    /// Metrobus GTFS endpoints
     public enum GTFS {}
 }
 
 public extension Bus {
-    /// Locations of MetroBuses
+    /// Locations of Metrobus Buses
     ///
     /// Omit both `route` and `location` to receive positions for all buses.
     ///
@@ -162,7 +162,7 @@ public extension Bus {
         }
     }
     
-    /// Reported delays or incidents for MetroBuses
+    /// Reported delays or incidents for Metrobus Buses
     ///
     /// Omit `route` to receive incidents for all buses.
     ///
@@ -207,7 +207,7 @@ public extension Bus {
                 self.busIncidents = busIncidents
             }
             
-            /// A MetroBus incident
+            /// A Metrobus incident
             public struct Incident: Codable, Equatable, Hashable {
                 /// Date and time (Eastern Standard Time) of last update.
                 public let dateUpdated: Date
@@ -282,7 +282,7 @@ public extension Bus {
         
         public struct Response: Codable, Equatable, Hashable {
             
-            /// MetroBus route
+            /// Metrobus route
             public let route: Route
             
             /// Descriptive name for the route.
@@ -573,7 +573,7 @@ public extension Bus {
                 
                 /// Information about a ``Stop``
                 public struct StopInfo: Codable, Equatable, Hashable {
-                    /// A MetroBus stop
+                    /// A Metrobus stop
                     /// > Warning: A `stop` of `0` incidates an unknown stop.
                     public let stop: Stop?
                     
@@ -589,7 +589,7 @@ public extension Bus {
                     /// Create a stop info response
                     ///
                     /// - Parameters:
-                    ///     - stop: A MetroBus stop
+                    ///     - stop: A Metrobus stop
                     ///     - stopName: Name of stop
                     ///     - stopSequence: Order of the stop in sequence
                     ///     - time: Scheduled departure time from this stop
@@ -623,7 +623,7 @@ public extension Bus {
         
         public let key: APIKey
         
-        // A MetroBus stop
+        // A Metrobus stop
         public let stop: Stop
         
         public weak var delegate: JSONEndpointDelegate<Self>? = nil
@@ -650,7 +650,7 @@ public extension Bus {
                 self.stopName = stopName
             }
             
-            /// An arrival time prediction for a MetroBus
+            /// An arrival time prediction for a bus
             public struct Prediction: Codable, Equatable, Hashable {
                 /// Denotes a binary direction (0 or 1) of the bus.
                 ///
@@ -719,7 +719,7 @@ public extension Bus {
         
         public let key: APIKey
         
-        // A MetroBus stop
+        // A Metrobus stop
         public let stop: Stop
         
         // Date to receive this stop's schedule for. Omit for current date.
@@ -797,7 +797,7 @@ public extension Bus {
                 ///     - directionNumber: `"0"` or `"1"`
                 ///     - startTime: Start time of this trip
                 ///     - endTime: End time of this trip
-                ///     - route: MetroBus route. Can include variants.
+                ///     - route: Metrobus route. Can include variants.
                 ///     - tripDirectionText: General direction of bus
                 ///     - tripHeadsign: Destination of bus
                 ///     - tripID: Trip Identifier
@@ -824,7 +824,7 @@ public extension Bus {
             
             /// A stop schedule
             public struct StopSchedule: Codable, Equatable, Hashable {
-                /// A MetroBus stop
+                /// A Metrobus stop
                 @MapToNil<Stop, SingleZero> public var stop: Stop?
                 
                 /// Stop name.
@@ -868,7 +868,7 @@ public extension Bus {
         }
     }
     
-    /// MetroBus ``Stop``s within a ``WMATALocation``.
+    /// Metrobus ``Stop``s within a ``WMATALocation``.
     ///
     /// Omit `location` to retrieve a list of all ``Stop``s.
     ///
@@ -909,7 +909,7 @@ public extension Bus {
             
             /// A stop schedule
             public struct StopSchedule: Codable, Equatable, Hashable {
-                /// A MetroBus stop
+                /// A Metrobus stop
                 @MapToNil<Stop, SingleZero> public var stop: Stop?
                 
                 /// Stop name.
@@ -931,7 +931,7 @@ public extension Bus {
                 /// Create a stop schedule response
                 ///
                 /// - Parameters:
-                ///     - stop: A MetroBus stop
+                ///     - stop: A Metrobus stop
                 ///     - name: Stop name
                 ///     - latitude: Latitude of stop
                 ///     - longitude: Longitude of stop
@@ -953,7 +953,7 @@ public extension Bus {
         }
     }
     
-    /// All MetroBus ``Route``  and variants
+    /// All Metrobus ``Route``  and variants
     ///
     /// For example, the `10A` and `10Av1` are the same route, but may stop at slightly different locations.
     struct Routes: JSONEndpoint {
@@ -986,11 +986,11 @@ public extension Bus {
                 self.routes = routes
             }
             
-            /// A MetroBus route.
+            /// A Metrobus route.
             ///
             /// Different than ``WMATA/Route``
             public struct Route: Codable, Equatable, Hashable {
-                /// A MetroBus route
+                /// A Metrobus route
                 public let route: WMATA.Route
                 
                 /// Descriptive name of the route variant.
@@ -1004,7 +1004,7 @@ public extension Bus {
                 /// Create a route response
                 ///
                 /// - Parameters:
-                ///     - route: A MetroBus route
+                ///     - route: A Metrobus route
                 ///     - name: Name of the route variant, i.e. `10A`, `10Av1`
                 ///     - lineDescription: Route variant's grouping
                 public init(
@@ -1023,9 +1023,9 @@ public extension Bus {
 
 public extension Bus.GTFS {
     
-    /// GTFS 1.0 Service Alerts feed for MetroBus
+    /// GTFS 1.0 Service Alerts feed for Metrobus
     ///
-    /// Service alerts represent higher level problems with buses, routes or all of MetroBus
+    /// Service alerts represent higher level problems with buses, routes or all of Metrobus
     ///
     /// [GTFS Alerts Documentation](https://gtfs.org/reference/realtime/v1/#message-alert)
     struct Alerts: GTFSEndpoint {
@@ -1041,7 +1041,7 @@ public extension Bus.GTFS {
         public weak var delegate: GTFSEndpointDelegate<Self>? = nil
     }
     
-    /// GTFS 1.0 Trip Updates feed for MetroBus
+    /// GTFS 1.0 Trip Updates feed for Metrobus
     ///
     /// Trip updates represent fluctuations in the timetable
     ///
@@ -1059,9 +1059,9 @@ public extension Bus.GTFS {
         public weak var delegate: GTFSEndpointDelegate<Self>? = nil
     }
     
-    /// GTFS 1.0 Vehicle Positions feed for MetroBus
+    /// GTFS 1.0 Vehicle Positions feed for Metrobus
     ///
-    /// Locations of MetroBuses
+    /// Locations of Metrobus Buses
     ///
     /// [GTFS Trip Updates Documentation](https://gtfs.org/reference/realtime/v1/#message-vehicleposition)
     struct VehiclePositions: GTFSEndpoint {

@@ -18,13 +18,13 @@ Here's some examples of what you'll find in these responses. Let's look at ``Rai
 
 This package converts station codes and line codes into ``Station`` and ``Line`` respectively. So, in WMATA's response for the ``Rail/NextTrains`` API, you could receive `E10` as a destination station. However, ``Rail/NextTrains/Response/Prediction/destination`` maps `E10` to ``Station/greenbelt`` instead. You can still receive the original station code by calling `rawValue` on ``Station/greenbelt``. ``Station`` instances also provide many helper variables and functions to receive data this is not available via the API.
 
-Similarly for line codes, `BL` gets converted to ``Line/blue`` in many responses. MetroBus stops and routes are also marked as their own type, but they are simply backed by strings with no additional information available.
+Similarly for line codes, `BL` gets converted to ``Line/blue`` in many responses. Metrobus stops and routes are also marked as their own type, but they are simply backed by strings with no additional information available.
 
 ### Data Wrangling
 
 In some cases data that comes from WMATA's API can be deceiptful or confusing. This package makes attempts to place this data into nicer formats. Let's look at some examples.
 
-In the ``Rail/NextTrains`` API, the `Car` field, for checking the number of cars a train has, can be `"6"` or `"8"`, as you might expect from typical MetroRail usage. However, it can also be `"-"` or `nil`. Stange values that can be tricky to check for since all of this data is just a string. In this package ``Rail/NextTrains/Response/Prediction/car`` is parsed and is an optional enum that can only be `.six`, `.eight` or `nil`.
+In the ``Rail/NextTrains`` API, the `Car` field, for checking the number of cars a train has, can be `"6"` or `"8"`, as you might expect from typical Metrorail usage. However, it can also be `"-"` or `nil`. Stange values that can be tricky to check for since all of this data is just a string. In this package ``Rail/NextTrains/Response/Prediction/car`` is parsed and is an optional enum that can only be `.six`, `.eight` or `nil`.
 
 Again in the ``Rail/NextTrains`` API, the `Min` field, for checking the minutes until a train arrives, can be a number within a string, `"ARR"`, `"BRD"`, `"---"` or `""`. Again, this is confusing and difficult to parse. In this package ``Rail/NextTrains/Response/Prediction/minutes-swift.property`` is parsed into an enum with possible values `.minutes(Int)`, `.arriving`, `.boarding`, or `.unknown`. This should allow you to more easily parse the data coming from WMATA's API in your app in a swifty way.
 

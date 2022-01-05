@@ -11,7 +11,7 @@ import GTFS
 
 /// Protocol defining a WMATA API endpoint.
 ///
-/// Used to make requests and receive responses from an API. Endpoints are available in ``Rail`` for MetroRail and ``Bus`` for MetroBus.
+/// Used to make requests and receive responses from an API. Endpoints are available in ``Rail`` for Metrorail and ``Bus`` for Metrobus.
 public protocol Endpoint: WMATADecoding, Hashable {
     /// The response WMATA sends back when calling this endpoint
     associatedtype Response
