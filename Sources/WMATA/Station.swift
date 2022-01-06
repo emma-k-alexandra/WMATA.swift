@@ -7,13 +7,13 @@
 
 import Foundation
 
-/// A MetroRail station
+/// A Metrorail station
 ///
 /// A station with in enum represents a single level within a physical station. Stations in this enum are named after the first name given by WMATA, with no shortenings. So, Archives-Navy Memorial-Penn Quarter is represented as ``archives``.
 ///
 /// Physical stations with multiple levels like L'Enfant Plaza require multiple station codes. For example, `lenfantPlazaUpper` is a single level within the L'Enfant Plaza station, along with `lenfantPlazaLower`. All stations follow this `...Upper` and `...Lower` naming convention. You can also use ``together`` or ``allTogether`` to get all relevant stations.
 ///
-/// ![A train passes at the Pentagon City MetroRail station](metrorail-station)
+/// ![A train passes at the Pentagon City Metrorail station](metrorail-station)
 public enum Station: String, CaseIterable, Codable, Equatable, Hashable, RawRepresentable {
     /// Red line tracks for Metro Center
     case metroCenterUpper = "A01"

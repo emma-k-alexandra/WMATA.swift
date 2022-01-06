@@ -6,9 +6,9 @@ Understanding endpoints and how to make requests the way you need.
 
 WMATA provides two formats for data from their API: JSON and GTFS. In this package, I refer to the JSON API as the "Standard API" and thr GTFS API as simply as the "GTFS API".
 
-Endpoints in this package are split into four categories: ``Rail`` and  ``Bus`` for JSON APIs for MetroRail and MetroBus respectively, and ``Rail/GTFS`` and ``Bus/GTFS`` for GTFS APIs for MetroRail and MetroBus respectively.
+Endpoints in this package are split into four categories: ``Rail`` and  ``Bus`` for JSON APIs for Metrorail and Metrobus respectively, and ``Rail/GTFS`` and ``Bus/GTFS`` for GTFS APIs for Metrorail and Metrobus respectively.
 
-Each API provided by WMATA is defined as an ``Endpoint`` within this package. So, the [MetroBus Routes API](https://developer.wmata.com/docs/services/54763629281d83086473f231/operations/5476362a281d830c946a3d6a) is defined as ``Bus/Routes`` and the [MetroRail Trip Updates GTFS API](https://developer.wmata.com/docs/services/gtfs/operations/5cdc51ea7a6be320cab064fe) is defined as ``Rail/GTFS/TripUpdates``. I would recommend exploring each namespace for relevant APIs. Names match with names on [WMATA's Developer Website](https://developer.wmata.com).
+Each API provided by WMATA is defined as an ``Endpoint`` within this package. So, the [Metrobus Routes API](https://developer.wmata.com/docs/services/54763629281d83086473f231/operations/5476362a281d830c946a3d6a) is defined as ``Bus/Routes`` and the [Metrorail Trip Updates GTFS API](https://developer.wmata.com/docs/services/gtfs/operations/5cdc51ea7a6be320cab064fe) is defined as ``Rail/GTFS/TripUpdates``. I would recommend exploring each namespace for relevant APIs. Names match with names on [WMATA's Developer Website](https://developer.wmata.com).
 
 ## Usage
 

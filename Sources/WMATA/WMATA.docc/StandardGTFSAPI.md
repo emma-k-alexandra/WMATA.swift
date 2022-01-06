@@ -14,9 +14,9 @@ The Standard API is the best supported by this package, and is recommended for m
 
 ## GTFS
 
-The GTFS API is a set of 3 endpoints available for both MetroRail and MetroBus based on the [General Transit Feed Specification](https://gtfs.org). GTFS is a standard data format split into two parts: GTFS and GTFS-RT (Real Time). To receive GTFS data, which in the case of WMATA is simply a zip file, you will need to use the [GTFS Package](https://github.com/emma-k-alexandra/GTFS) directly. `GTFS` is a dependency of this package. This package only supports calling GTFS-RT endpoints published by WMATA.
+The GTFS API is a set of 3 endpoints available for both Metrorail and Metrobus based on the [General Transit Feed Specification](https://gtfs.org). GTFS is a standard data format split into two parts: GTFS and GTFS-RT (Real Time). To receive GTFS data, which in the case of WMATA is simply a zip file, you will need to use the [GTFS Package](https://github.com/emma-k-alexandra/GTFS) directly. `GTFS` is a dependency of this package. This package only supports calling GTFS-RT endpoints published by WMATA.
 
-GTFS-RT endpoints return data for the entire MetroBus or MetroRail system with a single call. This may save you from making multiple calls with the Standard API at the cost of larger and more complex responses. GTFS-RT endpoints return data via a [Protocol Buffer](https://developers.google.com/protocol-buffers) which can substantally reduce response size at the cost of complexity.
+GTFS-RT endpoints return data for the entire Metrobus or Metrorail system with a single call. This may save you from making multiple calls with the Standard API at the cost of larger and more complex responses. GTFS-RT endpoints return data via a [Protocol Buffer](https://developers.google.com/protocol-buffers) which can substantally reduce response size at the cost of complexity.
 
 Protocol Buffers are not easily convertable into Swift structures. For example, [responses from the GTFS API are not `Codable`](https://github.com/apple/swift-protobuf/issues/657) and future `Codable` support looks bleak. So, you will encounter more difficulty parsing the responses from this API.
 

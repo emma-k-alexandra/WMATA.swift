@@ -8,7 +8,7 @@ WMATA.swift v12 removes the need to use `StationSet` when making calls to ``Rail
 
 This part of the package now works more similarly to the rest of the package.
 
-If you wish to make a request for trains at all MetroRail stations, omit the `stations` parameter when using ``Rail/NextTrains/init(key:stations:delegate:)``. Example:
+If you wish to make a request for trains at all Metrorail stations, omit the `stations` parameter when using ``Rail/NextTrains/init(key:stations:delegate:)``. Example:
 
 ```swift
 let nextTrains = Rail.NextTrains(key: API_KEY)
