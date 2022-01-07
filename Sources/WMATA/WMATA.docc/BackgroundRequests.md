@@ -75,11 +75,3 @@ class CustomEndpointDelegate: JSONEndpointDelegate<Bus.NextBuses> {
 ```
 
 You can read more about shared container identifiers in the "Performing Uploads and Downloads" section of Apple's [App Extension Programming Guide](https://developer.apple.com/library/archive/documentation/General/Conceptual/ExtensibilityPG/ExtensionScenarios.html#//apple_ref/doc/uid/TP40014214-CH21-SW1).
-
-## Topics
-
-### Delegates
-
-- ``JSONEndpointDelegate``
-- ``GTFSEndpointDelegate``
-- ``EndpointDelegate``

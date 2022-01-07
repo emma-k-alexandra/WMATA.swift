@@ -41,19 +41,10 @@ For more details, check out <doc:Endpoints>.
 - <doc:Responses>
 - <doc:StandardGTFSAPI>
 
-### Metrorail
+### Systems
 
-- ``Station``
-- ``Line``
-- ``Rail``
-- ``Rail/GTFS``
-
-### Metrobus
-
-- ``Stop``
-- ``Route``
-- ``Bus``
-- ``Bus/GTFS``
+- <doc:Metrorail>
+- <doc:Metrobus>
 
 ### Supporting structures
 
@@ -65,6 +56,7 @@ For more details, check out <doc:Endpoints>.
 - <doc:BackgroundRequests>
 - ``JSONEndpointDelegate``
 - ``GTFSEndpointDelegate``
+- ``EndpointDelegate``
 
 ### Advanced
 

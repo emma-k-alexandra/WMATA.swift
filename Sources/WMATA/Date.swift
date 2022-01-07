@@ -22,8 +22,8 @@ extension Date: URLQueryItemConvertible {
 }
 
 extension DateFormatter {
-    static var wmataQueryFormat: Self {
-        let formatter = Self()
+    static var wmataQueryFormat: DateFormatter {
+        let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd"
         formatter.locale = Locale(identifier: "en_US_POSIX")
         formatter.timeZone = TimeZone(abbreviation: "EST")!

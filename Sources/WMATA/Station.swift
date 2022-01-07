@@ -8,12 +8,11 @@
 import Foundation
 
 /// A Metrorail station
+/// ![A train passes at the Pentagon City Metrorail station](metrorail-station)
 ///
 /// A station with in enum represents a single level within a physical station. Stations in this enum are named after the first name given by WMATA, with no shortenings. So, Archives-Navy Memorial-Penn Quarter is represented as ``archives``.
 ///
-/// Physical stations with multiple levels like L'Enfant Plaza require multiple station codes. For example, `lenfantPlazaUpper` is a single level within the L'Enfant Plaza station, along with `lenfantPlazaLower`. All stations follow this `...Upper` and `...Lower` naming convention. You can also use ``together`` or ``allTogether`` to get all relevant stations.
-///
-/// ![A train passes at the Pentagon City Metrorail station](metrorail-station)
+/// Physical stations with multiple levels like L'Enfant Plaza require multiple station codes. For example, `lenfantPlazaUpper` is a single level within the L'Enfant Plaza station, along with `lenfantPlazaLower`. All stations follow this `...Upper` and `...Lower` naming convention. You can also use ``together`` or ``allTogether`` or `Array.lenfantPlaza`, etc. to get all relevant stations.
 public enum Station: String, CaseIterable, Codable, Equatable, Hashable, RawRepresentable {
     /// Red line tracks for Metro Center
     case metroCenterUpper = "A01"
@@ -441,14 +440,14 @@ public extension Station {
         }
     }
 
-    /// The ``Line``s this station is on
+    /// The ``Line``s this station is on in system map order.
     var lines: [Line] {
         switch self {
         case .metroCenterUpper, .galleryPlaceUpper, .fortTottenUpper, .farragutNorth, .dupontCircle, .woodleyPark, .clevelandPark, .vanNess, .tenleytown, .friendshipHeights, .bethesda, .medicalCenter, .grosvenor, .northBethesda, .twinbrook, .rockville, .shadyGrove, .judiciarySquare, .unionStation, .rhodeIslandAve, .brookland, .takoma, .silverSpring, .forestGlen, .wheaton, .glenmont, .noma:
             return [.red]
 
         case .metroCenterLower, .lenfantPlazaLower, .mcphersonSquare, .farragutWest, .foggyBottom, .rosslyn, .federalTriangle, .smithsonian, .federalCenterSW, .capitolSouth, .easternMarket, .potomacAve, .stadium:
-            return [.blue, .orange, .silver]
+            return [.orange, .blue, .silver]
 
         case .arlingtonCemetery, .vanDornStreet, .franconia:
             return [.blue]
@@ -489,7 +488,7 @@ public extension Station {
     /// All stations that are currently open to the public.
     ///
     /// Potomac Yard and Silver Line Phase 2 expansion stations are excluded.
-    static var allOpen: [Self] {
+    static var allOpen: [Station] {
         [.metroCenterUpper, .farragutNorth, .dupontCircle, .woodleyPark, .clevelandPark, .vanNess, .tenleytown, .friendshipHeights, .bethesda, .medicalCenter, .grosvenor, .northBethesda, .twinbrook, .rockville, .shadyGrove, .galleryPlaceUpper, .judiciarySquare, .unionStation, .rhodeIslandAve, .brookland, .fortTottenUpper, .takoma, .silverSpring, .forestGlen, .wheaton, .glenmont, .noma, .metroCenterLower, .mcphersonSquare, .farragutWest, .foggyBottom, .rosslyn, .arlingtonCemetery, .pentagon, .pentagonCity, .crystalCity, .ronaldReaganWashingtonNationalAirport, .braddockRoad, .kingSt, .eisenhowerAvenue, .huntington, .federalTriangle, .smithsonian, .lenfantPlazaLower, .federalCenterSW, .capitolSouth, .easternMarket, .potomacAve, .stadium, .minnesotaAve, .deanwood, .cheverly, .landover, .newCarrollton, .mtVernonSq7thSt, .shaw, .uStreet, .columbiaHeights, .georgiaAve, .fortTottenLower, .westHyattsville, .princeGeorgesPlaza, .collegePark, .greenbelt, .galleryPlaceLower, .archives, .lenfantPlazaUpper, .waterfront, .navyYard, .anacostia, .congressHeights, .southernAvenue, .naylorRoad, .suitland, .branchAve, .benningRoad, .capitolHeights, .addisonRoad, .morganBoulevard, .largoTownCenter, .vanDornStreet, .franconia, .courtHouse, .clarendon, .virginiaSquare, .ballston, .eastFallsChurch, .westFallsChurch, .dunnLoring, .vienna, .mcLean, .tysonsCorner, .greensboro, .springHill, .wiehle]
     }
 
@@ -536,7 +535,7 @@ public extension Station {
     /// See ``Station`` for more details.
     ///
     /// - Returns: The ``Station`` within the same physical station, if there is one. Otherwise, `nil`.
-    var together: Self? {
+    var together: Station? {
         switch self {
         case .fortTottenUpper:
             return .fortTottenLower
@@ -571,30 +570,39 @@ public extension Station {
     /// See ``Station`` for more details.
     ///
     /// - Returns: This station and the ``together``, if there is one. Otherwise, just this station.
-    var allTogether: [Self] {
-        if let together = self.together {
+    var allTogether: [Station] {
+        if let together = together {
             return [self, together]
         }
 
         return [self]
     }
+    
+    /// If this station or any station ``together`` connects to the given line.
+    ///
+    /// - Parameter line: The line to check for a connection
+    ///
+    /// - Returns: If the given line has a connection at this station
+    func connects(to line: Line) -> Bool {
+        allTogether.flatMap(\.lines).contains(line)
+    }
 
     /// Get the connecting lines at this station for the given line.
     ///
-    /// - Parameter to: The line to get connections for; if nil, returns all lines at this station.
+    /// - Parameter line: The line to get connections for; if nil, returns all lines at this station.
     ///
-    /// - Returns: An array of connecting lines; this is empty if the `to` line is the only line at this station.
+    /// - Returns: An array of connecting lines; this is empty if `line` is the only line at this station.
     func connections(to line: Line?) -> [Line] {
-        self.lines.filter({ $0 != line })
+        lines.filter { $0 != line }
     }
 
-    /// Get the connecting lines at this station and any station together with it for the given line.
+    /// Get the connecting lines at this station and any station ``together`` with it for the given line.
     ///
-    /// - Parameter to: The line to get connections for; if nil, returns all lines at this station.
+    /// - Parameter line: The line to get connections for; if nil, returns all lines at this station.
     ///
-    /// - Returns: An array of connecting lines; this is empty if the `to` line is the only line at this station.
+    /// - Returns: An array of connecting lines; this is empty if `line` is the only line at this station.
     func allConnections(to line: Line?) -> [Line] {
-        self.allTogether.flatMap({ $0.connections(to: line) })
+        allTogether.flatMap { $0.connections(to: line) }
     }
 }
 
