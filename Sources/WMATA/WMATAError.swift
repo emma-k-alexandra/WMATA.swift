@@ -98,7 +98,7 @@ public enum WMATAError: Error {
                 self.message = message
             } else {
                 throw DecodingError.typeMismatch(
-                    Self.self,
+                    Message.self,
                     .init(
                         codingPath: container.codingPath,
                         debugDescription: "Key `message` or `Message` was not found in WMATAError.Message while decoding",

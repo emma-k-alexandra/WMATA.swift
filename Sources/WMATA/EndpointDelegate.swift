@@ -15,7 +15,7 @@ open class EndpointDelegate<Parent: Endpoint>: NSObject, URLSessionDownloadDeleg
     
     /// Handle a response from a background request. Override this in your own delegate.
     open func received(_ response: Result<Parent.Response, WMATAError>) {
-        assertionFailure("Base EndpointDelegate received response. Override `func received(_ response: Result<Parent.Response, WMATAError>)`")
+        assertionFailure("Base EndpointDelegate received response. Override `func received(_ response: Result<Parent.Response, WMATAError>)` to receive background requests.")
     }
     
     /// An indentifier used when running in an app extension.
@@ -79,8 +79,14 @@ extension EndpointDelegate {
 
 /// A delegate for Standard API endpoints.
 ///
-/// To make your own delegate, sublcass this and override ``EndpointDelegate/received(_:)``.
+/// To make your own delegate, sublcass this and override ``received(_:)``.
 open class JSONEndpointDelegate<Parent: JSONEndpoint>: EndpointDelegate<Parent> {
+    
+    /// Handle a response from a background request. Override this in your own delegate.
+    open override func received(_ response: Result<Parent.Response, WMATAError>) {
+        assertionFailure("JSONEndpointDelegate received response. Override `func received(_ response: Result<Parent.Response, WMATAError>)` to receive background requests.")
+    }
+    
     /// Turns responses from the Standard API into ``Endpoint/Response`` structures or ``WMATAError``.
     open override func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
         received(loadData(from: location)
@@ -92,8 +98,14 @@ open class JSONEndpointDelegate<Parent: JSONEndpoint>: EndpointDelegate<Parent> 
 
 /// A delegate for GTFS API endpoints.
 ///
-/// To make your own delegate, sublcass this and override ``EndpointDelegate/received(_:)``.
+/// To make your own delegate, sublcass this and override ``received(_:)``.
 open class GTFSEndpointDelegate<Parent: GTFSEndpoint>: EndpointDelegate<Parent> {
+    
+    /// Handle a response from a background request. Override this in your own delegate.
+    open override func received(_ response: Result<Parent.Response, WMATAError>) {
+        assertionFailure("GTFSEndpointDelegate received response. Override `func received(_ response: Result<Parent.Response, WMATAError>)` to receive background requests.")
+    }
+    
     /// Turns responses from the GTFS API into `TransitRealtime_FeedMessage` or ``WMATAError``.
     open override func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
         received(loadData(from: location)

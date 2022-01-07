@@ -17,4 +17,35 @@ class LineTests: XCTestCase {
         XCTAssertEqual(Line.green.name, "Green")
         XCTAssertEqual(Line.silver.name, "Silver")
     }
+    
+    func testSharesTracksWith() {
+        XCTAssertEqual(Line.red.sharesTracksWith, [])
+        XCTAssertEqual(
+            Line.blue.sharesTracksWith,
+            [.yellow, .orange, .silver]
+        )
+        XCTAssertEqual(
+            Line.yellow.sharesTracksWith,
+            [.blue, .green]
+        )
+        XCTAssertEqual(
+            Line.orange.sharesTracksWith,
+            [.silver, .blue]
+        )
+        XCTAssertEqual(
+            Line.green.sharesTracksWith,
+            [.yellow]
+        )
+        XCTAssertEqual(
+            Line.silver.sharesTracksWith,
+            [.orange, .blue]
+        )
+    }
+    
+    func testLineOrder() {
+        XCTAssertEqual(
+            Line.allCases,
+            [.red, .orange, .blue, .green, .yellow, .silver]
+        )
+    }
 }

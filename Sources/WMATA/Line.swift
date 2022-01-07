@@ -9,24 +9,26 @@ import Combine
 import Foundation
 
 /// A Metrorail line
+/// ![Metrorail system map](metrorail-map)
 ///
 /// Represents the various, colorful rail lines within the Metrorail system.
-/// ![Metrorail system map](metrorail-map)
+///
+/// `Lines.allCases` returns lines ordered as they are in on the system map.
 public enum Line: String, CaseIterable, Codable, Hashable, Equatable, RawRepresentable {
     /// Red Line
     case red = "RD"
     
-    /// Blue Line
-    case blue = "BL"
-    
-    /// Yellow Line
-    case yellow = "YL"
-    
     /// Orange Line
     case orange = "OR"
     
+    /// Blue Line
+    case blue = "BL"
+    
     /// Green Line
     case green = "GR"
+    
+    /// Yellow Line
+    case yellow = "YL"
     
     /// Silver Line
     case silver = "SV"
@@ -59,8 +61,28 @@ public extension Line {
     
     /// Deprecated. Use `allCases` instead.
     @available(*, deprecated, renamed: "allCases", message: "All lines are now current.")
-    static var allCurrent: [Self] {
-        [.red, .blue, .yellow, .orange, .green, .silver]
+    static var allCurrent: [Line] {
+        [.red, .orange, .blue, .green, .yellow, .silver]
+    }
+    
+    /// Lines that this line shares tracks with at any point.
+    ///
+    /// Lines are in system map order.
+    var sharesTracksWith: [Line] {
+        switch self {
+        case .red:
+            return []
+        case .blue:
+            return [.orange, .yellow, .silver]
+        case .yellow:
+            return [.blue, .green]
+        case .orange:
+            return [.silver, .blue]
+        case .green:
+            return [.yellow]
+        case .silver:
+            return [.orange, .blue]
+        }
     }
 }
 

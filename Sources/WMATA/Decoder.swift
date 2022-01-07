@@ -24,7 +24,7 @@ public extension JSONDecoder.KeyDecodingStrategy {
     /// Decodes keys in responses from the WMATA Standard API.
     ///
     /// This strategy decodes certain keys into completely separate keys defined in endpoint responses. This includes renaming and mapping certain values to `nil`. In all cases, this stategy will decode pascal case keys into camel case keys appropriate for Swift APIs.
-    static var convertFromWMATA: Self {
+    static var convertFromWMATA: JSONDecoder.KeyDecodingStrategy {
         .custom { codingPath in
             let relevantKey = codingPath.last!
             
@@ -43,7 +43,7 @@ public extension JSONDecoder.KeyDecodingStrategy {
 }
 
 extension JSONDecoder.KeyDecodingStrategy {
-    static var convertFromPascalCase: Self {
+    static var convertFromPascalCase: JSONDecoder.KeyDecodingStrategy {
         .custom { codingPath in
             PascalCaseKey(stringValue: codingPath.last!.stringValue)
         }
@@ -148,8 +148,8 @@ public extension DateFormatter {
     /// Dates from WMATA's API are _nearly_ ISO-8601, but not quite. They're missing a timezone incidator, which is non-standard. This formatter assumes EST, which is what WMATA states all of their dates are formatted in.
     ///
     /// > Note: If you're having issues with dates coming from the API, check to confirm the timezone is correct. This formatter assumes EST, but I've been burned by the API enough times to not trust WMATA's claim that these dates are always EST.
-    static var wmataFormat: Self {
-        let formatter = Self()
+    static var wmataFormat: DateFormatter {
+        let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
         formatter.locale = Locale(identifier: "en_US_POSIX")
         formatter.timeZone = TimeZone(abbreviation: "EST")!
