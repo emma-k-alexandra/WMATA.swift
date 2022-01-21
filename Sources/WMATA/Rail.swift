@@ -167,6 +167,19 @@ public extension Rail {
                 ///
                 /// Populated for multilevel stations like L'Enfant Plaza, Metro Center, otherwise `nil`
                 @MapToNil<Station, EmptyString> public var secondStation: Station?
+                
+                /// If this entrance is an elevator or escalators
+                public enum EntranceType: Codable, Equatable, Hashable {
+                    case elevator
+                    case escalator
+                }
+                
+                /// If this entrance is an elevator or escalators.
+                ///
+                /// - Complexity: O(n), where *n*  is the length of the entrance name.
+                public var entranceType: EntranceType {
+                    name.contains("ELEVATOR") ? .elevator : .escalator
+                }
 
                 /// Create a station entrance response
                 ///
