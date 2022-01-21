@@ -87,6 +87,33 @@ final class RailTests: XCTestCase {
 
         waitForExpectations(timeout: 1)
     }
+    
+    func testEntrancesType() async {
+        let exp = expectation(description: name)
+        let entrances = Rail.StationEntrances(
+            key: TEST_API_KEY,
+            location: .init(
+                radius: 1000,
+                coordinates: .init(
+                    latitude: 38.881273,
+                    longitude: -77.015195
+                )
+            )
+        )
+        
+        let result = await entrances.request()
+
+        switch result {
+        case let .success(response):
+            XCTAssertEqual(response.entrances.first?.entranceType, .escalator)
+            exp.fulfill()
+
+        case let .failure(error):
+            print(error)
+        }
+
+        await waitForExpectations(timeout: 1)
+    }
 
     func testAllEntrances() {
         let exp = expectation(description: name)
