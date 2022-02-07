@@ -395,8 +395,9 @@ public extension Bus {
             /// Stop information
             public struct Stop: Codable, Equatable, Hashable {
                 /// The ``WMATA/Stop``
-                /// > Warning: A `stop` of `0` incidates an unknown stop.
-                public let stop: WMATA.Stop?
+                ///
+                /// The API value `"0"` is mapped to `nil`.
+                @MapToNil<WMATA.Stop, SingleZero> public var stop: WMATA.Stop?
                 
                 /// Stop name. May be slightly different from what is spoken or displayed in the bus.
                 public let name: String
@@ -419,7 +420,7 @@ public extension Bus {
                 ///     - longitude: longitude of stop
                 ///     - routes: Routes that provide service to this stop
                 public init(
-                    stop: WMATA.Stop,
+                    stop: WMATA.Stop?,
                     name: String,
                     latitude: Double,
                     longitude: Double,
@@ -505,8 +506,8 @@ public extension Bus {
             ///     - directionOne: List of route info
             public init(
                 name: String,
-                directionZero: [RouteInfo],
-                directionOne: [RouteInfo]
+                directionZero: [RouteInfo]?,
+                directionOne: [RouteInfo]?
             ) {
                 self.name = name
                 self.directionZero = directionZero
@@ -573,9 +574,10 @@ public extension Bus {
                 
                 /// Information about a ``Stop``
                 public struct StopInfo: Codable, Equatable, Hashable {
-                    /// A Metrobus stop
-                    /// > Warning: A `stop` of `0` incidates an unknown stop.
-                    public let stop: Stop?
+                    /// The ``WMATA/Stop``
+                    ///
+                    /// The API value `"0"` is mapped to `nil`.
+                    @MapToNil<Stop, SingleZero> public var stop: Stop?
                     
                     /// Stop name. May be slightly different from what is spoken or displayed in the bus.
                     public let stopName: String
@@ -594,7 +596,7 @@ public extension Bus {
                     ///     - stopSequence: Order of the stop in sequence
                     ///     - time: Scheduled departure time from this stop
                     public init(
-                        stop: Stop,
+                        stop: Stop?,
                         stopName: String,
                         stopSequence: Int,
                         time: Date
@@ -999,7 +1001,7 @@ public extension Bus {
                 /// Denotes the route variant’s grouping
                 ///
                 /// Lines are a combination of routes which lie in the same corridor and which have significant portions of their paths along the same roadways.
-                public let lineDescription: String
+                public let lineDescription: String?
 
                 /// Create a route response
                 ///
@@ -1010,7 +1012,7 @@ public extension Bus {
                 public init(
                     route: WMATA.Route,
                     name: String,
-                    lineDescription: String
+                    lineDescription: String?
                 ) {
                     self.route = route
                     self.name = name

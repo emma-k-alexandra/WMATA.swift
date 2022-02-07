@@ -59,7 +59,15 @@ When your application receives a response from the API, `received(_:)` will be c
 
 ## Application Extensions
 
-In order to make background requests within an application extension, you must supply a [shared container identifier](https://developer.apple.com/documentation/foundation/urlsessionconfiguration/1409450-sharedcontaineridentifier) to your delegate. This is done with ``EndpointDelegate/sharedContainerIdentifier``. Modifying the example above's custom delegate to include a shared container identifier looks like:
+In order to make background requests within an application extension, you must supply a [shared container identifier](https://developer.apple.com/documentation/foundation/urlsessionconfiguration/1409450-sharedcontaineridentifier) to your delegate. This is done with ``EndpointDelegate/sharedContainerIdentifier``. Use the convenience initializer:
+
+```swift
+CustomEndpointDelegate(
+    sharedContainerIdentifier:  "com.mycompany.myapp.backgroundsession"
+)
+```
+
+or set the identifier in your own code:
 
 ```swift
 class CustomEndpointDelegate: JSONEndpointDelegate<Bus.NextBuses> {
@@ -74,4 +82,4 @@ class CustomEndpointDelegate: JSONEndpointDelegate<Bus.NextBuses> {
 }
 ```
 
-You can read more about shared container identifiers in the "Performing Uploads and Downloads" section of Apple's [App Extension Programming Guide](https://developer.apple.com/library/archive/documentation/General/Conceptual/ExtensibilityPG/ExtensionScenarios.html#//apple_ref/doc/uid/TP40014214-CH21-SW1).
+Also see Apple's [Downloading Files in the Background](https://developer.apple.com/documentation/foundation/url_loading_system/downloading_files_in_the_background).

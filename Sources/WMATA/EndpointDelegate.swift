@@ -13,6 +13,14 @@ import GTFS
 /// This class is not indented for direct use. Instead, subclass ``JSONEndpointDelegate`` or ``GTFSEndpointDelegate``.
 open class EndpointDelegate<Parent: Endpoint>: NSObject, URLSessionDownloadDelegate, WMATADecoding {
     
+    /// Create this endpoint delegate with a shared container identifier.
+    ///
+    /// See ``sharedContainerIdentifier``.
+    convenience init(sharedContainerIdentifier: String) {
+        self.init()
+        self.sharedContainerIdentifier = sharedContainerIdentifier
+    }
+    
     /// Handle a response from a background request. Override this in your own delegate.
     open func received(_ response: Result<Parent.Response, WMATAError>) {
         assertionFailure("Base EndpointDelegate received response. Override `func received(_ response: Result<Parent.Response, WMATAError>)` to receive background requests.")

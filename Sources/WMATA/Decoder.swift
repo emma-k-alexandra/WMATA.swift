@@ -199,7 +199,7 @@ where
             return
         }
         
-        let stringValue = try container.decode(String.self)
+        let stringValue = try container.decode(MappedValues.ValueType.self)
         
         if MappedValues.allValues.contains(stringValue) {
             wrappedValue = nil
@@ -222,9 +222,10 @@ where
 ///
 /// These values must be defined at a static level like this to allow for initialization via `Decodable`.
 public protocol WMATAMappedValues: Hashable {
+    associatedtype ValueType: Codable & Hashable
     
     /// Values to map to `nil`.
-    static var allValues: [String] { get }
+    static var allValues: [ValueType] { get }
 }
 
 /// Map an empty string to `nil`.
@@ -245,4 +246,9 @@ public struct SingleDash: WMATAMappedValues, Equatable, Hashable {
 /// Map the value `"0"` to `nil`.
 public struct SingleZero: WMATAMappedValues, Equatable, Hashable {
     public static let allValues = ["0"]
+}
+
+/// Map the value `0` to `nil`.
+public struct SingleIntZero: WMATAMappedValues, Equatable, Hashable {
+    public static let allValues = [0]
 }
