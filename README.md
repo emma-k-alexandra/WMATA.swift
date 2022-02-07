@@ -1,6 +1,6 @@
 # WMATA.swift
 
-WMATA.swift is a Swift interface to the [Washington Metropolitan Area Transit Authority API][wmata].
+WMATA.swift is a Swift interface to the [Washington Metropolitan Area Transit Authority API](https://developer.wmata.com).
 
 ## Contents
 
@@ -35,10 +35,12 @@ dependencies: [
 
 Full documentation is available within Xcode, or [on the web in a slightly broken form](https://github.com/emma-k-alexandra/WMATA.swift/blob/main/Sources/WMATA/WMATA.docc/Documentation.md). Thanks DocC!
 
+To view documentation within Xcode, within the menu navigate to `Product > Build Documentation`. WMATA's documentation will appear under `Workspace Documentation` within the Developer Documentation window. Navigate to `Window > Developer Documentation` to open this window.
+
 ## Dependencies
 
-- [GTFS][gtfs]
-- [swift-protobuf][swift-protobuf], for GTFS-RT feeds.
+- [GTFS](https://github.com/emma-k-alexandra/GTFS), for GTFS-RT feeds.
+- [swift-protobuf](https://github.com/apple/swift-protobuf), for GTFS-RT feeds.
 - [DVR](https://github.com/venmo/DVR), for testing.
 
 ## Contact
@@ -57,7 +59,3 @@ Todo:
 ## License
 
 WMATA.swift is released under the MIT license. [See LICENSE](https://github.com/emma-k-alexandra/WMATA.swift/blob/master/LICENSE) for details.
-
-[gtfs]: https://github.com/emma-k-alexandra/GTFS
-[swift-protobuf]: https://github.com/apple/swift-protobuf
-[wmata]: https://developer.wmata.com

@@ -91,3 +91,4 @@ You can create custom values to map to nil in your response structure by adoptin
 - ``EmptyString``
 - ``SingleDash``
 - ``SingleZero``
+- ``SingleIntZero``

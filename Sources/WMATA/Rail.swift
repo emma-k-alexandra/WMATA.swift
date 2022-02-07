@@ -251,7 +251,7 @@ public extension Rail {
                 self.trainPositions = trainPositions
             }
             
-            /// A train position
+            /// The live location of a train within the rail system.
             public struct Positions: Codable, Equatable, Hashable {
                 /// Uniquely identifiable internal train identifier
                 public let trainID: String
@@ -261,8 +261,10 @@ public extension Rail {
                 /// Used by WMATA's Rail Scheduling and Operations Teams, as well as over open radio communication.
                 public let trainNumber: String
                 
-                /// Number of cars. Can be `0`.
-                public let carCount: Int
+                /// Number of cars.
+                ///
+                /// The API value `0` is mapped to `nil`.
+                @MapToNil<Int, SingleIntZero> public var carCount: Int?
                 
                 /// The direction of movement regardless of which track the train is on.
                 public let directionNumber: Int
@@ -322,7 +324,7 @@ public extension Rail {
                 public init(
                     trainID: String,
                     trainNumber: String,
-                    carCount: Int,
+                    carCount: Int?,
                     directionNumber: Int,
                     circuitID: Int,
                     destination: Station?,
@@ -1039,6 +1041,16 @@ public extension Rail {
             []
         }
         
+        /// Create a Next Trains call for all stations
+        ///
+        /// - Parameters
+        ///     - key: WMATA API Key for this request
+        ///     - delegate: Delegate to send background requests to
+        public init(key: APIKey, delegate: JSONEndpointDelegate<Rail.NextTrains>? = nil) {
+            self.key = key
+            self.delegate = delegate
+        }
+        
         /// Create a Next Trains call for multiple or all stations
         ///
         /// - Parameters
@@ -1081,7 +1093,7 @@ public extension Rail {
                 self.trains = trains
             }
             
-            ///
+            /// Information about upcoming train arrivals
             public struct Prediction: Codable, Equatable, Hashable {
                 /// The number of cars a train has
                 public enum Cars: String, Codable {
@@ -1222,9 +1234,9 @@ public extension Rail {
                     destination: Station?,
                     destinationName: String,
                     group: String,
-                    line: Line,
+                    line: Line?,
                     location: Station,
-                    locationName: String,
+                    locationName: String?,
                     minutes: Minutes
                 ) {
                     self.car = car

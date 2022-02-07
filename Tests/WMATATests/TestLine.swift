@@ -22,7 +22,7 @@ class LineTests: XCTestCase {
         XCTAssertEqual(Line.red.sharesTracksWith, [])
         XCTAssertEqual(
             Line.blue.sharesTracksWith,
-            [.yellow, .orange, .silver]
+            [.orange, .yellow, .silver]
         )
         XCTAssertEqual(
             Line.yellow.sharesTracksWith,
