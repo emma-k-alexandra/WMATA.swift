@@ -107,6 +107,7 @@ struct WMATACodingKey: CodingKey, Equatable, Hashable {
         "StationTogether1": "firstStationTogether",
         "StationTogether2": "secondStationTogether",
         "DestinationStation": "destination",
+        "DestinationCode": "destination",
         "SourceStation": "source",
         "ElevatorIncidents": "incidents",
         "DateOutOfServ": "dateOutOfService",
