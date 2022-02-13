@@ -16,7 +16,7 @@ open class EndpointDelegate<Parent: Endpoint>: NSObject, URLSessionDownloadDeleg
     /// Create this endpoint delegate with a shared container identifier.
     ///
     /// See ``sharedContainerIdentifier``.
-    convenience init(sharedContainerIdentifier: String) {
+    convenience public init(sharedContainerIdentifier: String) {
         self.init()
         self.sharedContainerIdentifier = sharedContainerIdentifier
     }
