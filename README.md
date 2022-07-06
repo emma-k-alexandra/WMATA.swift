@@ -26,7 +26,7 @@ dependencies: [
     .package(
         name: "WMATA",
         url: "https://github.com/emma-k-alexandra/WMATA.swift.git", 
-        .upToNextMajor(from: "13.0.0")
+        .upToNextMajor(from: "14.0.0")
     )
 ]
 ```
