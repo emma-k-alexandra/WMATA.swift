@@ -17,9 +17,9 @@ let package = Package(
     ],
     dependencies: [
         .package(
-            name: "GTFS",
-            url: "https://github.com/emma-k-alexandra/GTFS.git",
-            .upToNextMajor(from: .init(1, 0, 1))
+            name: "SwiftProtobuf",
+            url: "https://github.com/apple/swift-protobuf.git",
+            .upToNextMajor(from: .init(1, 18, 0))
         ),
         .package(
             name: "DVR",
@@ -31,7 +31,7 @@ let package = Package(
         .target(
             name: "WMATA",
             dependencies: [
-                "GTFS",
+                "SwiftProtobuf"
             ]
         ),
         .testTarget(

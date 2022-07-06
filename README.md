@@ -39,7 +39,6 @@ To view documentation within Xcode, within the menu navigate to `Product > Build
 
 ## Dependencies
 
-- [GTFS](https://github.com/emma-k-alexandra/GTFS), for GTFS-RT feeds.
 - [swift-protobuf](https://github.com/apple/swift-protobuf), for GTFS-RT feeds.
 - [DVR](https://github.com/venmo/DVR), for testing.
 
