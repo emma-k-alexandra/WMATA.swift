@@ -8,7 +8,7 @@ If you are persisting responses from the WMATA API in your application, you may 
 
 ## The WMATADecoding Protocol
 
-Internally this package uses the ``WMATADecoding`` protocol to decode responses from both the Standard and GTFS APIs. This protocol is also available to you. Simply adopt the protocol on your own object and call the ``WMATADecoding/decode(standard:)-3so7u`` or ``WMATADecoding/decode(gtfs:)-7ucan`` functions on your object. These methods return a `Result` with your ``Endpoint/Response`` or a ``WMATAError``.
+Internally this package uses the ``WMATADecoding`` protocol to decode responses from both the Standard and GTFS APIs. This protocol is also available to you. Simply adopt the protocol on your own object and call the ``WMATADecoding/decode(standard:)-3so7u`` or   ``WMATADecoding/decode(gtfs:)-66ov5`` functions on your object. These methods return a `Result` with your ``Endpoint/Response`` or a ``WMATAError``.
 
 ### Example
 

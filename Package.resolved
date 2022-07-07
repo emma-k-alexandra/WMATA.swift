@@ -11,12 +11,12 @@
         }
       },
       {
-        "package": "GTFS",
-        "repositoryURL": "https://github.com/emma-k-alexandra/GTFS.git",
+        "package": "SwiftDocCPlugin",
+        "repositoryURL": "https://github.com/apple/swift-docc-plugin",
         "state": {
           "branch": null,
-          "revision": "92197f4c41aba53889a2db1e2e9d6dbe4022a223",
-          "version": "1.0.1"
+          "revision": "3303b164430d9a7055ba484c8ead67a52f7b74f6",
+          "version": "1.0.0"
         }
       },
       {

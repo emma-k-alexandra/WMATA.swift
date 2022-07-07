@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import GTFS
 import SwiftProtobuf
 
 /// Protocol for decoding responses from WMATA's API

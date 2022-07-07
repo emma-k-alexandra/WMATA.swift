@@ -465,7 +465,7 @@ final class BusCombineTests: CombineTests {
 
         deferCancellable(cancellable)
 
-        waitForExpectations(timeout: 1)
+        waitForExpectations(timeout: 5)
     }
 
     func testVehiclePositionsPublisher() {

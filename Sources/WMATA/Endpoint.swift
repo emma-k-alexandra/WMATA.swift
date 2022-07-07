@@ -7,7 +7,6 @@
 
 import Foundation
 import Combine
-import GTFS
 
 /// Protocol defining a WMATA API endpoint.
 ///

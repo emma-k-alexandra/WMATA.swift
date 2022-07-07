@@ -7,7 +7,6 @@
 
 import Combine
 import Foundation
-import GTFS
 @testable import WMATA
 import XCTest
 
@@ -227,7 +226,7 @@ final class RailTests: XCTestCase {
             }
         }
 
-        waitForExpectations(timeout: 1)
+        waitForExpectations(timeout: 3)
     }
 
     func testStationToStationWithDelegate() {
@@ -795,7 +794,7 @@ final class RailGTFSTests: XCTestCase {
             }
         }
 
-        waitForExpectations(timeout: 1)
+        waitForExpectations(timeout: 3)
     }
 
     func testTripUpdatesWithDelegate() {
@@ -1200,7 +1199,7 @@ final class RailCombineTests: CombineTests {
 
         deferCancellable(cancellable)
 
-        waitForExpectations(timeout: 1)
+        waitForExpectations(timeout: 5)
     }
 
     func testTimingsPublisher() {

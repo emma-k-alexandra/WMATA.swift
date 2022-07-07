@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import GTFS
 
 /// Base delegate for receiving background responses from an ``Endpoint``.
 ///
