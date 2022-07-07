@@ -235,4 +235,41 @@ final class TestBusGTFSDVR: DVRTestCase {
         
         wait(for: [expectation], timeout: 5)
     }
+    
+    func testAsyncVehiclePositions() async {
+        let vehiclePositions = Rail.GTFS.VehiclePositions(key: TEST_API_KEY)
+        
+        let result = await vehiclePositions.request()
+        
+        switch result {
+        case let .success(feedMessage):
+            let feedEntity = feedMessage.entity.first!
+            
+            if feedEntity.hasVehicle {
+                let vehiclePosition = feedEntity.vehicle
+                
+                if vehiclePosition.hasPosition {
+                    let position = feedEntity.vehicle.position
+                    let latitude: Float
+                    let longitude: Float
+                    
+                    guard position.hasLatitude else {
+                        return
+                    }
+                    
+                    latitude = position.latitude
+                    
+                    guard position.hasLongitude else {
+                        return
+                    }
+                    
+                    longitude = position.longitude
+                    
+                    print("(\(latitude), \(longitude)") // (38.8764971, -77.0054798)
+                }
+            }
+        case let .failure(error):
+            print(error)
+        }
+    }
 }

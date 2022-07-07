@@ -37,3 +37,16 @@ This package is looking to improve its GTFS support in the future. Until then, I
 - ``Bus/GTFS``
 - ``GTFSEndpoint``
 - ``GTFSEndpointDelegate``
+- ``TransitRealtime_Alert``
+- ``TransitRealtime_VehiclePosition``
+- ``TransitRealtime_TripUpdate``
+- ``TransitRealtime_FeedEntity``
+- ``TransitRealtime_FeedHeader``
+- ``TransitRealtime_FeedMessage``
+- ``TransitRealtime_Position``
+- ``TransitRealtime_TimeRange``
+- ``TransitRealtime_TranslatedString``
+- ``TransitRealtime_TripDescriptor``
+- ``TransitRealtime_EntitySelector``
+- ``TransitRealtime_VehicleDescriptor``
+

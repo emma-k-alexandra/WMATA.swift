@@ -46,6 +46,10 @@ For more details, check out <doc:Endpoints>.
 - <doc:Metrorail>
 - <doc:Metrobus>
 
+### GTFS
+
+- <doc:GTFS-RT>
+
 ### Supporting structures
 
 - ``WMATALocation``
