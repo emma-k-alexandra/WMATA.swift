@@ -68,6 +68,7 @@ For more details, check out <doc:Endpoints>.
 
 ### Updating from Previous Versions
 
+- <doc:v14.1-Migration-Guide>
 - <doc:v14-Migration-Guide>
 - <doc:v13-Migration-Guide>
 - <doc:v12-Migration-Guide>
