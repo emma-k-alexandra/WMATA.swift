@@ -335,7 +335,7 @@ extension Station {
             .weekday: DateComponents(hour: 4, minute: 59),
             .saturday: DateComponents(hour: 6, minute: 59),
         ],
-        .princeGeorgesPlaza: [
+        .hyattsvilleCrossing: [
             .sunday: DateComponents(hour: 7, minute: 56),
             .weekday: DateComponents(hour: 4, minute: 56),
             .saturday: DateComponents(hour: 6, minute: 56),
@@ -425,7 +425,7 @@ extension Station {
             .weekday: DateComponents(hour: 4, minute: 47),
             .saturday: DateComponents(hour: 6, minute: 47),
         ],
-        .largoTownCenter: [
+        .downtownLargo: [
             .sunday: DateComponents(hour: 7, minute: 44),
             .weekday: DateComponents(hour: 4, minute: 44),
             .saturday: DateComponents(hour: 6, minute: 44),
@@ -485,7 +485,7 @@ extension Station {
             .weekday: DateComponents(hour: 5, minute: 3),
             .saturday: DateComponents(hour: 7, minute: 3),
         ],
-        .tysonsCorner: [
+        .tysons: [
             .sunday: DateComponents(hour: 8, minute: 1),
             .weekday: DateComponents(hour: 5, minute: 1),
             .saturday: DateComponents(hour: 7, minute: 1),

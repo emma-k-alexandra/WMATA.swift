@@ -201,6 +201,9 @@ public extension Station {
     @available(*, deprecated, renamed: "princeGeorgesPlaza")
     static let E08 = Self.princeGeorgesPlaza
     
+    @available(*, deprecated, renamed: "hyattsvilleCrossing")
+    static let princeGeorgesPlaza = Self.hyattsvilleCrossing
+    
     @available(*, deprecated, renamed: "collegePark")
     static let E09 = Self.collegePark
     
@@ -252,8 +255,11 @@ public extension Station {
     @available(*, deprecated, renamed: "morganBoulevard")
     static let G04 = Self.morganBoulevard
     
-    @available(*, deprecated, renamed: "largoTownCenter")
-    static let G05 = Self.largoTownCenter
+    @available(*, deprecated, renamed: "downtownLargo")
+    static let G05 = Self.downtownLargo
+    
+    @available(*, deprecated, renamed: "downtownLargo")
+    static let largoTownCenter = Self.downtownLargo
     
     @available(*, deprecated, renamed: "vanDornStreet")
     static let J02 = Self.vanDornStreet
@@ -288,8 +294,11 @@ public extension Station {
     @available(*, deprecated, renamed: "mcLean")
     static let N01 = Self.mcLean
     
-    @available(*, deprecated, renamed: "tysonsCorner")
-    static let N02 = Self.tysonsCorner
+    @available(*, deprecated, renamed: "tysons")
+    static let N02 = Self.tysons
+    
+    @available(*, deprecated, renamed: "tysons")
+    static let tysonsCorner = Self.tysons
     
     @available(*, deprecated, renamed: "greensboro")
     static let N03 = Self.greensboro

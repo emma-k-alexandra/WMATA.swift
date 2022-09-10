@@ -82,7 +82,7 @@ public enum Station: String, CaseIterable, Codable, Equatable, Hashable, RawRepr
     /// Green and Yellow line tracks for Fort Totten
     case fortTottenLower = "E06"
     case westHyattsville = "E07"
-    case princeGeorgesPlaza = "E08"
+    case hyattsvilleCrossing = "E08"
     case collegePark = "E09"
     case greenbelt = "E10"
     /// Green and Yellow line tracks for Gallery Place
@@ -102,7 +102,7 @@ public enum Station: String, CaseIterable, Codable, Equatable, Hashable, RawRepr
     case capitolHeights = "G02"
     case addisonRoad = "G03"
     case morganBoulevard = "G04"
-    case largoTownCenter = "G05"
+    case downtownLargo = "G05"
     case vanDornStreet = "J02"
     case franconia = "J03"
     case courtHouse = "K01"
@@ -114,7 +114,7 @@ public enum Station: String, CaseIterable, Codable, Equatable, Hashable, RawRepr
     case dunnLoring = "K07"
     case vienna = "K08"
     case mcLean = "N01"
-    case tysonsCorner = "N02"
+    case tysons = "N02"
     case greensboro = "N03"
     case springHill = "N04"
     case wiehle = "N06"
@@ -318,8 +318,8 @@ public extension Station {
         case .westHyattsville:
             return "West Hyattsville"
 
-        case .princeGeorgesPlaza:
-            return "Prince George's Plaza"
+        case .hyattsvilleCrossing:
+            return "Hyattsville Crossing"
 
         case .collegePark:
             return "College Park-U of Md"
@@ -372,8 +372,8 @@ public extension Station {
         case .morganBoulevard:
             return "Morgan Boulevard"
 
-        case .largoTownCenter:
-            return "Largo Town Center"
+        case .downtownLargo:
+            return "Downtown Largo"
 
         case .vanDornStreet:
             return "Van Dorn Street"
@@ -397,7 +397,7 @@ public extension Station {
             return "East Falls Church"
 
         case .westFallsChurch:
-            return "West Falls Church-VT/UVA"
+            return "West Falls Church-VT"
 
         case .dunnLoring:
             return "Dunn Loring-Merrifield"
@@ -408,8 +408,8 @@ public extension Station {
         case .mcLean:
             return "McLean"
 
-        case .tysonsCorner:
-            return "Tysons Corner"
+        case .tysons:
+            return "Tysons"
 
         case .greensboro:
             return "Greensboro"
@@ -461,19 +461,19 @@ public extension Station {
         case .minnesotaAve, .deanwood, .cheverly, .landover, .newCarrollton, .westFallsChurch, .dunnLoring, .vienna:
             return [.orange]
 
-        case .fortTottenLower, .galleryPlaceLower, .lenfantPlazaUpper, .mtVernonSq7thSt, .shaw, .uStreet, .columbiaHeights, .georgiaAve, .westHyattsville, .princeGeorgesPlaza, .collegePark, .greenbelt, .archives:
+        case .fortTottenLower, .galleryPlaceLower, .lenfantPlazaUpper, .mtVernonSq7thSt, .shaw, .uStreet, .columbiaHeights, .georgiaAve, .westHyattsville, .hyattsvilleCrossing, .collegePark, .greenbelt, .archives:
             return [.green, .yellow]
 
         case .waterfront, .navyYard, .anacostia, .congressHeights, .southernAvenue, .naylorRoad, .suitland, .branchAve:
             return [.green]
 
-        case .benningRoad, .capitolHeights, .addisonRoad, .morganBoulevard, .largoTownCenter:
+        case .benningRoad, .capitolHeights, .addisonRoad, .morganBoulevard, .downtownLargo:
             return [.blue, .silver]
 
         case .courtHouse, .clarendon, .virginiaSquare, .ballston, .eastFallsChurch:
             return [.orange, .silver]
 
-        case .mcLean, .tysonsCorner, .greensboro, .springHill, .wiehle, .restonTownCenter, .herndon, .innovationCenter, .dullesInternationalAirport, .loudounGateway, .ashburn:
+        case .mcLean, .tysons, .greensboro, .springHill, .wiehle, .restonTownCenter, .herndon, .innovationCenter, .dullesInternationalAirport, .loudounGateway, .ashburn:
             return [.silver]
         }
     }
@@ -489,7 +489,7 @@ public extension Station {
     ///
     /// Potomac Yard and Silver Line Phase 2 expansion stations are excluded.
     static var allOpen: [Station] {
-        [.metroCenterUpper, .farragutNorth, .dupontCircle, .woodleyPark, .clevelandPark, .vanNess, .tenleytown, .friendshipHeights, .bethesda, .medicalCenter, .grosvenor, .northBethesda, .twinbrook, .rockville, .shadyGrove, .galleryPlaceUpper, .judiciarySquare, .unionStation, .rhodeIslandAve, .brookland, .fortTottenUpper, .takoma, .silverSpring, .forestGlen, .wheaton, .glenmont, .noma, .metroCenterLower, .mcphersonSquare, .farragutWest, .foggyBottom, .rosslyn, .arlingtonCemetery, .pentagon, .pentagonCity, .crystalCity, .ronaldReaganWashingtonNationalAirport, .braddockRoad, .kingSt, .eisenhowerAvenue, .huntington, .federalTriangle, .smithsonian, .lenfantPlazaLower, .federalCenterSW, .capitolSouth, .easternMarket, .potomacAve, .stadium, .minnesotaAve, .deanwood, .cheverly, .landover, .newCarrollton, .mtVernonSq7thSt, .shaw, .uStreet, .columbiaHeights, .georgiaAve, .fortTottenLower, .westHyattsville, .princeGeorgesPlaza, .collegePark, .greenbelt, .galleryPlaceLower, .archives, .lenfantPlazaUpper, .waterfront, .navyYard, .anacostia, .congressHeights, .southernAvenue, .naylorRoad, .suitland, .branchAve, .benningRoad, .capitolHeights, .addisonRoad, .morganBoulevard, .largoTownCenter, .vanDornStreet, .franconia, .courtHouse, .clarendon, .virginiaSquare, .ballston, .eastFallsChurch, .westFallsChurch, .dunnLoring, .vienna, .mcLean, .tysonsCorner, .greensboro, .springHill, .wiehle]
+        [.metroCenterUpper, .farragutNorth, .dupontCircle, .woodleyPark, .clevelandPark, .vanNess, .tenleytown, .friendshipHeights, .bethesda, .medicalCenter, .grosvenor, .northBethesda, .twinbrook, .rockville, .shadyGrove, .galleryPlaceUpper, .judiciarySquare, .unionStation, .rhodeIslandAve, .brookland, .fortTottenUpper, .takoma, .silverSpring, .forestGlen, .wheaton, .glenmont, .noma, .metroCenterLower, .mcphersonSquare, .farragutWest, .foggyBottom, .rosslyn, .arlingtonCemetery, .pentagon, .pentagonCity, .crystalCity, .ronaldReaganWashingtonNationalAirport, .braddockRoad, .kingSt, .eisenhowerAvenue, .huntington, .federalTriangle, .smithsonian, .lenfantPlazaLower, .federalCenterSW, .capitolSouth, .easternMarket, .potomacAve, .stadium, .minnesotaAve, .deanwood, .cheverly, .landover, .newCarrollton, .mtVernonSq7thSt, .shaw, .uStreet, .columbiaHeights, .georgiaAve, .fortTottenLower, .westHyattsville, .hyattsvilleCrossing, .collegePark, .greenbelt, .galleryPlaceLower, .archives, .lenfantPlazaUpper, .waterfront, .navyYard, .anacostia, .congressHeights, .southernAvenue, .naylorRoad, .suitland, .branchAve, .benningRoad, .capitolHeights, .addisonRoad, .morganBoulevard, .downtownLargo, .vanDornStreet, .franconia, .courtHouse, .clarendon, .virginiaSquare, .ballston, .eastFallsChurch, .westFallsChurch, .dunnLoring, .vienna, .mcLean, .tysons, .greensboro, .springHill, .wiehle]
     }
 
     /// The opening time for this station on the given date.
