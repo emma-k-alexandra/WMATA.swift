@@ -1009,9 +1009,7 @@ public extension Rail {
     ///
     /// Some stations have two platforms (e.g.: Gallery Place, Fort Totten, L'Enfant Plaza, and Metro Center). Use `Array.galleryPlace` and similar for these stations.
     ///
-    /// For trains with no passengers, the `destinationName` will be `No Passenger`.
-    ///
-    /// Refreshes every 20-30 seconds
+    /// WMATA refreshes this data every 20-30 seconds
     ///
     /// [WMATA Next Trains Documentation](https://developer.wmata.com/docs/services/547636a6f9182302184cda78/operations/547636a6f918230da855363f)
     struct NextTrains: JSONEndpoint {
@@ -1127,6 +1125,15 @@ public extension Rail {
                 ///
                 /// For trains with no passengers, will be `No Passenger`.
                 public let destinationName: String
+                
+                /// If a Metro customer can board this train.
+                ///
+                /// You can use this property to filter out trains that are marked as `No Passenger`, like the Money Train.
+                ///
+                /// - Note: The ``Rail/NextTrains`` endpoint returns non-revenue trains very often.
+                public var isRevenueService: Bool {
+                    destinationName != "No Passenger"
+                }
                 
                 /// Denotes the track this train is on, but does not necessarily equate to Track 1 or Track 2.
                 ///
