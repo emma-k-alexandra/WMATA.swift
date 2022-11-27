@@ -12,12 +12,12 @@ WMATA.swift is a Swift interface to the [Washington Metropolitan Area Transit Au
 - [Contributing](#contributing)
 - [License](#license)
 
-## Requirements
+## Installation
+
+### Requirements
 
 - Swift 5.6
 - Xcode 13.2
-
-## Installation
 
 ### Swift Package Manager
 
@@ -26,10 +26,16 @@ dependencies: [
     .package(
         name: "WMATA",
         url: "https://github.com/emma-k-alexandra/WMATA.swift.git", 
-        .upToNextMajor(from: "14.0.0")
+        .upToNextMajor(from: "15.0.0")
     )
 ]
 ```
+
+## OS Support
+
+WMATA.swift commits to supporting current minus 2 OS versions.
+
+Currently, WMATA.swift is compatible with macOS 10.15, iOS 13, tvOS 13, watchOS 6 or higher.
 
 ## Documentation
 
@@ -50,9 +56,9 @@ Feel free to email questions and comments to [emma@emma.sh](mailto:emma@emma.sh)
 
 Todo:
 
-- [ ] Build out more DVR tests
-- [ ] Last Train times (API doesn't provide full information here)
-- [ ] Automated builds
+- [ ] Build out more DVR tests.
+- [ ] Automated builds.
+- [ ] Convert async functions from a `Result` to `return` or `throw` behavior, the dominant async pattern in Swift.
 
 ## Developer
 
