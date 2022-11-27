@@ -12,7 +12,7 @@ Some changes have been made for the opening of the new Silver Line stations.
 - ``Station/innovationCenter`` now has station code `N09`, previously `N11`.
 - ``Station/loudounGateway`` now has station code `N11`, previously `N14`.
 - ``Station/ashburn`` now has station code `N12`, previously `N15`.
-- ``Station/dullesInternatonalAirport`` has been renamed ``Station/washingtonDullesInternationalAirport``.
+- ``Station/dullesInternationalAirport`` has been renamed ``Station/washingtonDullesInternationalAirport``.
 - ``Station/washingtonDullesInternationalAirport`` now has station code `N10`, previously `N12`.
 
 These Silver Line Extension Phase 2 station codes were added before WMATA releases official information about their station codes. Previously, they were based entirely off of speculation. Now the official station codes have been released.
