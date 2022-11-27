@@ -25,7 +25,7 @@ final class RailTests: XCTestCase {
             }
         }
 
-        waitForExpectations(timeout: 1)
+        waitForExpectations(timeout: 2)
     }
 
     func testLinesWithDelegate() {
@@ -38,7 +38,7 @@ final class RailTests: XCTestCase {
 
         lines.backgroundRequest()
 
-        waitForExpectations(timeout: 1)
+        waitForExpectations(timeout: 2)
     }
 
     func testEntrances() {
@@ -64,7 +64,7 @@ final class RailTests: XCTestCase {
             }
         }
 
-        waitForExpectations(timeout: 1)
+        waitForExpectations(timeout: 2)
     }
 
     func testEntrancesWithDelegate() {
@@ -84,7 +84,7 @@ final class RailTests: XCTestCase {
 
             entrances.backgroundRequest()
 
-        waitForExpectations(timeout: 1)
+        waitForExpectations(timeout: 2)
     }
     
     func testEntrancesType() async {
@@ -111,7 +111,7 @@ final class RailTests: XCTestCase {
             print(error)
         }
 
-        await waitForExpectations(timeout: 1)
+        await waitForExpectations(timeout: 2)
     }
 
     func testAllEntrances() {
@@ -128,7 +128,7 @@ final class RailTests: XCTestCase {
             }
         }
 
-        waitForExpectations(timeout: 1)
+        waitForExpectations(timeout: 10)
     }
 
     func testAllEntrancesWithDelegate() {
@@ -141,7 +141,7 @@ final class RailTests: XCTestCase {
 
         entrances.backgroundRequest()
 
-        waitForExpectations(timeout: 1)
+        waitForExpectations(timeout: 2)
     }
 
     func testStations() {
@@ -161,7 +161,7 @@ final class RailTests: XCTestCase {
             }
         }
 
-        waitForExpectations(timeout: 1)
+        waitForExpectations(timeout: 2)
     }
 
     func testStationsWithDelegate() {
@@ -175,7 +175,7 @@ final class RailTests: XCTestCase {
 
         stations.backgroundRequest()
 
-        waitForExpectations(timeout: 1)
+        waitForExpectations(timeout: 2)
     }
 
     func testAllStations() {
@@ -192,7 +192,7 @@ final class RailTests: XCTestCase {
             }
         }
 
-        waitForExpectations(timeout: 1)
+        waitForExpectations(timeout: 2)
     }
 
     func testAllStationsWithDelegate() {
@@ -205,7 +205,7 @@ final class RailTests: XCTestCase {
 
         stations.backgroundRequest()
 
-        waitForExpectations(timeout: 1)
+        waitForExpectations(timeout: 2)
     }
 
     func testStationToStation() {
@@ -241,7 +241,7 @@ final class RailTests: XCTestCase {
 
         stationToStation.backgroundRequest()
 
-        waitForExpectations(timeout: 1)
+        waitForExpectations(timeout: 2)
     }
 
     func testStationToStationNoStart() {
@@ -262,7 +262,7 @@ final class RailTests: XCTestCase {
             }
         }
 
-        waitForExpectations(timeout: 1)
+        waitForExpectations(timeout: 2)
     }
 
     func testStationToStationNoStartWithDelegate() {
@@ -277,7 +277,7 @@ final class RailTests: XCTestCase {
 
         stationToStation.backgroundRequest()
 
-        waitForExpectations(timeout: 1)
+        waitForExpectations(timeout: 2)
     }
     
     func testStationToStationNoDestination() {
@@ -297,7 +297,7 @@ final class RailTests: XCTestCase {
             }
         }
 
-        waitForExpectations(timeout: 1)
+        waitForExpectations(timeout: 2)
     }
 
     func testStationToStationNoDestinationWithDelegate() {
@@ -312,7 +312,7 @@ final class RailTests: XCTestCase {
 
         stationToStation.backgroundRequest()
 
-        waitForExpectations(timeout: 1)
+        waitForExpectations(timeout: 2)
     }
     
     func testStationToStationAll() {
@@ -333,7 +333,7 @@ final class RailTests: XCTestCase {
             }
         }
 
-        waitForExpectations(timeout: 1)
+        waitForExpectations(timeout: 4)
     }
 
     func testStationToStationAllWithDelegate() {
@@ -348,7 +348,7 @@ final class RailTests: XCTestCase {
 
         stationToStation.backgroundRequest()
 
-        waitForExpectations(timeout: 1)
+        waitForExpectations(timeout: 2)
     }
 
     func testPositions() {
@@ -365,7 +365,7 @@ final class RailTests: XCTestCase {
             }
         }
 
-        waitForExpectations(timeout: 1)
+        waitForExpectations(timeout: 2)
     }
 
     func testPositionsWithDelegate() {
@@ -378,7 +378,7 @@ final class RailTests: XCTestCase {
 
         positions.backgroundRequest()
 
-        waitForExpectations(timeout: 1)
+        waitForExpectations(timeout: 2)
     }
 
     func testRoutes() {
@@ -395,7 +395,7 @@ final class RailTests: XCTestCase {
             }
         }
 
-        waitForExpectations(timeout: 1)
+        waitForExpectations(timeout: 2)
     }
 
     func testRoutesWithDelegate() {
@@ -408,7 +408,7 @@ final class RailTests: XCTestCase {
 
         routes.backgroundRequest()
 
-        waitForExpectations(timeout: 1)
+        waitForExpectations(timeout: 2)
     }
 
     func testCircuits() {
@@ -425,7 +425,7 @@ final class RailTests: XCTestCase {
             }
         }
 
-        waitForExpectations(timeout: 1)
+        waitForExpectations(timeout: 2)
     }
 
     func testCircuitsWithDelegate() {
@@ -438,7 +438,7 @@ final class RailTests: XCTestCase {
 
         circuits.backgroundRequest()
 
-        waitForExpectations(timeout: 1)
+        waitForExpectations(timeout: 2)
     }
 
     func testElevatorAndEscalatorIncidents() {
@@ -458,7 +458,7 @@ final class RailTests: XCTestCase {
             }
         }
 
-        waitForExpectations(timeout: 1)
+        waitForExpectations(timeout: 2)
     }
 
     func testElevatorAndEscalatorIncidentsWithDelegate() {
@@ -472,7 +472,7 @@ final class RailTests: XCTestCase {
 
         incidents.backgroundRequest()
 
-        waitForExpectations(timeout: 1)
+        waitForExpectations(timeout: 2)
     }
 
     func testIncidents() {
@@ -492,7 +492,7 @@ final class RailTests: XCTestCase {
             }
         }
 
-        waitForExpectations(timeout: 1)
+        waitForExpectations(timeout: 2)
     }
 
     func testIncidentsWithDelegate() {
@@ -506,7 +506,28 @@ final class RailTests: XCTestCase {
 
         incidents.backgroundRequest()
 
-        waitForExpectations(timeout: 1)
+        waitForExpectations(timeout: 2)
+    }
+    
+    func testNextTrainSilverLineExtension() {
+        let exp = expectation(description: name)
+        let predictions = Rail.NextTrains(
+            key: TEST_API_KEY,
+            station: .washingtonDullesInternationalAirport
+        )
+
+        predictions.request { result in
+            print(result)
+            switch result {
+            case .success:
+                exp.fulfill()
+
+            case let .failure(error):
+                print(error)
+            }
+        }
+
+        waitForExpectations(timeout: 2)
     }
 
     func testNextTrain() {
@@ -526,7 +547,7 @@ final class RailTests: XCTestCase {
             }
         }
 
-        waitForExpectations(timeout: 1)
+        waitForExpectations(timeout: 2)
     }
 
     func testNextTrainWithDelegate() {
@@ -540,7 +561,7 @@ final class RailTests: XCTestCase {
 
         predictions.backgroundRequest()
 
-        waitForExpectations(timeout: 1)
+        waitForExpectations(timeout: 2)
     }
 
     func testNextTrains() {
@@ -560,7 +581,7 @@ final class RailTests: XCTestCase {
             }
         }
 
-        waitForExpectations(timeout: 1)
+        waitForExpectations(timeout: 2)
     }
 
     func testNextTrainsWithDelegate() {
@@ -574,7 +595,7 @@ final class RailTests: XCTestCase {
 
         predictions.backgroundRequest()
 
-        waitForExpectations(timeout: 1)
+        waitForExpectations(timeout: 2)
     }
     
     func testNextTrainsAll() {
@@ -593,7 +614,7 @@ final class RailTests: XCTestCase {
             }
         }
 
-        waitForExpectations(timeout: 1)
+        waitForExpectations(timeout: 2)
     }
 
     func testNextTrainsAllWithDelegate() {
@@ -606,7 +627,7 @@ final class RailTests: XCTestCase {
 
         predictions.backgroundRequest()
 
-        waitForExpectations(timeout: 1)
+        waitForExpectations(timeout: 2)
     }
 
     func testInformation() {
@@ -626,7 +647,7 @@ final class RailTests: XCTestCase {
             }
         }
 
-        waitForExpectations(timeout: 1)
+        waitForExpectations(timeout: 2)
     }
 
     func testInformationWithDelegate() {
@@ -640,7 +661,7 @@ final class RailTests: XCTestCase {
 
         information.backgroundRequest()
 
-        waitForExpectations(timeout: 1)
+        waitForExpectations(timeout: 2)
     }
 
     func testParkingInformation() {
@@ -660,7 +681,7 @@ final class RailTests: XCTestCase {
             }
         }
 
-        waitForExpectations(timeout: 1)
+        waitForExpectations(timeout: 2)
     }
 
     func testParkingInformationWithDelegate() {
@@ -674,7 +695,7 @@ final class RailTests: XCTestCase {
 
         information.backgroundRequest()
 
-        waitForExpectations(timeout: 1)
+        waitForExpectations(timeout: 4)
     }
 
     func testPath() {
@@ -695,7 +716,7 @@ final class RailTests: XCTestCase {
             }
         }
 
-        waitForExpectations(timeout: 1)
+        waitForExpectations(timeout: 2)
     }
 
     func testPathWithDelegate() {
@@ -710,7 +731,7 @@ final class RailTests: XCTestCase {
         
         path.backgroundRequest()
 
-        waitForExpectations(timeout: 1)
+        waitForExpectations(timeout: 2)
     }
 
     func testTimings() {
@@ -730,7 +751,7 @@ final class RailTests: XCTestCase {
             }
         }
 
-        waitForExpectations(timeout: 1)
+        waitForExpectations(timeout: 2)
     }
 
     func testTimingsWithDelegate() {
@@ -744,15 +765,14 @@ final class RailTests: XCTestCase {
 
         timings.backgroundRequest()
 
-        waitForExpectations(timeout: 1)
+        waitForExpectations(timeout: 2)
     }
 }
 
 final class RailGTFSTests: XCTestCase {
     func testAlerts() {
         let exp = expectation(description: name)
-        let alerts = Rail.GTFS.Alerts(
-            key: TEST_API_KEY)
+        let alerts = Rail.GTFS.Alerts(key: TEST_API_KEY)
 
         alerts.request { result in
             switch result {
@@ -764,7 +784,7 @@ final class RailGTFSTests: XCTestCase {
             }
         }
 
-        waitForExpectations(timeout: 1)
+        waitForExpectations(timeout: 4)
     }
 
     func testAlertsWithDelegate() {
@@ -777,7 +797,7 @@ final class RailGTFSTests: XCTestCase {
 
         alerts.backgroundRequest()
 
-        waitForExpectations(timeout: 1)
+        waitForExpectations(timeout: 2)
     }
 
     func testTripUpdates() {
@@ -807,7 +827,7 @@ final class RailGTFSTests: XCTestCase {
 
         tripUpdates.backgroundRequest()
 
-        waitForExpectations(timeout: 1)
+        waitForExpectations(timeout: 2)
     }
 
     func testVehiclePositions() {
@@ -824,7 +844,7 @@ final class RailGTFSTests: XCTestCase {
             }
         }
 
-        waitForExpectations(timeout: 1)
+        waitForExpectations(timeout: 2)
     }
 
     func testVehiclePositionsWithDelegate() {
@@ -837,7 +857,7 @@ final class RailGTFSTests: XCTestCase {
 
         vehiclePositions.backgroundRequest()
 
-        waitForExpectations(timeout: 1)
+        waitForExpectations(timeout: 2)
     }
 }
 
@@ -862,7 +882,7 @@ final class RailCombineTests: CombineTests {
 
         deferCancellable(cancellable)
 
-        waitForExpectations(timeout: 1)
+        waitForExpectations(timeout: 2)
     }
 
     func testEntrancesPublisher() {
@@ -894,7 +914,7 @@ final class RailCombineTests: CombineTests {
 
         deferCancellable(cancellable)
 
-        waitForExpectations(timeout: 1)
+        waitForExpectations(timeout: 5)
     }
 
     func testStationsPublisher() {
@@ -920,7 +940,7 @@ final class RailCombineTests: CombineTests {
 
         deferCancellable(cancellable)
 
-        waitForExpectations(timeout: 1)
+        waitForExpectations(timeout: 10)
     }
 
     func testStationPublisher() {
@@ -947,7 +967,7 @@ final class RailCombineTests: CombineTests {
 
         deferCancellable(cancellable)
 
-        waitForExpectations(timeout: 1)
+        waitForExpectations(timeout: 2)
     }
 
     func testPositionsPublisher() {
@@ -970,7 +990,7 @@ final class RailCombineTests: CombineTests {
 
         deferCancellable(cancellable)
 
-        waitForExpectations(timeout: 1)
+        waitForExpectations(timeout: 4)
     }
 
     func testRoutesPublisher() {
@@ -993,7 +1013,7 @@ final class RailCombineTests: CombineTests {
 
         deferCancellable(cancellable)
 
-        waitForExpectations(timeout: 1)
+        waitForExpectations(timeout: 4)
     }
 
     func testCircuitsPublisher() {
@@ -1016,7 +1036,7 @@ final class RailCombineTests: CombineTests {
 
         deferCancellable(cancellable)
 
-        waitForExpectations(timeout: 1)
+        waitForExpectations(timeout: 4)
     }
 
     func testElevatorAndEscalatorIncidentsPublisher() {
@@ -1042,7 +1062,7 @@ final class RailCombineTests: CombineTests {
 
         deferCancellable(cancellable)
 
-        waitForExpectations(timeout: 1)
+        waitForExpectations(timeout: 2)
     }
 
     func testIncidentsPublisher() {
@@ -1068,7 +1088,7 @@ final class RailCombineTests: CombineTests {
 
         deferCancellable(cancellable)
 
-        waitForExpectations(timeout: 1)
+        waitForExpectations(timeout: 2)
     }
 
     func testNextTrainPublisher() {
@@ -1094,7 +1114,7 @@ final class RailCombineTests: CombineTests {
 
         deferCancellable(cancellable)
 
-        waitForExpectations(timeout: 1)
+        waitForExpectations(timeout: 2)
     }
 
     func testNextTrainsPublisher() {
@@ -1120,7 +1140,7 @@ final class RailCombineTests: CombineTests {
 
         deferCancellable(cancellable)
 
-        waitForExpectations(timeout: 1)
+        waitForExpectations(timeout: 2)
     }
 
     func testInformationPublisher() {
@@ -1146,7 +1166,7 @@ final class RailCombineTests: CombineTests {
 
         deferCancellable(cancellable)
 
-        waitForExpectations(timeout: 1)
+        waitForExpectations(timeout: 2)
     }
 
     func testParkingInformationPublisher() {
@@ -1172,7 +1192,7 @@ final class RailCombineTests: CombineTests {
 
         deferCancellable(cancellable)
 
-        waitForExpectations(timeout: 1)
+        waitForExpectations(timeout: 2)
     }
 
     func testPathPublisher() {
@@ -1225,7 +1245,7 @@ final class RailCombineTests: CombineTests {
 
         deferCancellable(cancellable)
 
-        waitForExpectations(timeout: 1)
+        waitForExpectations(timeout: 2)
     }
 }
 
@@ -1250,7 +1270,7 @@ final class RailGTFSCombineTests: CombineTests {
 
         deferCancellable(cancellable)
 
-        waitForExpectations(timeout: 1)
+        waitForExpectations(timeout: 4)
     }
 
     func testTripUpdatesPublisher() {
@@ -1273,7 +1293,7 @@ final class RailGTFSCombineTests: CombineTests {
 
         deferCancellable(cancellable)
 
-        waitForExpectations(timeout: 1)
+        waitForExpectations(timeout: 2)
     }
 
     func testVehiclePositionsPublisher() {
@@ -1296,6 +1316,6 @@ final class RailGTFSCombineTests: CombineTests {
 
         deferCancellable(cancellable)
 
-        waitForExpectations(timeout: 1)
+        waitForExpectations(timeout: 2)
     }
 }

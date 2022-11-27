@@ -510,17 +510,17 @@ final class TestRailGTFSDVR: DVRTestCase {
 }
 
 final class TestRailAsyncDVR: DVRTestCase {
-    func testLines() async {
+    func testLines() {
         let lines = Rail.Lines(key: TEST_API_KEY)
         
-        let result = await lines.request(with: session)
-        
-        switch result {
-        case let .success(response):
-            XCTAssertEqual(response.lines.count, 6)
-        case let .failure(error):
-            print(error)
-            XCTFail()
+        lines.request(with: session) { [weak self] result in
+            switch result {
+            case let .success(response):
+                XCTAssertEqual(response.lines.count, 6)
+                self?.expectation.fulfill()
+            case let .failure(error):
+                print(error)
+            }
         }
     }
 }

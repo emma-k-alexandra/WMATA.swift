@@ -53,18 +53,6 @@ public extension Line {
         }
     }
     
-    /// Deprecated. All Lines are current. You do not need to check for currency.
-    @available(*, deprecated, message: "All lines are now current. You may simply remove all calls to this property.")
-    var current: Bool {
-        true
-    }
-    
-    /// Deprecated. Use `allCases` instead.
-    @available(*, deprecated, renamed: "allCases", message: "All lines are now current.")
-    static var allCurrent: [Line] {
-        [.red, .orange, .blue, .green, .yellow, .silver]
-    }
-    
     /// Lines that this line shares tracks with at any point.
     ///
     /// Lines are in system map order.

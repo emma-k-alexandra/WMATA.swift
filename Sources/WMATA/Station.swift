@@ -119,11 +119,11 @@ public enum Station: String, CaseIterable, Codable, Equatable, Hashable, RawRepr
     case springHill = "N04"
     case wiehle = "N06"
     case restonTownCenter = "N07"
-    case herndon = "N10"
-    case innovationCenter = "N11"
-    case dullesInternationalAirport = "N12"
-    case loudounGateway = "N14"
-    case ashburn = "N15"
+    case herndon = "N08"
+    case innovationCenter = "N09"
+    case washingtonDullesInternationalAirport = "N10"
+    case loudounGateway = "N11"
+    case ashburn = "N12"
 }
 
 public extension Station {
@@ -429,8 +429,8 @@ public extension Station {
         case .innovationCenter:
             return "Innovation Center"
 
-        case .dullesInternationalAirport:
-            return "Dulles International Airport"
+        case .washingtonDullesInternationalAirport:
+            return "Washington Dulles International Airport"
 
         case .loudounGateway:
             return "Loudoun Gateway"
@@ -473,61 +473,23 @@ public extension Station {
         case .courtHouse, .clarendon, .virginiaSquare, .ballston, .eastFallsChurch:
             return [.orange, .silver]
 
-        case .mcLean, .tysons, .greensboro, .springHill, .wiehle, .restonTownCenter, .herndon, .innovationCenter, .dullesInternationalAirport, .loudounGateway, .ashburn:
+        case .mcLean, .tysons, .greensboro, .springHill, .wiehle, .restonTownCenter, .herndon, .innovationCenter, .washingtonDullesInternationalAirport, .loudounGateway, .ashburn:
             return [.silver]
         }
     }
 
     /// Indicates if a station is open to the public.
     ///
-    /// - Returns: `false` if a station is part of the Potomac Yard or Silver Line Phase 2 expansions. Otherwise `true`.
+    /// - Returns: `false` if this station is Potomac Yard. Otherwise `true`.
     var open: Bool {
         Station.allOpen.contains(self)
     }
     
     /// All stations that are currently open to the public.
     ///
-    /// Potomac Yard and Silver Line Phase 2 expansion stations are excluded.
+    /// Potomac Yard is excluded.
     static var allOpen: [Station] {
-        [.metroCenterUpper, .farragutNorth, .dupontCircle, .woodleyPark, .clevelandPark, .vanNess, .tenleytown, .friendshipHeights, .bethesda, .medicalCenter, .grosvenor, .northBethesda, .twinbrook, .rockville, .shadyGrove, .galleryPlaceUpper, .judiciarySquare, .unionStation, .rhodeIslandAve, .brookland, .fortTottenUpper, .takoma, .silverSpring, .forestGlen, .wheaton, .glenmont, .noma, .metroCenterLower, .mcphersonSquare, .farragutWest, .foggyBottom, .rosslyn, .arlingtonCemetery, .pentagon, .pentagonCity, .crystalCity, .ronaldReaganWashingtonNationalAirport, .braddockRoad, .kingSt, .eisenhowerAvenue, .huntington, .federalTriangle, .smithsonian, .lenfantPlazaLower, .federalCenterSW, .capitolSouth, .easternMarket, .potomacAve, .stadium, .minnesotaAve, .deanwood, .cheverly, .landover, .newCarrollton, .mtVernonSq7thSt, .shaw, .uStreet, .columbiaHeights, .georgiaAve, .fortTottenLower, .westHyattsville, .hyattsvilleCrossing, .collegePark, .greenbelt, .galleryPlaceLower, .archives, .lenfantPlazaUpper, .waterfront, .navyYard, .anacostia, .congressHeights, .southernAvenue, .naylorRoad, .suitland, .branchAve, .benningRoad, .capitolHeights, .addisonRoad, .morganBoulevard, .downtownLargo, .vanDornStreet, .franconia, .courtHouse, .clarendon, .virginiaSquare, .ballston, .eastFallsChurch, .westFallsChurch, .dunnLoring, .vienna, .mcLean, .tysons, .greensboro, .springHill, .wiehle]
-    }
-
-    /// The opening time for this station on the given date.
-    ///
-    /// - Parameters:
-    ///     - date: Date to check the opening time for. Defaults to current day.
-    ///
-    /// - Returns: The opening time. `nil` if the station is not ``open`` yet.
-    func openingTime(on date: Date = Date()) -> Date? {
-        let day = date.wmataDay()
-        
-        guard let openingTimeDateComponents = Self.openingTimes[self]?[day] else {
-            return nil
-        }
-        
-        let openingDateComponents = Calendar(identifier: .gregorian).dateComponents([
-            .day,
-            .month,
-            .year,
-            .timeZone,
-            .calendar
-        ], from: date)
-
-        let openingTime = DateComponents(
-            calendar: openingDateComponents.calendar,
-            timeZone: openingDateComponents.timeZone,
-            year: openingDateComponents.year,
-            month: openingDateComponents.month,
-            day: openingDateComponents.day,
-            hour: openingTimeDateComponents.hour,
-            minute: openingTimeDateComponents.minute
-        )
-            
-        guard let openingTime = openingTime.date else {
-            return nil
-        }
-        
-        return openingTime
+        [.metroCenterUpper, .farragutNorth, .dupontCircle, .woodleyPark, .clevelandPark, .vanNess, .tenleytown, .friendshipHeights, .bethesda, .medicalCenter, .grosvenor, .northBethesda, .twinbrook, .rockville, .shadyGrove, .galleryPlaceUpper, .judiciarySquare, .unionStation, .rhodeIslandAve, .brookland, .fortTottenUpper, .takoma, .silverSpring, .forestGlen, .wheaton, .glenmont, .noma, .metroCenterLower, .mcphersonSquare, .farragutWest, .foggyBottom, .rosslyn, .arlingtonCemetery, .pentagon, .pentagonCity, .crystalCity, .ronaldReaganWashingtonNationalAirport, .braddockRoad, .kingSt, .eisenhowerAvenue, .huntington, .federalTriangle, .smithsonian, .lenfantPlazaLower, .federalCenterSW, .capitolSouth, .easternMarket, .potomacAve, .stadium, .minnesotaAve, .deanwood, .cheverly, .landover, .newCarrollton, .mtVernonSq7thSt, .shaw, .uStreet, .columbiaHeights, .georgiaAve, .fortTottenLower, .westHyattsville, .hyattsvilleCrossing, .collegePark, .greenbelt, .galleryPlaceLower, .archives, .lenfantPlazaUpper, .waterfront, .navyYard, .anacostia, .congressHeights, .southernAvenue, .naylorRoad, .suitland, .branchAve, .benningRoad, .capitolHeights, .addisonRoad, .morganBoulevard, .downtownLargo, .vanDornStreet, .franconia, .courtHouse, .clarendon, .virginiaSquare, .ballston, .eastFallsChurch, .westFallsChurch, .dunnLoring, .vienna, .mcLean, .tysons, .greensboro, .springHill, .wiehle, .restonTownCenter, .herndon, .innovationCenter, .washingtonDullesInternationalAirport, .loudounGateway, .ashburn]
     }
 
     /// The station located within the same physical station as this station.

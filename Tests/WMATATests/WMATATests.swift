@@ -60,9 +60,10 @@ class TestGTFSDelegate<Parent: GTFSEndpoint>: GTFSEndpointDelegate<Parent> {
 class DVRTestCase: XCTestCase {
     lazy var session = {
         Session(
-            outputDirectory: URL(fileURLWithPath: #file)
+            outputDirectory: "/" + URL(fileURLWithPath: #filePath)
                 .pathComponents
                 .dropLast()
+                .dropFirst()
                 .joined(separator: "/")
                 .appending("/Fixtures"),
             cassetteName: name,

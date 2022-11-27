@@ -86,7 +86,7 @@ final class BusDelegateTests: XCTestCase {
 
         stopsSearch.backgroundRequest()
 
-        waitForExpectations(timeout: 1)
+        waitForExpectations(timeout: 2)
     }
 
     func testIncidentsWithDelegate() {
@@ -442,7 +442,7 @@ final class BusCombineTests: CombineTests {
 
         deferCancellable(cancellable)
 
-        waitForExpectations(timeout: 1)
+        waitForExpectations(timeout: 4)
     }
 
     func testTripUpdatesPublisher() {
@@ -465,7 +465,7 @@ final class BusCombineTests: CombineTests {
 
         deferCancellable(cancellable)
 
-        waitForExpectations(timeout: 5)
+        waitForExpectations(timeout: 10)
     }
 
     func testVehiclePositionsPublisher() {
@@ -513,7 +513,7 @@ final class BusGTFSCombineTests: CombineTests {
 
         deferCancellable(cancellable)
 
-        waitForExpectations(timeout: 1)
+        waitForExpectations(timeout: 4)
     }
 
     func testTripUpdatesPublisher() {
@@ -536,7 +536,7 @@ final class BusGTFSCombineTests: CombineTests {
 
         deferCancellable(cancellable)
 
-        waitForExpectations(timeout: 1)
+        waitForExpectations(timeout: 2)
     }
 
     func testVehiclePositionsPublisher() {
@@ -559,6 +559,6 @@ final class BusGTFSCombineTests: CombineTests {
 
         deferCancellable(cancellable)
 
-        waitForExpectations(timeout: 1)
+        waitForExpectations(timeout: 2)
     }
 }
