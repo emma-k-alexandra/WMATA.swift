@@ -12,6 +12,6 @@ Data for this line is no longer available from the Standard Routes API. You may 
 
 ## Deprecations
 
-- ``Line/current``, simply remove all references to this property. All lines are current.
+- `Line.current`, simply remove all references to this property. All lines are current.
 
-- ``Line/allCurrent``, use `Line.allCases` instead.
+- `Line.allCurrent`, use `Line.allCases` instead.
