@@ -244,7 +244,7 @@ public extension Station {
             return "Ronald Reagan Washington National Airport"
 
         case .potomacYard:
-            return "Potomac Yard"
+            return "Potomac Yard-VT"
 
         case .braddockRoad:
             return "Braddock Road"
@@ -478,18 +478,18 @@ public extension Station {
         }
     }
 
-    /// Indicates if a station is open to the public.
+    /// Indicates if a station is open to the public. Currently, all stations are open.
     ///
-    /// - Returns: `false` if this station is Potomac Yard. Otherwise `true`.
+    /// - Returns: `true`
     var open: Bool {
-        Station.allOpen.contains(self)
+        true
     }
     
-    /// All stations that are currently open to the public.
+    /// All stations that are currently open to the public. Currently, all stations are open, so this is an alias for `Station.allCases`.
     ///
-    /// Potomac Yard is excluded.
+    /// - Returns: All stations.
     static var allOpen: [Station] {
-        [.metroCenterUpper, .farragutNorth, .dupontCircle, .woodleyPark, .clevelandPark, .vanNess, .tenleytown, .friendshipHeights, .bethesda, .medicalCenter, .grosvenor, .northBethesda, .twinbrook, .rockville, .shadyGrove, .galleryPlaceUpper, .judiciarySquare, .unionStation, .rhodeIslandAve, .brookland, .fortTottenUpper, .takoma, .silverSpring, .forestGlen, .wheaton, .glenmont, .noma, .metroCenterLower, .mcphersonSquare, .farragutWest, .foggyBottom, .rosslyn, .arlingtonCemetery, .pentagon, .pentagonCity, .crystalCity, .ronaldReaganWashingtonNationalAirport, .braddockRoad, .kingSt, .eisenhowerAvenue, .huntington, .federalTriangle, .smithsonian, .lenfantPlazaLower, .federalCenterSW, .capitolSouth, .easternMarket, .potomacAve, .stadium, .minnesotaAve, .deanwood, .cheverly, .landover, .newCarrollton, .mtVernonSq7thSt, .shaw, .uStreet, .columbiaHeights, .georgiaAve, .fortTottenLower, .westHyattsville, .hyattsvilleCrossing, .collegePark, .greenbelt, .galleryPlaceLower, .archives, .lenfantPlazaUpper, .waterfront, .navyYard, .anacostia, .congressHeights, .southernAvenue, .naylorRoad, .suitland, .branchAve, .benningRoad, .capitolHeights, .addisonRoad, .morganBoulevard, .downtownLargo, .vanDornStreet, .franconia, .courtHouse, .clarendon, .virginiaSquare, .ballston, .eastFallsChurch, .westFallsChurch, .dunnLoring, .vienna, .mcLean, .tysons, .greensboro, .springHill, .wiehle, .restonTownCenter, .herndon, .innovationCenter, .washingtonDullesInternationalAirport, .loudounGateway, .ashburn]
+        Station.allCases
     }
 
     /// The station located within the same physical station as this station.
