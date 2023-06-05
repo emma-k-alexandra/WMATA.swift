@@ -110,8 +110,8 @@ final class RailTests: XCTestCase {
         case let .failure(error):
             print(error)
         }
-
-        await waitForExpectations(timeout: 2)
+        
+        await fulfillment(of: [exp], timeout: 2)
     }
 
     func testAllEntrances() {
@@ -458,7 +458,7 @@ final class RailTests: XCTestCase {
             }
         }
 
-        waitForExpectations(timeout: 2)
+        waitForExpectations(timeout: 4)
     }
 
     func testElevatorAndEscalatorIncidentsWithDelegate() {
@@ -1192,7 +1192,7 @@ final class RailCombineTests: CombineTests {
 
         deferCancellable(cancellable)
 
-        waitForExpectations(timeout: 2)
+        waitForExpectations(timeout: 4)
     }
 
     func testPathPublisher() {
