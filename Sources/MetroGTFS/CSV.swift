@@ -8,20 +8,16 @@
 import Foundation
 import SwiftCSV
 
-func loadCSV() throws {
+public func loadCSV() throws {
     let csv = try CSV<Named>(
         name: "stops",
         extension: "txt",
         bundle: .module
     )
     
-    guard csv != nil else {
-        return
-    }
+    guard let csv else { return }
     
     try csv.enumerateAsDict { row in
         print(row)
     }
 }
-
-loadCSV()

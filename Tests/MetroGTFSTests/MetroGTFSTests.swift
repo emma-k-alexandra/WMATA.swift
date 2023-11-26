@@ -6,6 +6,7 @@
 //
 
 import XCTest
+import MetroGTFS
 
 final class GTFSTests: XCTestCase {
 
@@ -33,7 +34,7 @@ final class GTFSTests: XCTestCase {
     }
     
     func testCSVParsing() throws {
-        
+        try loadCSV()
     }
 
 }

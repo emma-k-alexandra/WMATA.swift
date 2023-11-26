@@ -1,2 +1,0 @@
-feed_publisher_name,feed_publisher_url,feed_lang,feed_start_date,feed_end_date
-WMATA,http://www.wmata.com,"en",20231121,20231201
