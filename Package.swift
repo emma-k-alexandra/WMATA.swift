@@ -30,9 +30,12 @@ let package = Package(
         ),
         .package(
             url: "https://github.com/apple/swift-docc-plugin",
-            from: "1.0.0"
+            .upToNextMajor(from: .init(1, 0, 0))
         ),
-        .package(url: "https://github.com/swiftcsv/SwiftCSV.git", from: "0.8.0")
+        .package(
+            url: "https://github.com/stephencelis/SQLite.swift.git",
+            .upToNextMinor(from: .init(0, 14, 1))
+        )
     ],
     targets: [
         .target(
@@ -49,12 +52,10 @@ let package = Package(
         .target(
             name: "MetroGTFS",
             dependencies: [
-                .product(name: "SwiftCSV", package: "SwiftCSV")
+                .product(name: "SQLite", package: "SQLite.swift")
             ],
-            path: "Sources/MetroGTFS",
             resources: [
-                .copy("Static/stops.txt"),
-                .copy("Static/levels.txt")
+                .copy("MetroGTFS.sqlite3")
             ]
         ),
         .testTarget(

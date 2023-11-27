@@ -9,7 +9,7 @@ Create a SQLite database from WMATA's Static MetroRail GTFS data.
 
 ## Usage
 
-This package uses the awesome [`node-gtfs`](https://github.com/BlinkTagInc/node-gtfs) package to build the SQLite database. This means you will need Node.js installed.
+This package uses the awesome [`node-gtfs`][node-gtfs] package to build the SQLite database. This means you will need Node.js installed.
 If you do not regularly use Node.js I recommend using [pkgx](https://pkgx.sh) or [brew](https://formulae.brew.sh/formula/node) to use Node.
 
 If you use pkgx, no additional setup is required. Skip to [Create SQLite Database](#create-sqlite-database).
@@ -20,7 +20,7 @@ If installing Node.js with brew, run
 brew install node
 ```
 
-This will install the current version of Node.js.
+This will install the current version of Node.js. You can now create the database.
 
 ### Create SQLite database
 
@@ -32,6 +32,12 @@ To use `node-gtfs` to create the SQLite database run
 
 You will now have a new SQLite database in this directory called `MetroGTFS.sqlite3` that contains all MetroRail GTFS static data.
 
+See the [`node-gtfs`][node-gtfs] project for details on each table and indexes.
+
+## Updating to New GTFS data
+
+Download the latest MetroRail GTFS data from <https://developer.wmata.com> and run `./create-sqlite.sh` again to create a new database with
+
 ## Todo
 
 This project is fairly new and therefore currently has limited capabilities. In the future,
@@ -40,3 +46,5 @@ I would like to see the following implemented
 - [ ] Fetch GTFS data from WMATA's developer API
 - [ ] MetroBus GTFS support
 - [ ] GTFS-RT support
+
+[node-gtfs]: https://github.com/BlinkTagInc/node-gtfs

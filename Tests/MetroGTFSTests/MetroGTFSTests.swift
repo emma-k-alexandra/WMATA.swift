@@ -6,9 +6,9 @@
 //
 
 import XCTest
-import MetroGTFS
+@testable import MetroGTFS
 
-final class GTFSTests: XCTestCase {
+final class MetroGTFSTests: XCTestCase {
 
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
@@ -33,8 +33,21 @@ final class GTFSTests: XCTestCase {
         }
     }
     
-    func testCSVParsing() throws {
-        try loadCSV()
+    func testCreateAllStops() throws {
+        let database = try GTFS.Database.connection()
+        
+        for row in try GTFS.Database.stops(from: database) {
+            let stop = try GTFS.Stop.from(row: row)
+            
+            // Does the Stop ID from the database match one of the valid location type prefixes?
+            let prefix = stop.id.string.prefixMatch(of: try Regex("^(ENT|NODE|PF|PLF|STN)"))
+            
+            if let prefix {
+                XCTAssert(!prefix.isEmpty)
+            } else {
+                XCTFail("Stop ID does not have a valid prefix. \(stop). ID: \(stop.id)")
+            }
+        }
     }
 
 }

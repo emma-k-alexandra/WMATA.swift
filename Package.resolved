@@ -10,6 +10,15 @@
       }
     },
     {
+      "identity" : "sqlite.swift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/stephencelis/SQLite.swift.git",
+      "state" : {
+        "revision" : "7a2e3cd27de56f6d396e84f63beefd0267b55ccb",
+        "version" : "0.14.1"
+      }
+    },
+    {
       "identity" : "swift-docc-plugin",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-docc-plugin",
@@ -25,15 +34,6 @@
       "state" : {
         "revision" : "7e2c5f3cbbeea68e004915e3a8961e20bd11d824",
         "version" : "1.18.0"
-      }
-    },
-    {
-      "identity" : "swiftcsv",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/swiftcsv/SwiftCSV.git",
-      "state" : {
-        "revision" : "b61dcd1b2b1120e751cee4cd64a16ff10364885d",
-        "version" : "0.9.1"
       }
     }
   ],
