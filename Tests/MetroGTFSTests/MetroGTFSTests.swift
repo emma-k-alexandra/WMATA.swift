@@ -7,47 +7,58 @@
 
 import XCTest
 @testable import MetroGTFS
+import WMATA
 
 final class MetroGTFSTests: XCTestCase {
-
-    override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-    }
-
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-    }
-
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-        // Any test you write for XCTest can be annotated as throws and async.
-        // Mark your test throws to produce an unexpected failure when your test encounters an uncaught error.
-        // Mark your test async to allow awaiting for asynchronous code to complete. Check the results with assertions afterwards.
-    }
-
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
-        }
-    }
-    
     func testCreateAllStops() throws {
-        let database = try GTFS.Database.connection()
+        let database = try GTFS.Database()
         
-        for row in try GTFS.Database.stops(from: database) {
-            let stop = try GTFS.Stop.from(row: row)
+        for row in try database.all(GTFS.Stop.self) {
+            let stop = try GTFS.Stop(row)
             
             // Does the Stop ID from the database match one of the valid location type prefixes?
             let prefix = stop.id.string.prefixMatch(of: try Regex("^(ENT|NODE|PF|PLF|STN)"))
             
-            if let prefix {
-                XCTAssert(!prefix.isEmpty)
-            } else {
-                XCTFail("Stop ID does not have a valid prefix. \(stop). ID: \(stop.id)")
-            }
+            XCTAssertNotNil(prefix)
+            XCTAssertGreaterThan(prefix!.count, 0)
         }
     }
-
+    
+    func testCreateAStop() throws {
+        let stop = try GTFS.Stop(id: .init("STN_N12"))
+        
+        XCTAssertEqual(stop.name, "ASHBURN METRORAIL STATION")
+    }
+    
+    func testCreateAStopFromWMATAStation() throws {
+        let stop = try GTFS.Stop(station: .ashburn)
+        
+        XCTAssertEqual(stop.name, "ASHBURN METRORAIL STATION")
+    }
+    
+    func testCreateAllStopsWithParentStation() throws {
+        let stops = try GTFS.Stop.all(withParentStation: .init("STN_B01_F01"))
+        
+        for stop in stops {
+            XCTAssert(stop.name.contains("CHINATOWN") || stop.name.contains("GALLERY PL"), stop.name)
+        }
+    }
+    
+    func testCreateAllLevels() throws {
+        let database = try GTFS.Database()
+        
+        for row in try database.all(GTFS.Level.self) {
+            let level = try GTFS.Level(row)
+            
+            let stationCode = level.id.string.prefix(3)
+            
+            XCTAssertNotNil(Station(rawValue: String(stationCode)))
+        }
+    }
+    
+    func testCreateALevel() throws {
+        let level = try GTFS.Level(id: .init("B05_L1"))
+        
+        XCTAssertEqual(level.name, "Mezzanine")
+    }
 }

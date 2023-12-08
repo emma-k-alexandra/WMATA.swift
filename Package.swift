@@ -52,7 +52,8 @@ let package = Package(
         .target(
             name: "MetroGTFS",
             dependencies: [
-                .product(name: "SQLite", package: "SQLite.swift")
+                .product(name: "SQLite", package: "SQLite.swift"),
+                "WMATA"
             ],
             resources: [
                 .copy("MetroGTFS.sqlite3")

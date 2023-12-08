@@ -107,7 +107,18 @@ public extension GTFS {
         /// ``GTFS/Level`` of the location. The same level may be used by multiple unlinked stations.
         public var level: GTFS.Identifier<GTFS.Level>?
         
-        public init(id: GTFS.Identifier<GTFS.Stop>, name: String, description: String? = nil, location: GTFS.Coordinates, zoneID: String, locationType: LocationType, parentStation: GTFS.Identifier<GTFS.Stop>? = nil, wheelchairBoarding: WheelchairBoarding, level: GTFS.Identifier<GTFS.Level>? = nil) {
+        /// Create a new Stop by providing all of it's fields
+        public init(
+            id: GTFS.Identifier<GTFS.Stop>,
+            name: String,
+            description: String? = nil,
+            location: GTFS.Coordinates,
+            zoneID: String,
+            locationType: LocationType,
+            parentStation: GTFS.Identifier<GTFS.Stop>? = nil,
+            wheelchairBoarding: WheelchairBoarding,
+            level: GTFS.Identifier<GTFS.Level>? = nil
+        ) {
             self.id = id
             self.name = name
             self.description = description
@@ -118,10 +129,74 @@ public extension GTFS {
             self.wheelchairBoarding = wheelchairBoarding
             self.level = level
         }
+        
+        /// Create a GTFS Stop from a GTFS Stop ID
+        public init(id: GTFS.Identifier<GTFS.Stop>) throws {
+            let database = try GTFS.Database()
+            
+            let stopRow = try database.one(GTFS.Stop.self, with: id)
+            
+            guard let stopRow else {
+                throw GTFS.DatabaseQueryError.notFound(id)
+            }
+            
+            do {
+                self = try GTFS.Stop(stopRow)
+            } catch {
+                throw GTFS.DatabaseError.invalid(stopRow)
+            }
+        }
+        
+        /// Create a Stop from a row in the GTFS database's stops table
+        init(_ row: Row) throws {
+            guard let locationType = LocationType(rawValue: try row.get(TableColumn.locationType)) else {
+                throw GTFS.DatabaseDecodingError.invalidEntry(structureType: GTFS.Stop.self, key: "location_type")
+            }
+            
+            var parentStation: GTFS.Identifier<GTFS.Stop>? = nil
+            
+            if let parentStationID = try row.get(TableColumn.parentStation) {
+                parentStation = GTFS.Identifier<GTFS.Stop>(parentStationID)
+            }
+            
+            guard let wheelchairBoarding = WheelchairBoarding(rawValue:  try row.get(TableColumn.wheelchairBoarding)) else {
+                throw GTFS.DatabaseDecodingError.invalidEntry(structureType: GTFS.Stop.self, key: "wheelchair_boarding")
+            }
+            
+            var level: GTFS.Identifier<GTFS.Level>? = nil
+            
+            if let levelID = try row.get(TableColumn.levelID) {
+                level = GTFS.Identifier<GTFS.Level>(levelID)
+            }
+            
+            self.id = GTFS.Identifier(try row.get(TableColumn.id))
+            self.name = try row.get(TableColumn.name)
+            self.description = try row.get(TableColumn.description)
+            self.location = GTFS.Coordinates(
+                latitude: try row.get(TableColumn.latitude),
+                longitude: try row.get(TableColumn.longitude)
+            )
+            self.zoneID = try row.get(TableColumn.zoneID)
+            self.locationType = locationType
+            self.parentStation = parentStation
+            self.wheelchairBoarding = wheelchairBoarding
+            self.level = level
+        }
+        
+        /// Create all Stops with the given parent station
+        ///
+        /// [More info about parent stations]((https://gtfs.org/schedule/reference/#stopstxt))
+        public static func all(withParentStation id: GTFS.Identifier<GTFS.Stop>) throws -> [GTFS.Stop] {
+            let database = try GTFS.Database()
+            
+            let allStopRows = try database.all(GTFS.Stop.self, with: id, in: TableColumn.parentStation)
+            
+            return try allStopRows.map { try GTFS.Stop($0) }
+        }
     }
 }
 
-internal extension GTFS.Stop {
+extension GTFS.Stop {
     /// Columns in the SQLite `stops` table
     enum TableColumn {
         static let id = Expression<String>("stop_id")
@@ -135,42 +210,11 @@ internal extension GTFS.Stop {
         static let wheelchairBoarding = Expression<Int>("wheelchair_boarding")
         static let levelID = Expression<String?>("level_id")
     }
-    
-    /// Create a ``GTFS/Stop`` from an entry in the `stops` table of SQLite
-    static func from(row: Row) throws -> GTFS.Stop {
-        guard let locationType = LocationType(rawValue: try row.get(TableColumn.locationType)) else {
-            throw GTFS.DatabaseDecodingError.invalidEntry(structureType: GTFS.Stop.self, key: "location_type")
-        }
-        
-        var parentStation: GTFS.Identifier<GTFS.Stop>? = nil
-        
-        if let parentStationID = try row.get(TableColumn.parentStation) {
-            parentStation = GTFS.Identifier<GTFS.Stop>(parentStationID)
-        }
-        
-        guard let wheelchairBoarding = WheelchairBoarding(rawValue:  try row.get(TableColumn.wheelchairBoarding)) else {
-            throw GTFS.DatabaseDecodingError.invalidEntry(structureType: GTFS.Stop.self, key: "wheelchair_boarding")
-        }
-        
-        var level: GTFS.Identifier<GTFS.Level>? = nil
-        
-        if let levelID = try row.get(TableColumn.levelID) {
-            level = GTFS.Identifier<GTFS.Level>(levelID)
-        }
-        
-        return GTFS.Stop(
-            id: GTFS.Identifier(try row.get(TableColumn.id)),
-            name: try row.get(TableColumn.name),
-            description: try row.get(TableColumn.description),
-            location: GTFS.Coordinates(
-                latitude: try row.get(TableColumn.latitude),
-                longitude: try row.get(TableColumn.longitude)
-            ),
-            zoneID: try row.get(TableColumn.zoneID),
-            locationType: locationType,
-            parentStation: parentStation,
-            wheelchairBoarding: wheelchairBoarding,
-            level: level
-        )
-    }
+}
+
+extension GTFS.Stop: Queryable {
+    static let databaseTable = GTFS.Database.Table(
+        sqlTable: SQLite.Table("stops"),
+        primaryKeyColumn: TableColumn.id
+    )
 }

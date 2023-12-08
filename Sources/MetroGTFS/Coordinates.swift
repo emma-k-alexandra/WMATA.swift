@@ -8,12 +8,12 @@
 import Foundation
 
 public extension GTFS {
-    /// Location in latlong
+    /// Location with latitude and longitude coordinates
     struct Coordinates: Equatable, Hashable {
         /// Latitude in degrees, for the DMV this value is positive.
         var latitude: Double
         
-        /// Longitude in degrees, For this DMV this value is negative.
+        /// Longitude in degrees, For the DMV this value is negative.
         var longitude: Double
 
         /// Create a new location
