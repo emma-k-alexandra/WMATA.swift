@@ -35,7 +35,7 @@ extension GTFS {
         }
         
         /// Run a database query that only returns one row
-        private func run(query: SQLite.Table) throws -> Row? {
+        func run(query: SQLite.Table) throws -> Row? {
             do {
                 return try connection.pluck(query)
             } catch {
@@ -44,7 +44,7 @@ extension GTFS {
         }
         
         /// Run a database query that returns multiple rows
-        private func run(query: SQLite.Table) throws -> AnySequence<Row> {
+        func run(query: SQLite.Table) throws -> AnySequence<Row> {
             do {
                 return try connection.prepare(query)
             } catch {

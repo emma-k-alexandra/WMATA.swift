@@ -9,7 +9,7 @@ import Foundation
 
 public extension GTFS {
     /// Location with latitude and longitude coordinates
-    struct Coordinates: Equatable, Hashable {
+    struct Coordinates: Equatable, Hashable, Codable {
         /// Latitude in degrees, for the DMV this value is positive.
         var latitude: Double
         

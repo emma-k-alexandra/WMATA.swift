@@ -10,7 +10,7 @@ import SQLite
 
 public extension GTFS {
     /// A [GTFS Level](https://gtfs.org/schedule/reference/#levelstxt). Defines the levels in a station. Can be used with pathways to navigate stations.
-    struct Level {
+    struct Level: Equatable, Hashable, Codable {
         /// A unique identifer for the level.
         public var id: GTFS.Identifier<GTFS.Level>
         
@@ -40,7 +40,7 @@ public extension GTFS {
             let levelRow = try database.one(GTFS.Level.self, with: id)
             
             guard let levelRow else {
-                throw GTFS.DatabaseQueryError.notFound(id)
+                throw GTFS.DatabaseQueryError.notFound(id, Level.databaseTable.sqlTable)
             }
             
             self = try .init(levelRow)

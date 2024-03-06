@@ -12,7 +12,7 @@ public extension GTFS {
     /// A [GTFS Stop](https://gtfs.org/schedule/reference/#stopstxt).
     ///
     /// For MetroRail, represents a Station, Platform, Entrance, or location between one of the previous stops like an elevator, escalator, or the paid and unpaid sides of a faregate.
-    struct Stop {
+    struct Stop: Equatable, Hashable, Codable {
         /// The unique ID for this stop
         ///
         /// Identifies a location: stop/platform, station, entrance/exit, generic node or boarding area (see `location_type`).
@@ -59,7 +59,7 @@ public extension GTFS {
         public var zoneID: String
         
         /// The GTFS `location_type` of a stop.
-        public enum LocationType: Int {
+        public enum LocationType: Int, Hashable, Codable {
             /// A location where passengers board or disembark from a transit vehicle. Is called a platform when defined within a `parent_station`
             case platform = 0
             
@@ -89,7 +89,7 @@ public extension GTFS {
         public var parentStation: GTFS.Identifier<GTFS.Stop>?
         
         /// Indicates whether wheelchair boardings are possible from the location.
-        public enum WheelchairBoarding: Int {
+        public enum WheelchairBoarding: Int, Hashable, Codable {
             
             // Unused by WMATA.
             case noAccessibilityInformation = 0
@@ -136,8 +136,10 @@ public extension GTFS {
             
             let stopRow = try database.one(GTFS.Stop.self, with: id)
             
+            
+            
             guard let stopRow else {
-                throw GTFS.DatabaseQueryError.notFound(id)
+                throw GTFS.DatabaseQueryError.notFound(id, Stop.databaseTable.sqlTable)
             }
             
             do {
