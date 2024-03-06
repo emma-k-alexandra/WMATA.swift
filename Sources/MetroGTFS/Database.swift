@@ -51,29 +51,6 @@ extension GTFS {
                 throw GTFS.DatabaseError.unableToPerformQuery(query)
             }
         }
-        
-//        /// Fetch all stops from the GTFS Static Stops table
-//        func stops() throws -> AnySequence<Row> {
-//            return try run(query: Tables.stops)
-//            
-//        }
-//        
-//        /// Fetch a stop with the given `id` from the GTFS Static Stops table
-//        func stop(with id: GTFS.Identifier<GTFS.Stop>) throws -> Row? {
-//            return try run(query: Tables.stops.where(GTFS.Stop.TableColumn.id == id.string))
-//        }
-//        
-//        /// Fetch all GTFS Stops with the given Parent Station.
-//        ///
-//        /// [More info on Parent Stations](https://developers.google.com/transit/gtfs/reference#stopstxt)
-//        func stops(parentStation id: GTFS.Identifier<GTFS.Stop>) throws -> AnySequence<Row> {
-//            return try run(query: Tables.stops.where(GTFS.Stop.TableColumn.parentStation == id.string))
-//        }
-//        
-//        /// Fetch all levels from the GTFS Static Levels table
-//        func levels() throws -> AnySequence<Row> {
-//            return try run(query: Tables.levels)
-//        }
     }
 }
 
@@ -138,7 +115,9 @@ extension GTFS.Database {
     }
 }
 
+/// If a data type can be loaded from a SQLite database
 protocol Queryable {
+    /// The actual table in SQLite to pull the data type from
     static var databaseTable: GTFS.Database.Table { get }
 }
 

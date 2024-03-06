@@ -67,3 +67,7 @@ To generate documentation for deploying to Github Pages, run `./docs.sh`.
 ## License
 
 WMATA.swift is released under the MIT license. [See LICENSE](https://github.com/emma-k-alexandra/WMATA.swift/blob/main/LICENSE) for details.
+
+## Legal
+
+This package is not distributed by or affiliated with WMATA.
