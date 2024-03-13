@@ -9,10 +9,10 @@
 
 import WMATA
 
-public extension GTFS.Stop {
+public extension GTFSStop {
     /// Create a GTFS Stop from a ``Station``
     init(station: Station) throws {
-        self = try .init(id: .init("STN_\(station.rawValue)"))
+        try self.init(id: .init("STN_\(station.rawValue)"))
     }
 }
 

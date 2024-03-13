@@ -13,11 +13,11 @@ final class MetroGTFSTests: XCTestCase {
     func testCreateAllStops() throws {
         let database = try GTFS.Database()
         
-        for row in try database.all(GTFS.Stop.self) {
-            let stop = try GTFS.Stop(row)
+        for row in try database.all(GTFSStop.self) {
+            let stop = try GTFSStop(row: row)
             
             // Does the Stop ID from the database match one of the valid location type prefixes?
-            let prefix = stop.id.string.prefixMatch(of: try Regex("^(ENT|NODE|PF|PLF|STN)"))
+            let prefix = stop.id.rawValue.prefixMatch(of: try Regex("^(ENT|NODE|PF|PLF|STN)"))
             
             XCTAssertNotNil(prefix)
             XCTAssertGreaterThan(prefix!.count, 0)
@@ -25,19 +25,25 @@ final class MetroGTFSTests: XCTestCase {
     }
     
     func testCreateAStop() throws {
-        let stop = try GTFS.Stop(id: .init("STN_N12"))
+        let stop = try GTFSStop(id: .init("STN_N12"))
+        
+        XCTAssertEqual(stop.name, "ASHBURN METRORAIL STATION")
+    }
+    
+    func testCreateAStopWithShorthand() throws {
+        let stop = try GTFSStop("STN_N12")
         
         XCTAssertEqual(stop.name, "ASHBURN METRORAIL STATION")
     }
     
     func testCreateAStopFromWMATAStation() throws {
-        let stop = try GTFS.Stop(station: .ashburn)
+        let stop = try GTFSStop(station: .ashburn)
         
         XCTAssertEqual(stop.name, "ASHBURN METRORAIL STATION")
     }
     
     func testCreateAllStopsWithParentStation() throws {
-        let stops = try GTFS.Stop.all(withParentStation: .init("STN_B01_F01"))
+        let stops = try GTFSStop.all(withParentStation: .init("STN_B01_F01"))
         
         for stop in stops {
             XCTAssert(stop.name.contains("CHINATOWN") || stop.name.contains("GALLERY PL"), stop.name)
@@ -47,17 +53,23 @@ final class MetroGTFSTests: XCTestCase {
     func testCreateAllLevels() throws {
         let database = try GTFS.Database()
         
-        for row in try database.all(GTFS.Level.self) {
-            let level = try GTFS.Level(row)
+        for row in try database.all(GTFSLevel.self) {
+            let level = try GTFSLevel(row: row)
             
-            let stationCode = level.id.string.prefix(3)
+            let stationCode = level.id.rawValue.prefix(3)
             
             XCTAssertNotNil(Station(rawValue: String(stationCode)))
         }
     }
     
     func testCreateALevel() throws {
-        let level = try GTFS.Level(id: .init("B05_L1"))
+        let level = try GTFSLevel(id: .init("B05_L1"))
+        
+        XCTAssertEqual(level.name, "Mezzanine")
+    }
+    
+    func testCreateALevelWithShorthand() throws {
+        let level = try GTFSLevel("B05_L1")
         
         XCTAssertEqual(level.name, "Mezzanine")
     }

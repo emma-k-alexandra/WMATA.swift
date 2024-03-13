@@ -29,7 +29,7 @@ public extension GTFS {
     /// Errors associated with incorrect SQLite database queries
     enum DatabaseQueryError<Structure>: Error {
         /// The requested row does not exist in the given SQLite database table
-        case notFound(GTFS.Identifier<Structure>, Table)
+        case notFound(GTFSIdentifier<Structure>, Table)
     }
     
     /// Errors associated with decoding SQLite table rows into Swift types
