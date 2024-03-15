@@ -10,7 +10,7 @@ import SQLite
 
 /// A [GTFS Stop](https://gtfs.org/schedule/reference/#stopstxt).
 ///
-/// For MetroRail, represents a Station, Platform, Entrance, or location between one of the previous stops like an elevator, escalator, or the paid and unpaid sides of a faregate.
+/// For MetroRail, represents a Station, Platform, Entrance, locations between one of the previous stops like an elevator, escalator, or the paid and unpaid sides of a faregate.
 ///
 /// ```swift
 /// let stop = try GTFSStop("STN_N12")
