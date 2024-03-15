@@ -52,7 +52,7 @@ public struct GTFSLevel: Equatable, Hashable, Codable {
     /// level.name // "Mezzanine"
     /// ```
     public init(id: GTFSIdentifier<GTFSLevel>) throws {
-        let database = try GTFS.Database()
+        let database = try GTFSDatabase()
         
         let levelRow = try database.one(GTFSLevel.self, with: id)
         
@@ -104,5 +104,5 @@ extension GTFSLevel {
 }
 
 extension GTFSLevel: Queryable {
-    static let databaseTable = GTFS.Database.Table(sqlTable: SQLite.Table("levels"), primaryKeyColumn: GTFSLevel.TableColumn.id)
+    static let databaseTable = GTFSDatabase.Table(sqlTable: SQLite.Table("levels"), primaryKeyColumn: GTFSLevel.TableColumn.id)
 }

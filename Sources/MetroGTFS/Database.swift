@@ -8,53 +8,51 @@
 import Foundation
 import SQLite
 
-extension GTFS {
-    /// The GTFS Static Database. Used to perform queries on the GTFS Static Database.
-    struct Database {
-        private let connection: Connection
-        
-        /// Create a new GTFS Database. If there is not currently an open connection to the database, create one.
-        init() throws {
-            if let connection = GTFS.Database.shared {
-                self.connection = connection
-                
-                return
-            }
-            
-            let connection: Connection
-            
-            do {
-                connection = try GTFS.Database.connection()
-            } catch {
-                throw GTFSDatabaseError.unableToConnectToDatabase
-            }
-            
-            GTFS.Database.shared = connection
-            
+/// The GTFS Static Database. Used to perform queries on the GTFS Static Database.
+struct GTFSDatabase {
+    private let connection: Connection
+    
+    /// Create a new GTFS Database. If there is not currently an open connection to the database, create one.
+    init() throws {
+        if let connection = GTFSDatabase.shared {
             self.connection = connection
+            
+            return
         }
         
-        /// Run a database query that only returns one row
-        func run(query: SQLite.Table) throws -> Row? {
-            do {
-                return try connection.pluck(query)
-            } catch {
-                throw GTFSDatabaseError.unableToPerformQuery(query)
-            }
+        let connection: Connection
+        
+        do {
+            connection = try GTFSDatabase.connection()
+        } catch {
+            throw GTFSDatabaseError.unableToConnectToDatabase
         }
         
-        /// Run a database query that returns multiple rows
-        func run(query: SQLite.Table) throws -> AnySequence<Row> {
-            do {
-                return try connection.prepare(query)
-            } catch {
-                throw GTFSDatabaseError.unableToPerformQuery(query)
-            }
+        GTFSDatabase.shared = connection
+        
+        self.connection = connection
+    }
+    
+    /// Run a database query that only returns one row
+    func run(query: SQLite.Table) throws -> Row? {
+        do {
+            return try connection.pluck(query)
+        } catch {
+            throw GTFSDatabaseError.unableToPerformQuery(query)
+        }
+    }
+    
+    /// Run a database query that returns multiple rows
+    func run(query: SQLite.Table) throws -> AnySequence<Row> {
+        do {
+            return try connection.prepare(query)
+        } catch {
+            throw GTFSDatabaseError.unableToPerformQuery(query)
         }
     }
 }
 
-extension GTFS.Database {
+extension GTFSDatabase {
     /// Get all GTFS Structures of the given type from the GTFS Database
     func all<Structure: Queryable>(_ structure: Structure.Type) throws -> AnySequence<Row> {
         return try run(query: structure.databaseTable.sqlTable)
@@ -89,7 +87,7 @@ extension GTFS.Database {
     }
 }
 
-extension GTFS.Database {
+extension GTFSDatabase {
     /// The global shares connection to the GTFS database
     private static var shared: Connection?
     
@@ -107,7 +105,7 @@ extension GTFS.Database {
     }
 }
 
-extension GTFS.Database {
+extension GTFSDatabase {
     /// A SQLite database table and the column it's primary key is in
     struct Table {
         let sqlTable: SQLite.Table
@@ -118,6 +116,6 @@ extension GTFS.Database {
 /// If a data type can be loaded from a SQLite database
 protocol Queryable {
     /// The actual table in SQLite to pull the data type from
-    static var databaseTable: GTFS.Database.Table { get }
+    static var databaseTable: GTFSDatabase.Table { get }
 }
 

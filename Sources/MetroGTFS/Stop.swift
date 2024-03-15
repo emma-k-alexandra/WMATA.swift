@@ -151,7 +151,7 @@ public struct GTFSStop: Equatable, Hashable, Codable {
     ///
     /// [More on Stops](https://gtfs.org/schedule/reference/#stopstxt)
     public init(id: GTFSIdentifier<GTFSStop>) throws {
-        let database = try GTFS.Database()
+        let database = try GTFSDatabase()
         
         let stopRow = try database.one(GTFSStop.self, with: id)
         
@@ -231,7 +231,7 @@ public struct GTFSStop: Equatable, Hashable, Codable {
     ///
     /// [More info about parent stations](https://gtfs.org/schedule/reference/#stopstxt)
     public static func all(withParentStation id: GTFSIdentifier<GTFSStop>) throws -> [GTFSStop] {
-        let database = try GTFS.Database()
+        let database = try GTFSDatabase()
         
         let allStopRows = try database.all(GTFSStop.self, with: id, in: TableColumn.parentStation)
         
@@ -263,7 +263,7 @@ extension GTFSStop {
 }
 
 extension GTFSStop: Queryable {
-    static let databaseTable = GTFS.Database.Table(
+    static let databaseTable = GTFSDatabase.Table(
         sqlTable: SQLite.Table("stops"),
         primaryKeyColumn: TableColumn.id
     )
