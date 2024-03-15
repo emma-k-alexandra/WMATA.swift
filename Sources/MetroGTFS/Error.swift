@@ -21,7 +21,7 @@ public enum GTFSDatabaseError: Error {
     /// Note that in the SQLite wrapper MetroGTFS uses, a Table is the data type used to represent a query.
     case unableToPerformQuery(Table)
     
-    /// The given rows does is not valid and could not be loaded. Usually associated with some ``MetroGTFS/GTFS/DatabaseDecodingError``.
+    /// The given rows does is not valid and could not be loaded. Usually associated with some ``GTFSDatabaseDecodingError``.
     case invalid(Row)
 }
 

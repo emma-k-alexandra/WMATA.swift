@@ -30,7 +30,6 @@ public struct GTFSStop: Equatable, Hashable, Codable {
     /// - `PLF_B05_RD_SHADY_GROVE` - Platform at Brookland-CUA on the Red Line to Shady Grove
     ///
     /// ## Notes
-    /// - For stations, this ID is typically identical to a ``Station``
     /// - For transfer stations, both `Station` IDs are included. Example: `STN_D03_F03`.
     public var id: GTFSIdentifier<GTFSStop>
     
@@ -77,7 +76,7 @@ public struct GTFSStop: Equatable, Hashable, Codable {
         /// A location within a station, not matching any other `Location`, that may be used to link together pathways.
         ///
         /// ## Notes
-        /// Unfortunately, WMATA uses this value for platforms instead of ``GTFS/Stop/Location/platform``. Also used for elevator and escalator landings.
+        /// Unfortunately, WMATA uses this value for platforms instead of  ``platform``. Also used for elevator and escalator landings.
         case genericNode = 3
         
         /// A specific location on a platform, where passengers can board and/or alight vehicles.
@@ -90,7 +89,7 @@ public struct GTFSStop: Equatable, Hashable, Codable {
     /// If this stop is a Platform, Station, Entrance, or some other type of location.
     public var locationType: LocationType
     
-    /// If this stop is location within some other ``GTFS/Stop``
+    /// If this stop is location within some other ``GTFSStop``
     public var parentStation: GTFSIdentifier<GTFSStop>?
     
     /// Indicates whether wheelchair boardings are possible from the location.
@@ -109,7 +108,7 @@ public struct GTFSStop: Equatable, Hashable, Codable {
     /// Indicates whether wheelchair boardings are possible from the location.
     public var wheelchairBoarding: WheelchairBoarding
     
-    /// ``GTFS/Level`` of the location. The same level may be used by multiple unlinked stations.
+    /// ``GTFSLevel`` of the location. The same level may be used by multiple unlinked stations.
     public var level: GTFSIdentifier<GTFSLevel>?
     
     /// Create a new Stop by providing all of it's fields
