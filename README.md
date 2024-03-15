@@ -57,17 +57,22 @@ let ashburn = try GTFSStop("STN_N12")
 print(ashburn.name) // "ASHBURN METRORAIL STATION"
 ```
 
+## Documentation
+
+Full documentation is available at <https://emma-k-alexandra.github.io/WMATA.swift/documentation/wmata/> or within Xcode.
+
+To view documentation within Xcode, within the menu navigate to `Product > Build Documentation`. WMATA's documentation will appear under `Workspace Documentation` within the Developer Documentation window. Navigate to `Window > Developer Documentation` to open this window.
+
 ## OS Support
 
 WMATA.swift commits to supporting current minus 2 OS versions.
 
 Currently, WMATA.swift is compatible with macOS 12, iOS 15, tvOS 15, watchOS 8 or higher.
 
-## Documentation
+## Versioning
 
-Full documentation is available at <https://emma-k-alexandra.github.io/WMATA.swift/documentation/wmata/> or within Xcode.
+WMATA.swift uses semantic versioning. Only major versions will contain breaking changes.
 
-To view documentation within Xcode, within the menu navigate to `Product > Build Documentation`. WMATA's documentation will appear under `Workspace Documentation` within the Developer Documentation window. Navigate to `Window > Developer Documentation` to open this window.
 
 ## Dependencies
 
