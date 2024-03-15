@@ -26,7 +26,7 @@ extension GTFS {
             do {
                 connection = try GTFS.Database.connection()
             } catch {
-                throw GTFS.DatabaseError.unableToConnectToDatabase
+                throw GTFSDatabaseError.unableToConnectToDatabase
             }
             
             GTFS.Database.shared = connection
@@ -39,7 +39,7 @@ extension GTFS {
             do {
                 return try connection.pluck(query)
             } catch {
-                throw GTFS.DatabaseError.unableToPerformQuery(query)
+                throw GTFSDatabaseError.unableToPerformQuery(query)
             }
         }
         
@@ -48,7 +48,7 @@ extension GTFS {
             do {
                 return try connection.prepare(query)
             } catch {
-                throw GTFS.DatabaseError.unableToPerformQuery(query)
+                throw GTFSDatabaseError.unableToPerformQuery(query)
             }
         }
     }
@@ -98,7 +98,7 @@ extension GTFS.Database {
         let path = Bundle.module.path(forResource: "MetroGTFS", ofType: "sqlite3")
         
         guard let path else {
-            throw GTFS.DatabaseError.failedToLoadDatabase
+            throw GTFSDatabaseError.failedToLoadDatabase
         }
         
         let connection = try Connection(path, readonly: true)

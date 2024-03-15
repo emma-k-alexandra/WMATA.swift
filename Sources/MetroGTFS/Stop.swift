@@ -49,7 +49,7 @@ public struct GTFSStop: Equatable, Hashable, Codable {
     public var description: String?
     
     /// The latitude and longitude of this stop
-    public var location: GTFS.Coordinates
+    public var location: GTFSCoordinates
     
     /// Identifies the fare zone for a stop.
     ///
@@ -111,7 +111,7 @@ public struct GTFSStop: Equatable, Hashable, Codable {
         id: GTFSIdentifier<GTFSStop>,
         name: String,
         description: String? = nil,
-        location: GTFS.Coordinates,
+        location: GTFSCoordinates,
         zoneID: String,
         locationType: LocationType,
         parentStation: GTFSIdentifier<GTFSStop>? = nil,
@@ -138,13 +138,13 @@ public struct GTFSStop: Equatable, Hashable, Codable {
         
         
         guard let stopRow else {
-            throw GTFS.DatabaseQueryError.notFound(id, GTFSStop.databaseTable.sqlTable)
+            throw GTFSDatabaseQueryError.notFound(id, GTFSStop.databaseTable.sqlTable)
         }
         
         do {
             self = try GTFSStop(row: stopRow)
         } catch {
-            throw GTFS.DatabaseError.invalid(stopRow)
+            throw GTFSDatabaseError.invalid(stopRow)
         }
     }
     
@@ -156,7 +156,7 @@ public struct GTFSStop: Equatable, Hashable, Codable {
     /// Create a Stop from a row in the GTFS database's stops table
     init(row: Row) throws {
         guard let locationType = LocationType(rawValue: try row.get(TableColumn.locationType)) else {
-            throw GTFS.DatabaseDecodingError.invalidEntry(structureType: GTFSStop.self, key: "location_type")
+            throw GTFSDatabaseDecodingError.invalidEntry(structureType: GTFSStop.self, key: "location_type")
         }
         
         var parentStation: GTFSIdentifier<GTFSStop>? = nil
@@ -166,7 +166,7 @@ public struct GTFSStop: Equatable, Hashable, Codable {
         }
         
         guard let wheelchairBoarding = WheelchairBoarding(rawValue:  try row.get(TableColumn.wheelchairBoarding)) else {
-            throw GTFS.DatabaseDecodingError.invalidEntry(structureType: GTFSStop.self, key: "wheelchair_boarding")
+            throw GTFSDatabaseDecodingError.invalidEntry(structureType: GTFSStop.self, key: "wheelchair_boarding")
         }
         
         var level: GTFSIdentifier<GTFSLevel>? = nil
@@ -178,7 +178,7 @@ public struct GTFSStop: Equatable, Hashable, Codable {
         self.id = GTFSIdentifier(try row.get(TableColumn.id))
         self.name = try row.get(TableColumn.name)
         self.description = try row.get(TableColumn.description)
-        self.location = GTFS.Coordinates(
+        self.location = GTFSCoordinates(
             latitude: try row.get(TableColumn.latitude),
             longitude: try row.get(TableColumn.longitude)
         )

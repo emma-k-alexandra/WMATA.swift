@@ -39,7 +39,7 @@ public struct GTFSLevel: Equatable, Hashable, Codable {
         let levelRow = try database.one(GTFSLevel.self, with: id)
         
         guard let levelRow else {
-            throw GTFS.DatabaseQueryError.notFound(id, GTFSLevel.databaseTable.sqlTable)
+            throw GTFSDatabaseQueryError.notFound(id, GTFSLevel.databaseTable.sqlTable)
         }
         
         self = try .init(row: levelRow)
