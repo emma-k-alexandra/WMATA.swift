@@ -14,7 +14,7 @@ permissions:
 
 # Allow one concurrent deployment
 concurrency:
-  group: "pages"
+  group: pages
   cancel-in-progress: true
 
 jobs:
@@ -22,24 +22,25 @@ jobs:
     runs-on: macos-latest
 
     steps:
-    - uses: actions/checkout@v4
-    - name: Set up Pages
-      uses: actions/configure-pages@v4
-    - name: Set up Swift
-      uses: fwal/setup-swift@v2
-      with:
-        swift-version: '5.9'
-    - name: Generate Docs
-      uses: fwcd/swift-docc-action@v1
-      with:
-        output: ./public
-        transform-for-static-hosting: 'true'
-        disable-indexing: 'true'
-        hosting-base-path: WMATA.swift
-    - name: Upload artifact
-      uses: actions/upload-pages-artifact@v3
-      with:
-        path: ./public
+      - uses: actions/checkout@v4
+      - name: Set up Pages
+        uses: actions/configure-pages@v4
+      - name: Set up Swift
+        uses: fwal/setup-swift@v2
+        with:
+          swift-version: '5.9'
+      - name: Generate Docs
+        uses: fwcd/swift-docc-action@v1
+        with:
+          target: MetroGTFS
+          output: ./public
+          transform-for-static-hosting: 'true'
+          disable-indexing: 'true'
+          hosting-base-path: WMATA.swift
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./public
 
   deploy:
     environment:
@@ -49,5 +50,6 @@ jobs:
     needs: docs
 
     steps:
-    - name: Deploy Docs
-      uses: actions/deploy-pages@v4
+      - name: Deploy Docs
+        id: deployment
+        uses: actions/deploy-pages@v4
