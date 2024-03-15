@@ -2,22 +2,12 @@
 
 WMATA.swift is a Swift interface to the [Washington Metropolitan Area Transit Authority API](https://developer.wmata.com).
 
-## Contents
-
-- [Requirements](#requirements)
-- [Installation](#installation)
-- [Documentation](#documentation)
-- [Dependencies](#dependencies)
-- [Contact](#contact)
-- [Contributing](#contributing)
-- [License](#license)
-
-## Installation
+## Install
 
 ### Requirements
 
-- Swift 5.6
-- Xcode 13.2
+- Swift 5.9
+- Xcode 15
 
 ### Swift Package Manager
 
@@ -31,11 +21,47 @@ dependencies: [
 ]
 ```
 
+## Usage
+
+### Standard API
+
+To work with WMATA's Standard API use the `WMATA` package.
+
+```swift
+import WMATA
+
+let nextTrains = Rail.NextRails(
+    key: YOUR_API_KEY,
+    station: .waterfront
+)
+
+nextTrains.request { result in 
+    switch result {
+    case let .success(response):
+        print(response.trains)
+    case let .failure(error):
+        print(error)
+    }
+}
+```
+
+### GTFS Static
+
+To work with GTFS Static data use the `MetroGTFS` package.
+
+```swift
+import MetroGTFS
+
+let ashburn = try GTFSStop("STN_N12")
+
+print(ashburn.name) // "ASHBURN METRORAIL STATION"
+```
+
 ## OS Support
 
 WMATA.swift commits to supporting current minus 2 OS versions.
 
-Currently, WMATA.swift is compatible with macOS 10.15, iOS 13, tvOS 13, watchOS 6 or higher.
+Currently, WMATA.swift is compatible with macOS 12, iOS 15, tvOS 15, watchOS 8 or higher.
 
 ## Documentation
 
@@ -47,6 +73,7 @@ To view documentation within Xcode, within the menu navigate to `Product > Build
 
 - [swift-protobuf](https://github.com/apple/swift-protobuf), for GTFS-RT feeds.
 - [DVR](https://github.com/venmo/DVR), for testing.
+- [SQLite.swift](https://github.com/stephencelis/SQLite.swift), for GTFS Static data. Only used in `MetroGTFS` package.
 
 ## Contact
 
@@ -56,9 +83,8 @@ Feel free to email questions and comments to [emma@emma.sh](mailto:emma@emma.sh)
 
 Todo:
 
-- [ ] Build out more DVR tests.
-- [ ] Automated builds.
-- [ ] Convert async functions from a `Result` to `return` or `throw` behavior, the dominant async pattern in Swift.
+- [ ] Support all GTFS Static data in `MetroGTFS`
+- [ ] Convert async functions from a `Result` to `return` or `throw` behavior, the dominant async pattern in Swift
 
 ## Developer
 
@@ -67,3 +93,5 @@ To generate documentation for deploying to Github Pages, run `./docs.sh`.
 ## License
 
 WMATA.swift is released under the MIT license. [See LICENSE](https://github.com/emma-k-alexandra/WMATA.swift/blob/main/LICENSE) for details.
+
+This package is not distributed by or affiliated with WMATA.
