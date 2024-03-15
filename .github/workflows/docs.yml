@@ -32,7 +32,7 @@ jobs:
       - name: Generate Docs
         uses: fwcd/swift-docc-action@v1
         with:
-          target: MetroGTFS
+          target: WMATA,MetroGTFS
           output: ./public
           transform-for-static-hosting: 'true'
           disable-indexing: 'true'
