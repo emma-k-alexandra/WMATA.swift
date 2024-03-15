@@ -11,6 +11,12 @@ import SQLite
 /// A [GTFS Stop](https://gtfs.org/schedule/reference/#stopstxt).
 ///
 /// For MetroRail, represents a Station, Platform, Entrance, or location between one of the previous stops like an elevator, escalator, or the paid and unpaid sides of a faregate.
+///
+/// ```swift
+/// let stop = try GTFSStop("STN_N12")
+///
+/// stop.name // "ASHBURN METRORAIL STATION"
+/// ```
 public struct GTFSStop: Equatable, Hashable, Codable {
     /// The unique ID for this stop
     ///
@@ -129,26 +135,52 @@ public struct GTFSStop: Equatable, Hashable, Codable {
         self.level = level
     }
     
-    /// Create a GTFS Stop from a GTFS Stop ID
+    /// Create a GTFS Stop from a Stop ID
+    ///
+    /// - Parameters:
+    ///   - id: A unique identifier for a stop. Typically `STN` and a station code. Example: `.init("STN_N12")`.
+    ///
+    /// - Throws: `GTFSDatabaseError` if the GTFS database is unavailable or the database has some other issue
+    /// - Throws: `GTFSDatabaseQueryError`, if the given stop ID is not in the database
+    ///
+    /// ```swift
+    ///  let stop = try GTFSStop(.init("STN_N12"))
+    ///
+    ///  stop.name // "ASHBURN METRORAIL STATION"
+    /// ```
+    ///
+    /// [More on Stops](https://gtfs.org/schedule/reference/#stopstxt)
     public init(id: GTFSIdentifier<GTFSStop>) throws {
         let database = try GTFS.Database()
         
         let stopRow = try database.one(GTFSStop.self, with: id)
-        
-        
         
         guard let stopRow else {
             throw GTFSDatabaseQueryError.notFound(id, GTFSStop.databaseTable.sqlTable)
         }
         
         do {
-            self = try GTFSStop(row: stopRow)
+            try self.init(row: stopRow)
         } catch {
             throw GTFSDatabaseError.invalid(stopRow)
         }
     }
     
-    /// Create a GTFS Stop from a GTFS Stop ID string
+    /// Create a GTFS Stop from a Stop ID string
+    ///
+    /// - Parameters:
+    ///   - id: A unique identifier for a stop. Typically `STN` and a station code. Example: `STN_N12`.
+    ///
+    /// - Throws: `GTFSDatabaseError` if the GTFS database is unavailable or the database has some other issue
+    /// - Throws: `GTFSDatabaseQueryError`, if the given stop ID is not in the database
+    ///
+    /// ```swift
+    ///  let stop = try GTFSStop("STN_N12")
+    ///
+    ///  stop.name // "ASHBURN METRORAIL STATION"
+    /// ```
+    ///
+    /// [More on Stops](https://gtfs.org/schedule/reference/#stopstxt)
     public init(_ idString: @autoclosure @escaping () -> String) throws {
         try self.init(id: .init(idString()))
     }
@@ -191,13 +223,26 @@ public struct GTFSStop: Equatable, Hashable, Codable {
     
     /// Create all Stops with the given parent station
     ///
-    /// [More info about parent stations]((https://gtfs.org/schedule/reference/#stopstxt))
+    /// - Parameters:
+    ///   - id: The Stop ID of the Stop's parent Stop
+    ///
+    /// - Throws: `GTFSDatabaseError` if the GTFS database is unavailable or the database has some other issue
+    /// - Throws: `GTFSDatabaseQueryError`, if the given stop ID is not in the database
+    ///
+    /// [More info about parent stations](https://gtfs.org/schedule/reference/#stopstxt)
     public static func all(withParentStation id: GTFSIdentifier<GTFSStop>) throws -> [GTFSStop] {
         let database = try GTFS.Database()
         
         let allStopRows = try database.all(GTFSStop.self, with: id, in: TableColumn.parentStation)
         
         return try allStopRows.map { try GTFSStop(row: $0) }
+    }
+    
+    /// Create all Stops with the given parent station
+    ///
+    /// See ``all(withParentStation:)-6rk0p``
+    public static func all(withParentStation idString: @autoclosure @escaping () -> String) throws -> [GTFSStop] {
+        return try self.all(withParentStation: .init(idString()))
     }
 }
 

@@ -8,7 +8,13 @@
 import Foundation
 import SQLite
 
-/// A [GTFS Level](https://gtfs.org/schedule/reference/#levelstxt). Defines the levels in a station. Can be used with pathways to navigate stations.
+/// A [GTFS Level](https://gtfs.org/schedule/reference/#levelstxt). Describes the different physical levels and floors in a station. Can be used with pathways to navigate stations.
+///
+/// ```swift
+/// let level = try GTFSLevel("B05_L1")
+///
+/// level.name // "Mezzanine"
+/// ```
 public struct GTFSLevel: Equatable, Hashable, Codable {
     /// A unique identifer for the level.
     public var id: GTFSIdentifier<GTFSLevel>
@@ -17,7 +23,7 @@ public struct GTFSLevel: Equatable, Hashable, Codable {
     ///
     /// For WMATA, these are integers between -3 and 2.
     ///
-    ///Ground level should have index 0, with levels above ground indicated by positive indices and levels below ground by negative indices.
+    /// Ground level should have index 0, with levels above ground indicated by positive indices and levels below ground by negative indices.
     public var index: Int
     
     /// Name of the level as seen by the rider inside the building or station.
@@ -30,9 +36,21 @@ public struct GTFSLevel: Equatable, Hashable, Codable {
         self.name = name
     }
     
-    /// Create a Level from a GTFS Level ID. Performs a database query.
+    /// Create a Level from a Level ID. Performs a database query.
+    ///
+    /// - Parameters:
+    ///   - id: A unique indentifer for a level. Typically is a station code + a floor identifier. Example: `.init("B05_L1")`
+    ///
+    ///   - Throws: `GTFSDatabaseError` if the GTFS database is unavailable or the database has some other issue
+    ///   - Throws: `GTFSDatabaseQueryError` if the given level is not in the database
     ///
     /// [More on Level IDs](https://developers.google.com/transit/gtfs/reference#levelstxt)
+    ///
+    /// ```swift
+    /// let level = try GTFSLevel(.init("B05_L1"))
+    ///
+    /// level.name // "Mezzanine"
+    /// ```
     public init(id: GTFSIdentifier<GTFSLevel>) throws {
         let database = try GTFS.Database()
         
@@ -42,12 +60,24 @@ public struct GTFSLevel: Equatable, Hashable, Codable {
             throw GTFSDatabaseQueryError.notFound(id, GTFSLevel.databaseTable.sqlTable)
         }
         
-        self = try .init(row: levelRow)
+        try self.init(row: levelRow)
     }
     
-    /// Create a Level from a GTFS Level ID. Performs a database query.
+    /// Create a Level from a Level ID string. Performs a database query.
     ///
-    /// [More on Level IDs](https://developers.google.com/transit/gtfs/reference#levelstxt)
+    /// - Parameters:
+    ///   - idString: A unique indentifer for a level. Typically is a station code + a floor identifier. Example: `B05_L1`
+    ///
+    ///   - Throws: `GTFSDatabaseError` if the GTFS database is unavailable or the database has some other issue
+    ///   - Throws: `GTFSDatabaseQueryError`, if the given level ID is not in the database
+    ///
+    /// [More on Levels](https://gtfs.org/schedule/reference/#levelstxt)
+    ///
+    /// ```swift
+    /// let level = try GTFSLevel("B05_L1")
+    ///
+    /// level.name // "Mezzanine"
+    /// ```
     public init(_ idString: @autoclosure @escaping () -> String) throws {
         try self.init(id: .init(idString()))
     }
@@ -55,8 +85,12 @@ public struct GTFSLevel: Equatable, Hashable, Codable {
     /// Create a Level from a database row from the levels table
     init(row: Row) throws {
         self.id = GTFSIdentifier(try row.get(TableColumn.id))
-        self.index = Int(try row.get(TableColumn.index))
-        self.name = try row.get(TableColumn.name)
+        do {
+            self.index = Int(try row.get(TableColumn.index))
+            self.name = try row.get(TableColumn.name)
+        } catch {
+            throw GTFSDatabaseError.invalid(row)
+        }
     }
 }
 
