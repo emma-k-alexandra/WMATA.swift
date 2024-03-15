@@ -32,14 +32,6 @@ jobs:
       - name: Generate Docs
         uses: fwcd/swift-docc-action@v1
         with:
-          target: WMATA
-          output: ./public
-          transform-for-static-hosting: 'true'
-          disable-indexing: 'true'
-          hosting-base-path: WMATA.swift
-      - name: Generate Docs
-        uses: fwcd/swift-docc-action@v1
-        with:
           target: MetroGTFS --target WMATA
           output: ./public
           transform-for-static-hosting: 'true'
