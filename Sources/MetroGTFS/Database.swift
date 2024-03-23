@@ -54,12 +54,12 @@ struct GTFSDatabase {
 
 extension GTFSDatabase {
     /// Get all GTFS Structures of the given type from the GTFS Database
-    func all<Structure: Queryable>(_ structure: Structure.Type) throws -> AnySequence<Row> {
+    func all<Structure: GTFSStructure>(_ structure: Structure.Type) throws -> AnySequence<Row> {
         return try run(query: structure.databaseTable.sqlTable)
     }
     
     /// Get all GTFS Structures of the given type with the given `id` in the given `column`. Defaults to using the primary key column.
-    func all<Structure: Queryable>(
+    func all<Structure: GTFSStructure>(
         _ structure: Structure.Type,
         with id: GTFSIdentifier<Structure>,
         in column: SQLite.Expression<String> = Structure.databaseTable.primaryKeyColumn
@@ -68,7 +68,7 @@ extension GTFSDatabase {
     }
     
     /// Get all GTFS Structures of the given type with the given `id` in the given `column`.
-    func all<Structure: Queryable>(
+    func all<Structure: GTFSStructure>(
         _ structure: Structure.Type,
         with id: GTFSIdentifier<Structure>,
         in column: SQLite.Expression<String?>
@@ -78,7 +78,7 @@ extension GTFSDatabase {
 
     
     /// Get a single structure of the given type with the given `id` in the given `column`. Defaults to using the primary key column.
-    func one<Structure: Queryable>(
+    func one<Structure: GTFSStructure>(
         _ structure: Structure.Type,
         with id: GTFSIdentifier<Structure>,
         in column: SQLite.Expression<String> = Structure.databaseTable.primaryKeyColumn
@@ -112,10 +112,3 @@ extension GTFSDatabase {
         let primaryKeyColumn: SQLite.Expression<String>
     }
 }
-
-/// If a data type can be loaded from a SQLite database
-protocol Queryable {
-    /// The actual table in SQLite to pull the data type from
-    static var databaseTable: GTFSDatabase.Table { get }
-}
-

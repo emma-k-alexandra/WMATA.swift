@@ -104,7 +104,25 @@ final class MetroGTFSTests: XCTestCase {
         XCTAssertEqual(agency.phone, "202-637-7000")
     }
     
-    func testCreateAnInvalidAgency() throws {
+    func testCreateAnInvalidAgency() {
         XCTAssertNil(try? GTFSAgency("WMATA"))
+    }
+    
+    func testCreateFeedInfo() throws {
+        let feedInfo = try GTFSFeedInfo(.init("WMATA"))
+        
+        XCTAssertEqual(feedInfo.publisherName, "WMATA")
+        XCTAssertEqual(feedInfo.publisherURL, URL(string: "http://www.wmata.com"))
+        XCTAssertTrue(feedInfo.startDate! > Date.distantPast)
+    }
+    
+    func testCreateFeedInfoWithShorthand() throws {
+        let feedInfo = try GTFSFeedInfo("WMATA")
+        
+        XCTAssertEqual(feedInfo.publisherName, "WMATA")
+    }
+    
+    func testCreateInvalidFeedInfo() {
+        XCTAssertNil(try? GTFSFeedInfo("ABCDEFG"))
     }
 }

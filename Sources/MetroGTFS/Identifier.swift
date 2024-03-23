@@ -24,6 +24,14 @@ public struct GTFSIdentifier<Structure>: Equatable, Hashable, RawRepresentable {
     public init(rawValue id: String) {
         self.rawValue = id
     }
+    
+    public init?(rawValue id: String?) {
+        if let id {
+            self.rawValue = id
+        }
+        
+        return nil
+    }
 }
 
 extension GTFSIdentifier: Codable {

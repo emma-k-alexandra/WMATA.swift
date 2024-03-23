@@ -8,6 +8,13 @@
 import Foundation
 import SQLite
 
+/// A [GTFS Agency](https://gtfs.org/schedule/reference/#agencytxt). Describes the different physical levels and floors in a station. Can be used with pathways to navigate stations.
+///
+/// ```swift
+/// let level = try GTFSAgency("MET")
+///
+/// level.name // "WMATA"
+/// ```
 public struct GTFSAgency: Equatable, Hashable, Codable {
     /// A unique identifier for this agency. `MET` for WMATA.
     public var id: GTFSIdentifier<GTFSAgency>
@@ -40,53 +47,9 @@ public struct GTFSAgency: Equatable, Hashable, Codable {
         self.phone = phone
         self.fareURL = fareURL
     }
-    
-    /// Create an Agency from an Agency ID. Performs a database query.
-    ///
-    /// - Parameters:
-    ///   - idString: A unique identifier for an agency. For WMATA, this is `MET`.
-    ///
-    ///   - Throws: ``GTFSDatabaseError`` if the GTFS database is unavailable or the database has some other issue
-    ///   - Throws: ``GTFSDatabaseQueryError`` if the given Agency ID does not exist in the database
-    ///
-    /// [More on Agencies](https://gtfs.org/schedule/reference/#agencytxt)
-    ///
-    /// ```swift
-    /// let agency = try GTFSAgency(id: .init("MET"))
-    ///
-    /// agency.name // "WMATA"
-    /// ```
-    public init(id: GTFSIdentifier<GTFSAgency>) throws {
-        let database = try GTFSDatabase()
-        
-        let agencyRow = try database.one(GTFSAgency.self, with: id)
-        
-        guard let agencyRow else {
-            throw GTFSDatabaseQueryError.notFound(id, GTFSAgency.databaseTable.sqlTable)
-        }
-        
-        try self.init(row: agencyRow)
-    }
-    
-    /// Create an Agency from an Agency ID string. Performs a database query.
-    ///
-    /// - Parameters:
-    ///   - idString: A unique identifier for an agency. For WMATA, this is `MET`.
-    ///
-    ///   - Throws: ``GTFSDatabaseError`` if the GTFS database is unavailable or the database has some other issue
-    ///   - Throws: ``GTFSDatabaseQueryError`` if the given Agency ID does not exist in the database
-    ///
-    /// [More on Agencies](https://gtfs.org/schedule/reference/#agencytxt)
-    ///
-    /// ```swift
-    /// let agency = try GTFSAgency("MET")
-    ///
-    /// agency.name // "WMATA"
-    /// ```
-    public init(_ idString: @autoclosure @escaping () -> String) throws {
-        try self.init(id: .init(idString()))
-    }
-    
+}
+
+extension GTFSAgency: GTFSStructure {
     /// Create an Agency from a database row in the `agency` table
     init(row: Row) throws {
         self.id = GTFSIdentifier(try row.get(TableColumn.id))
@@ -108,10 +71,8 @@ public struct GTFSAgency: Equatable, Hashable, Codable {
             throw GTFSDatabaseError.invalid(row)
         }
     }
-}
-
-extension GTFSAgency {
-    /// Columns in thr GTFS Static agency datatable table
+    
+    /// Columns in the GTFS Static agency datatable table
     enum TableColumn {
         static let id = Expression<String>("agency_id")
         static let name = Expression<String>("agency_name")
@@ -121,8 +82,6 @@ extension GTFSAgency {
         static let phone = Expression<String>("agency_phone")
         static let fareURL = Expression<URL>("agency_fare_url")
     }
-}
-
-extension GTFSAgency: Queryable {
+    
     static let databaseTable = GTFSDatabase.Table(sqlTable: SQLite.Table("agency"), primaryKeyColumn: GTFSAgency.TableColumn.id)
 }

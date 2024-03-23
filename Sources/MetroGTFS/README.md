@@ -28,7 +28,7 @@ The following GTFS data types are supported
 | calendar_dates.txt | ❌ | 
 | shapes.txt | ❌ | 
 | pathways.txt | ❌ | 
-| feed_info.txt | ❌ | 
+| feed_info.txt | ✅ | 
 | timepoints.txt | ❌ |
 | timepoints_times.txt | ❌ |
 

@@ -35,74 +35,26 @@ public struct GTFSLevel: Equatable, Hashable, Codable {
         self.index = index
         self.name = name
     }
-    
-    /// Create a Level from a Level ID. Performs a database query.
-    ///
-    /// - Parameters:
-    ///   - id: A unique indentifer for a level. Typically is a station code + a floor identifier. Example: `.init("B05_L1")`
-    ///
-    ///   - Throws: `GTFSDatabaseError` if the GTFS database is unavailable or the database has some other issue
-    ///   - Throws: `GTFSDatabaseQueryError` if the given level is not in the database
-    ///
-    /// [More on Level IDs](https://developers.google.com/transit/gtfs/reference#levelstxt)
-    ///
-    /// ```swift
-    /// let level = try GTFSLevel(.init("B05_L1"))
-    ///
-    /// level.name // "Mezzanine"
-    /// ```
-    public init(id: GTFSIdentifier<GTFSLevel>) throws {
-        let database = try GTFSDatabase()
-        
-        let levelRow = try database.one(GTFSLevel.self, with: id)
-        
-        guard let levelRow else {
-            throw GTFSDatabaseQueryError.notFound(id, GTFSLevel.databaseTable.sqlTable)
-        }
-        
-        try self.init(row: levelRow)
-    }
-    
-    /// Create a Level from a Level ID string. Performs a database query.
-    ///
-    /// - Parameters:
-    ///   - idString: A unique indentifer for a level. Typically is a station code + a floor identifier. Example: `B05_L1`
-    ///
-    ///   - Throws: `GTFSDatabaseError` if the GTFS database is unavailable or the database has some other issue
-    ///   - Throws: `GTFSDatabaseQueryError` if the given level ID is not in the database
-    ///
-    /// [More on Levels](https://gtfs.org/schedule/reference/#levelstxt)
-    ///
-    /// ```swift
-    /// let level = try GTFSLevel("B05_L1")
-    ///
-    /// level.name // "Mezzanine"
-    /// ```
-    public init(_ idString: @autoclosure @escaping () -> String) throws {
-        try self.init(id: .init(idString()))
-    }
-    
-    /// Create a Level from a database row from the `levels` table
-    init(row: Row) throws {
-        self.id = GTFSIdentifier(try row.get(TableColumn.id))
-        do {
-            self.index = Int(try row.get(TableColumn.index))
-            self.name = try row.get(TableColumn.name)
-        } catch {
-            throw GTFSDatabaseError.invalid(row)
-        }
-    }
 }
 
-extension GTFSLevel {
+extension GTFSLevel: GTFSStructure {
     /// Columns in the GTFS Static levels database table
     enum TableColumn {
         static let id = Expression<String>("level_id")
         static let index = Expression<Double>("level_index")
         static let name = Expression<String>("level_name")
     }
-}
-
-extension GTFSLevel: Queryable {
+    
     static let databaseTable = GTFSDatabase.Table(sqlTable: SQLite.Table("levels"), primaryKeyColumn: GTFSLevel.TableColumn.id)
+    
+    /// Create a Level from a database row from the `levels` table
+    init(row: Row) throws {
+        do {
+            self.id = GTFSIdentifier(try row.get(TableColumn.id))
+            self.index = Int(try row.get(TableColumn.index))
+            self.name = try row.get(TableColumn.name)
+        } catch {
+            throw GTFSDatabaseError.invalid(row)
+        }
+    }
 }
