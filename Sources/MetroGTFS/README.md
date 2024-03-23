@@ -19,7 +19,7 @@ The following GTFS data types are supported
 | GTFS Files | Supported? |  
 | - | - |
 | stops.txt | ✅ | 
-| agency.txt | ❌ | 
+| agency.txt | ✅ | 
 | levels.txt | ✅ | 
 | routes.txt | ❌ | 
 | trips.txt | ❌ | 

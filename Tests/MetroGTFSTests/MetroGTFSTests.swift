@@ -11,7 +11,7 @@ import WMATA
 
 final class MetroGTFSTests: XCTestCase {
     func testCreateAllStops() throws {
-        let database = try GTFS.Database()
+        let database = try GTFSDatabase()
         
         for row in try database.all(GTFSStop.self) {
             let stop = try GTFSStop(row: row)
@@ -36,6 +36,10 @@ final class MetroGTFSTests: XCTestCase {
         XCTAssertEqual(stop.name, "ASHBURN METRORAIL STATION")
     }
     
+    func testCreateAnInvalidStop() {
+        XCTAssertNil(try? GTFSStop("ABCDEFG"))
+    }
+    
     func testCreateAStopFromWMATAStation() throws {
         let stop = try GTFSStop(station: .ashburn)
         
@@ -51,7 +55,7 @@ final class MetroGTFSTests: XCTestCase {
     }
     
     func testCreateAllLevels() throws {
-        let database = try GTFS.Database()
+        let database = try GTFSDatabase()
         
         for row in try database.all(GTFSLevel.self) {
             let level = try GTFSLevel(row: row)
@@ -72,5 +76,35 @@ final class MetroGTFSTests: XCTestCase {
         let level = try GTFSLevel("B05_L1")
         
         XCTAssertEqual(level.name, "Mezzanine")
+    }
+    
+    func testCreateAnInvalidLevel() throws {
+        XCTAssertNil(try? GTFSLevel("ABCDEFG"))
+    }
+    
+    func testCreateAllAgencies() throws {
+        let database = try GTFSDatabase()
+        
+        for row in try database.all(GTFSAgency.self) {
+            let agency = try GTFSAgency(row: row)
+            
+            XCTAssertEqual(agency.name, "WMATA") // there's only one agency in WMATA's data
+        }
+    }
+    
+    func testCreateAnAgency() throws {
+        let agency = try GTFSAgency(id: .init("MET"))
+        
+        XCTAssertEqual(agency.url, URL(string: "http://www.wmata.com"))
+    }
+    
+    func testCreateAnAgencyWithShorthand() throws {
+        let agency = try GTFSAgency("MET")
+        
+        XCTAssertEqual(agency.phone, "202-637-7000")
+    }
+    
+    func testCreateAnInvalidAgency() throws {
+        XCTAssertNil(try? GTFSAgency("WMATA"))
     }
 }

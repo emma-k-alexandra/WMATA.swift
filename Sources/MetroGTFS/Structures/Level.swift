@@ -69,7 +69,7 @@ public struct GTFSLevel: Equatable, Hashable, Codable {
     ///   - idString: A unique indentifer for a level. Typically is a station code + a floor identifier. Example: `B05_L1`
     ///
     ///   - Throws: `GTFSDatabaseError` if the GTFS database is unavailable or the database has some other issue
-    ///   - Throws: `GTFSDatabaseQueryError`, if the given level ID is not in the database
+    ///   - Throws: `GTFSDatabaseQueryError` if the given level ID is not in the database
     ///
     /// [More on Levels](https://gtfs.org/schedule/reference/#levelstxt)
     ///
@@ -82,7 +82,7 @@ public struct GTFSLevel: Equatable, Hashable, Codable {
         try self.init(id: .init(idString()))
     }
     
-    /// Create a Level from a database row from the levels table
+    /// Create a Level from a database row from the `levels` table
     init(row: Row) throws {
         self.id = GTFSIdentifier(try row.get(TableColumn.id))
         do {
