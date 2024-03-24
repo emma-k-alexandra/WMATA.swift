@@ -11,12 +11,12 @@ import SQLite
 /// A [GTFS Agency](https://gtfs.org/schedule/reference/#agencytxt). Describes the different physical levels and floors in a station. Can be used with pathways to navigate stations.
 ///
 /// ```swift
-/// let level = try GTFSAgency("MET")
+/// let level = try GTFSAgency("1")
 ///
 /// level.name // "WMATA"
 /// ```
 public struct GTFSAgency: Equatable, Hashable, Codable {
-    /// A unique identifier for this agency. `MET` for WMATA.
+    /// A unique identifier for this agency. `1` for WMATA.
     public var id: GTFSIdentifier<GTFSAgency>
     
     /// The user-friendly name of the agency. `WMATA` for WMATA.

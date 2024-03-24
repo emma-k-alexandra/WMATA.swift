@@ -22,6 +22,14 @@ brew install node
 
 This will install the current version of Node.js. You can now create the database.
 
+### Fetch GTFS data
+
+To pull an updated GTFS Static dataset from WMATA, call
+
+```zsh
+curl -H "api_key: YOUR_WMATA_DEVELOPER_API_KEY" https://api.wmata.com/gtfs/rail-gtfs-static.zip > rail-gtfs-static.zip
+```
+
 ### Create SQLite database
 
 To use `node-gtfs` to create the SQLite database run

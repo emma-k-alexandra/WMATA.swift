@@ -78,14 +78,6 @@ extension GTFSStructure {
             allRows = try database.all(Self.self)
         }
         
-        return try allRows.map { try Self(row: $0) }
-    }
-    
-    /// Create every GTFS structure of this type present in the database. Performs a database query.
-    public static func all(
-        _ idString: @autoclosure @escaping () -> String? = nil,
-        in expression: Expression<String>? = nil
-    ) throws -> [Self] {
-        return try Self.all(with: .init(rawValue: idString()), in: expression)
+        return try allRows.map { try .init(row: $0) }
     }
 }

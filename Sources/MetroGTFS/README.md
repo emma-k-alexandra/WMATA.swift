@@ -18,18 +18,26 @@ The following GTFS data types are supported
 
 | GTFS Files | Supported? |  
 | - | - |
-| stops.txt | ✅ | 
 | agency.txt | ✅ | 
-| levels.txt | ✅ | 
-| routes.txt | ❌ | 
-| trips.txt | ❌ | 
-| stop_times.txt | ❌ | 
+| areas.txt | ❌ |
 | calendar.txt | ❌ | 
 | calendar_dates.txt | ❌ | 
-| shapes.txt | ❌ | 
-| pathways.txt | ❌ | 
+| fare_leg_rules.txt | ❌ |
+| fare_media.txt | ❌ |
+| fare_products.txt | ❌ |
 | feed_info.txt | ✅ | 
+| levels.txt | ✅ |
+| network.txt | ~ Not provided by WMATA but supported |
+| pathways.txt | ❌ | 
+| routes.txt | ✅ | 
+| shapes.txt | ❌ | 
+| stops.txt | ✅ | 
+| stop_times.txt | ❌ |
+| stop_areas.txt | ❌ |
+| timeframes.txt | ❌ |
 | timepoints.txt | ❌ |
 | timepoints_times.txt | ❌ |
+| trips.txt | ❌ | 
+
 
 Unlisted GTFS files are not provided by WMATA.

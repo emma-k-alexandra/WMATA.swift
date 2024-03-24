@@ -1,8 +1,9 @@
 {
   "agencies": [
     {
-      "path": "wmata-gtfs-rail-static.zip"
+      "path": "rail-gtfs-static.zip"
     }
   ],
+  "ignoreDuplicates": true,
   "sqlitePath": "MetroGTFS.sqlite3"
 }

@@ -93,13 +93,13 @@ final class MetroGTFSTests: XCTestCase {
     }
     
     func testCreateAnAgency() throws {
-        let agency = try GTFSAgency(id: .init("MET"))
+        let agency = try GTFSAgency(id: .init("1"))
         
         XCTAssertEqual(agency.url, URL(string: "http://www.wmata.com"))
     }
     
     func testCreateAnAgencyWithShorthand() throws {
-        let agency = try GTFSAgency("MET")
+        let agency = try GTFSAgency("1")
         
         XCTAssertEqual(agency.phone, "202-637-7000")
     }
@@ -124,5 +124,40 @@ final class MetroGTFSTests: XCTestCase {
     
     func testCreateInvalidFeedInfo() {
         XCTAssertNil(try? GTFSFeedInfo("ABCDEFG"))
+    }
+    
+    func testCreateAllRoutes() throws {
+        for route in try GTFSRoute.all() {
+            XCTAssertEqual(route.networkID, .init("Metrorail"))
+        }
+    }
+    
+    func testCreateRoute() throws {
+        let route = try GTFSRoute(id: .init("RED"))
+        
+        XCTAssertEqual(route.routeType, .metro)
+    }
+    
+    func testCreateRouteWithShorthand() throws {
+        let route = try GTFSRoute("SILVER")
+        
+        XCTAssertEqual(route.longLame, "Metrorail Silver Line")
+    }
+    
+    func testCreateInvalidRoute() {
+        XCTAssertNil(try? GTFSRoute("PURPLE"))
+    }
+    
+    func testCreateRouteFromWMATALine() throws {
+        let route = try GTFSRoute(line: .red)
+        
+        XCTAssertEqual(route.longLame, "Metrorail Red Line")
+    }
+    
+    func testCreateNetwork() {
+        let network = GTFSNetwork(id: .init("Metrorail"), name: "Hello")
+        
+        XCTAssertEqual(network.id, .init("Metrorail"))
+        XCTAssertEqual(network.name, "Hello")
     }
 }
