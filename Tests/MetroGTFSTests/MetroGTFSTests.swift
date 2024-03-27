@@ -160,4 +160,34 @@ final class MetroGTFSTests: XCTestCase {
         XCTAssertEqual(network.id, .init("Metrorail"))
         XCTAssertEqual(network.name, "Hello")
     }
+    
+    func testCreateAllServices() throws {
+        for service in try GTFSService.all() {
+            XCTAssertGreaterThan(service.all.count, 1)
+        }
+    }
+    
+    func testCreateService() throws {
+        let service = try GTFSService("weekday_service_R")
+        
+        XCTAssertEqual(service.thursday, .hasService)
+    }
+    
+    func testCreateInvalidService() {
+        XCTAssertNil(try? GTFSService("ABCDEFG"))
+    }
+    
+    func testServiceAll() throws {
+        let service = try GTFSService("weekday_service_R")
+        
+        XCTAssertEqual(service.all.count, 7)
+        XCTAssertEqual(service.all[.monday], .hasService)
+    }
+    
+    func testServiceOn() throws {
+        let service = try GTFSService("weekend_service_R")
+        
+        XCTAssertEqual(service.on(.saturday), .hasService)
+        XCTAssertEqual(service.on(.monday), .noService)
+    }
 }

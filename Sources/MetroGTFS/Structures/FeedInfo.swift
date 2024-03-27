@@ -66,25 +66,3 @@ extension GTFSFeedInfo: GTFSStructure {
         }
     }
 }
-
-internal extension Date {
-    /// Create a `Date` from the 8 character string provided in GTFS data.
-    ///
-    /// ## Example
-    ///
-    /// ```
-    /// Date(from8CharacterString: "20240305")
-    /// ```
-    init?(from8CharacterString dateString: String) {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyymmdd"
-        
-        let date = dateFormatter.date(from: dateString)
-        
-        if let date {
-            self = date
-        } else {
-            return nil
-        }
-    }
-}

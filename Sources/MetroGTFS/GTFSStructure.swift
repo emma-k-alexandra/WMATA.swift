@@ -16,8 +16,10 @@ protocol GTFSStructure {
     /// The actual table in SQLite to pull the data type from
     static var databaseTable: GTFSDatabase.Table { get }
     
+    /// Create this structure from a database row
     init(row: Row) throws
     
+    /// A unique identifier for this structure. Usually the primary key in the database.
     var id: GTFSIdentifier<Self> { get }
 }
 
